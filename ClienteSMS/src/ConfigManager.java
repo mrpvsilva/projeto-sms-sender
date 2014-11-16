@@ -33,5 +33,9 @@ public class ConfigManager {
 		}
 
 	}
+	
+	public void Happy(){
+		
+	}
 
 }
