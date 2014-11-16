@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.sms.MainActivity" >
+
+    <EditText
+        android:id="@+id/et_ddd"
+        android:layout_width="650px"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="56dp"
+        android:ems="10"
+        android:hint="DDD"
+        android:inputType="number" >
+
+        <requestFocus />
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/et_numero"
+        android:layout_width="650px"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/et_ddd"
+        android:layout_below="@+id/et_ddd"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="Número"
+        android:inputType="number" >
+    </EditText>
+
+    <EditText
+        android:id="@+id/et_txtsms"
+        android:layout_width="650px"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/et_numero"
+        android:layout_below="@+id/et_numero"
+        android:layout_marginTop="23dp"
+        android:ems="10"
+        android:hint="Texto"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/btn_enviar"
+        android:layout_width="650px"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_txtsms"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:text="Enviar" />
+
+</RelativeLayout>
