@@ -42,6 +42,8 @@ public class Evento implements Serializable {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "clienteseventos", joinColumns = { @JoinColumn(name = "idevento", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idcliente", referencedColumnName = "id") })
 	private List<Cliente> clientes;
+	@OneToMany(mappedBy = "evento",cascade=CascadeType.ALL)
+	private List<EventoItem> itens;
 
 	public Evento() {
 
@@ -58,8 +60,28 @@ public class Evento implements Serializable {
 
 	}
 
+	public void addCliente(Cliente cliente) {
+		if (this.clientes == null) {
+			clientes = new ArrayList<Cliente>();
+		}
+
+		this.clientes.add(cliente);
+	}
+
+	public void addItem(Item item, int quantidade) {
+		if (this.itens == null) {
+			itens = new ArrayList<EventoItem>();
+		}
+		EventoItem evi = new EventoItem(this, item, quantidade);
+		this.itens.add(evi);
+	}
+
 	public long getId() {
 		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getStatus() {
@@ -110,18 +132,6 @@ public class Evento implements Serializable {
 		this.dataEvento = dataEvento;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public void addCliente(Cliente cliente) {
-		if (this.clientes == null) {
-			clientes = new ArrayList<Cliente>();
-		}
-
-		this.clientes.add(cliente);
-	}
-
 	public List<Cliente> getClientes() {
 		return clientes;
 	}
@@ -130,4 +140,11 @@ public class Evento implements Serializable {
 		this.clientes = clientes;
 	}
 
+	public List<EventoItem> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<EventoItem> itens) {
+		this.itens = itens;
+	}
 }

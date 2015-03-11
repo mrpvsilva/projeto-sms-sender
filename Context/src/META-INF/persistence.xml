@@ -19,6 +19,8 @@
 		<class>com.domain.TipoServico</class>
 		<class>com.domain.TelefoneFornecedor</class>
 		<class>com.domain.Telefone</class>
+		
+		<class>com.domain.Usuario</class>
 
 
 

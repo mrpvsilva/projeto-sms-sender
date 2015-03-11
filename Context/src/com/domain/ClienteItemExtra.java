@@ -23,16 +23,22 @@ public class ClienteItemExtra implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "iditem", referencedColumnName = "id")
 	private Item item;
-	@Column
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "idevento", referencedColumnName = "id")
+	private Evento evento;
+
 	private int quantidade;
-	
+
 	public ClienteItemExtra() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public ClienteItemExtra(Cliente cliente,Item item, int quantidade) {
+
+	public ClienteItemExtra(Cliente cliente, Evento evento, Item item,
+			int quantidade) {
 		setCliente(cliente);
 		setItem(item);
+		setEvento(evento);
 		setQuantidade(quantidade);
 	}
 
@@ -58,6 +64,14 @@ public class ClienteItemExtra implements Serializable {
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public Evento getEvento() {
+		return evento;
+	}
+
+	public void setEvento(Evento evento) {
+		this.evento = evento;
 	}
 
 }
