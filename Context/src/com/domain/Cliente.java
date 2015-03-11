@@ -15,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 @Entity
 @Table(name = "clientes")
 public class Cliente implements Serializable {
@@ -50,7 +49,7 @@ public class Cliente implements Serializable {
 	@ManyToMany(mappedBy = "clientes")
 	private List<Evento> eventos;
 
-	@OneToMany(cascade = CascadeType.ALL)	
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ClienteItemExtra> itensExtras;
 
 	public Cliente() {
@@ -185,12 +184,13 @@ public class Cliente implements Serializable {
 		this.eventos = eventos;
 	}
 
-	public void addItemExtra(Item ItemExtra, int quantidade) {
+	public void addItemExtra(Item ItemExtra, Evento evento, int quantidade) {
 		if (itensExtras == null) {
 			itensExtras = new ArrayList<ClienteItemExtra>();
 		}
 
-		ClienteItemExtra cie = new ClienteItemExtra(this, ItemExtra, quantidade);
+		ClienteItemExtra cie = new ClienteItemExtra(this, evento, ItemExtra,
+				quantidade);
 		itensExtras.add(cie);
 	}
 
