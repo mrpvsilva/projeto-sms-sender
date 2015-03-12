@@ -7,7 +7,7 @@ import Model.UsuarioModel;
 
 public class ClientesControl {
 
-	//fala arua
+	//fala arua kkkk
 	public UsuarioBean Logar(UsuarioBean usuAut){
 	
 		UsuarioModel usuMod = new UsuarioModel();
