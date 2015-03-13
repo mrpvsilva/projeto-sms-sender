@@ -218,14 +218,15 @@ public class JFTelaPrincipal extends JFrame implements ActionListener{
 		/* JMenu Fornecedores */
 		if(acao.getSource() == JMIFornCad){
 			JDTelaCadForn jdtcf;
+			
 			try {
 				jdtcf = new JDTelaCadForn();
 				jdtcf.setVisible(true);
 				jdtcf.setLocationRelativeTo(null);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				JOptionPane.showMessageDialog(null, e.getMessage(),"Erro ao carregar máscaras",JOptionPane.ERROR_MESSAGE);
+			}// necessário devido a máscara e não ter que repetir várias instruções try e Catch
 			
 		}// final do JMenuItemFornecedores Cadastro
 		
@@ -259,8 +260,16 @@ public class JFTelaPrincipal extends JFrame implements ActionListener{
 				
 		/* JMenu Clientes */
 		if(acao.getSource() == JMICliCad){
-			JDTelaCadCli jdtcc = new JDTelaCadCli();
-			jdtcc.setVisible(true);
+			JDTelaCadCli jdtcc;
+			
+			try {
+				jdtcc = new JDTelaCadCli();
+				jdtcc.setVisible(true);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, e.getMessage(),"Erro ao carregar máscaras",JOptionPane.ERROR_MESSAGE);
+			}// necessário devido a máscara e não ter que repetir várias instruções try e Catch
+			
 		}// final do JMenuItemClientes Cadastrar
 		
 		if(acao.getSource() == JMICliBuscar){
