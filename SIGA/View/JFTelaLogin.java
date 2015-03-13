@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
+import persistenceManagerFactory.PersistenceManagerFactory;
 import Control.UsuarioControl;
 import Model.UsuarioBean;
 
@@ -47,6 +48,9 @@ public class JFTelaLogin extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public JFTelaLogin() {
+		//INICIA UMA SESSIONFACTORY DO HIBERNATE PARA SER UTILIZADO EM TODA A APLICAÇÃO.
+		PersistenceManagerFactory.getPersistanceManager();
+		//
 		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
