@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
+import Control.ServicosControl;
+
 public class JDTelaBuscarServ extends JDialog implements ActionListener{
 
 	/**
@@ -26,7 +28,8 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener{
 	private JButton JBBuscar;
 	private JTextField JTFBuscar;
 	private JComboBox<String> JCBFiltro;
-
+	private ServicosControl servCont = new ServicosControl();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -44,7 +47,7 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public JDTelaBuscarServ() {
-		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A - buscar serviços");
+		setTitle("SIGA - buscar serviços");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -57,6 +60,7 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener{
 		}
 		{
 			JBBuscar = new JButton("Buscar");
+			JBBuscar.addActionListener(this);
 			JBBuscar.setBounds(335, 11, 89, 23);
 			contentPanel.add(JBBuscar);
 		}
@@ -68,7 +72,10 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener{
 		}
 		{
 			JCBFiltro = new JComboBox<String>();
-			JCBFiltro.setBounds(41, 8, 103, 20);
+			for (String item : servCont.Filtros()) {
+				JCBFiltro.addItem(item);
+			}
+			JCBFiltro.setBounds(41, 11, 103, 20);
 			contentPanel.add(JCBFiltro);
 		}
 		{
@@ -77,11 +84,13 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener{
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBCadServ = new JButton("Cadastrar");
+				JBCadServ.addActionListener(this);
 				buttonPane.add(JBCadServ);
 				getRootPane().setDefaultButton(JBCadServ);
 			}
 			{
 				JBEditServ = new JButton("Alterar");
+				JBEditServ.addActionListener(this);
 				buttonPane.add(JBEditServ);
 			}
 		}
@@ -97,6 +106,10 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener{
 		if(acao.getSource() == JBEditServ){
 			
 		}// final do botão atualizar serviços
+		
+		if(acao.getSource() == JBBuscar){
+			
+		}// final do botão buscar serviços
 		
 	}// final da ação do botão
 		

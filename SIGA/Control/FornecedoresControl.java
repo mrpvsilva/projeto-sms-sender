@@ -1,26 +1,19 @@
 package Control;
 
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
-import Model.UsuarioBean;
-import Model.UsuarioModel;
+import Model.FornecedoresModel;
+
 
 public class FornecedoresControl {
 
-	public UsuarioBean Logar(UsuarioBean usuAut){
+	FornecedoresModel fornMod = new FornecedoresModel();
 	
-		UsuarioModel usuMod = new UsuarioModel();
+	/*Envia filtros para a JDTelaBuscarForn*/
+	public ArrayList<String> Filtros(){
+
+		return fornMod.FiltroForn();
 		
-		usuAut.setResposta(usuMod.AutenticarUsuario(usuAut));
-		
-		/*Validação da autenticação*/
-		if(usuAut.getResposta()){
-			return usuAut;
-		}else{
-			JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.","SIGA - Autenticação",JOptionPane.ERROR_MESSAGE);
-			return usuAut;
-		}
-		
-	}// final do método Logar
+	}// final do método filtros
 	
 }

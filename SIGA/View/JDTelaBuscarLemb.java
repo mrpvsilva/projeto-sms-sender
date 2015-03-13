@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
+import Control.LembretesControl;
+
 public class JDTelaBuscarLemb extends JDialog implements ActionListener{
 
 	/**
@@ -26,6 +28,7 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener{
 	private JButton JBBuscar;
 	private JTextField JTFBuscar;
 	private JComboBox<String> JCBFiltro;
+	private LembretesControl lemCont = new LembretesControl();
 
 	/**
 	 * Launch the application.
@@ -44,7 +47,7 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public JDTelaBuscarLemb() {
-		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A - buscar lembretes");
+		setTitle("SIGA - buscar lembretes");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -57,6 +60,7 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener{
 		}
 		{
 			JBBuscar = new JButton("Buscar");
+			JBBuscar.addActionListener(this);
 			JBBuscar.setBounds(335, 11, 89, 23);
 			contentPanel.add(JBBuscar);
 		}
@@ -68,7 +72,10 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener{
 		}
 		{
 			JCBFiltro = new JComboBox<String>();
-			JCBFiltro.setBounds(40, 8, 103, 20);
+			for (String item : lemCont.Filtros()) {
+				JCBFiltro.addItem(item);
+			}
+			JCBFiltro.setBounds(40, 11, 103, 20);
 			contentPanel.add(JCBFiltro);
 		}
 		{
@@ -77,11 +84,13 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener{
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBCadLemb = new JButton("Cadastrar");
+				JBCadLemb.addActionListener(this);
 				buttonPane.add(JBCadLemb);
 				getRootPane().setDefaultButton(JBCadLemb);
 			}
 			{
 				JBEditLemb = new JButton("Alterar");
+				JBEditLemb.addActionListener(this);
 				buttonPane.add(JBEditLemb);
 			}
 		}
@@ -99,6 +108,10 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener{
 			
 		}// final do botão atualizar lembretes
 		
+		if(acao.getSource() == JBBuscar){
+			
+		}// final do botão buscar lembretes
+
 	}// final da ação do botão
 
 }

@@ -1,11 +1,18 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class FornecedoresModel {
 
-	public boolean AutenticarUsuario(UsuarioBean usuario){
+	/*Adiciona lista de possíveis filtros */
+	public ArrayList<String> FiltroForn (){
+		ArrayList<String> lista = new ArrayList<String>();
 		
+		lista.add("CNPJ");
+		lista.add("NOME");
+		lista.add("SERVIÇO PRESTADO");
 		
-		return true;
-	}
+		return lista;
+	}// final do método filtros
 	
 }

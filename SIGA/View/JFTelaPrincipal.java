@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -216,8 +217,16 @@ public class JFTelaPrincipal extends JFrame implements ActionListener{
 
 		/* JMenu Fornecedores */
 		if(acao.getSource() == JMIFornCad){
-			JDTelaCadForn jdtcf = new JDTelaCadForn();
-			jdtcf.setVisible(true);
+			JDTelaCadForn jdtcf;
+			try {
+				jdtcf = new JDTelaCadForn();
+				jdtcf.setVisible(true);
+				jdtcf.setLocationRelativeTo(null);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}// final do JMenuItemFornecedores Cadastro
 		
 		if(acao.getSource() == JMIFornBuscar){

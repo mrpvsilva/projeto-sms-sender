@@ -2,19 +2,23 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class JDTelaCadLemb extends JDialog {
+public class JDTelaCadLemb extends JDialog implements ActionListener{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+	private JButton JBSalvLemb;
+	private JButton JBNovLemb;
 
 	/**
 	 * Launch the application.
@@ -34,27 +38,40 @@ public class JDTelaCadLemb extends JDialog {
 	 */
 	public JDTelaCadLemb() {
 		setBounds(100, 100, 450, 300);
-		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A - cadastro de lembretes");
+		setTitle("SIGA - cadastro de lembretes");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				JBSalvLemb = new JButton("Salvar");
+				JBSalvLemb.addActionListener(this);
+				buttonPane.add(JBSalvLemb);
+				getRootPane().setDefaultButton(JBSalvLemb);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+				JBNovLemb = new JButton("Novo");
+				JBNovLemb.addActionListener(this);
+				buttonPane.add(JBNovLemb);
 			}
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent acao) {
+		
+		if(acao.getSource() == JBSalvLemb){
+			
+		}// final do botão salvar lembrete
+		
+		if(acao.getSource() == JBNovLemb){
+			
+		}// final do botão novo lembrete
+		
 	}
 
 }
