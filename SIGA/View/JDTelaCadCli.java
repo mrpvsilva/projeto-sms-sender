@@ -19,11 +19,8 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JButton JBCadUsu;
-	private JButton JBEditUsu;
-	private JLabel JLFiltro;
-	private JButton JBBuscar;
-	private JTextField JTFBuscar;
+	private JButton JBCadCli;
+	private JButton JBEditCad;
 
 	/**
 	 * Launch the application.
@@ -42,40 +39,25 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public JDTelaCadCli() {
-		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A - cadastro de cliente");
+		setTitle("SIGA - cadastro de cliente");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JLFiltro = new JLabel("Filtro");
-			JLFiltro.setBounds(10, 11, 46, 14);
-			contentPanel.add(JLFiltro);
-		}
-		{
-			JBBuscar = new JButton("Buscar");
-			JBBuscar.setBounds(335, 11, 89, 23);
-			contentPanel.add(JBBuscar);
-		}
-		{
-			JTFBuscar = new JTextField();
-			JTFBuscar.setColumns(10);
-			JTFBuscar.setBounds(153, 11, 172, 20);
-			contentPanel.add(JTFBuscar);
-		}
-		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JBCadUsu = new JButton("Cadastrar");
-				buttonPane.add(JBCadUsu);
-				getRootPane().setDefaultButton(JBCadUsu);
+				JBCadCli = new JButton("Salvar");
+				buttonPane.add(JBCadCli);
+				getRootPane().setDefaultButton(JBCadCli);
 			}
 			{
-				JBEditUsu = new JButton("Alterar");
-				buttonPane.add(JBEditUsu);
+				JBEditCad = new JButton("Novo");
+				JBEditCad.addActionListener(this);
+				buttonPane.add(JBEditCad);
 			}
 		}
 	}
@@ -83,11 +65,11 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent acao) {
 
-		if(acao.getSource() == JBCadUsu){
+		if(acao.getSource() == JBCadCli){
 			
 		}// final do botão cadastrar usuário
 		
-		if(acao.getSource() == JBEditUsu){
+		if(acao.getSource() == JBEditCad){
 			
 		}// final do botão atualizar usuário
 		

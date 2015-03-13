@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
+import Control.ClientesControl;
+
 public class JDTelaBuscarCli extends JDialog implements ActionListener{
 
 	/**
@@ -26,7 +28,8 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener{
 	private JButton JBBuscar;
 	private JTextField JTFBuscar;
 	private JComboBox<String> JCBFiltro;
-
+	private ClientesControl cliCont = new ClientesControl();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -44,7 +47,7 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public JDTelaBuscarCli() {
-		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A - buscar clientes");
+		setTitle("SIGA - buscar clientes");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -57,6 +60,7 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener{
 		}
 		{
 			JBBuscar = new JButton("Buscar");
+			JBBuscar.addActionListener(this);
 			JBBuscar.setBounds(335, 11, 89, 23);
 			contentPanel.add(JBBuscar);
 		}
@@ -68,7 +72,10 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener{
 		}
 		{
 			JCBFiltro = new JComboBox<String>();
-			JCBFiltro.setBounds(39, 8, 103, 20);
+			for (String item : cliCont.Filtros()) {
+				JCBFiltro.addItem(item);
+			}
+			JCBFiltro.setBounds(39, 11, 103, 20);
 			contentPanel.add(JCBFiltro);
 		}
 		{
@@ -77,13 +84,13 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener{
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBCadCli = new JButton("Cadastrar");
-				JBCadCli.setActionCommand("OK");
+				JBCadCli.addActionListener(this);
 				buttonPane.add(JBCadCli);
 				getRootPane().setDefaultButton(JBCadCli);
 			}
 			{
 				JBEditCli = new JButton("Alterar");
-				JBEditCli.setActionCommand("Cancel");
+				JBEditCli.addActionListener(this);
 				buttonPane.add(JBEditCli);
 			}
 		}
@@ -99,6 +106,10 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener{
 		if(acao.getSource() == JBEditCli){
 			
 		}// final do botão atualizar cliente
+		
+		if(acao.getSource() == JBBuscar){
+			
+		}// final do botão buscar cliente
 		
 	}// final da ação do botão
 

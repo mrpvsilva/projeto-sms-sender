@@ -1,11 +1,18 @@
 package Model;
 
-public class LembretesModel {
+import java.util.ArrayList;
 
-	public boolean AutenticarUsuario(UsuarioBean usuario){
+public class LembretesModel {
+	
+	/*Adiciona lista de possíveis filtros */
+	public ArrayList<String> FiltroLemb (){
+		ArrayList<String> lista = new ArrayList<String>();
 		
+		lista.add("DT AGENDADA");
+		lista.add("ASSUNTO");
+		lista.add("USUÁRIO");
 		
-		return true;
-	}
+		return lista;
+	}// final do método filtros
 	
 }

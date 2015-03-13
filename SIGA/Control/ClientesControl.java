@@ -1,27 +1,21 @@
 package Control;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
+import Model.ClientesModel;
 import Model.UsuarioBean;
 import Model.UsuarioModel;
 
 public class ClientesControl {
-
-	//fala arua kkkk
-	public UsuarioBean Logar(UsuarioBean usuAut){
 	
-		UsuarioModel usuMod = new UsuarioModel();
+	ClientesModel cliMod = new ClientesModel();
+	
+	/*Envia filtros para view JDTelaBuscarCli */
+	public ArrayList<String> Filtros(){
 		
-		usuAut.setResposta(usuMod.AutenticarUsuario(usuAut));
-		
-		/*Validação da autenticação*/
-		if(usuAut.getResposta()){
-			return usuAut;
-		}else{
-			JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.","SIGA - Autenticação",JOptionPane.ERROR_MESSAGE);
-			return usuAut;
-		}
-		
-	}// final do método Logar
+		return cliMod.FiltroCli();
+	}// final do método filtros
 	
 }

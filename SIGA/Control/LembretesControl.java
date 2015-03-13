@@ -1,26 +1,22 @@
 package Control;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
+import Model.ClientesModel;
+import Model.LembretesModel;
 import Model.UsuarioBean;
 import Model.UsuarioModel;
 
 public class LembretesControl {
 
-	public UsuarioBean Logar(UsuarioBean usuAut){
+	LembretesModel lembMod = new LembretesModel();
 	
-		UsuarioModel usuMod = new UsuarioModel();
+	/*Envia filtros para view JDTelaBuscarLemb */
+	public ArrayList<String> Filtros(){
 		
-		usuAut.setResposta(usuMod.AutenticarUsuario(usuAut));
-		
-		/*Validação da autenticação*/
-		if(usuAut.getResposta()){
-			return usuAut;
-		}else{
-			JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.","SIGA - Autenticação",JOptionPane.ERROR_MESSAGE);
-			return usuAut;
-		}
-		
-	}// final do método Logar
+		return lembMod.FiltroLemb();
+	}// final do método filtros
 	
 }

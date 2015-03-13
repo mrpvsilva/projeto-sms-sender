@@ -1,5 +1,7 @@
 package Control;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 import Model.UsuarioBean;
@@ -7,10 +9,10 @@ import Model.UsuarioModel;
 
 public class UsuarioControl {
 
-	public UsuarioBean Logar(UsuarioBean usuAut){
+	UsuarioModel usuMod = new UsuarioModel();
 	
-		UsuarioModel usuMod = new UsuarioModel();
-		
+	public UsuarioBean Logar(UsuarioBean usuAut){
+			
 		usuAut.setResposta(usuMod.AutenticarUsuario(usuAut));
 		
 		/*Validação da autenticação*/
@@ -22,5 +24,12 @@ public class UsuarioControl {
 		}
 		
 	}// final do método Logar
+	
+	/*Envia filtros para view JDTelaBuscarCli */
+	public ArrayList<String> Filtros(){
+		
+		return usuMod.FiltroUsu();
+		
+	}// final do método filtros
 	
 }

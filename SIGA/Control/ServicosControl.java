@@ -1,26 +1,22 @@
 package Control;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
+import Model.ServicosModel;
 import Model.UsuarioBean;
 import Model.UsuarioModel;
 
 public class ServicosControl {
-
-	public UsuarioBean Logar(UsuarioBean usuAut){
 	
-		UsuarioModel usuMod = new UsuarioModel();
-		
-		usuAut.setResposta(usuMod.AutenticarUsuario(usuAut));
-		
-		/*Validação da autenticação*/
-		if(usuAut.getResposta()){
-			return usuAut;
-		}else{
-			JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.","SIGA - Autenticação",JOptionPane.ERROR_MESSAGE);
-			return usuAut;
-		}
-		
-	}// final do método Logar
+	ServicosModel servMod = new ServicosModel();
+	
+	/*Envia filtros para view JDTelaBuscarServ */
+	public ArrayList<String> Filtros(){
+			
+		return servMod.FiltroServ();
+	
+	}// final do método filtros
 	
 }

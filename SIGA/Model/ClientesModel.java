@@ -1,11 +1,18 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class ClientesModel {
 
-	public boolean AutenticarUsuario(UsuarioBean usuario){
+	/*Adiciona lista de possíveis filtros */
+	public ArrayList<String> FiltroCli (){
+		ArrayList<String> lista = new ArrayList<String>();
 		
+		lista.add("NOME");
+		lista.add("CPF");
+		lista.add("TIPO EVENTO");
 		
-		return true;
-	}
+		return lista;
+	}// final do método filtros
 	
 }
