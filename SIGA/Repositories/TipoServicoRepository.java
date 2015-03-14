@@ -9,7 +9,7 @@ import Interfaces.IPersistenceManager;
 import Interfaces.ITipoServicoRepository;
 
 public class TipoServicoRepository extends RepositoryBase<TipoServico>
-		implements ITipoServicoRepository<TipoServico> {
+		implements ITipoServicoRepository {
 
 	public TipoServicoRepository(IPersistenceManager persistenceManager) {
 		super(persistenceManager);
@@ -18,8 +18,7 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 
 	@Override
 	public List<TipoServico> FindAll() {
-		Query q = entityManager.createQuery("from TipoServico order by nome");
-		System.out.println("aqui");
+		Query q = entityManager.createQuery("from TipoServico order by nome", TipoServico.class);
 		return q.getResultList();
 	}
 

@@ -1,7 +1,9 @@
 package Interfaces;
 
-public interface ITipoServicoRepository<E> extends IRepositoryBase<E> {
+import Dominio.TipoServico;
 
-	public E getTipoByName(String nome);
+public interface ITipoServicoRepository extends IRepositoryBase<TipoServico> {
+
+	public TipoServico getTipoByName(String nome);
 
 }

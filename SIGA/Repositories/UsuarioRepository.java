@@ -6,7 +6,7 @@ import Interfaces.IPersistenceManager;
 import Interfaces.IUsuarioRepository;
 
 public class UsuarioRepository extends RepositoryBase<Usuario> implements
-		IUsuarioRepository<Usuario> {
+		IUsuarioRepository {
 
 	public UsuarioRepository(IPersistenceManager persistenceManager) {
 		super(persistenceManager);

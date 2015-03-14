@@ -9,7 +9,7 @@ import Repositories.UsuarioRepository;
 
 public class UsuarioModel {
 
-	private IUsuarioRepository<Usuario> _usuarioRepository = new UsuarioRepository(
+	private IUsuarioRepository _usuarioRepository = new UsuarioRepository(
 			PersistenceManagerFactory.getPersistanceManager());
 
 	public boolean AutenticarUsuario(UsuarioBean usuario) {
