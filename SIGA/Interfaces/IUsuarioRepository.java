@@ -1,7 +1,8 @@
 package Interfaces;
+
 import Dominio.Usuario;
 
-public interface IUsuarioRepository<E> extends IRepositoryBase<E> {
+public interface IUsuarioRepository extends IRepositoryBase<Usuario> {
 
 	public Usuario GetUsuario(String usuario, String senha);
 

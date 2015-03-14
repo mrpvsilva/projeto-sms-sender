@@ -17,10 +17,9 @@ import Repositories.TipoServicoRepository;
 public class FornecedoresControl {
 
 	FornecedoresModel fornMod = new FornecedoresModel();
-	private IFornecedorRepository<Fornecedor> _fornecedorRepository = new FornecedorRepository(
-			PersistenceManagerFactory.getPersistanceManager());
+	private IFornecedorRepository _fornecedorRepository = new FornecedorRepository(	PersistenceManagerFactory.getPersistanceManager());
 
-	private ITipoServicoRepository<TipoServico> _tipoServicorepository = new TipoServicoRepository(
+	private ITipoServicoRepository _tipoServicorepository = new TipoServicoRepository(
 			PersistenceManagerFactory.getPersistanceManager());
 
 	/* Envia filtros para a JDTelaBuscarForn */

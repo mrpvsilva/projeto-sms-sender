@@ -1,5 +1,6 @@
 package Interfaces;
+import Dominio.Fornecedor;
 
-public interface IFornecedorRepository<E> extends IRepositoryBase<E> {
+public interface IFornecedorRepository extends IRepositoryBase<Fornecedor> {
 
 }

@@ -4,9 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import Control.ServicosControl;
 import Extra.Extras;
+import Model.ServicosBean;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -17,7 +22,7 @@ import jmoneyfield.JMoneyField;
 
 import javax.swing.JComboBox;
 
-public class JDTelaCadServ extends JDialog implements ActionListener{
+public class JDTelaCadServ extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -25,11 +30,14 @@ public class JDTelaCadServ extends JDialog implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField JTFItem;
+	private JTextArea JTADescItem;
 	private JTextField JMFVlrCusto;
+	private JMoneyField JMFVlrCom;
 	private JComboBox<String> JCBStatus;
 	private Extras ext = new Extras();
 	private JButton JBSalvServ;
 	private JButton JBNovoServ;
+	private ServicosControl sc;
 
 	/**
 	 * Launch the application.
@@ -48,6 +56,7 @@ public class JDTelaCadServ extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public JDTelaCadServ() {
+		sc = new ServicosControl();
 		setBounds(100, 100, 450, 300);
 		setTitle("SIGA - cadastro de servi\u00E7os");
 		getContentPane().setLayout(new BorderLayout());
@@ -70,17 +79,17 @@ public class JDTelaCadServ extends JDialog implements ActionListener{
 			contentPanel.add(JTFItem);
 			JTFItem.setColumns(10);
 		}
-		
-		JTextArea JTADescItem = new JTextArea();
+
+		JTADescItem = new JTextArea();
 		JTADescItem.setLineWrap(true);
 		JTADescItem.setWrapStyleWord(true);
 		JTADescItem.setBounds(101, 43, 323, 108);
 		contentPanel.add(JTADescItem);
-		
+
 		JLabel JLValorCusto = new JLabel("Valor custo");
 		JLValorCusto.setBounds(10, 163, 72, 14);
 		contentPanel.add(JLValorCusto);
-		
+
 		JMFVlrCusto = new JMoneyField();
 		JMFVlrCusto.setBounds(101, 160, 150, 20);
 		contentPanel.add(JMFVlrCusto);
@@ -89,8 +98,8 @@ public class JDTelaCadServ extends JDialog implements ActionListener{
 			lblValorComercial.setBounds(10, 203, 90, 14);
 			contentPanel.add(lblValorComercial);
 		}
-		
-		JMoneyField JMFVlrCom = new JMoneyField();
+
+		JMFVlrCom = new JMoneyField();
 		JMFVlrCom.setBounds(101, 200, 150, 20);
 		contentPanel.add(JMFVlrCom);
 		{
@@ -100,19 +109,20 @@ public class JDTelaCadServ extends JDialog implements ActionListener{
 		}
 		{
 			JCBStatus = new JComboBox<String>();
-			for(String item: ext.Status()){
+			for (String item : ext.Status()) {
 				JCBStatus.addItem(item);
 			}
 			JCBStatus.setBounds(317, 160, 107, 20);
 			contentPanel.add(JCBStatus);
 		}
-		
+
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvServ = new JButton("Salvar");
+				JBSalvServ.addActionListener(this);
 				buttonPane.add(JBSalvServ);
 				getRootPane().setDefaultButton(JBSalvServ);
 			}
@@ -126,12 +136,32 @@ public class JDTelaCadServ extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent acao) {
 
-		if(acao.getSource() == JBSalvServ){
-			
+		if (acao.getSource() == JBSalvServ) {
+			ServicosBean sb = new ServicosBean();
+			sb.setAtivoitem(JCBStatus.getSelectedIndex() == 0 ? true : false);
+			sb.setNomeitem(JTFItem.getText());
+			sb.setDescricaoitem(JTADescItem.getText());
+			// tratar os caracteres presentes na mascara monetaria
+			// sb.setVlrcustoitem(Double.parseDouble(JMFVlrCusto.getText()));
+			// sb.setVlrcomercialitem(Double.parseDouble(JMFVlrCom.getText()));
+			sb.setVlrcustoitem(500.0);
+			sb.setVlrcomercialitem(1000.0);
+
+			String out = sc.Cadastrar(sb);
+
+			if (out != null) {
+				JOptionPane.showMessageDialog(null, out, "Alerta",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Serviço cadastrado com sucesso", "Sucesso",
+						JOptionPane.ERROR_MESSAGE);
+			}
+
 		}// final do botão salvar
-		
-		if(acao.getSource() == JBNovoServ){
-			
+
+		if (acao.getSource() == JBNovoServ) {
+
 		}// final do botão novo
 	}
 }
