@@ -5,14 +5,20 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
+
+import Extra.Extras;
+import Extra.Validacoes;
+import Model.FornecedoresBean;
 
 public class JDTelaEditForn extends JDialog implements ActionListener{
 
@@ -36,14 +42,18 @@ public class JDTelaEditForn extends JDialog implements ActionListener{
 	private JLabel JLBairro;
 	private JTextField JTFBairro;
 	private JLabel lblCep;
-	private JTextField JTFCep;
+	private JTextField JFFCep;
+	private JComboBox<String> JCBOperadora1;
+	private JComboBox<String> JCBOperadora;
+	private JComboBox<String> JCBOperadora2;
+	private Extras ext = new Extras();
 	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaEditForn dialog = new JDTelaEditForn();
+			JDTelaEditForn dialog = new JDTelaEditForn("");
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -55,9 +65,9 @@ public class JDTelaEditForn extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 * @throws ParseException 
 	 */
-	public JDTelaEditForn() throws ParseException  {
+	public JDTelaEditForn(String CpfCnpj) throws ParseException  {
 		
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 581, 300);
 		setTitle("SIGA  - edi\u00E7\u00E3o de fornecedores");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -73,7 +83,7 @@ public class JDTelaEditForn extends JDialog implements ActionListener{
 		contentPanel.add(JLCnpj);
 		
 		JLabel JLRg = new JLabel("Rg");
-		JLRg.setBounds(197, 39, 35, 14);
+		JLRg.setBounds(279, 42, 35, 14);
 		contentPanel.add(JLRg);
 		
 		JLabel JLTelefone1 = new JLabel("Fone");
@@ -81,7 +91,7 @@ public class JDTelaEditForn extends JDialog implements ActionListener{
 		contentPanel.add(JLTelefone1);
 		
 		JLabel JLTelefone2 = new JLabel("Fone 1");
-		JLTelefone2.setBounds(197, 64, 46, 14);
+		JLTelefone2.setBounds(279, 67, 46, 14);
 		contentPanel.add(JLTelefone2);
 		
 		JLabel JLTelefone3 = new JLabel("Fone 2");
@@ -97,7 +107,7 @@ public class JDTelaEditForn extends JDialog implements ActionListener{
 		contentPanel.add(JLEnd);
 		
 		JTFNome = new JTextField();
-		JTFNome.setBounds(48, 8, 376, 20);
+		JTFNome.setBounds(48, 8, 438, 20);
 		contentPanel.add(JTFNome);
 		JTFNome.setColumns(10);
 		
@@ -106,15 +116,15 @@ public class JDTelaEditForn extends JDialog implements ActionListener{
 		contentPanel.add(JFFCnpj);
 		
 		JFFRg = new JFormattedTextField();
-		JFFRg.setBounds(286, 33, 118, 20);
+		JFFRg.setBounds(368, 36, 118, 20);
 		contentPanel.add(JFFRg);
 		
 		JLabel JLSite = new JLabel("Site");
-		JLSite.setBounds(10, 200, 46, 14);
+		JLSite.setBounds(10, 203, 46, 14);
 		contentPanel.add(JLSite);
 		
 		JLabel JLTpServ = new JLabel("Tipo Servi\u00E7o");
-		JLTpServ.setBounds(197, 92, 79, 14);
+		JLTpServ.setBounds(279, 95, 79, 14);
 		contentPanel.add(JLTpServ);
 		
 		JFFFone = new JFormattedTextField();
@@ -122,7 +132,7 @@ public class JDTelaEditForn extends JDialog implements ActionListener{
 		contentPanel.add(JFFFone);
 		
 		JFFFone1 = new JFormattedTextField();
-		JFFFone1.setBounds(286, 64, 118, 20);
+		JFFFone1.setBounds(368, 67, 118, 20);
 		contentPanel.add(JFFFone1);
 		
 		JFFFone2 = new JFormattedTextField();
@@ -130,22 +140,22 @@ public class JDTelaEditForn extends JDialog implements ActionListener{
 		contentPanel.add(JFFFone2);
 		
 		JTFEmail = new JTextField();
-		JTFEmail.setBounds(48, 120, 376, 20);
+		JTFEmail.setBounds(48, 120, 438, 20);
 		contentPanel.add(JTFEmail);
 		JTFEmail.setColumns(10);
 		
 		JTFEnd = new JTextField();
-		JTFEnd.setBounds(48, 148, 376, 20);
+		JTFEnd.setBounds(48, 148, 438, 20);
 		contentPanel.add(JTFEnd);
 		JTFEnd.setColumns(10);
 		
 		JTFSite = new JTextField();
-		JTFSite.setBounds(48, 197, 376, 20);
+		JTFSite.setBounds(48, 200, 438, 20);
 		contentPanel.add(JTFSite);
 		JTFSite.setColumns(10);
 		
 		JCBTpServ = new JComboBox<String>();
-		JCBTpServ.setBounds(286, 89, 118, 20);
+		JCBTpServ.setBounds(368, 92, 118, 20);
 		
 		contentPanel.add(JCBTpServ);
 		
@@ -159,13 +169,34 @@ public class JDTelaEditForn extends JDialog implements ActionListener{
 		JTFBairro.setColumns(10);
 		
 		lblCep = new JLabel("CEP");
-		lblCep.setBounds(197, 175, 46, 14);
+		lblCep.setBounds(279, 178, 46, 14);
 		contentPanel.add(lblCep);
 		
-		JTFCep = new JTextField();
-		JTFCep.setBounds(286, 172, 118, 20);
-		contentPanel.add(JTFCep);
-		JTFCep.setColumns(10);
+		JFFCep = new JTextField();
+		JFFCep.setBounds(368, 175, 118, 20);
+		contentPanel.add(JFFCep);
+		JFFCep.setColumns(10);
+		
+		JCBOperadora1 = new JComboBox<String>();
+		for(String item : ext.getOperadora()){
+			JCBOperadora1.addItem(item);
+		}
+		JCBOperadora1.setBounds(496, 67, 59, 20);
+		contentPanel.add(JCBOperadora1);
+		
+		JCBOperadora = new JComboBox<String>();
+		for(String item : ext.getOperadora()){
+			JCBOperadora.addItem(item);
+		}
+		JCBOperadora.setBounds(176, 64, 59, 20);
+		contentPanel.add(JCBOperadora);
+		
+		JCBOperadora2 = new JComboBox<String>();
+		for(String item : ext.getOperadora()){
+			JCBOperadora2.addItem(item);
+		}
+		JCBOperadora2.setBounds(176, 92, 59, 20);
+		contentPanel.add(JCBOperadora2);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -189,9 +220,65 @@ public class JDTelaEditForn extends JDialog implements ActionListener{
 
 		if(acao.getSource() == JBAtuForn){
 			
+			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Deseja atualizar o fornecedor?")){
+				
+			
+			if(JTFNome.getText().isEmpty()) // Valida Nome
+				JOptionPane.showMessageDialog(null, "Nome em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else if(!Validacoes.ValidaCpfCnpj(JFFCnpj.getText())) // Valida CpfCnpj
+				JOptionPane.showMessageDialog(null, "Cpf/Cnpj inválido.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else if(JFFRg.getText().trim().isEmpty()) // Valida Rg
+				JOptionPane.showMessageDialog(null, "Rg em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else if(!Validacoes.ValidaTelefone(JFFFone.getText())) // Valida Telefone
+				JOptionPane.showMessageDialog(null, "Telefone inválido.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else if(JTFEmail.getText().trim().isEmpty()) // Valida Email
+				JOptionPane.showMessageDialog(null, "Email em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else if(JTFEnd.getText().trim().isEmpty()) // Valida Endereço
+				JOptionPane.showMessageDialog(null, "Endereço em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else if(JTFBairro.getText().trim().isEmpty()) // Valida Bairro
+				JOptionPane.showMessageDialog(null, "Bairro em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else if(Validacoes.ValidaCep(JFFCep.getText())) // Valida Cep
+				JOptionPane.showMessageDialog(null, "Cep inválido.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else if(JTFSite.getText().trim().isEmpty()) // Valida Site
+				JOptionPane.showMessageDialog(null, "Site em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else{
+				
+				FornecedoresBean fornBean = new FornecedoresBean();
+				
+				fornBean.setNomeforn(JTFNome.getText());
+				fornBean.setCnpjforn(Extras.FormatCnpjCpf(JFFCnpj.getText())); 		// Formata e seta no Bean
+				fornBean.setRgforn(JFFRg.getText());
+				
+				fornBean.setTelefonesforn(Extras.FormatFone(JFFFone.getText())); 	// Formata e seta no Bean
+				fornBean.setTelefonesforn1(Extras.FormatFone(JFFFone1.getText())); 	// Formata e seta no Bean
+				fornBean.setTelefonesforn2(Extras.FormatFone(JFFFone2.getText())); 	// Formata e seta no Bean
+				
+				fornBean.setOperadora(JCBOperadora.getSelectedItem().toString()); 	
+				fornBean.setOperadora1(JCBOperadora1.getSelectedItem().toString());	
+				fornBean.setOperadora2(JCBOperadora2.getSelectedItem().toString());	
+				
+				fornBean.setEmailforn(JTFEmail.getText());
+				fornBean.setEndforn(JTFEnd.getText());
+				fornBean.setBairro(JTFBairro.getText());
+				
+				fornBean.setCep(Extras.FormatCep(JFFCep.getText()));				// Formata e seta no Bean
+				fornBean.setSiteforn(JTFSite.getText());
+				
+				/* Colocar o método de cadastrar */
+				/* Acredito que esteja todas as validações possíveis */
+				
+			}// final da validação
+			
+			}// final da confirmação
+			
+			
 		}// final do botão atualizar
 		
 		if(acao.getSource() == JBExclForn){
+			
+			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Deseja excluir o fornecedor?")){
+				
+			}// final da confirmação
 			
 		}// final do botão excluir
 	}

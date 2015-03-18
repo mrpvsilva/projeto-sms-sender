@@ -9,12 +9,18 @@ import java.text.ParseException;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+
+import Extra.Extras;
+import Extra.Mascaras;
+import Extra.Validacoes;
+import Model.ClientesBean;
 
 
 public class JDTelaCadCli extends JDialog implements ActionListener{
@@ -25,7 +31,7 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JButton JBCadCli;
-	private JButton JBEditCad;
+	private JButton JBNovoCad;
 	private JTextField JTFNome;
 	private JTextField JTFResp;
 	private JTextField JTFRg;
@@ -39,6 +45,13 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 	private JFormattedTextField JFFConvExtra;
 	private JFormattedTextField JFFFone1;
 	private JFormattedTextField JFFFone2;
+	private Extras ext = new Extras();
+	private JFormattedTextField JFFCpf;
+	private JFormattedTextField JFFFone;
+	private JComboBox<String> JCBOperadora2;
+	private JComboBox<String> JCBOperadora1;
+	private JComboBox<String> JCBOperadora;
+	private JComboBox<String> JCBSn;
 
 	/**
 	 * Launch the application.
@@ -59,7 +72,7 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 	 */
 	public JDTelaCadCli() throws ParseException {
 		setTitle("SIGA - cadastro de cliente");
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 581, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -78,7 +91,7 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 		contentPanel.add(JLRg);
 		
 		JLabel JLTipoEvento = new JLabel("Evento");
-		JLTipoEvento.setBounds(239, 61, 46, 14);
+		JLTipoEvento.setBounds(301, 58, 46, 14);
 		contentPanel.add(JLTipoEvento);
 		
 		JLabel JLCpf = new JLabel("CPF");
@@ -98,7 +111,7 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 		contentPanel.add(JLFone);
 		
 		JLabel JLFone1 = new JLabel("Fone1");
-		JLFone1.setBounds(239, 165, 46, 14);
+		JLFone1.setBounds(301, 168, 46, 14);
 		contentPanel.add(JLFone1);
 		
 		JLabel JLFone2 = new JLabel("Fone2");
@@ -106,61 +119,61 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 		contentPanel.add(JLFone2);
 		
 		JLabel lblConvExtra = new JLabel("Conv. Extra");
-		lblConvExtra.setBounds(239, 83, 66, 14);
+		lblConvExtra.setBounds(301, 83, 66, 14);
 		contentPanel.add(lblConvExtra);
 		
 		JLabel JLNomeGuerra = new JLabel("Nome Guerra");
-		JLNomeGuerra.setBounds(239, 190, 81, 14);
+		JLNomeGuerra.setBounds(301, 193, 81, 14);
 		contentPanel.add(JLNomeGuerra);
 		
 		JTFNome = new JTextField();
-		JTFNome.setBounds(58, 8, 366, 20);
+		JTFNome.setBounds(58, 8, 428, 20);
 		contentPanel.add(JTFNome);
 		JTFNome.setColumns(10);
 		
 		JTFResp = new JTextField();
-		JTFResp.setBounds(58, 33, 366, 20);
+		JTFResp.setBounds(58, 33, 428, 20);
 		contentPanel.add(JTFResp);
 		JTFResp.setColumns(10);
 		
-		maskRG= new MaskFormatter("#######");
+		maskRG= new MaskFormatter(Mascaras.maskRg);
 		JTFRg = new JFormattedTextField(maskRG);
 		JTFRg.setBounds(58, 58, 118, 20);
 		contentPanel.add(JTFRg);
 		JTFRg.setColumns(10);
 		
 		JCBEvento = new JComboBox<String>();
-		JCBEvento.setBounds(306, 58, 118, 20);
+		JCBEvento.setBounds(368, 58, 118, 20);
 		contentPanel.add(JCBEvento);
 		
-		maskCpf= new MaskFormatter("###.###.###-##");
-		JFormattedTextField JFFCpf = new JFormattedTextField(maskCpf);
+		maskCpf= new MaskFormatter(Mascaras.maskCpf);
+		JFFCpf = new JFormattedTextField(maskCpf);
 		JFFCpf.setBounds(58, 83, 118, 20);
 		contentPanel.add(JFFCpf);
 		
 		JTFEmail = new JTextField();
-		JTFEmail.setBounds(58, 108, 366, 20);
+		JTFEmail.setBounds(58, 108, 428, 20);
 		contentPanel.add(JTFEmail);
 		JTFEmail.setColumns(10);
 		
 		JTFEnd = new JTextField();
-		JTFEnd.setBounds(58, 133, 366, 20);
+		JTFEnd.setBounds(58, 133, 428, 20);
 		contentPanel.add(JTFEnd);
 		JTFEnd.setColumns(10);
 		
-		maskFone = new MaskFormatter("(##)####-####");
-		JFormattedTextField JFFFone = new JFormattedTextField(maskFone);
+		maskFone = new MaskFormatter(Mascaras.mask9digi);
+		JFFFone = new JFormattedTextField(maskFone);
 		((JFormattedTextField) JFFFone).setFocusLostBehavior(JFormattedTextField.COMMIT);
 		JFFFone.setBounds(58, 161, 118, 20);
 		contentPanel.add(JFFFone);
 		
 		JFFConvExtra = new JFormattedTextField(maskRG);
-		JFFConvExtra.setBounds(306, 83, 118, 20);
+		JFFConvExtra.setBounds(368, 83, 118, 20);
 		contentPanel.add(JFFConvExtra);
 		
 		JFFFone1 = new JFormattedTextField(maskFone);
 		((JFormattedTextField) JFFFone1).setFocusLostBehavior(JFormattedTextField.COMMIT);
-		JFFFone1.setBounds(306, 161, 118, 20);
+		JFFFone1.setBounds(368, 161, 118, 20);
 		contentPanel.add(JFFFone1);
 		
 		JFFFone2 = new JFormattedTextField(maskFone);
@@ -169,9 +182,37 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 		contentPanel.add(JFFFone2);
 		
 		JTFNomeGuerra = new JTextField();
-		JTFNomeGuerra.setBounds(306, 187, 118, 20);
+		JTFNomeGuerra.setBounds(368, 187, 118, 20);
 		contentPanel.add(JTFNomeGuerra);
 		JTFNomeGuerra.setColumns(10);
+		
+		JCBOperadora1 = new JComboBox<String>();
+		for(String item : ext.getOperadora()){
+			JCBOperadora1.addItem(item);
+		}
+		JCBOperadora1.setBounds(496, 161, 59, 20);
+		contentPanel.add(JCBOperadora1);
+		
+		JCBOperadora = new JComboBox<String>();
+		for(String item : ext.getOperadora()){
+			JCBOperadora.addItem(item);
+		}
+		JCBOperadora.setBounds(186, 162, 59, 20);
+		contentPanel.add(JCBOperadora);
+		
+		JCBOperadora2 = new JComboBox<String>();
+		for(String item : ext.getOperadora()){
+			JCBOperadora2.addItem(item);
+		}
+		JCBOperadora2.setBounds(186, 187, 59, 20);
+		contentPanel.add(JCBOperadora2);
+		
+		JCBSn = new JComboBox<String>();
+		for(String item : ext.getSimNao()){
+			JCBOperadora2.addItem(item);
+		}
+		JCBSn.setBounds(496, 187, 59, 20);
+		contentPanel.add(JCBSn);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -182,9 +223,9 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 				getRootPane().setDefaultButton(JBCadCli);
 			}
 			{
-				JBEditCad = new JButton("Novo");
-				JBEditCad.addActionListener(this);
-				buttonPane.add(JBEditCad);
+				JBNovoCad = new JButton("Novo");
+				JBNovoCad.addActionListener(this);
+				buttonPane.add(JBNovoCad);
 			}
 		}
 	}
@@ -194,9 +235,73 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 
 		if(acao.getSource() == JBCadCli){
 			
+			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Deseja cadastrar o cliente?")){
+				
+				if(JTFNome.getText().trim().isEmpty())
+					JOptionPane.showMessageDialog(null, "Nome em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+				else if(JTFRg.getText().trim().isEmpty())
+					JOptionPane.showMessageDialog(null, "Rg em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+				else if(Validacoes.ValidaCpfCnpj(JFFCpf.getText()))
+					JOptionPane.showMessageDialog(null, "Cpf inválido.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+				else if(JTFEmail.getText().trim().isEmpty())
+					JOptionPane.showMessageDialog(null, "Email em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+				else if(JTFEnd.getText().trim().isEmpty())
+					JOptionPane.showMessageDialog(null, "Endereço em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+				else if(Validacoes.ValidaTelefone(JFFFone.getText()))
+					JOptionPane.showMessageDialog(null, "Telefone inválido/em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+				else if (JCBSn.getSelectedItem().toString().equals("SIM") && JTFNomeGuerra.getText().trim().isEmpty())
+					JOptionPane.showMessageDialog(null, "Nome guerra em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+				else{
+					ClientesBean cliBean = new ClientesBean();
+					
+					cliBean.setNomecompcli(JTFNome.getText());
+					cliBean.setRespcli(JTFResp.getText());
+					cliBean.setRgcli(JTFRg.getText());
+					cliBean.setCpfcli(Extras.FormatCnpjCpf(JFFCpf.getText())); 					// Formata depois seta
+					cliBean.setEmailcli(JTFEmail.getText());
+					cliBean.setEndcli(JTFEnd.getText());
+					
+					cliBean.setTelefonecli(Extras.FormatFone(JFFFone.getText())); 				// Formata depois seta
+					cliBean.setTelefonecli1(Extras.FormatFone(JFFFone1.getText())); 			// Formata depois seta
+					cliBean.setTelefonecli2(Extras.FormatFone(JFFFone2.getText())); 			// Formata depois seta
+					
+					cliBean.setTipoeventocli(JCBEvento.getSelectedItem().toString());
+					cliBean.setConvidadosextrascli(Integer.parseInt(JFFConvExtra.getText()));  	// Formata depois seta
+					cliBean.setNomeguerracli(JTFNomeGuerra.getText());
+					
+					cliBean.setOperadora(JCBOperadora.getSelectedItem().toString());
+					cliBean.setOperadora1(JCBOperadora1.getSelectedItem().toString());
+					cliBean.setOperadora2(JCBOperadora2.getSelectedItem().toString());
+					
+				}// final da validação
+				
+			}// final da confirmação
+			
 		}// final do botão cadastrar usuário
 		
-		if(acao.getSource() == JBEditCad){
+		if(acao.getSource() == JBNovoCad){
+			
+			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Deseja cadastrar o cliente?")){
+				JTFNome.setText("");
+				JTFResp.setText("");
+				JTFRg.setText("");
+				JFFCpf.setText(""); 				
+				JTFEmail.setText("");
+				JTFEnd.setText("");
+				
+				JFFFone.setText(""); 				
+				JFFFone1.setText(""); 			
+				JFFFone2.setText(""); 			
+				
+				JCBEvento.setSelectedItem("");
+				JFFConvExtra.setText("");  	
+				JTFNomeGuerra.setText("");
+				
+				JCBOperadora.setSelectedItem("TIM");
+				JCBOperadora1.setSelectedItem("TIM");
+				JCBOperadora2.setSelectedItem("TIm");
+				
+			}// final da confirmação
 			
 		}// final do botão atualizar usuário
 		
