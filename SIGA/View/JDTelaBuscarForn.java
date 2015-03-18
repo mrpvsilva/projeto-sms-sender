@@ -4,15 +4,21 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.ParseException;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-
 import Control.FornecedoresControl;
 
 public class JDTelaBuscarForn extends JDialog implements ActionListener{
@@ -29,6 +35,10 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener{
 	private JTextField JTFBuscar;
 	private JComboBox<String> JCBFiltro;
 	private FornecedoresControl fornCont = new FornecedoresControl();
+	private JScrollPane scroll;
+	private JTable tabela;
+	private DefaultTableModel model;
+	protected String valor;
 	
 
 	/**
@@ -76,9 +86,60 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener{
 			for (String item : fornCont.Filtros()) {
 				JCBFiltro.addItem(item);
 			}
-			JCBFiltro.setBounds(39, 11, 103, 20);
+			JCBFiltro.setBounds(43, 12, 103, 20);
 			contentPanel.add(JCBFiltro);
 		}
+		{
+			// Criação da Jtable
+			scroll = new JScrollPane();
+			contentPanel.add(scroll);
+            scroll.setBounds(12, 59, 412, 158);
+            {
+                    final TableModel tabelaModel = 
+                                    new DefaultTableModel(
+                                                    new String[][] { },
+                                                    new String[] {  "CNPJ/CPF", 
+                                                    				"Nome",
+                                                    				"Telefone"}){
+                    	/**
+																		 * 
+																		 */
+																		private static final long serialVersionUID = 1L;
+
+						public boolean isCellEditable(int row, int col) {  
+                    		return false;  
+                         } };
+                    
+                    tabela = new JTable();
+                    scroll.setViewportView(tabela);
+                    tabela.setModel(tabelaModel);
+                    model = (DefaultTableModel) tabela.getModel();
+                    model.fireTableDataChanged();
+                    
+                    //for (LancamentoBean lanc : lancControl.getLancamentos()) { Laço necessário para incluir registro na tabela
+						//model.addRow(new Object[]{new Integer(lanc.getIdLancamento()),formatas.format(lanc.getDtCompra()),lanc.getNAutorizacao(),lanc.getSelectedConveniada()});
+                    	model.addRow(new Object[]{new Integer(123),"Teste1","(91)12345678"});
+                    	model.addRow(new Object[]{new Integer(456),"Teste2","(91)12345679"});
+                    	model.addRow(new Object[]{new Integer(789),"Teste3","(91)12345670"});
+                    	
+					//}
+                    
+                    tabela.addMouseListener(new MouseAdapter() {
+                            
+
+							public void mouseClicked(MouseEvent evt) {
+								if(evt.getClickCount() == 1){
+                                    int linha = tabela.getSelectedRow();
+                                    valor = String.valueOf(tabela.getValueAt(linha, 0));       
+                                    
+								}
+								
+                            }
+                    });
+                    
+            }
+    }
+		
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -102,10 +163,25 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener{
 
 
 		if(acao.getSource() == JBCadForn){
+			JDTelaCadForn jdtcf;
+			try {
+				jdtcf = new JDTelaCadForn();
+				jdtcf.setVisible(true);
+				jdtcf.setLocationRelativeTo(null);
+			} catch (ParseException e) {
+				JOptionPane.showMessageDialog(null, e.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE);
+			}
 			
 		}// final do botão cadastrar fornecedores
 		
 		if(acao.getSource() == JBEditForn){
+			try {
+				JDTelaEditForn jdtef = new JDTelaEditForn(valor); // Já está pegando o valor da linha ao clicar, o valor vem do cpf cnpj
+				jdtef.setVisible(true);
+				jdtef.setLocationRelativeTo(null);
+			} catch (ParseException e) {
+				JOptionPane.showMessageDialog(null, e.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE);
+			}
 			
 		}// final do botão atualizar fornecedores
 		
