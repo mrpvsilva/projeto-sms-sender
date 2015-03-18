@@ -20,7 +20,6 @@ public class UsuarioModel {
 		if (u == null)
 			return false;
 
-		System.out.println(u.getId());
 		return true;
 	}
 

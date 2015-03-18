@@ -37,6 +37,7 @@ public class JDTelaEditForn extends JDialog implements ActionListener{
 	private JTextField JTFBairro;
 	private JLabel lblCep;
 	private JTextField JTFCep;
+	
 	/**
 	 * Launch the application.
 	 */

@@ -17,7 +17,8 @@ import Repositories.TipoServicoRepository;
 public class FornecedoresControl {
 
 	FornecedoresModel fornMod = new FornecedoresModel();
-	private IFornecedorRepository _fornecedorRepository = new FornecedorRepository(	PersistenceManagerFactory.getPersistanceManager());
+	private IFornecedorRepository _fornecedorRepository = new FornecedorRepository(
+			PersistenceManagerFactory.getPersistanceManager());
 
 	private ITipoServicoRepository _tipoServicorepository = new TipoServicoRepository(
 			PersistenceManagerFactory.getPersistanceManager());
@@ -60,7 +61,9 @@ public class FornecedoresControl {
 		TelefoneFornecedor tf = new TelefoneFornecedor();
 		tf.setDdd(ddd);
 		tf.setNumero(numero);
-		tf.setTipo("RESIDENCIAL");
+
+		// mudar campo tipo telefone para guardar a operadora
+		tf.setOperadora("TIM");
 		f.addTelefoneFornecedor(tf);
 
 		if (!_fornecedorRepository.Add(f))
@@ -70,16 +73,12 @@ public class FornecedoresControl {
 	}
 
 	public String[] DDLTipoServico() {
-		List<TipoServico> l = _tipoServicorepository.FindAll();
-
+		List<TipoServico> l = _tipoServicorepository.FindAll(true);
 		String[] ddl = new String[l.size() + 1];
-
 		ddl[0] = "Selecione";
-
 		for (int i = 0; i < l.size(); i++) {
 			ddl[i + 1] = l.get(i).getNome();
 		}
-
 		return ddl;
 
 	}
