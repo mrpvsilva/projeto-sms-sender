@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -42,7 +43,7 @@ public class Fornecedor implements Serializable {
 	@JoinColumn(name = "idtiposervico", referencedColumnName = "id")
 	private TipoServico tipoServico;
 
-	@OneToMany(cascade = CascadeType.ALL)	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "telefonesfornecedores", joinColumns = { @JoinColumn(name = "idfornecedor", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idtelefone", referencedColumnName = "id") })
 	private List<Telefone> telefones;
 
@@ -135,20 +136,20 @@ public class Fornecedor implements Serializable {
 		this.tipoServico = tiposervico;
 	}
 
-	public void addTelefoneFornecedor(TelefoneFornecedor telefoneFornecedor) {
-		if (this.telefones == null) {
-			this.telefones = new ArrayList<Telefone>();
-		}
-
-		this.telefones.add(telefoneFornecedor);
-	}
-
 	public List<Telefone> getTelefones() {
 		return telefones;
 	}
 
 	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
+	}
+
+	public void addTelefoneFornecedor(Telefone telefone) {
+		if (this.telefones == null) {
+			this.telefones = new ArrayList<Telefone>();
+		}
+
+		this.telefones.add(telefone);
 	}
 
 }

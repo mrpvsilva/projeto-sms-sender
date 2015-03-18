@@ -29,16 +29,16 @@ public abstract class Telefone implements Serializable {
 	@Column
 	private String numero;
 	@Column
-	private String tipo;
+	private String operadora;
 
 	public Telefone() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Telefone(int ddd, String numero, String tipo) {
+	public Telefone(int ddd, String numero, String operadora) {
 		setDdd(ddd);
 		setNumero(numero);
-		setTipo(tipo);
+		setOperadora(operadora);
 	}
 
 	public long getId() {
@@ -65,12 +65,12 @@ public abstract class Telefone implements Serializable {
 		this.numero = numero;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public String getOperadora() {
+		return operadora;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setOperadora(String operadora) {
+		this.operadora = operadora;
 	}
 
 }

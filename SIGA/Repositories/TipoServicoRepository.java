@@ -18,7 +18,16 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 
 	@Override
 	public List<TipoServico> FindAll() {
-		Query q = entityManager.createQuery("from TipoServico order by nome", TipoServico.class);
+		Query q = entityManager.createQuery("from TipoServico order by nome",
+				TipoServico.class);
+		return q.getResultList();
+	}
+
+	public List<TipoServico> FindAll(boolean ativo) {
+		Query q = entityManager.createQuery(
+				"from TipoServico where ativo=:ativo order by nome",
+				TipoServico.class);
+		q.setParameter("ativo", ativo);
 		return q.getResultList();
 	}
 
@@ -26,7 +35,6 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		Query q = entityManager
 				.createQuery("from TipoServico where nome=:nome");
 		q.setParameter("nome", nome);
-		System.out.println("aqui");
 		return (TipoServico) q.getSingleResult();
 	}
 

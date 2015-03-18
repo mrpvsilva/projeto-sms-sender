@@ -8,7 +8,7 @@ import Interfaces.IPersistenceManager;
 public class PersistenceManagerFactory {
 
 	private static EntityManagerFactory factory = Persistence
-			.createEntityManagerFactory("teste");
+			.createEntityManagerFactory("siga");
 	private static EntityManager _entityManager = factory.createEntityManager();
 	private static IPersistenceManager _persistanceManager = new IPersistenceManager() {
 		@Override
