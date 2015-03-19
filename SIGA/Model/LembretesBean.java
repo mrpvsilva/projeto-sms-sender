@@ -7,7 +7,14 @@ public class LembretesBean {
 	private Date dtcontatolemb;
 	private Date dtagendadalemb;
 	private String assunto;
+	private String usuario;
 	
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
 	public Date getDtcontatolemb() {
 		return dtcontatolemb;
 	}

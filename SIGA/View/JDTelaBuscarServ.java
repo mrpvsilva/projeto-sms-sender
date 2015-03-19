@@ -4,11 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -29,6 +34,10 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener{
 	private JTextField JTFBuscar;
 	private JComboBox<String> JCBFiltro;
 	private ServicosControl servCont = new ServicosControl();
+	private DefaultTableModel model;
+	private JTable tabela;
+	private JScrollPane scroll;
+	protected String valor;
 	
 	/**
 	 * Launch the application.
@@ -79,6 +88,57 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener{
 			contentPanel.add(JCBFiltro);
 		}
 		{
+			// Criação da Jtable
+			scroll = new JScrollPane();
+			contentPanel.add(scroll);
+            scroll.setBounds(12, 59, 412, 158);
+            {
+                    final TableModel tabelaModel = 
+                                    new DefaultTableModel(
+                                                    new String[][] { },
+                                                    new String[] {  "Item", 
+                                                    				"Descrição",
+                                                    				"Ativo"}){
+                    	/**
+																		 * 
+																		 */
+																		private static final long serialVersionUID = 1L;
+
+						public boolean isCellEditable(int row, int col) {  
+                    		return false;  
+                         } };
+                    
+                    tabela = new JTable();
+                    scroll.setViewportView(tabela);
+                    tabela.setModel(tabelaModel);
+                    model = (DefaultTableModel) tabela.getModel();
+                    model.fireTableDataChanged();
+                    
+                    //for (LancamentoBean lanc : lancControl.getLancamentos()) { Laço necessário para incluir registro na tabela
+						//model.addRow(new Object[]{new Integer(lanc.getIdLancamento()),formatas.format(lanc.getDtCompra()),lanc.getNAutorizacao(),lanc.getSelectedConveniada()});
+                    	model.addRow(new Object[]{"Copo","Teste1","Ativo"});
+                    	model.addRow(new Object[]{"Saco","Teste2","Inativo"});
+                    	model.addRow(new Object[]{"Camisa","Teste3","Ativo"});
+                    	
+					//}
+                    
+                    tabela.addMouseListener(new MouseAdapter() {
+                            
+
+							public void mouseClicked(MouseEvent evt) {
+								if(evt.getClickCount() == 1){
+                                    int linha = tabela.getSelectedRow();
+                                    valor = String.valueOf(tabela.getValueAt(linha, 0));       
+                                    
+								}
+								
+                            }
+                    });
+                    
+            }
+    }
+		
+		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
@@ -100,11 +160,16 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener{
 	public void actionPerformed(ActionEvent acao) {
 
 		if(acao.getSource() == JBCadServ){
+			JDTelaCadServ jdtcs = new JDTelaCadServ();
+			jdtcs.setVisible(true);
+			jdtcs.setLocationRelativeTo(null);
 			
 		}// final do botão cadastrar serviços
 		
 		if(acao.getSource() == JBEditServ){
-			
+			JDTelaEditServ jdtes = new JDTelaEditServ();
+			jdtes.setVisible(true);
+			jdtes.setLocationRelativeTo(null);
 		}// final do botão atualizar serviços
 		
 		if(acao.getSource() == JBBuscar){

@@ -4,12 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import Extra.Extras;
+import Extra.Validacoes;
+import Model.ServicosBean;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
@@ -26,8 +31,9 @@ public class JDTelaEditServ extends JDialog implements ActionListener{
 	private Extras ext = new Extras();
 	private JButton JBAtuServ;
 	private JButton JBNovoServ;
-	private JTextField JTFVlrCom;
-	private JTextField JTFVlrCusto;
+	private JTextField JMFVlrCom;
+	private JTextField JMFVlrCusto;
+	private JTextArea JTADescItem;
 
 	/**
 	 * Launch the application.
@@ -64,12 +70,12 @@ public class JDTelaEditServ extends JDialog implements ActionListener{
 		}
 		{
 			JTFItem = new JTextField();
-			JTFItem.setBounds(49, 8, 375, 20);
+			JTFItem.setBounds(101, 8, 323, 20);
 			contentPanel.add(JTFItem);
 			JTFItem.setColumns(10);
 		}
 		
-		JTextArea JTADescItem = new JTextArea();
+		JTADescItem = new JTextArea();
 		JTADescItem.setLineWrap(true);
 		JTADescItem.setWrapStyleWord(true);
 		JTADescItem.setBounds(101, 43, 323, 108);
@@ -79,18 +85,18 @@ public class JDTelaEditServ extends JDialog implements ActionListener{
 		JLValorCusto.setBounds(10, 163, 72, 14);
 		contentPanel.add(JLValorCusto);
 		
-		JTFVlrCusto = new JTextField();
-		JTFVlrCusto.setBounds(101, 160, 150, 20);
-		contentPanel.add(JTFVlrCusto);
+		JMFVlrCusto = new JTextField();
+		JMFVlrCusto.setBounds(101, 160, 150, 20);
+		contentPanel.add(JMFVlrCusto);
 		{
 			JLabel lblValorComercial = new JLabel("Valor comercial");
 			lblValorComercial.setBounds(10, 203, 90, 14);
 			contentPanel.add(lblValorComercial);
 		}
 		
-		JTFVlrCom = new JTextField();
-		JTFVlrCom.setBounds(101, 200, 150, 20);
-		contentPanel.add(JTFVlrCom);
+		JMFVlrCom = new JTextField();
+		JMFVlrCom.setBounds(101, 200, 150, 20);
+		contentPanel.add(JMFVlrCom);
 		{
 			JLabel JLAtivo = new JLabel("Ativo");
 			JLAtivo.setBounds(261, 162, 46, 14);
@@ -125,6 +131,28 @@ public class JDTelaEditServ extends JDialog implements ActionListener{
 	public void actionPerformed(ActionEvent acao) {
 
 		if(acao.getSource() == JBAtuServ){
+			
+			if(JTFItem.getText().trim().isEmpty())
+				JOptionPane.showMessageDialog(null, "Nome do item em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else if(JTADescItem.getText().trim().isEmpty())
+				JOptionPane.showMessageDialog(null, "Descrição do item em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else if(!Validacoes.ValidaVlrMoney(JMFVlrCusto.getText()))
+				JOptionPane.showMessageDialog(null, "Valor de custo em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);	
+			else if(!Validacoes.ValidaVlrMoney(JMFVlrCom.getText()))
+				JOptionPane.showMessageDialog(null, "Valor comercial em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else{
+				ServicosBean servBean = new ServicosBean();
+				
+				servBean.setNomeitem(JTFItem.getText());
+				servBean.setDescricaoitem(JTADescItem.getText());
+				servBean.setVlrcustoitem(Extras.FormatVlrMoneyBD(JMFVlrCusto.getText()));
+				servBean.setVlrcomercialitem(Extras.FormatVlrMoneyBD(JMFVlrCom.getText()));
+				servBean.setAtivoitem(JCBStatus.getSelectedIndex() == 0 ? true : false);
+						
+				// COlocar aqui a atualização do serviço
+				
+			}// final das validações
+			
 			
 		}// final do botão atualizar
 		

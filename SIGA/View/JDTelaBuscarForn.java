@@ -163,25 +163,27 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener{
 
 
 		if(acao.getSource() == JBCadForn){
-			JDTelaCadForn jdtcf;
+						
 			try {
-				jdtcf = new JDTelaCadForn();
+				JDTelaCadForn jdtcf = new JDTelaCadForn();
 				jdtcf.setVisible(true);
 				jdtcf.setLocationRelativeTo(null);
 			} catch (ParseException e) {
 				JOptionPane.showMessageDialog(null, e.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE);
-			}
+			}// final do try e catch
 			
 		}// final do botão cadastrar fornecedores
 		
 		if(acao.getSource() == JBEditForn){
+			
 			try {
+				JOptionPane.showMessageDialog(null, valor);
 				JDTelaEditForn jdtef = new JDTelaEditForn(valor); // Já está pegando o valor da linha ao clicar, o valor vem do cpf cnpj
 				jdtef.setVisible(true);
 				jdtef.setLocationRelativeTo(null);
 			} catch (ParseException e) {
 				JOptionPane.showMessageDialog(null, e.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE);
-			}
+			}// final do try e catch
 			
 		}// final do botão atualizar fornecedores
 		
