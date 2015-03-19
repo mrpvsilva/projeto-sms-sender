@@ -62,5 +62,14 @@ public class Validacoes {
 		return resp;
 	}
 	
+	public static boolean ValidaVlrMoney(String vlrMoney){
+		
+		if(Extras.FormatVlrMoney(vlrMoney).isEmpty())
+			resp = false;
+		else
+			resp = true;
+		
+		return resp;
+	}
 	
 }

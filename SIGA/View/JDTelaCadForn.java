@@ -343,7 +343,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener{
 				JOptionPane.showMessageDialog(null, "Endereço em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
 			else if(JTFBairro.getText().trim().isEmpty()) // Valida Bairro
 				JOptionPane.showMessageDialog(null, "Bairro em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
-			else if(Validacoes.ValidaCep(JFFCep.getText())) // Valida Cep
+			else if(!Validacoes.ValidaCep(JFFCep.getText())) // Valida Cep
 				JOptionPane.showMessageDialog(null, "Cep inválido.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
 			else if(JTFSite.getText().trim().isEmpty()) // Valida Site
 				JOptionPane.showMessageDialog(null, "Site em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
@@ -355,9 +355,13 @@ public class JDTelaCadForn extends JDialog implements ActionListener{
 				fornBean.setCnpjforn(Extras.FormatCnpjCpf(JFFCnpj.getText())); 		// Formata e seta no Bean
 				fornBean.setRgforn(JFFRg.getText());
 				
-				fornBean.setTelefonesforn(Extras.FormatFone(JFFFone.getText())); 	// Formata e seta no Bean
-				fornBean.setTelefonesforn1(Extras.FormatFone(JFFFone1.getText())); 	// Formata e seta no Bean
-				fornBean.setTelefonesforn2(Extras.FormatFone(JFFFone2.getText())); 	// Formata e seta no Bean
+				fornBean.setTelefonesforn (  Extras.FormatFoneBD(Extras.FormatFone(JFFFone.getText()))   ); 	// Formata e seta no Bean somente os números
+				fornBean.setTelefonesforn1(  Extras.FormatFoneBD(Extras.FormatFone(JFFFone1.getText()))  ); 	// Formata e seta no Bean somente os números
+				fornBean.setTelefonesforn2(  Extras.FormatFoneBD(Extras.FormatFone(JFFFone2.getText()))  ); 	// Formata e seta no Bean somente os números
+				
+				fornBean.setDdd  ( Extras.FormatDDD(Extras.FormatFone(JFFFone.getText()))  ); 	// Formata e seta no Bean somente os DDD
+				fornBean.setDdd1 ( Extras.FormatDDD(Extras.FormatFone(JFFFone1.getText())) ); 	// Formata e seta no Bean somente os DDD
+				fornBean.setDdd2 ( Extras.FormatDDD(Extras.FormatFone(JFFFone2.getText())) ); 	// Formata e seta no Bean somente os DDD
 				
 				fornBean.setOperadora(JCBOperadora.getSelectedItem().toString()); 	
 				fornBean.setOperadora1(JCBOperadora1.getSelectedItem().toString());	

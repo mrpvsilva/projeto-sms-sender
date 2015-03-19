@@ -15,6 +15,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import Model.UsuarioBean;
+import javax.swing.KeyStroke;
+import java.awt.event.KeyEvent;
 
 public class JFTelaPrincipal extends JFrame implements ActionListener{
 
@@ -88,6 +90,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener{
 		menuBar.add(JMForn);
 		
 		JMIFornCad = new JMenuItem("Cadastrar");
+		JMIFornCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		JMIFornCad.addActionListener(this);
 		JMForn.add(JMIFornCad);
 		
@@ -340,8 +343,15 @@ public class JFTelaPrincipal extends JFrame implements ActionListener{
 		
 		/* JMenu Usuário */
 		if(acao.getSource() == JMIUsuCad){
-			JDTelaCadUsu jdtcu = new JDTelaCadUsu();
-			jdtcu.setVisible(true);
+			 
+			try {
+				JDTelaCadUsu jdtcu = new JDTelaCadUsu();
+				jdtcu.setVisible(true);
+				jdtcu.setLocationRelativeTo(null);
+			} catch (ParseException e) {
+				JOptionPane.showMessageDialog(null, e.getMessage(),"Erro ao carregar máscara",JOptionPane.ERROR_MESSAGE);
+			}
+			
 		}// final do JMenuItemUsuário Cadastrar
 		
 		if(acao.getSource() == JMIUsuBuscar){

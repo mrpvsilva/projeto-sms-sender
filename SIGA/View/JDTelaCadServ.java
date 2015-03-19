@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import Control.ServicosControl;
 import Extra.Extras;
+import Extra.Validacoes;
 import Model.ServicosBean;
 
 import javax.swing.JButton;
@@ -75,7 +76,7 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 		}
 		{
 			JTFItem = new JTextField();
-			JTFItem.setBounds(49, 8, 375, 20);
+			JTFItem.setBounds(101, 8, 323, 20);
 			contentPanel.add(JTFItem);
 			JTFItem.setColumns(10);
 		}
@@ -137,6 +138,39 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent acao) {
 
 		if (acao.getSource() == JBSalvServ) {
+			
+			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Deseja cadastrar o serviço?")){
+			
+			if(JTFItem.getText().trim().isEmpty())
+				JOptionPane.showMessageDialog(null, "Nome do item em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else if(JTADescItem.getText().trim().isEmpty())
+				JOptionPane.showMessageDialog(null, "Descrição do item em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else if(!Validacoes.ValidaVlrMoney(JMFVlrCusto.getText()))
+				JOptionPane.showMessageDialog(null, "Valor de custo em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);	
+			else if(!Validacoes.ValidaVlrMoney(JMFVlrCom.getText()))
+				JOptionPane.showMessageDialog(null, "Valor comercial em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+			else{
+				ServicosBean servBean = new ServicosBean();
+				
+				servBean.setNomeitem(JTFItem.getText());
+				servBean.setDescricaoitem(JTADescItem.getText());
+				servBean.setVlrcustoitem(Extras.FormatVlrMoneyBD(JMFVlrCusto.getText()));
+				servBean.setVlrcomercialitem(Extras.FormatVlrMoneyBD(JMFVlrCom.getText()));
+				servBean.setAtivoitem(JCBStatus.getSelectedIndex() == 0 ? true : false);
+						
+				String out = sc.Cadastrar(servBean);
+
+				if (out != null) {
+					JOptionPane.showMessageDialog(null, out, "Alerta",JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null,"Serviço cadastrado com sucesso", "Sucesso",JOptionPane.WARNING_MESSAGE);
+				}
+				
+			}// final das validações
+			
+			}// final da confirmação
+			
+			/** Inserção de valores feito do Paulo
 			ServicosBean sb = new ServicosBean();
 			sb.setAtivoitem(JCBStatus.getSelectedIndex() == 0 ? true : false);
 			sb.setNomeitem(JTFItem.getText());
@@ -157,11 +191,23 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 						"Serviço cadastrado com sucesso", "Sucesso",
 						JOptionPane.ERROR_MESSAGE);
 			}
+			**/
 
 		}// final do botão salvar
 
 		if (acao.getSource() == JBNovoServ) {
 
+			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Deseja cadastrar um novo serviço?")){
+			
+				JTFItem.setText("");
+				JTADescItem.setText("");
+				JMFVlrCusto.setText("");
+				JMFVlrCom.setText("");
+				JCBStatus.setSelectedItem("ATIVO");
+				
+				
+			}// final da confirmação
+			
 		}// final do botão novo
 	}
 }

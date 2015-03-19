@@ -91,7 +91,7 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 		contentPanel.add(JLRg);
 		
 		JLabel JLTipoEvento = new JLabel("Evento");
-		JLTipoEvento.setBounds(301, 58, 46, 14);
+		JLTipoEvento.setBounds(281, 61, 46, 14);
 		contentPanel.add(JLTipoEvento);
 		
 		JLabel JLCpf = new JLabel("CPF");
@@ -111,7 +111,7 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 		contentPanel.add(JLFone);
 		
 		JLabel JLFone1 = new JLabel("Fone1");
-		JLFone1.setBounds(301, 168, 46, 14);
+		JLFone1.setBounds(281, 165, 46, 14);
 		contentPanel.add(JLFone1);
 		
 		JLabel JLFone2 = new JLabel("Fone2");
@@ -119,11 +119,11 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 		contentPanel.add(JLFone2);
 		
 		JLabel lblConvExtra = new JLabel("Conv. Extra");
-		lblConvExtra.setBounds(301, 83, 66, 14);
+		lblConvExtra.setBounds(281, 86, 66, 14);
 		contentPanel.add(lblConvExtra);
 		
 		JLabel JLNomeGuerra = new JLabel("Nome Guerra");
-		JLNomeGuerra.setBounds(301, 193, 81, 14);
+		JLNomeGuerra.setBounds(281, 190, 81, 14);
 		contentPanel.add(JLNomeGuerra);
 		
 		JTFNome = new JTextField();
@@ -282,6 +282,7 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 		if(acao.getSource() == JBNovoCad){
 			
 			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Deseja cadastrar o cliente?")){
+				
 				JTFNome.setText("");
 				JTFResp.setText("");
 				JTFRg.setText("");

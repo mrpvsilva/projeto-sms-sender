@@ -56,4 +56,40 @@ public class Extras {
 		return fone;
 	}
 	
+	public static String FormatDDD(String fone){
+		
+		if(fone.isEmpty())
+			fone="";
+		else
+			fone = fone.substring(0, 2);
+		
+		return fone;
+	}
+	
+	public static String FormatFoneBD(String fone){
+		
+		if(fone.isEmpty())
+			fone = "";
+		else if(fone.length()==10)
+			fone = fone.substring(1, 9);
+		else
+			fone = fone.substring(1, 10);
+			
+		return fone;
+	}
+	
+	public static double FormatVlrMoneyBD(String valor){
+		
+		valor = valor.replace("R$","").replace("_", "").replace(".","").replace(",", ".").trim();
+		
+		double val = Double.parseDouble(valor);		
+		return val;
+	}
+	
+	public static String FormatVlrMoney(String valor){
+		
+		valor = valor.replace("R$","").replace("_", "").replace(",", ".").replace(".","").trim();
+				
+		return valor;
+	}
 }

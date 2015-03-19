@@ -8,6 +8,9 @@ public class FornecedoresBean {
 	private String telefonesforn;
 	private String telefonesforn1;
 	private String telefonesforn2;
+	private String ddd;
+	private String ddd1;
+	private String ddd2;
 	private String emailforn;
 	private String endforn;
 	private String siteforn;
@@ -19,6 +22,24 @@ public class FornecedoresBean {
 	private String operadora1;
 	private String operadora2;
 	
+	public String getDdd() {
+		return ddd;
+	}
+	public void setDdd(String ddd) {
+		this.ddd = ddd;
+	}
+	public String getDdd1() {
+		return ddd1;
+	}
+	public void setDdd1(String ddd1) {
+		this.ddd1 = ddd1;
+	}
+	public String getDdd2() {
+		return ddd2;
+	}
+	public void setDdd2(String ddd2) {
+		this.ddd2 = ddd2;
+	}
 	public String getOperadora1() {
 		return operadora1;
 	}
