@@ -5,7 +5,6 @@ import java.util.List;
 
 import persistenceManagerFactory.PersistenceManagerFactory;
 import Dominio.Fornecedor;
-import Dominio.TelefoneFornecedor;
 import Dominio.TipoServico;
 import Interfaces.IFornecedorRepository;
 import Interfaces.ITipoServicoRepository;
@@ -46,30 +45,36 @@ public class FornecedoresControl {
 		f.setEndereco(fornecedor.getEndforn());
 
 		// o campo tipo servico é obrigatorio
-		TipoServico ts = _tipoServicorepository.getTipoByName(fornecedor
-				.getTiposervprestadoforn());
-		f.setTiposervico(ts);
+		f.setTiposervico(BuscarTipoServico(fornecedor.getTiposervprestadoforn()));
 
 		// ADICIONA OS TELEFONES DO FORNECEDOR
-		String telefones = fornecedor.getTelefonesforn().replace("(", "")
-				.replace("-", "").replace(")", "-");
-
-		String[] tels = telefones.split("-");
-		int ddd = Integer.parseInt(tels[0]);
-		String numero = tels[1];
-
-		TelefoneFornecedor tf = new TelefoneFornecedor();
-		tf.setDdd(ddd);
-		tf.setNumero(numero);
+		f.setTelefones(fornecedor.getTelefones());
 
 		// mudar campo tipo telefone para guardar a operadora
-		tf.setOperadora("TIM");
-		f.addTelefoneFornecedor(tf);
 
 		if (!_fornecedorRepository.Add(f))
 			return "Falha no cadastro do fornecedor";
 
 		return null;
+	}
+
+	public String Atualizar(Fornecedor fornecedor) {
+		if (!_fornecedorRepository.Update(fornecedor))
+			return "Falha na atualização do fornecedor";
+
+		return null;
+	}
+
+	public List<Fornecedor> ListarTodos() {
+		return _fornecedorRepository.FindAll();
+	}
+
+	public List<Fornecedor> ListarTodos(String coluna, String valor) {
+		return _fornecedorRepository.FindAll(coluna, valor);
+	}
+
+	public Fornecedor BuscarFornecedor(int id) {
+		return _fornecedorRepository.GetById(id);
 	}
 
 	public String[] DDLTipoServico() {
@@ -81,6 +86,10 @@ public class FornecedoresControl {
 		}
 		return ddl;
 
+	}
+
+	public TipoServico BuscarTipoServico(String nome) {
+		return _tipoServicorepository.getTipoByName(nome);
 	}
 
 }

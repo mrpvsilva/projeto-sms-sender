@@ -3,6 +3,8 @@ package persistenceManagerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
+
 import Interfaces.IPersistenceManager;
 
 public class PersistenceManagerFactory {
@@ -19,7 +21,12 @@ public class PersistenceManagerFactory {
 	};
 
 	public static IPersistenceManager getPersistanceManager() {
-		return _persistanceManager;
+		try {
+			return _persistanceManager;
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			return null;
+		}
 	}
 
 }

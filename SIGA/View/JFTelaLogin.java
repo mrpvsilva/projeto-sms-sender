@@ -17,7 +17,7 @@ import persistenceManagerFactory.PersistenceManagerFactory;
 import Control.UsuarioControl;
 import Model.UsuarioBean;
 
-public class JFTelaLogin extends JFrame implements ActionListener{
+public class JFTelaLogin extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -42,15 +42,25 @@ public class JFTelaLogin extends JFrame implements ActionListener{
 				}
 			}
 		});
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// INICIA UMA SESSIONFACTORY DO HIBERNATE PARA SER UTILIZADO EM
+				// TODA A
+				// APLICAÇÃO.
+				PersistenceManagerFactory.getPersistanceManager();
+				//
+			}
+		}).start();
 	}
 
 	/**
 	 * Create the frame.
 	 */
 	public JFTelaLogin() {
-		//INICIA UMA SESSIONFACTORY DO HIBERNATE PARA SER UTILIZADO EM TODA A APLICAÇÃO.
-		PersistenceManagerFactory.getPersistanceManager();
-		//
+
 		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -59,25 +69,25 @@ public class JFTelaLogin extends JFrame implements ActionListener{
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
-		
+
 		JLabel JLLogin = new JLabel("Login");
 		JLLogin.setBounds(62, 131, 46, 14);
 		contentPane.add(JLLogin);
-		
+
 		JLabel JLSenha = new JLabel("Senha");
 		JLSenha.setBounds(62, 167, 46, 14);
 		contentPane.add(JLSenha);
-		
+
 		JTFLogin = new JTextField();
 		JTFLogin.setBounds(118, 128, 224, 20);
 		contentPane.add(JTFLogin);
 		JTFLogin.setColumns(10);
-		
+
 		JPFSenha = new JPasswordField();
 		JPFSenha.setEchoChar('*');
 		JPFSenha.setBounds(118, 164, 224, 20);
 		contentPane.add(JPFSenha);
-		
+
 		JBAcessar = new JButton("Acessar");
 		JBAcessar.addActionListener(this);
 		JBAcessar.setBounds(154, 212, 101, 23);
@@ -87,33 +97,33 @@ public class JFTelaLogin extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent acao) {
 
-		if(acao.getSource() == JBAcessar){
-			
-			
+		if (acao.getSource() == JBAcessar) {
+
 			/* Validação do usuário e senha */
-			if(JTFLogin.getText().isEmpty()){
-				JOptionPane.showMessageDialog(null, "Usuário em branco","Autenticação",JOptionPane.ERROR_MESSAGE);
-			}else if(new String(JPFSenha.getPassword()).isEmpty()){
-				JOptionPane.showMessageDialog(null, "Senha em branco","Autenticação",JOptionPane.ERROR_MESSAGE);
-			}else{
+			if (JTFLogin.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Usuário em branco",
+						"Autenticação", JOptionPane.ERROR_MESSAGE);
+			} else if (new String(JPFSenha.getPassword()).isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Senha em branco",
+						"Autenticação", JOptionPane.ERROR_MESSAGE);
+			} else {
 				UsuarioControl usuCon = new UsuarioControl();
 				UsuarioBean usuBean = new UsuarioBean();
 				usuBean.setLogin(JTFLogin.getText());
 				usuBean.setSenha(new String(JPFSenha.getPassword()));
-				
+
 				usuBean.setResposta(usuCon.Logar(usuBean).getResposta());
-				
-				if(usuBean.getResposta()){
+
+				if (usuBean.getResposta()) {
 					JFTelaPrincipal jftp = new JFTelaPrincipal(usuBean);
 					jftp.setVisible(true);
 					this.dispose();
 				}
-				
+
 			}
 			/* Final da validação do usuário */
-			
-			
+
 		}// final do botão Acessar
-		
+
 	}// final do método de ação dos botões
 }

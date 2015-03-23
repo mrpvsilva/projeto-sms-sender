@@ -10,7 +10,7 @@ public class FornecedoresModel {
 		
 		lista.add("CNPJ");
 		lista.add("NOME");
-		lista.add("TELEFONE");
+		//lista.add("TELEFONE");
 		
 		return lista;
 	}// final do método filtros
