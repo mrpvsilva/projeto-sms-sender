@@ -6,8 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,8 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
 import Control.ServicosControl;
+import Dominio.Item;
 
-public class JDTelaBuscarServ extends JDialog implements ActionListener{
+public class JDTelaBuscarServ extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -37,8 +41,9 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener{
 	private DefaultTableModel model;
 	private JTable tabela;
 	private JScrollPane scroll;
-	protected String valor;
-	
+	protected String Id;
+	private ServicosControl _servicoControl = new ServicosControl();
+
 	/**
 	 * Launch the application.
 	 */
@@ -91,53 +96,55 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener{
 			// Criação da Jtable
 			scroll = new JScrollPane();
 			contentPanel.add(scroll);
-            scroll.setBounds(12, 59, 412, 158);
-            {
-                    final TableModel tabelaModel = 
-                                    new DefaultTableModel(
-                                                    new String[][] { },
-                                                    new String[] {  "Item", 
-                                                    				"Descrição",
-                                                    				"Ativo"}){
-                    	/**
+			scroll.setBounds(12, 59, 412, 158);
+			{
+				final TableModel tabelaModel = new DefaultTableModel(
+						new String[][] {},
+						new String[] { "ID", "Item", "Ativo" }) {
+					/**
 																		 * 
 																		 */
-																		private static final long serialVersionUID = 1L;
+					private static final long serialVersionUID = 1L;
 
-						public boolean isCellEditable(int row, int col) {  
-                    		return false;  
-                         } };
-                    
-                    tabela = new JTable();
-                    scroll.setViewportView(tabela);
-                    tabela.setModel(tabelaModel);
-                    model = (DefaultTableModel) tabela.getModel();
-                    model.fireTableDataChanged();
-                    
-                    //for (LancamentoBean lanc : lancControl.getLancamentos()) { Laço necessário para incluir registro na tabela
-						//model.addRow(new Object[]{new Integer(lanc.getIdLancamento()),formatas.format(lanc.getDtCompra()),lanc.getNAutorizacao(),lanc.getSelectedConveniada()});
-                    	model.addRow(new Object[]{"Copo","Teste1","Ativo"});
-                    	model.addRow(new Object[]{"Saco","Teste2","Inativo"});
-                    	model.addRow(new Object[]{"Camisa","Teste3","Ativo"});
-                    	
-					//}
-                    
-                    tabela.addMouseListener(new MouseAdapter() {
-                            
+					public boolean isCellEditable(int row, int col) {
+						return false;
+					}
+				};
 
-							public void mouseClicked(MouseEvent evt) {
-								if(evt.getClickCount() == 1){
-                                    int linha = tabela.getSelectedRow();
-                                    valor = String.valueOf(tabela.getValueAt(linha, 0));       
-                                    
-								}
-								
-                            }
-                    });
-                    
-            }
-    }
-		
+				tabela = new JTable();
+				scroll.setViewportView(tabela);
+				tabela.setModel(tabelaModel);
+				model = (DefaultTableModel) tabela.getModel();
+				model.fireTableDataChanged();
+
+				// for (LancamentoBean lanc : lancControl.getLancamentos()) {
+				// Laço necessário para incluir registro na tabela
+				// model.addRow(new Object[]{new
+				// Integer(lanc.getIdLancamento()),formatas.format(lanc.getDtCompra()),lanc.getNAutorizacao(),lanc.getSelectedConveniada()});
+
+				for (Item item : _servicoControl.BuscarTodos()) {
+					model.addRow(new Object[] { item.getId(), item.getNome(),
+							item.isAtivo() ? "Ativo" : "Inativo" });
+				}
+
+				tabela.getColumnModel().getColumn(0).setMinWidth(0);
+				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
+
+				tabela.addMouseListener(new MouseAdapter() {
+
+					public void mouseClicked(MouseEvent evt) {
+						if (evt.getClickCount() == 1) {
+							int linha = tabela.getSelectedRow();
+							Id = String.valueOf(tabela.getValueAt(linha, 0));
+
+						}
+
+					}
+				});
+
+			}
+		}
+
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -159,25 +166,37 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent acao) {
 
-		if(acao.getSource() == JBCadServ){
+		if (acao.getSource() == JBCadServ) {
 			JDTelaCadServ jdtcs = new JDTelaCadServ();
 			jdtcs.setVisible(true);
 			jdtcs.setLocationRelativeTo(null);
-			
+
 		}// final do botão cadastrar serviços
-		
-		if(acao.getSource() == JBEditServ){
-			JDTelaEditServ jdtes = new JDTelaEditServ();
-			jdtes.setVisible(true);
-			jdtes.setLocationRelativeTo(null);
+
+		if (acao.getSource() == JBEditServ) {
+			if (Id != null) {
+				JDTelaEditServ jdtes = new JDTelaEditServ(Integer.parseInt(Id));
+				jdtes.setVisible(true);
+				jdtes.setLocationRelativeTo(null);
+			} else {
+				JOptionPane.showMessageDialog(null, "Selecione uma linha");
+			}
 		}// final do botão atualizar serviços
-		
-		if(acao.getSource() == JBBuscar){
-			
+
+		if (acao.getSource() == JBBuscar) {
+
+			String campo = JCBFiltro.getSelectedItem().toString() == "ITEM" ? "nome"
+					: "descricao";
+			String txt = JTFBuscar.getText();
+
+			model.setRowCount(0);
+			for (Item item : _servicoControl.BuscarTodos(campo, txt)) {
+				model.addRow(new Object[] { item.getId(), item.getNome(),
+						item.isAtivo() ? "Ativo" : "Inativo" });
+			}
+
 		}// final do botão buscar serviços
-		
+
 	}// final da ação do botão
-		
-	
 
 }

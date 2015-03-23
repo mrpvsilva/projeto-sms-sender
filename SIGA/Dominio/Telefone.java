@@ -25,7 +25,7 @@ public abstract class Telefone implements Serializable {
 	@GeneratedValue
 	private long id;
 	@Column
-	private int ddd;
+	private String ddd;
 	@Column
 	private String numero;
 	@Column
@@ -35,7 +35,7 @@ public abstract class Telefone implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Telefone(int ddd, String numero, String operadora) {
+	public Telefone(String ddd, String numero, String operadora) {
 		setDdd(ddd);
 		setNumero(numero);
 		setOperadora(operadora);
@@ -49,11 +49,11 @@ public abstract class Telefone implements Serializable {
 		this.id = id;
 	}
 
-	public int getDdd() {
+	public String getDdd() {
 		return ddd;
 	}
 
-	public void setDdd(int ddd) {
+	public void setDdd(String ddd) {
 		this.ddd = ddd;
 	}
 

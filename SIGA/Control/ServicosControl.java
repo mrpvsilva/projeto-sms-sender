@@ -1,6 +1,7 @@
 package Control;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import persistenceManagerFactory.PersistenceManagerFactory;
 import Dominio.Item;
@@ -20,12 +21,9 @@ public class ServicosControl {
 	private ITipoItemRepository _tipoItemRepository = new TipoItemRepository(
 			PersistenceManagerFactory.getPersistanceManager());
 
-	/* Envia filtros para view JDTelaBuscarServ */
 	public ArrayList<String> Filtros() {
-
 		return servMod.FiltroServ();
-
-	}// final do método filtros
+	}
 
 	public String Cadastrar(ServicosBean servico) {
 		TipoItem tipoItem = _tipoItemRepository.GetById(1);
@@ -39,4 +37,24 @@ public class ServicosControl {
 
 		return null;
 	}
+
+	public List<Item> BuscarTodos() {
+		return _itemRepository.FindAll();
+	}
+
+	public List<Item> BuscarTodos(String campo, String txt) {
+		return _itemRepository.FindAll(campo, txt);
+	}
+
+	public Item BuscarItem(int ID) {
+		return _itemRepository.GetById(ID);
+	}
+
+	public String Atualizar(Item item) {
+		if (!_itemRepository.Update(item))
+			return "Falha na atualização do serviço";
+
+		return null;
+	}
+
 }

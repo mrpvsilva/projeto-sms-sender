@@ -15,4 +15,14 @@ public class TelefoneFornecedor extends Telefone {
 
 	private static final long serialVersionUID = 1L;
 
+	public TelefoneFornecedor() {
+
+	}
+
+	public TelefoneFornecedor(String ddd, String numero, String operadora) {
+		setDdd(ddd);
+		setNumero(numero);
+		setOperadora(operadora);
+	}
+
 }
