@@ -4,9 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.ParseException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -49,7 +48,7 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 	public static void main(String[] args) {
 		try {
 			JDTelaBuscarUsu dialog = new JDTelaBuscarUsu();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			// dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -108,31 +107,21 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 				model = (DefaultTableModel) tabela.getModel();
 				model.fireTableDataChanged();
 
-				// for (LancamentoBean lanc : lancControl.getLancamentos()) {
-				// Laço necessário para incluir registro na tabela
-				// model.addRow(new Object[]{new
-				// Integer(lanc.getIdLancamento()),formatas.format(lanc.getDtCompra()),lanc.getNAutorizacao(),lanc.getSelectedConveniada()});
-				for (Usuario u : usuCont.BuscarTodos()) {
-
-					model.addRow(new Object[] { u.getId(), u.getUsuario(),
-							u.getNomeCompleto(), u.getCpf(), u.getPerfil() });
-				}
+				CarregarGrid(usuCont.BuscarTodos());
 				tabela.getColumnModel().getColumn(0).setMinWidth(0);
 				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
-
 				// }
 
-				tabela.addMouseListener(new MouseAdapter() {
-
-					public void mouseClicked(MouseEvent evt) {
-						if (evt.getClickCount() == 1) {
-							int linha = tabela.getSelectedRow();
-							valor = String.valueOf(tabela.getValueAt(linha, 0));
-
-						}
-
-					}
-				});
+				// tabela.addMouseListener(new MouseAdapter() {
+				//
+				// public void mouseClicked(MouseEvent evt) {
+				// if (evt.getClickCount() == 1) {
+				// int linha = tabela.getSelectedRow();
+				// valor = String.valueOf(tabela.getValueAt(linha, 0));
+				// }
+				//
+				// }
+				// });
 
 			}
 		}
@@ -159,6 +148,7 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 				JBEditUsu.addActionListener(this);
 			}
 		}
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
 	@Override
@@ -178,10 +168,23 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 		}// final do botão cadastrar usuário
 
 		if (acao.getSource() == JBEditUsu) {
-			if (valor != null) {
-				JDTelaEditUsu jdteu = new JDTelaEditUsu(Integer.parseInt(valor));
-				jdteu.setVisible(true);
-				jdteu.setLocationRelativeTo(null);
+			int linha = tabela.getSelectedRow();
+
+			if (linha > -1) {
+				JDTelaEditUsu jdteu;
+				try {
+					jdteu = new JDTelaEditUsu(Integer.parseInt(String
+							.valueOf(tabela.getValueAt(linha, 0))));
+					jdteu.setVisible(true);
+					jdteu.setLocationRelativeTo(null);
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			} else {
 				JOptionPane.showMessageDialog(null, "Selecione uma linha");
 			}
@@ -192,19 +195,21 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 					: JCBFiltro.getSelectedItem().toString() == "NOME" ? "nomecompleto"
 							: "cpf";
 			String value = JTFBuscar.getText();
-
-			model.setRowCount(0);
-
 			if (!value.equals("")) {
-				for (Usuario u : usuCont.BuscarTodos(campo, value)) {
-
-					model.addRow(new Object[] { u.getId(), u.getUsuario(),
-							u.getNomeCompleto(), u.getCpf(), u.getPerfil() });
-				}
-
+				CarregarGrid(usuCont.BuscarTodos(campo, value));
+			} else {
+				CarregarGrid(usuCont.BuscarTodos());
 			}
 
 		}// final do botão buscar usuário
 
 	}// final da ação do botão
+
+	private void CarregarGrid(List<Usuario> lista) {
+		model.setRowCount(0);
+		for (Usuario u : lista) {
+			model.addRow(new Object[] { u.getId(), u.getUsuario(),
+					u.getNomeCompleto(), u.getCpf(), u.getPerfil() });
+		}
+	}
 }

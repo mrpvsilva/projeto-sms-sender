@@ -1,11 +1,13 @@
 package Model;
 
+import java.math.BigDecimal;
+
 public class ServicosBean {
 
 	private String nomeitem;
 	private String descricaoitem;
-	private Double vlrcustoitem;
-	private Double vlrcomercialitem;
+	private BigDecimal vlrcustoitem;
+	private BigDecimal vlrcomercialitem;
 	private boolean ativoitem;
 	
 	public String getNomeitem() {
@@ -20,16 +22,16 @@ public class ServicosBean {
 	public void setDescricaoitem(String descricaoitem) {
 		this.descricaoitem = descricaoitem;
 	}
-	public Double getVlrcustoitem() {
+	public BigDecimal getVlrcustoitem() {
 		return vlrcustoitem;
 	}
-	public void setVlrcustoitem(Double vlrcustoitem) {
+	public void setVlrcustoitem(BigDecimal vlrcustoitem) {
 		this.vlrcustoitem = vlrcustoitem;
 	}
-	public Double getVlrcomercialitem() {
+	public BigDecimal getVlrcomercialitem() {
 		return vlrcomercialitem;
 	}
-	public void setVlrcomercialitem(Double vlrcomercialitem) {
+	public void setVlrcomercialitem(BigDecimal vlrcomercialitem) {
 		this.vlrcomercialitem = vlrcomercialitem;
 	}
 	public boolean isAtivoitem() {
