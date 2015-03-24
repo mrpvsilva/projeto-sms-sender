@@ -121,31 +121,9 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 				// Laço necessário para incluir registro na tabela
 				// model.addRow(new Object[]{new
 				// Integer(lanc.getIdLancamento()),formatas.format(lanc.getDtCompra()),lanc.getNAutorizacao(),lanc.getSelectedConveniada()});
-				for (Fornecedor f : _fornecedorControl.ListarTodos()) {
-					model.addRow(new Object[] {
-							f.getId(),
-							f.getCpfcnpj(),
-							f.getNome(),
-							"(" + f.getTelefones().get(0).getDdd() + ")"
-									+ f.getTelefones().get(0).getNumero() + "-"
-									+ f.getTelefones().get(0).getOperadora() });
-
-				}
-
+				CarregarGrid(_fornecedorControl.ListarTodos());
 				tabela.getColumnModel().getColumn(0).setMinWidth(0);
 				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
-
-				tabela.addMouseListener(new MouseAdapter() {
-
-					public void mouseClicked(MouseEvent evt) {
-						if (evt.getClickCount() == 1) {
-							int linha = tabela.getSelectedRow();
-							valor = String.valueOf(tabela.getValueAt(linha, 0));
-
-						}
-
-					}
-				});
 
 			}
 		}
@@ -187,9 +165,11 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 		if (acao.getSource() == JBEditForn) {
 
 			try {
-				if (valor != null) {
+				int linha = tabela.getSelectedRow();
+				if (linha > -1) {
 					JDTelaEditForn jdtef = new JDTelaEditForn(
-							Integer.parseInt(valor));
+							Integer.parseInt(String.valueOf(tabela.getValueAt(
+									linha, 0))));
 					jdtef.setVisible(true);
 					jdtef.setLocationRelativeTo(null);
 				} else {
@@ -209,23 +189,28 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 					: "";
 			String _valor = JTFBuscar.getText();
 			if (!_valor.equals("")) {
-				List<Fornecedor> l = _fornecedorControl.ListarTodos(coluna,
-						_valor);
-				model.setRowCount(0);
-				for (Fornecedor f : l) {
-
-					model.addRow(new Object[] {
-							f.getId(),
-							f.getCpfcnpj(),
-							f.getNome(),
-							"(" + f.getTelefones().get(0).getDdd() + ")"
-									+ f.getTelefones().get(0).getNumero() + "-"
-									+ f.getTelefones().get(0).getOperadora() });
-
-				}
+				CarregarGrid(_fornecedorControl.ListarTodos(coluna, _valor));
+			} else {
+				CarregarGrid(_fornecedorControl.ListarTodos());
 			}
 
 		}// final do botão buscar fornecedores
 
 	}// final da ação do botão
+
+	private void CarregarGrid(List<Fornecedor> lista) {
+		model.setRowCount(0);
+		for (Fornecedor f : lista) {
+
+			model.addRow(new Object[] {
+					f.getId(),
+					f.getCpfcnpj(),
+					f.getNome(),
+					"(" + f.getTelefones().get(0).getDdd() + ")"
+							+ f.getTelefones().get(0).getNumero() + "-"
+							+ f.getTelefones().get(0).getOperadora() });
+
+		}
+
+	}
 }
