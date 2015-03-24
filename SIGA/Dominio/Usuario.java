@@ -24,6 +24,16 @@ public class Usuario implements Serializable {
 	private String nomeCompleto;
 	@Column
 	private String cpf;
+	@Column
+	private String perfil;
+
+	public String getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
+	}
 
 	public long getId() {
 		return id;

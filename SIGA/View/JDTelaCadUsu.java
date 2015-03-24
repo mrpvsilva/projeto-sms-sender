@@ -17,13 +17,15 @@ import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPasswordField;
 
+import Control.UsuarioControl;
+import Dominio.Usuario;
 import Extra.Extras;
 import Extra.Mascaras;
 import Model.UsuarioBean;
 
 import javax.swing.JComboBox;
 
-public class JDTelaCadUsu extends JDialog implements ActionListener{
+public class JDTelaCadUsu extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -39,7 +41,8 @@ public class JDTelaCadUsu extends JDialog implements ActionListener{
 	private JPasswordField JPFSenha;
 	private MaskFormatter maskCpf;
 	private JLabel JLPerfil;
-	private JComboBox<String> JCBPerfil;
+	private JComboBox JCBPerfil;
+	private UsuarioControl _usuarioControl = new UsuarioControl();
 
 	/**
 	 * Launch the application.
@@ -56,7 +59,8 @@ public class JDTelaCadUsu extends JDialog implements ActionListener{
 
 	/**
 	 * Create the dialog.
-	 * @throws ParseException 
+	 * 
+	 * @throws ParseException
 	 */
 	public JDTelaCadUsu() throws ParseException {
 		setBounds(100, 100, 368, 225);
@@ -70,25 +74,25 @@ public class JDTelaCadUsu extends JDialog implements ActionListener{
 			JLUsuario.setBounds(10, 11, 46, 14);
 			contentPanel.add(JLUsuario);
 		}
-		
+
 		JTFUsuario = new JTextField();
 		JTFUsuario.setBounds(60, 8, 289, 20);
 		contentPanel.add(JTFUsuario);
 		JTFUsuario.setColumns(10);
-		
+
 		JLabel JLSenha = new JLabel("Senha");
 		JLSenha.setBounds(10, 36, 46, 14);
 		contentPanel.add(JLSenha);
-		
+
 		JLabel JLNome = new JLabel("Nome");
 		JLNome.setBounds(10, 64, 46, 14);
 		contentPanel.add(JLNome);
-		
+
 		JTFNome = new JTextField();
 		JTFNome.setBounds(60, 61, 289, 20);
 		contentPanel.add(JTFNome);
 		JTFNome.setColumns(10);
-		
+
 		JLabel JLCpf = new JLabel("Cpf");
 		JLCpf.setBounds(10, 89, 46, 14);
 		contentPanel.add(JLCpf);
@@ -97,16 +101,16 @@ public class JDTelaCadUsu extends JDialog implements ActionListener{
 		JFFCpf.setBounds(60, 86, 176, 20);
 		contentPanel.add(JFFCpf);
 		JFFCpf.setColumns(10);
-		
+
 		JPFSenha = new JPasswordField();
 		JPFSenha.setBounds(60, 33, 289, 20);
 		contentPanel.add(JPFSenha);
-		
+
 		JLPerfil = new JLabel("Perfil");
 		JLPerfil.setBounds(10, 114, 46, 14);
 		contentPanel.add(JLPerfil);
-		
-		JCBPerfil = new JComboBox<String>();
+
+		JCBPerfil = new JComboBox(_usuarioControl.DDLPerfis());
 		JCBPerfil.setBounds(60, 111, 176, 20);
 		contentPanel.add(JCBPerfil);
 		{
@@ -115,6 +119,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener{
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvUsu = new JButton("Salvar");
+				JBSalvUsu.addActionListener(this);
 				buttonPane.add(JBSalvUsu);
 				getRootPane().setDefaultButton(JBSalvUsu);
 			}
@@ -128,44 +133,63 @@ public class JDTelaCadUsu extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent acao) {
 
-		if(acao.getSource() == JBSalvUsu){
-			
-			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Deseja cadastrar o usuário?")){
-							
-			if(JTFUsuario.getText().isEmpty())
-				JOptionPane.showMessageDialog(null, "Usuário em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
-			else if(new String(JPFSenha.getPassword()).isEmpty())
-				JOptionPane.showMessageDialog(null, "Senha em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
-			else if(JTFNome.getText().isEmpty())
-				JOptionPane.showMessageDialog(null, "Nome em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
-			else{
-				
-				UsuarioBean usuBean = new UsuarioBean();
-				
-				usuBean.setLogin(JTFUsuario.getText());
-				usuBean.setSenha(new String(JPFSenha.getPassword()));
-				usuBean.setNome(JTFNome.getText());
-				usuBean.setCpf(Extras.FormatCnpjCpf(JFFCpf.getText()));
-				usuBean.setPerfil(JCBPerfil.getSelectedItem().toString());
-				
-				
-			}// final da validação
-			
+		if (acao.getSource() == JBSalvUsu) {
+
+			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
+					"Deseja cadastrar o usuário?")) {
+
+				if (JTFUsuario.getText().isEmpty())
+					JOptionPane.showMessageDialog(null, "Usuário em branco.",
+							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+				else if (new String(JPFSenha.getPassword()).isEmpty())
+					JOptionPane.showMessageDialog(null, "Senha em branco.",
+							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+				else if (JTFNome.getText().isEmpty())
+					JOptionPane.showMessageDialog(null, "Nome em branco.",
+							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+				else {
+
+					UsuarioBean usuBean = new UsuarioBean();
+
+					usuBean.setLogin(JTFUsuario.getText());
+					usuBean.setSenha(new String(JPFSenha.getPassword()));
+					usuBean.setNome(JTFNome.getText());
+					usuBean.setCpf(Extras.FormatCnpjCpf(JFFCpf.getText()));
+					usuBean.setPerfil(JCBPerfil.getSelectedItem().toString());
+
+					Usuario usuario = new Usuario();
+					usuario.setUsuario(JTFUsuario.getText());
+					usuario.setSenha(Extras.FormatCnpjCpf(JFFCpf.getText()));
+					usuario.setNomeCompleto(JTFNome.getText());
+					usuario.setCpf(Extras.FormatCnpjCpf(JFFCpf.getText()));
+					usuario.setPerfil(JCBPerfil.getSelectedItem().toString());
+
+					String out = _usuarioControl.Cadastrar(usuario);
+
+					if (out == null) {
+						JOptionPane.showMessageDialog(null,
+								"Usuário cadastardo com sucesso");
+					} else {
+						JOptionPane.showMessageDialog(null, out);
+					}
+
+				}// final da validação
+
 			}// final da confirmação
-			
+
 		}// final do botão salvar usuário
-		
-		if(acao.getSource() == JBNovUsu){
-			
-			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Deseja cadastrar um novo usuário?")){
-			
+
+		if (acao.getSource() == JBNovUsu) {
+
+			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
+					"Deseja cadastrar um novo usuário?")) {
+
 				JTFUsuario.setText("");
 				JPFSenha.setText("");
 				JTFNome.setText("");
-			
+
 			}// final da confirmação
-			
-			
+
 		}// final do botão novo usuário
 
 	}

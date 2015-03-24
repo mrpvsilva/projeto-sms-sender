@@ -1,6 +1,9 @@
 package Repositories;
 
+import java.util.List;
+
 import javax.persistence.Query;
+
 import Dominio.Usuario;
 import Interfaces.IPersistenceManager;
 import Interfaces.IUsuarioRepository;
@@ -28,6 +31,16 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 			ex.printStackTrace();
 			return null;
 		}
+
+	}
+
+	@Override
+	public List<Usuario> FindAll(String campo, String value) {
+		String q = "from Usuario where " + campo + " like :valor";
+		Query query = entityManager.createQuery(q);
+		query.setParameter("valor", "%" + value + "%");
+
+		return query.getResultList();
 
 	}
 }
