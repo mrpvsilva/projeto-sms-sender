@@ -4,11 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -18,6 +20,7 @@ import javax.swing.JPasswordField;
 import Control.UsuarioControl;
 import Dominio.Usuario;
 import Extra.Extras;
+import Extra.Mascaras;
 import Model.UsuarioBean;
 
 import javax.swing.JComboBox;
@@ -42,6 +45,7 @@ public class JDTelaEditUsu extends JDialog implements ActionListener {
 	private UsuarioControl _usuarioControl = new UsuarioControl();
 	private Usuario _usuario;
 	private JButton btnResetarSenha;
+	private MaskFormatter maskCpf;
 
 	/**
 	 * Launch the application.
@@ -58,8 +62,9 @@ public class JDTelaEditUsu extends JDialog implements ActionListener {
 
 	/**
 	 * Create the dialog.
+	 * @throws ParseException 
 	 */
-	public JDTelaEditUsu(int id) {
+	public JDTelaEditUsu(int id) throws ParseException {
 		_id = id;
 		setBounds(100, 100, 376, 227);
 		setTitle("SIGA - edição de usu\u00E1rio");
@@ -95,7 +100,8 @@ public class JDTelaEditUsu extends JDialog implements ActionListener {
 		JLCpf.setBounds(10, 89, 46, 14);
 		contentPanel.add(JLCpf);
 
-		JFFCpf = new JFormattedTextField();
+		maskCpf = new MaskFormatter(Mascaras.maskCpf);
+		JFFCpf = new JFormattedTextField(maskCpf);
 		JFFCpf.setBounds(60, 86, 176, 20);
 		contentPanel.add(JFFCpf);
 		JFFCpf.setColumns(10);
@@ -203,7 +209,6 @@ public class JDTelaEditUsu extends JDialog implements ActionListener {
 
 	private void PreencherCampos() {
 		_usuario = _usuarioControl.BuscarUsuario(_id);
-
 		JTFUsuario.setText(_usuario.getUsuario());
 		JTFNome.setText(_usuario.getNomeCompleto());
 		JFFCpf.setText(_usuario.getCpf());

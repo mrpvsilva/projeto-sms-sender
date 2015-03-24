@@ -1,6 +1,7 @@
 package Dominio;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Fornecedor implements Serializable {
 	@Column
 	private String nome;
 	@Column
-	private double valorServico;
+	private BigDecimal valorServico;
 	@Column
 	private String email;
 	@Column
@@ -51,7 +52,7 @@ public class Fornecedor implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Fornecedor(String nome, double valorServico, String email,
+	public Fornecedor(String nome, BigDecimal valorServico, String email,
 			String endereco, String cpfcnpj, String rg, String site,
 			TipoServico tipoServico) {
 		setNome(nome);
@@ -80,11 +81,11 @@ public class Fornecedor implements Serializable {
 		this.nome = nome;
 	}
 
-	public double getValorservico() {
+	public BigDecimal getValorservico() {
 		return valorServico;
 	}
 
-	public void setValorservico(double valorservico) {
+	public void setValorservico(BigDecimal valorservico) {
 		this.valorServico = valorservico;
 	}
 

@@ -1,5 +1,6 @@
 package Control;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class FornecedoresControl {
 				.replace("-", ""));
 		f.setNome(fornecedor.getNomeforn());
 		// falta o campo valor do serviço
-		f.setValorservico(500);
+		f.setValorservico(new BigDecimal(5.00));
 		//
 		f.setRg(fornecedor.getRgforn());
 		f.setEmail(fornecedor.getEmailforn());

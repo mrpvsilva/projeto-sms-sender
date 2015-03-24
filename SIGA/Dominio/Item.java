@@ -1,6 +1,7 @@
 package Dominio;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,9 +25,9 @@ public class Item implements Serializable {
 	@Column
 	private String descricao;
 	@Column
-	private double valorCusto;
+	private BigDecimal valorCusto;
 	@Column
-	private double valorComercial;
+	private BigDecimal valorComercial;
 	@Column
 	private boolean ativo;
 	@ManyToOne
@@ -37,8 +38,8 @@ public class Item implements Serializable {
 		this.ativo = true;
 	}
 
-	public Item(String nome, String descricao, double valorCusto,
-			double valorComercial, boolean ativo, TipoItem tipoitem) {
+	public Item(String nome, String descricao, BigDecimal valorCusto,
+			BigDecimal valorComercial, boolean ativo, TipoItem tipoitem) {
 
 		setNome(nome);
 		setDescricao(descricao);
@@ -72,19 +73,19 @@ public class Item implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public double getValorCusto() {
+	public BigDecimal getValorCusto() {
 		return valorCusto;
 	}
 
-	public void setValorCusto(double valorCusto) {
+	public void setValorCusto(BigDecimal valorCusto) {
 		this.valorCusto = valorCusto;
 	}
 
-	public double getValorComercial() {
+	public BigDecimal getValorComercial() {
 		return valorComercial;
 	}
 
-	public void setValorComercial(double valorComercial) {
+	public void setValorComercial(BigDecimal valorComercial) {
 		this.valorComercial = valorComercial;
 	}
 

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 
 import Control.ServicosControl;
 import Dominio.Item;
@@ -15,11 +16,14 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.BadLocationException;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
+
+import jmoneyfield.JMoneyField;
 
 public class JDTelaEditServ extends JDialog implements ActionListener {
 
@@ -33,8 +37,8 @@ public class JDTelaEditServ extends JDialog implements ActionListener {
 	private Extras ext = new Extras();
 	private JButton JBAtuServ;
 	private JButton JBNovoServ;
-	private JTextField JMFVlrCom;
-	private JTextField JMFVlrCusto;
+	private JMoneyField JMFVlrCom;
+	private JMoneyField JMFVlrCusto;
 	private JTextArea JTADescItem;
 	private ServicosControl _servicoControl = new ServicosControl();
 	private Item _item;
@@ -91,8 +95,8 @@ public class JDTelaEditServ extends JDialog implements ActionListener {
 		JLValorCusto.setBounds(10, 163, 72, 14);
 		contentPanel.add(JLValorCusto);
 
-		JMFVlrCusto = new JTextField();
-		JMFVlrCusto.setBounds(101, 160, 150, 20);
+		JMFVlrCusto = new JMoneyField(); // new JTextField();
+		JMFVlrCusto.setBounds(101, 160, 159, 20);
 		contentPanel.add(JMFVlrCusto);
 		{
 			JLabel lblValorComercial = new JLabel("Valor comercial");
@@ -100,12 +104,12 @@ public class JDTelaEditServ extends JDialog implements ActionListener {
 			contentPanel.add(lblValorComercial);
 		}
 
-		JMFVlrCom = new JTextField();
-		JMFVlrCom.setBounds(101, 200, 150, 20);
+		JMFVlrCom = new JMoneyField();
+		JMFVlrCom.setBounds(101, 200, 159, 20);
 		contentPanel.add(JMFVlrCom);
 		{
 			JLabel JLAtivo = new JLabel("Ativo");
-			JLAtivo.setBounds(261, 162, 46, 14);
+			JLAtivo.setBounds(270, 164, 34, 14);
 			contentPanel.add(JLAtivo);
 		}
 		{
@@ -113,7 +117,7 @@ public class JDTelaEditServ extends JDialog implements ActionListener {
 			for (String item : ext.Status()) {
 				JCBStatus.addItem(item);
 			}
-			JCBStatus.setBounds(317, 160, 107, 20);
+			JCBStatus.setBounds(301, 160, 107, 20);
 			contentPanel.add(JCBStatus);
 		}
 
@@ -162,10 +166,10 @@ public class JDTelaEditServ extends JDialog implements ActionListener {
 
 				servBean.setNomeitem(JTFItem.getText());
 				servBean.setDescricaoitem(JTADescItem.getText());
-				servBean.setVlrcustoitem(Extras.FormatVlrMoneyBD(JMFVlrCusto
-						.getText()));
-				servBean.setVlrcomercialitem(Extras.FormatVlrMoneyBD(JMFVlrCom
-						.getText()));
+				servBean.setVlrcustoitem(new BigDecimal(Extras
+						.FormatVlrMoneyBD(JMFVlrCusto.getText())));
+				servBean.setVlrcomercialitem(new BigDecimal(Extras
+						.FormatVlrMoneyBD(JMFVlrCom.getText())));
 				servBean.setAtivoitem(JCBStatus.getSelectedIndex() == 0 ? true
 						: false);
 
@@ -174,10 +178,13 @@ public class JDTelaEditServ extends JDialog implements ActionListener {
 				_item.setAtivo(JCBStatus.getSelectedIndex() == 0 ? true : false);
 				_item.setDescricao(JTADescItem.getText());
 				_item.setNome(JTFItem.getText());
-				_item.setValorCusto(Extras.FormatVlrMoneyBD(JMFVlrCusto
-						.getText()));
-				_item.setValorComercial(Extras.FormatVlrMoneyBD(JMFVlrCom
-						.getText()));
+
+				try {
+					_item.setValorCusto(JMFVlrCusto.getValor());
+					_item.setValorComercial(JMFVlrCom.getValor());
+				} catch (BadLocationException e) {
+					e.printStackTrace();
+				}
 
 				String out = _servicoControl.Atualizar(_item);
 
@@ -202,8 +209,8 @@ public class JDTelaEditServ extends JDialog implements ActionListener {
 		_item = _servicoControl.BuscarItem(_ID);
 		JTFItem.setText(_item.getNome());
 		JTADescItem.setText(_item.getDescricao());
-		JMFVlrCusto.setText(_item.getValorCusto() + "");
-		JMFVlrCom.setText(_item.getValorComercial() + "");
+		JMFVlrCusto.setValor(_item.getValorCusto());
+		JMFVlrCom.setValor(_item.getValorComercial());
 
 		if (_item.isAtivo())
 			JCBStatus.setSelectedIndex(0);
