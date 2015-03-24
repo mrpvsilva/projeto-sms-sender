@@ -22,8 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
 import Control.UsuarioControl;
+import Dominio.Usuario;
 
-public class JDTelaBuscarUsu extends JDialog implements ActionListener{
+public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -41,7 +42,7 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener{
 	private JTable tabela;
 	private JScrollPane scroll;
 	protected String valor;
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -86,53 +87,56 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener{
 			// Criação da Jtable
 			scroll = new JScrollPane();
 			contentPanel.add(scroll);
-            scroll.setBounds(12, 59, 412, 158);
-            {
-                    final TableModel tabelaModel = 
-                                    new DefaultTableModel(
-                                                    new String[][] { },
-                                                    new String[] {  "Item", 
-                                                    				"Descrição",
-                                                    				"Ativo"}){
-                    	/**
+			scroll.setBounds(12, 59, 412, 158);
+			{
+				final TableModel tabelaModel = new DefaultTableModel(
+						new String[][] {}, new String[] { "ID", "Usuário",
+								"Nome", "CPF", "Perfil" }) {
+					/**
 																		 * 
 																		 */
-																		private static final long serialVersionUID = 1L;
+					private static final long serialVersionUID = 1L;
 
-						public boolean isCellEditable(int row, int col) {  
-                    		return false;  
-                         } };
-                    
-                    tabela = new JTable();
-                    scroll.setViewportView(tabela);
-                    tabela.setModel(tabelaModel);
-                    model = (DefaultTableModel) tabela.getModel();
-                    model.fireTableDataChanged();
-                    
-                    //for (LancamentoBean lanc : lancControl.getLancamentos()) { Laço necessário para incluir registro na tabela
-						//model.addRow(new Object[]{new Integer(lanc.getIdLancamento()),formatas.format(lanc.getDtCompra()),lanc.getNAutorizacao(),lanc.getSelectedConveniada()});
-                    	model.addRow(new Object[]{"arua","Aruã","Operacional"});
-                    	model.addRow(new Object[]{"paulo","Paulo","Operacional"});
-                    	model.addRow(new Object[]{"guido","Guido","Administrador"});
-                    	
-					//}
-                    
-                    tabela.addMouseListener(new MouseAdapter() {
-                            
+					public boolean isCellEditable(int row, int col) {
+						return false;
+					}
+				};
 
-							public void mouseClicked(MouseEvent evt) {
-								if(evt.getClickCount() == 1){
-                                    int linha = tabela.getSelectedRow();
-                                    valor = String.valueOf(tabela.getValueAt(linha, 0));       
-                                    
-								}
-								
-                            }
-                    });
-                    
-            }
-    }
-		
+				tabela = new JTable();
+				scroll.setViewportView(tabela);
+				tabela.setModel(tabelaModel);
+				model = (DefaultTableModel) tabela.getModel();
+				model.fireTableDataChanged();
+
+				// for (LancamentoBean lanc : lancControl.getLancamentos()) {
+				// Laço necessário para incluir registro na tabela
+				// model.addRow(new Object[]{new
+				// Integer(lanc.getIdLancamento()),formatas.format(lanc.getDtCompra()),lanc.getNAutorizacao(),lanc.getSelectedConveniada()});
+				for (Usuario u : usuCont.BuscarTodos()) {
+
+					model.addRow(new Object[] { u.getId(), u.getUsuario(),
+							u.getNomeCompleto(), u.getCpf(), u.getPerfil() });
+				}
+				tabela.getColumnModel().getColumn(0).setMinWidth(0);
+				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
+
+				// }
+
+				tabela.addMouseListener(new MouseAdapter() {
+
+					public void mouseClicked(MouseEvent evt) {
+						if (evt.getClickCount() == 1) {
+							int linha = tabela.getSelectedRow();
+							valor = String.valueOf(tabela.getValueAt(linha, 0));
+
+						}
+
+					}
+				});
+
+			}
+		}
+
 		JCBFiltro = new JComboBox<String>();
 		for (String item : usuCont.Filtros()) {
 			JCBFiltro.addItem(item);
@@ -160,27 +164,47 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent acao) {
 
-		if(acao.getSource() == JBCadUsu){
-			 
+		if (acao.getSource() == JBCadUsu) {
+
 			try {
 				JDTelaCadUsu jdtcu = new JDTelaCadUsu();
 				jdtcu.setVisible(true);
 				jdtcu.setLocationRelativeTo(null);
 			} catch (ParseException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage(),"Erro ao carregar máscara",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, e.getMessage(),
+						"Erro ao carregar máscara", JOptionPane.ERROR_MESSAGE);
 			}
 
 		}// final do botão cadastrar usuário
-		
-		if(acao.getSource() == JBEditUsu){
-			JDTelaEditUsu jdteu = new JDTelaEditUsu();
-			jdteu.setVisible(true);
-			jdteu.setLocationRelativeTo(null);
+
+		if (acao.getSource() == JBEditUsu) {
+			if (valor != null) {
+				JDTelaEditUsu jdteu = new JDTelaEditUsu(Integer.parseInt(valor));
+				jdteu.setVisible(true);
+				jdteu.setLocationRelativeTo(null);
+			} else {
+				JOptionPane.showMessageDialog(null, "Selecione uma linha");
+			}
 		}// final do botão atualizar usuário
-		
-		if(acao.getSource() == JBBuscar){
-			
+
+		if (acao.getSource() == JBBuscar) {
+			String campo = JCBFiltro.getSelectedItem().toString() == "USUARIO" ? "usuario"
+					: JCBFiltro.getSelectedItem().toString() == "NOME" ? "nomecompleto"
+							: "cpf";
+			String value = JTFBuscar.getText();
+
+			model.setRowCount(0);
+
+			if (!value.equals("")) {
+				for (Usuario u : usuCont.BuscarTodos(campo, value)) {
+
+					model.addRow(new Object[] { u.getId(), u.getUsuario(),
+							u.getNomeCompleto(), u.getCpf(), u.getPerfil() });
+				}
+
+			}
+
 		}// final do botão buscar usuário
-		
+
 	}// final da ação do botão
 }

@@ -333,6 +333,7 @@ public class JDTelaEditForn extends JDialog implements ActionListener {
 
 	private void PreencherCampos() {
 		fornecedor = _fornecedorControl.BuscarFornecedor(_ID);
+		
 		JTFNome.setText(fornecedor.getNome());
 		JFFCnpj.setText(fornecedor.getCpfcnpj());
 		JFFRg.setText(fornecedor.getRg());
@@ -342,44 +343,27 @@ public class JDTelaEditForn extends JDialog implements ActionListener {
 		List<Telefone> telefones = fornecedor.getTelefones();
 
 		if (telefones.size() > 0) {
+			JCBOperadora.setSelectedItem(telefones.get(0).getOperadora());
 			JFFFone.setText("(" + telefones.get(0).getDdd() + ")"
 					+ telefones.get(0).getNumero());
-			for (int i = 0; i < JCBOperadora.getItemCount(); i++) {
-				if (JCBOperadora.getItemAt(i).equals(
-						telefones.get(0).getOperadora())) {
-					JCBOperadora.setSelectedIndex(i);
-				}
-			}
+
 		}
 
 		if (telefones.size() > 1) {
 			JFFFone1.setText("(" + telefones.get(1).getDdd() + ")"
 					+ telefones.get(1).getNumero());
-			for (int i = 0; i < JCBOperadora1.getItemCount(); i++) {
-				if (JCBOperadora1.getItemAt(i).equals(
-						telefones.get(2).getOperadora())) {
-					JCBOperadora1.setSelectedIndex(i);
-				}
-			}
+			JCBOperadora1.setSelectedItem(telefones.get(1).getOperadora());
+
 		}
 
 		if (telefones.size() > 2) {
 			JFFFone2.setText("(" + telefones.get(2).getDdd() + ")"
 					+ telefones.get(2).getNumero());
-			for (int i = 0; i < JCBOperadora2.getItemCount(); i++) {
-				if (JCBOperadora2.getItemAt(i).equals(
-						telefones.get(2).getOperadora())) {
-					JCBOperadora2.setSelectedIndex(i);
-				}
-			}
+			JCBOperadora2.setSelectedItem(telefones.get(2).getOperadora());
+
 		}
 
-		for (int i = 0; i < JCBTpServ.getItemCount(); i++) {
-			if (JCBTpServ.getItemAt(i).equals(
-					fornecedor.getTiposervico().getNome())) {
-				JCBTpServ.setSelectedIndex(i);
-			}
-		}
+		JCBTpServ.setSelectedItem(fornecedor.getTiposervico().getNome());
 
 	}
 }

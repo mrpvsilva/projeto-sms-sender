@@ -27,11 +27,15 @@ public class UsuarioModel {
 	public ArrayList<String> FiltroUsu() {
 		ArrayList<String> lista = new ArrayList<String>();
 
-		lista.add("LOGIN");
+		lista.add("USUARIO");
 		lista.add("NOME");
-		lista.add("PERFIL");
+		lista.add("CPF");
 
 		return lista;
 	}// final do método filtros
+
+	public String[] DDLPerfis() {
+		return new String[] { "SELECIONE", "ADMIN", "VENDEDOR" };
+	}
 
 }
