@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -32,8 +33,7 @@ public class Fornecedor implements Serializable {
 	private BigDecimal valorServico;
 	@Column
 	private String email;
-	@Column
-	private String endereco;
+
 	@Column
 	private String cpfcnpj;
 	@Column
@@ -48,21 +48,25 @@ public class Fornecedor implements Serializable {
 	@JoinTable(name = "telefonesfornecedores", joinColumns = { @JoinColumn(name = "idfornecedor", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idtelefone", referencedColumnName = "id") })
 	private List<Telefone> telefones;
 
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "enderecosfornecedores", joinColumns = { @JoinColumn(name = "idfornecedor", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idendereco", referencedColumnName = "id") })
+	private Endereco endereco;
+
 	public Fornecedor() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Fornecedor(String nome, BigDecimal valorServico, String email,
-			String endereco, String cpfcnpj, String rg, String site,
+			Endereco endereco, String cpfcnpj, String rg, String site,
 			TipoServico tipoServico) {
 		setNome(nome);
-		setValorservico(valorServico);
+		setValorServico(valorServico);
 		setEmail(email);
 		setEndereco(endereco);
 		setCpfcnpj(cpfcnpj);
 		setRg(rg);
 		setSite(site);
-		setTiposervico(tipoServico);
+		setTipoServico(tipoServico);
 	}
 
 	public long getId() {
@@ -81,12 +85,12 @@ public class Fornecedor implements Serializable {
 		this.nome = nome;
 	}
 
-	public BigDecimal getValorservico() {
+	public BigDecimal getValorServico() {
 		return valorServico;
 	}
 
-	public void setValorservico(BigDecimal valorservico) {
-		this.valorServico = valorservico;
+	public void setValorServico(BigDecimal valorServico) {
+		this.valorServico = valorServico;
 	}
 
 	public String getEmail() {
@@ -95,14 +99,6 @@ public class Fornecedor implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
 	}
 
 	public String getCpfcnpj() {
@@ -129,12 +125,12 @@ public class Fornecedor implements Serializable {
 		this.site = site;
 	}
 
-	public TipoServico getTiposervico() {
+	public TipoServico getTipoServico() {
 		return tipoServico;
 	}
 
-	public void setTiposervico(TipoServico tiposervico) {
-		this.tipoServico = tiposervico;
+	public void setTipoServico(TipoServico tipoServico) {
+		this.tipoServico = tipoServico;
 	}
 
 	public List<Telefone> getTelefones() {
@@ -143,6 +139,14 @@ public class Fornecedor implements Serializable {
 
 	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	public void addTelefoneFornecedor(Telefone telefone) {

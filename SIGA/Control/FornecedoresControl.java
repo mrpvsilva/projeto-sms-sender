@@ -30,30 +30,11 @@ public class FornecedoresControl {
 
 	}// final do método filtros
 
-	public String Cadastrar(FornecedoresBean fornecedor) {
-
-		Fornecedor f = new Fornecedor();
-
-		f.setCpfcnpj(fornecedor.getCnpjforn().replace(".", "").replace("/", "")
-				.replace("-", ""));
-		f.setNome(fornecedor.getNomeforn());
-		// falta o campo valor do serviço
-		f.setValorservico(new BigDecimal(5.00));
-		//
-		f.setRg(fornecedor.getRgforn());
-		f.setEmail(fornecedor.getEmailforn());
-		f.setSite(fornecedor.getSiteforn());
-		f.setEndereco(fornecedor.getEndforn());
-
-		// o campo tipo servico é obrigatorio
-		f.setTiposervico(BuscarTipoServico(fornecedor.getTiposervprestadoforn()));
-
-		// ADICIONA OS TELEFONES DO FORNECEDOR
-		f.setTelefones(fornecedor.getTelefones());
+	public String Cadastrar(Fornecedor fornecedor) {
 
 		// mudar campo tipo telefone para guardar a operadora
 
-		if (!_fornecedorRepository.Add(f))
+		if (!_fornecedorRepository.Add(fornecedor))
 			return "Falha no cadastro do fornecedor";
 
 		return null;

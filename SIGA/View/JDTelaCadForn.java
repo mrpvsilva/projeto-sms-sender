@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
 import java.text.ParseException;
 
 import javax.swing.JButton;
@@ -20,12 +21,12 @@ import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 
 import Control.FornecedoresControl;
+import Dominio.EnderecoFornecedor;
+import Dominio.Fornecedor;
 import Dominio.TelefoneFornecedor;
 import Extra.Extras;
 import Extra.Mascaras;
 import Extra.Validacoes;
-import Model.FornecedoresBean;
-
 import java.awt.event.KeyAdapter;
 
 public class JDTelaCadForn extends JDialog implements ActionListener {
@@ -53,7 +54,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	private JLabel JLBairro;
 	private JTextField JTFBairro;
 	private JLabel lblCep;
-	private JTextField JFFCep;
+	private JFormattedTextField JFFCep;
 	private JCheckBox JCBCpfMask;
 	private MaskFormatter maskCep;
 	private JComboBox<String> JCBOperadora1;
@@ -356,6 +357,11 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 																		// Telefone
 					JOptionPane.showMessageDialog(null, "Telefone inválido.",
 							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+				else if (JCBTpServ.getSelectedItem().toString()
+						.equals("Selecione"))
+					JOptionPane.showMessageDialog(null,
+							"Selecione um tipo de serviço.",
+							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 				else if (JTFEmail.getText().trim().isEmpty()) // Valida Email
 					JOptionPane.showMessageDialog(null, "Email em branco.",
 							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
@@ -373,50 +379,58 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 				else {
 
-					FornecedoresBean fornBean = new FornecedoresBean();
+					Fornecedor f = new Fornecedor();
 
-					fornBean.setNomeforn(JTFNome.getText());
-					fornBean.setCnpjforn(Extras.FormatCnpjCpf(JFFCnpj.getText())); // Formata
-																					// e
-																					// seta
-																					// no
-																					// Bean
-					fornBean.setRgforn(JFFRg.getText());
+					f.setNome(JTFNome.getText());
+					f.setCpfcnpj(Extras.FormatCnpjCpf(JFFCnpj.getText()));
+					f.setValorServico(new BigDecimal(5.00));
 
-					fornBean.AddTelefone(new TelefoneFornecedor(Extras
-							.FormatDDD(Extras.FormatFone(JFFFone.getText())),
-							Extras.FormatFoneBD(Extras.FormatFone(JFFFone
-									.getText())), JCBOperadora
-									.getSelectedItem().toString()));
+					f.setRg(JFFRg.getText());
+					f.setEmail(JTFEmail.getText());
+					f.setSite(JTFSite.getText());
 
-					fornBean.AddTelefone(new TelefoneFornecedor(Extras
-							.FormatDDD(Extras.FormatFone(JFFFone1.getText())),
-							Extras.FormatFoneBD(Extras.FormatFone(JFFFone1
-									.getText())), JCBOperadora1
-									.getSelectedItem().toString()));
+					EnderecoFornecedor endereco = new EnderecoFornecedor();
 
-					fornBean.AddTelefone(new TelefoneFornecedor(Extras
-							.FormatDDD(Extras.FormatFone(JFFFone2.getText())),
-							Extras.FormatFoneBD(Extras.FormatFone(JFFFone2
-									.getText())), JCBOperadora2
-									.getSelectedItem().toString()));
+					endereco.setEndereco(JTFEnd.getText());
+					endereco.setBairro(JTFBairro.getText());
+					System.out.println(JFFCep.getValue());
+					endereco.setCep((Integer.parseInt(Extras.FormatCep(JFFCep
+							.getText()))));
 
-					fornBean.setEmailforn(JTFEmail.getText());
-					fornBean.setEndforn(JTFEnd.getText());
-					fornBean.setBairro(JTFBairro.getText());
+					f.setEndereco(endereco);
 
-					fornBean.setCep(Extras.FormatCep(JFFCep.getText())); // Formata
-																			// e
-																			// seta
-																			// no
-																			// Bean
-					fornBean.setSiteforn(JTFSite.getText());
+					// o campo tipo servico é obrigatorio
+					f.setTipoServico(_fornecedorControl
+							.BuscarTipoServico(JCBTpServ.getSelectedItem()
+									.toString()));
 
-					fornBean.setTiposervprestadoforn(JCBTpServ
-							.getSelectedItem().toString());
+					f.addTelefoneFornecedor(new TelefoneFornecedor(
+							Extras.FormatDDDBD(Extras.FormatFoneBD(JFFFone
+									.getText())), Extras.FormatNumeroBD(Extras
+									.FormatFoneBD(JFFFone.getText())),
+							JCBOperadora.getSelectedItem().toString()));
 
-					/* Colocar o método de cadastrar */
-					String out = _fornecedorControl.Cadastrar(fornBean);
+					if (JFFFone1.getValue() != null) {
+						f.addTelefoneFornecedor(new TelefoneFornecedor(Extras
+								.FormatDDDBD(Extras.FormatFoneBD(JFFFone1
+										.getText())), Extras
+								.FormatNumeroBD(Extras.FormatFoneBD(JFFFone1
+										.getText())), JCBOperadora1
+								.getSelectedItem().toString()));
+
+					}
+
+					if (JFFFone2.getValue() != null) {
+						f.addTelefoneFornecedor(new TelefoneFornecedor(Extras
+								.FormatDDDBD(Extras.FormatFoneBD(JFFFone2
+										.getText())), Extras
+								.FormatNumeroBD(Extras.FormatFoneBD(JFFFone2
+										.getText())), JCBOperadora2
+								.getSelectedItem().toString()));
+
+					}
+
+					String out = _fornecedorControl.Cadastrar(f);
 					if (out == null) {
 						JOptionPane.showMessageDialog(null,
 								"Forncedor cadastrado");
