@@ -1,95 +1,116 @@
 package Extra;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
+import Dominio.Usuario;
 
 public class Extras {
 	ArrayList<String> lista;
-	
-	public ArrayList<String> getSimNao(){
+
+	private static Usuario _usuarioLogado;
+
+	public static Usuario getUsuarioLogado() {
+		return _usuarioLogado;
+	}
+
+	public static void setUsuarioLogado(Usuario _usuarioLogado) {
+		Extras._usuarioLogado = _usuarioLogado;
+	}
+
+	public ArrayList<String> getSimNao() {
 		lista = new ArrayList<>();
-		
+
 		lista.add("SIM");
 		lista.add("NAO");
-				
+
 		return lista;
 	}
-	
-	public ArrayList<String> Status(){
+
+	public ArrayList<String> Status() {
 		lista = new ArrayList<>();
-		
+
 		lista.add("ATIVO");
 		lista.add("INATIVO");
-		
+
 		return lista;
 	}
-	
-	public ArrayList<String> getOperadora(){
+
+	public ArrayList<String> getOperadora() {
 		lista = new ArrayList<>();
-		
+
 		lista.add("TIM");
 		lista.add("OI");
 		lista.add("VIVO");
 		lista.add("CLARO");
-				
+
 		return lista;
 	}
-	
-	public static String FormatCnpjCpf(String cnpjcpf){
-		
-		if(cnpjcpf.contains("/"))
-			cnpjcpf = cnpjcpf.replace(".", "").replace("/", "").replace("-", "").trim();
+
+	public static String FormatCnpjCpf(String cnpjcpf) {
+
+		if (cnpjcpf.contains("/"))
+			cnpjcpf = cnpjcpf.replace(".", "").replace("/", "")
+					.replace("-", "").trim();
 		else
 			cnpjcpf = cnpjcpf.replace(".", "").replace("-", "").trim();
-		
+
 		return cnpjcpf;
 	}
-	
-	public static String FormatCep(String cep){
-		cep = cep.replace(".","").replace("-","").trim();
-		
+
+	public static String FormatCep(String cep) {
+		cep = cep.replace(".", "").replace("-", "").trim();
+
 		return cep;
 	}
-	
-	public static String FormatFone(String fone){
-		fone = fone.replace("(","").replace(")","").replace("-", "").trim();
-		
+
+	public static String FormatFone(String fone) {
+		fone = fone.replace("(", "").replace(")", "").replace("-", "").trim();
+
 		return fone;
 	}
-	
-	public static String FormatDDD(String fone){
-		
-		if(fone.isEmpty())
-			fone="";
+
+	public static String FormatDDD(String fone) {
+
+		if (fone.isEmpty())
+			fone = "";
 		else
 			fone = fone.substring(0, 2);
-		
+
 		return fone;
 	}
-	
-	public static String FormatFoneBD(String fone){
-		
-		if(fone.isEmpty())
+
+	public static String FormatFoneBD(String fone) {
+
+		if (fone.isEmpty())
 			fone = "";
-		else if(fone.length()==10)
+		else if (fone.length() == 10)
 			fone = fone.substring(1, 9);
 		else
 			fone = fone.substring(1, 10);
-			
+
 		return fone;
 	}
-	
-	public static double FormatVlrMoneyBD(String valor){
-		
-		valor = valor.replace("R$","").replace("_", "").replace(".","").replace(",", ".").trim();
-		
-		double val = Double.parseDouble(valor);		
+
+	public static double FormatVlrMoneyBD(String valor) {
+
+		valor = valor.replace("R$", "").replace("_", "").replace(".", "")
+				.replace(",", ".").trim();
+
+		double val = Double.parseDouble(valor);
 		return val;
 	}
-	
-	public static String FormatVlrMoney(String valor){
-		
-		valor = valor.replace("R$","").replace("_", "").replace(",", ".").replace(".","").trim();
-				
+
+	public static String FormatVlrMoney(String valor) {
+
+		valor = valor.replace("R$", "").replace("_", "").replace(",", ".")
+				.replace(".", "").trim();
+
 		return valor;
+	}
+
+	public static String FormatDate(Date date) {
+		return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(date);
 	}
 }

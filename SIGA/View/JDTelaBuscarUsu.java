@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.util.List;
 
@@ -78,6 +80,14 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 		}
 		{
 			JTFBuscar = new JTextField();
+			JTFBuscar.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					if (e.getKeyCode() == 10) {
+						Pesquisar();
+					}
+				}
+			});
 			JTFBuscar.setColumns(10);
 			JTFBuscar.setBounds(153, 11, 172, 20);
 			contentPanel.add(JTFBuscar);
@@ -110,18 +120,6 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 				CarregarGrid(usuCont.BuscarTodos());
 				tabela.getColumnModel().getColumn(0).setMinWidth(0);
 				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
-				// }
-
-				// tabela.addMouseListener(new MouseAdapter() {
-				//
-				// public void mouseClicked(MouseEvent evt) {
-				// if (evt.getClickCount() == 1) {
-				// int linha = tabela.getSelectedRow();
-				// valor = String.valueOf(tabela.getValueAt(linha, 0));
-				// }
-				//
-				// }
-				// });
 
 			}
 		}
@@ -171,10 +169,11 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 			int linha = tabela.getSelectedRow();
 
 			if (linha > -1) {
-				JDTelaEditUsu jdteu;
+
 				try {
-					jdteu = new JDTelaEditUsu(Integer.parseInt(String
-							.valueOf(tabela.getValueAt(linha, 0))));
+					JDTelaEditUsu jdteu = new JDTelaEditUsu(
+							Integer.parseInt(String.valueOf(tabela.getValueAt(
+									linha, 0))));
 					jdteu.setVisible(true);
 					jdteu.setLocationRelativeTo(null);
 				} catch (NumberFormatException e) {
@@ -191,19 +190,22 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 		}// final do botão atualizar usuário
 
 		if (acao.getSource() == JBBuscar) {
-			String campo = JCBFiltro.getSelectedItem().toString() == "USUARIO" ? "usuario"
-					: JCBFiltro.getSelectedItem().toString() == "NOME" ? "nomecompleto"
-							: "cpf";
-			String value = JTFBuscar.getText();
-			if (!value.equals("")) {
-				CarregarGrid(usuCont.BuscarTodos(campo, value));
-			} else {
-				CarregarGrid(usuCont.BuscarTodos());
-			}
-
+			Pesquisar();
 		}// final do botão buscar usuário
 
 	}// final da ação do botão
+
+	private void Pesquisar() {
+		String campo = JCBFiltro.getSelectedItem().toString() == "USUARIO" ? "usuario"
+				: JCBFiltro.getSelectedItem().toString() == "NOME" ? "nomecompleto"
+						: "cpf";
+		String value = JTFBuscar.getText();
+		if (!value.equals("")) {
+			CarregarGrid(usuCont.BuscarTodos(campo, value));
+		} else {
+			CarregarGrid(usuCont.BuscarTodos());
+		}
+	}
 
 	private void CarregarGrid(List<Usuario> lista) {
 		model.setRowCount(0);

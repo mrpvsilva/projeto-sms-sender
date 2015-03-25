@@ -6,9 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,8 +22,10 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
 import Control.LembretesControl;
+import Dominio.Lembrete;
+import Extra.Extras;
 
-public class JDTelaBuscarLemb extends JDialog implements ActionListener{
+public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -33,12 +37,11 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener{
 	private JLabel JLFiltro;
 	private JButton JBBuscar;
 	private JTextField JTFBuscar;
-	private JComboBox<String> JCBFiltro;
-	private LembretesControl lemCont = new LembretesControl();
+	private JComboBox JCBFiltro;
 	private JScrollPane scroll;
 	private JTable tabela;
 	private DefaultTableModel model;
-	protected String valor;
+	private LembretesControl _lembreteControl = new LembretesControl();
 
 	/**
 	 * Launch the application.
@@ -81,10 +84,7 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener{
 			contentPanel.add(JTFBuscar);
 		}
 		{
-			JCBFiltro = new JComboBox<String>();
-			for (String item : lemCont.Filtros()) {
-				JCBFiltro.addItem(item);
-			}
+			JCBFiltro = new JComboBox(_lembreteControl.Filtros());
 			JCBFiltro.setBounds(40, 11, 103, 20);
 			contentPanel.add(JCBFiltro);
 		}
@@ -92,52 +92,34 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener{
 			// Criação da Jtable
 			scroll = new JScrollPane();
 			contentPanel.add(scroll);
-            scroll.setBounds(12, 59, 412, 158);
-            {
-                    final TableModel tabelaModel = 
-                                    new DefaultTableModel(
-                                                    new String[][] { },
-                                                    new String[] {  "Data agendada", 
-                                                    				"Assunto",
-                                                    				"Usuário"}){
-                    	/**
+			scroll.setBounds(12, 59, 412, 158);
+			{
+				final TableModel tabelaModel = new DefaultTableModel(
+						new String[][] {}, new String[] { "ID", "Data",
+								"Assunto", "Destinatario" }) {
+					/**
 																		 * 
 																		 */
-																		private static final long serialVersionUID = 1L;
+					private static final long serialVersionUID = 1L;
 
-						public boolean isCellEditable(int row, int col) {  
-                    		return false;  
-                         } };
-                    
-                    tabela = new JTable();
-                    scroll.setViewportView(tabela);
-                    tabela.setModel(tabelaModel);
-                    model = (DefaultTableModel) tabela.getModel();
-                    model.fireTableDataChanged();
-                    
-                    //for (LancamentoBean lanc : lancControl.getLancamentos()) { Laço necessário para incluir registro na tabela
-						//model.addRow(new Object[]{new Integer(lanc.getIdLancamento()),formatas.format(lanc.getDtCompra()),lanc.getNAutorizacao(),lanc.getSelectedConveniada()});
-                    	model.addRow(new Object[]{"01/02/2015","Retornar para o cliente","Guido"});
-                    	model.addRow(new Object[]{"02/03/2015","Ligar para o Guido","Flavio"});
-                    	model.addRow(new Object[]{"03/04/2015","Pegar datashow","Junior"});
-                    	
-					//}
-                    
-                    tabela.addMouseListener(new MouseAdapter() {
-                            
+					public boolean isCellEditable(int row, int col) {
+						return false;
+					}
+				};
 
-							public void mouseClicked(MouseEvent evt) {
-								if(evt.getClickCount() == 1){
-                                    int linha = tabela.getSelectedRow();
-                                    valor = String.valueOf(tabela.getValueAt(linha, 0));       
-                                    
-								}
-								
-                            }
-                    });
-                    
-            }
-    }
+				tabela = new JTable();
+				scroll.setViewportView(tabela);
+				tabela.setModel(tabelaModel);
+				model = (DefaultTableModel) tabela.getModel();
+				model.fireTableDataChanged();
+
+				tabela.getColumnModel().getColumn(0).setMinWidth(0);
+				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
+
+				CarregarGrid(_lembreteControl.BuscarTodos());
+
+			}
+		}
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -159,23 +141,56 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent acao) {
 
-
-		if(acao.getSource() == JBCadLemb){
+		if (acao.getSource() == JBCadLemb) {
 			JDTelaCadLemb jdtcl = new JDTelaCadLemb();
 			jdtcl.setVisible(true);
 			jdtcl.setLocationRelativeTo(null);
 		}// final do botão cadastrar lembretes
-		
-		if(acao.getSource() == JBEditLemb){
-			JDTelaEditLemb jdtel = new JDTelaEditLemb();
-			jdtel.setVisible(true);
-			jdtel.setLocationRelativeTo(null);
+
+		if (acao.getSource() == JBEditLemb) {
+
+			int linha = tabela.getSelectedRow();
+			if (linha > -1) {
+
+				JDTelaEditLemb jdtel = new JDTelaEditLemb(
+						Integer.parseInt(model.getValueAt(linha, 0).toString()));
+				jdtel.setVisible(true);
+				jdtel.setLocationRelativeTo(null);
+			} else {
+				JOptionPane.showMessageDialog(null, "Selecione uma linha");
+			}
 		}// final do botão atualizar lembretes
-		
-		if(acao.getSource() == JBBuscar){
-			
+
+		if (acao.getSource() == JBBuscar) {
+			Pesquisar();
 		}// final do botão buscar lembretes
 
 	}// final da ação do botão
+
+	private void Pesquisar() {
+		String campo = JCBFiltro.getSelectedItem().toString() == "ASSUNTO" ? "assunto"
+				: "iddestinatario";
+		String value = JTFBuscar.getText();
+
+		if (!value.equals("")) {
+
+			CarregarGrid(_lembreteControl.BuscarTodos(campo, value));
+		} else {
+			CarregarGrid(_lembreteControl.BuscarTodos());
+		}
+
+	}
+
+	private void CarregarGrid(List<Lembrete> lista) {
+
+		model.setRowCount(0);
+		for (Lembrete l : lista) {
+
+			model.addRow(new Object[] { l.getId(),
+					Extras.FormatDate(l.getDatahora()), l.getAssunto(),
+					l.getDestinatario().getUsuario() });
+		}
+
+	}
 
 }

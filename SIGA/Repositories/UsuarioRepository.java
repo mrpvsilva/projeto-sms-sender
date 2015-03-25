@@ -43,4 +43,20 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 		return query.getResultList();
 
 	}
+
+	@Override
+	public Usuario GetUsuario(String usuario) {
+		try {
+
+			String query = "from Usuario where usuario = :usuario";
+			Query q = entityManager.createQuery(query);
+			q.setParameter("usuario", usuario);
+			Usuario u = (Usuario) q.getSingleResult();
+			return u;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
 }
