@@ -21,8 +21,6 @@ import Control.UsuarioControl;
 import Dominio.Usuario;
 import Extra.Extras;
 import Extra.Mascaras;
-import Model.UsuarioBean;
-
 import javax.swing.JComboBox;
 
 public class JDTelaEditUsu extends JDialog implements ActionListener {
