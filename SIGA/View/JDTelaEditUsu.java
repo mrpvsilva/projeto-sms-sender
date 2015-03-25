@@ -62,7 +62,8 @@ public class JDTelaEditUsu extends JDialog implements ActionListener {
 
 	/**
 	 * Create the dialog.
-	 * @throws ParseException 
+	 * 
+	 * @throws ParseException
 	 */
 	public JDTelaEditUsu(int id) throws ParseException {
 		_id = id;
@@ -156,16 +157,17 @@ public class JDTelaEditUsu extends JDialog implements ActionListener {
 							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 				else {
 
-					UsuarioBean usuBean = new UsuarioBean();
+					// UsuarioBean usuBean = new UsuarioBean();
+					//
+					// usuBean.setLogin(JTFUsuario.getText());
+					// usuBean.setSenha(new String(JPFSenha.getPassword()));
+					// usuBean.setNome(JTFNome.getText());
+					// usuBean.setCpf(Extras.FormatCnpjCpf(JFFCpf.getText()));
+					// usuBean.setPerfil(JCBPerfil.getSelectedItem().toString());
 
-					usuBean.setLogin(JTFUsuario.getText());
-					usuBean.setSenha(new String(JPFSenha.getPassword()));
-					usuBean.setNome(JTFNome.getText());
-					usuBean.setCpf(Extras.FormatCnpjCpf(JFFCpf.getText()));
-					usuBean.setPerfil(JCBPerfil.getSelectedItem().toString());
-
-					_usuario.setNomeCompleto(JTFUsuario.getText());
-					_usuario.setCpf(JFFCpf.getText());
+					_usuario.setUsuario(JTFUsuario.getText());
+					_usuario.setNomeCompleto(JTFNome.getText());
+					_usuario.setCpf(Extras.FormatCnpjCpf(JFFCpf.getText()));
 					_usuario.setPerfil(JCBPerfil.getSelectedItem().toString());
 
 					String out = _usuarioControl.Atualizar(_usuario);
@@ -184,10 +186,11 @@ public class JDTelaEditUsu extends JDialog implements ActionListener {
 		}// final do botão salvar usuário
 
 		if (acao.getSource() == btnResetarSenha) {
-			_usuario.setSenha(_usuario.getCpf());
+			_usuario.setSenha(Extras.FormatCnpjCpf(JFFCpf.getText()));
 			String out = _usuarioControl.Atualizar(_usuario);
 
 			if (out == null) {
+				PreencherCampos();
 				JOptionPane.showMessageDialog(null,
 						"Senha resetada com sucesso");
 			} else {

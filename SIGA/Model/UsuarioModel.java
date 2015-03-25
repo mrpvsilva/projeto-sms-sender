@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import persistenceManagerFactory.PersistenceManagerFactory;
 import Dominio.Usuario;
+import Extra.Extras;
 import Interfaces.IUsuarioRepository;
 import Repositories.UsuarioRepository;
 
@@ -19,6 +20,8 @@ public class UsuarioModel {
 
 		if (u == null)
 			return false;
+
+		Extras.setUsuarioLogado(u);
 
 		return true;
 	}

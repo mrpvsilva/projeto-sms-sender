@@ -1,22 +1,78 @@
 package Control;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.JOptionPane;
-
-import Model.ClientesModel;
+import persistenceManagerFactory.PersistenceManagerFactory;
+import Dominio.Lembrete;
+import Dominio.Usuario;
+import Extra.Extras;
+import Interfaces.ILembreteRepository;
+import Interfaces.IUsuarioRepository;
 import Model.LembretesModel;
-import Model.UsuarioBean;
-import Model.UsuarioModel;
+import Repositories.LembreteRepository;
+import Repositories.UsuarioRepository;
 
 public class LembretesControl {
 
 	LembretesModel lembMod = new LembretesModel();
-	
-	/*Envia filtros para view JDTelaBuscarLemb */
-	public ArrayList<String> Filtros(){
-		
+
+	private ILembreteRepository _lembreteRepository = new LembreteRepository(
+			PersistenceManagerFactory.getPersistanceManager());
+	private IUsuarioRepository _usuarioRepository = new UsuarioRepository(
+			PersistenceManagerFactory.getPersistanceManager());
+
+	/* Envia filtros para view JDTelaBuscarLemb */
+
+	public String Cadastrar(Lembrete lembrete) {
+
+		lembrete.setRemetente(Extras.getUsuarioLogado());
+
+		if (!_lembreteRepository.Add(lembrete))
+			return "Falha no cadastro do lembrete";
+
+		return null;
+	}
+
+	public String Atualizar(Lembrete lembrete) {
+
+		lembrete.setRemetente(_usuarioRepository.GetById(2));
+
+		if (!_lembreteRepository.Update(lembrete))
+			return "Falha no atualização do lembrete";
+
+		return null;
+	}
+
+	public List<Lembrete> BuscarTodos() {
+		return _lembreteRepository.FindAll();
+	}
+
+	public List<Lembrete> BuscarTodos(String campo, String valor) {
+		return _lembreteRepository.FindAll(campo, valor);
+	}
+
+	public Usuario BuscarDestinatario(String usuario) {
+		return _usuarioRepository.GetUsuario(usuario);
+	}
+
+	public String[] DDLRemetentes() {
+		List<Usuario> l = _usuarioRepository.FindAll();
+		String[] ddl = new String[l.size() + 1];
+		ddl[0] = "Selecione";
+		for (int i = 0; i < l.size(); i++) {
+			ddl[i + 1] = l.get(i).getUsuario();
+		}
+		return ddl;
+
+	}
+
+	public Lembrete BuscarLembrete(int id) {
+		return _lembreteRepository.GetById(id);
+	}
+
+	public String[] Filtros() {
 		return lembMod.FiltroLemb();
 	}// final do método filtros
-	
+
 }
