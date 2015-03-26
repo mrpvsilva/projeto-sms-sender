@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.text.ParseException;
 
@@ -12,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,13 +21,19 @@ import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 
 import Control.FornecedoresControl;
+import Dominio.Endereco;
 import Dominio.EnderecoFornecedor;
 import Dominio.Fornecedor;
-import Dominio.TelefoneFornecedor;
+import Dominio.Telefone;
 import Extra.Extras;
 import Extra.Mascaras;
 import Extra.Validacoes;
-import java.awt.event.KeyAdapter;
+import TableModels.TelefoneTableModel;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 public class JDTelaCadForn extends JDialog implements ActionListener {
 
@@ -42,14 +48,9 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	private JTextField JTFSite;
 	private JButton JBNovForn;
 	private JButton JBSalvForn;
-	private JFormattedTextField JFFFone1;
-	private JFormattedTextField JFFFone;
-	private JFormattedTextField JFFRg;
+	private JTextField JFFRg;
 	private JFormattedTextField JFFCnpj;
-	private MaskFormatter maskFone;
 	private JComboBox JCBTpServ;
-	private JFormattedTextField JFFFone2;
-	private MaskFormatter maskRG;
 	private MaskFormatter maskCnpj;
 	private JLabel JLBairro;
 	private JTextField JTFBairro;
@@ -57,18 +58,22 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	private JFormattedTextField JFFCep;
 	private JCheckBox JCBCpfMask;
 	private MaskFormatter maskCep;
-	private JComboBox<String> JCBOperadora1;
-	private Extras ext = new Extras();
-	private JComboBox<String> JCBOperadora;
-	private JComboBox<String> JCBOperadora2;
 	private FornecedoresControl _fornecedorControl;
+	private TelefoneTableModel telmodel;
+	private JScrollPane scrollPane;
+	private JTable table;
+	private JButton btnaddtel;
+	private JButton btnedittel;
+	private JButton btnremovetel;
+	private int id;
+	private Fornecedor fornecedor;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaCadForn dialog = new JDTelaCadForn();
+			JDTelaCadForn dialog = new JDTelaCadForn(0);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -81,9 +86,10 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	 * 
 	 * @throws ParseException
 	 */
-	public JDTelaCadForn() throws ParseException {
+	public JDTelaCadForn(int id) throws ParseException {
+		this.id = id;
 		_fornecedorControl = new FornecedoresControl();
-		setBounds(100, 100, 581, 300);
+		setBounds(0, -20, 512, 379);
 		setTitle("SIGA  - cadastro de fornecedores");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -91,232 +97,138 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 
 		JLabel JLNome = new JLabel("Nome");
-		JLNome.setBounds(10, 11, 46, 14);
+		JLNome.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLNome.setBounds(0, 11, 73, 14);
 		contentPanel.add(JLNome);
 
 		JLabel JLCnpj = new JLabel("Cnpj");
-		JLCnpj.setBounds(10, 36, 35, 14);
+		JLCnpj.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLCnpj.setBounds(0, 36, 73, 14);
 		contentPanel.add(JLCnpj);
 
 		JLabel JLRg = new JLabel("Rg");
-		JLRg.setBounds(296, 39, 35, 14);
+		JLRg.setBounds(293, 39, 35, 14);
 		contentPanel.add(JLRg);
 
-		JLabel JLTelefone1 = new JLabel("Fone");
-		JLTelefone1.setBounds(10, 67, 46, 14);
+		JLabel JLTelefone1 = new JLabel("Telefones");
+		JLTelefone1.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLTelefone1.setBounds(0, 104, 73, 14);
 		contentPanel.add(JLTelefone1);
 
-		JLabel JLTelefone2 = new JLabel("Fone 1");
-		JLTelefone2.setBounds(296, 70, 46, 14);
-		contentPanel.add(JLTelefone2);
-
-		JLabel JLTelefone3 = new JLabel("Fone 2");
-		JLTelefone3.setBounds(10, 95, 46, 14);
-		contentPanel.add(JLTelefone3);
-
 		JLabel JLEmail = new JLabel("Email");
-		JLEmail.setBounds(10, 120, 46, 14);
+		JLEmail.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLEmail.setBounds(0, 198, 73, 14);
 		contentPanel.add(JLEmail);
 
 		JLabel JLEnd = new JLabel("Ender.");
-		JLEnd.setBounds(10, 151, 59, 14);
+		JLEnd.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLEnd.setBounds(0, 229, 73, 14);
 		contentPanel.add(JLEnd);
 
 		JTFNome = new JTextField();
-		JTFNome.setBounds(48, 8, 438, 20);
+		JTFNome.setBounds(83, 11, 400, 20);
 		contentPanel.add(JTFNome);
 		JTFNome.setColumns(10);
 
 		maskCnpj = new MaskFormatter(Mascaras.maskCnpj);
 		JFFCnpj = new JFormattedTextField(maskCnpj);
-		JFFCnpj.setBounds(48, 36, 118, 20);
+		JFFCnpj.setBounds(83, 36, 118, 20);
 		contentPanel.add(JFFCnpj);
 
-		maskRG = new MaskFormatter(Mascaras.maskRg);
-		JFFRg = new JFormattedTextField(maskRG);
-		((JFormattedTextField) JFFRg)
-				.setFocusLostBehavior(JFormattedTextField.COMMIT); // Permite o
-																	// usu√°rio
-																	// avan√ßar
-																	// o campo
-																	// sem
-																	// preencher
-																	// todos a
-																	// m√°scara
-		JFFRg.setBounds(368, 36, 118, 20);
+		JFFRg = new JTextField();
+
+		JFFRg.setBounds(320, 36, 163, 20);
 		contentPanel.add(JFFRg);
 
 		JLabel JLSite = new JLabel("Site");
-		JLSite.setBounds(10, 203, 46, 14);
+		JLSite.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLSite.setBounds(0, 281, 73, 14);
 		contentPanel.add(JLSite);
 
 		JLabel JLTpServ = new JLabel("Tipo Servi\u00E7o");
-		JLTpServ.setBounds(296, 98, 76, 14);
+		JLTpServ.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLTpServ.setBounds(0, 64, 73, 14);
 		contentPanel.add(JLTpServ);
 
-		maskFone = new MaskFormatter(Mascaras.mask9digi);
-		JFFFone = new JFormattedTextField(maskFone);
-		JFFFone.setBounds(48, 64, 118, 20);
-		JFFFone.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent k) {
-				if (k.getKeyCode() == 112) {
-					JFFFone.setBounds(0, 0, 0, 0);
-					try {
-						maskFone = new MaskFormatter(Mascaras.mask9digi);
-						JFFFone = new JFormattedTextField(maskFone);
-						JFFFone.setBounds(48, 64, 118, 20);
-						contentPanel.add(JFFFone);
-					} catch (ParseException e) {
-
-					}
-				}
-
-				if (k.getKeyCode() == 113) {
-					JFFFone.setBounds(0, 0, 0, 0);
-					try {
-						maskFone = new MaskFormatter(Mascaras.mask8digi);
-						JFFFone = new JFormattedTextField(maskFone);
-						JFFFone.setBounds(48, 64, 118, 20);
-						contentPanel.add(JFFFone);
-					} catch (ParseException e) {
-
-					}
-				}
-			}
-		});
-		contentPanel.add(JFFFone);
-
-		JFFFone1 = new JFormattedTextField(maskFone);
-		JFFFone1.setToolTipText("1- Tim \r\n2- Oi \r\n3- Vivo \r\n4- Claro\r\n5- Fixo \r\n6- Fax");
-		JFFFone1.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent k) {
-				if (k.getKeyCode() == 112) {
-					JFFFone1.setBounds(0, 0, 0, 0);
-					try {
-						maskFone = new MaskFormatter(Mascaras.mask9digi);
-						JFFFone1 = new JFormattedTextField(maskFone);
-						JFFFone1.setBounds(306, 64, 118, 20);
-						contentPanel.add(JFFFone1);
-					} catch (ParseException e) {
-
-					}
-				}
-
-				if (k.getKeyCode() == 113) {
-					JFFFone1.setBounds(0, 0, 0, 0);
-					try {
-						maskFone = new MaskFormatter(Mascaras.mask8digi);
-						JFFFone1 = new JFormattedTextField(maskFone);
-						JFFFone1.setBounds(306, 64, 118, 20);
-						contentPanel.add(JFFFone1);
-					} catch (ParseException e) {
-
-					}
-				}
-			}
-		});
-		JFFFone1.setBounds(368, 67, 118, 20);
-		contentPanel.add(JFFFone1);
-
-		JFFFone2 = new JFormattedTextField(maskFone);
-		JFFFone2.setToolTipText("1- Tim \r\n2- Oi \r\n3- Vivo \r\n4- Claro\r\n5- Fixo \r\n6- Fax");
-		JFFFone2.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent k) {
-				if (k.getKeyCode() == 112) {
-					JFFFone2.setBounds(0, 0, 0, 0);
-					try {
-						maskFone = new MaskFormatter(Mascaras.mask9digi);
-						JFFFone2 = new JFormattedTextField(maskFone);
-						JFFFone2.setBounds(48, 92, 118, 20);
-						contentPanel.add(JFFFone2);
-					} catch (ParseException e) {
-
-					}
-				}
-
-				if (k.getKeyCode() == 113) {
-					JFFFone2.setBounds(0, 0, 0, 0);
-					try {
-						maskFone = new MaskFormatter(Mascaras.mask8digi);
-						JFFFone2 = new JFormattedTextField(maskFone);
-						JFFFone2.setBounds(48, 92, 118, 20);
-						contentPanel.add(JFFFone2);
-					} catch (ParseException e) {
-
-					}
-				}
-			}
-		});
-		JFFFone2.setBounds(48, 92, 118, 20);
-		contentPanel.add(JFFFone2);
-
 		JTFEmail = new JTextField();
-		JTFEmail.setBounds(48, 120, 438, 20);
+		JTFEmail.setBounds(83, 201, 400, 20);
 		contentPanel.add(JTFEmail);
 		JTFEmail.setColumns(10);
 
 		JTFEnd = new JTextField();
-		JTFEnd.setBounds(48, 148, 438, 20);
+		JTFEnd.setBounds(83, 229, 400, 20);
 		contentPanel.add(JTFEnd);
 		JTFEnd.setColumns(10);
 
 		JTFSite = new JTextField();
-		JTFSite.setBounds(48, 200, 438, 20);
+		JTFSite.setBounds(83, 281, 400, 20);
 		contentPanel.add(JTFSite);
 		JTFSite.setColumns(10);
 
 		JCBTpServ = new JComboBox(_fornecedorControl.DDLTipoServico());
-		JCBTpServ.setBounds(368, 95, 118, 20);
+		JCBTpServ.setBounds(83, 64, 184, 20);
 
 		contentPanel.add(JCBTpServ);
 
 		JLBairro = new JLabel("Bairro");
-		JLBairro.setBounds(10, 175, 46, 14);
+		JLBairro.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLBairro.setBounds(0, 253, 73, 14);
 		contentPanel.add(JLBairro);
 
 		JTFBairro = new JTextField();
-		JTFBairro.setBounds(48, 172, 118, 20);
+		JTFBairro.setBounds(83, 253, 118, 20);
 		contentPanel.add(JTFBairro);
 		JTFBairro.setColumns(10);
 
 		lblCep = new JLabel("CEP");
-		lblCep.setBounds(296, 178, 46, 14);
+		lblCep.setBounds(293, 259, 46, 14);
 		contentPanel.add(lblCep);
 
 		maskCep = new MaskFormatter(Mascaras.maskCep);
 		JFFCep = new JFormattedTextField(maskCep);
-		JFFCep.setBounds(368, 175, 118, 20);
+		JFFCep.setBounds(365, 256, 118, 20);
 		contentPanel.add(JFFCep);
 		JFFCep.setColumns(10);
 
 		JCBCpfMask = new JCheckBox("CPF");
-		JCBCpfMask.setBounds(172, 34, 56, 23);
+		JCBCpfMask.setBounds(208, 35, 56, 23);
 		JCBCpfMask.addActionListener(this);
 		contentPanel.add(JCBCpfMask);
 
-		JCBOperadora1 = new JComboBox<String>();
-		for (String item : ext.getOperadora()) {
-			JCBOperadora1.addItem(item);
-		}
-		JCBOperadora1.setBounds(496, 67, 59, 20);
-		contentPanel.add(JCBOperadora1);
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(83, 103, 272, 87);
+		contentPanel.add(scrollPane);
 
-		JCBOperadora = new JComboBox<String>();
-		for (String item : ext.getOperadora()) {
-			JCBOperadora.addItem(item);
-		}
-		JCBOperadora.setBounds(176, 64, 59, 20);
-		contentPanel.add(JCBOperadora);
+		telmodel = new TelefoneTableModel();
+		table = new JTable(telmodel);
+		table.getColumnModel().getColumn(0).setMinWidth(0);
+		table.getColumnModel().getColumn(0).setMaxWidth(0);
+		scrollPane.setViewportView(table);
 
-		JCBOperadora2 = new JComboBox<String>();
-		for (String item : ext.getOperadora()) {
-			JCBOperadora2.addItem(item);
-		}
-		JCBOperadora2.setBounds(176, 92, 59, 20);
-		contentPanel.add(JCBOperadora2);
+		btnaddtel = new JButton("");
+		btnaddtel.setIcon(new ImageIcon(JDTelaCadForn.class
+				.getResource("/resources/plus.png")));
+		btnaddtel.setToolTipText("Adicionar telefone");
+		btnaddtel.setBounds(358, 105, 23, 23);
+		btnaddtel.addActionListener(this);
+		contentPanel.add(btnaddtel);
+
+		btnedittel = new JButton("");
+		btnedittel.setToolTipText("Alterar telefone");
+		btnedittel.setIcon(new ImageIcon(JDTelaCadForn.class
+				.getResource("/resources/edit.png")));
+		btnedittel.setBounds(358, 130, 23, 23);
+		btnedittel.addActionListener(this);
+		contentPanel.add(btnedittel);
+
+		btnremovetel = new JButton("");
+		btnremovetel.setToolTipText("Remover telefone");
+		btnremovetel.setIcon(new ImageIcon(JDTelaCadForn.class
+				.getResource("/resources/trash.png")));
+		btnremovetel.setBounds(357, 154, 23, 23);
+		btnremovetel.addActionListener(this);
+		contentPanel.add(btnremovetel);
+
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -333,10 +245,41 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 				buttonPane.add(JBNovForn);
 			}
 		}
+
+		PreencherCampos();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent acao) {
+
+		if (acao.getSource() == btnaddtel) {
+			EditFormTelefone ef = new EditFormTelefone(-1, null, telmodel);
+			ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			ef.setVisible(true);
+		}
+
+		if (acao.getSource() == btnedittel) {
+			int linha = table.getSelectedRow();
+
+			if (linha > -1) {
+				Telefone t = telmodel.getTelefone(linha);
+				EditFormTelefone ef = new EditFormTelefone(linha, t, telmodel);
+				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				ef.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(null, "Selecione um telefone");
+			}
+
+		}
+
+		if (acao.getSource() == btnremovetel) {
+			int linha = table.getSelectedRow();
+			if (linha > -1) {
+				telmodel.Remove(linha);
+			} else {
+				JOptionPane.showMessageDialog(null, "Selecione um telefone");
+			}
+		}
 
 		if (acao.getSource() == JBSalvForn) {
 
@@ -353,9 +296,10 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 				else if (JFFRg.getText().trim().isEmpty()) // Valida Rg
 					JOptionPane.showMessageDialog(null, "Rg em branco.",
 							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else if (!Validacoes.ValidaTelefone(JFFFone.getText())) // Valida
-																		// Telefone
-					JOptionPane.showMessageDialog(null, "Telefone inv·lido.",
+				else if (telmodel.getTelefones().size() < 1)
+
+					JOptionPane.showMessageDialog(null,
+							"Adicione ao menos um telefone",
 							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 				else if (JCBTpServ.getSelectedItem().toString()
 						.equals("Selecione"))
@@ -379,64 +323,15 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 				else {
 
-					Fornecedor f = new Fornecedor();
-
-					f.setNome(JTFNome.getText());
-					f.setCpfcnpj(Extras.FormatCnpjCpf(JFFCnpj.getText()));
-					f.setValorServico(new BigDecimal(5.00));
-
-					f.setRg(JFFRg.getText());
-					f.setEmail(JTFEmail.getText());
-					f.setSite(JTFSite.getText());
-
-					EnderecoFornecedor endereco = new EnderecoFornecedor();
-
-					endereco.setEndereco(JTFEnd.getText());
-					endereco.setBairro(JTFBairro.getText());
-					System.out.println(JFFCep.getValue());
-					endereco.setCep((Integer.parseInt(Extras.FormatCep(JFFCep
-							.getText()))));
-
-					f.setEndereco(endereco);
-
-					// o campo tipo servico È obrigatorio
-					f.setTipoServico(_fornecedorControl
-							.BuscarTipoServico(JCBTpServ.getSelectedItem()
-									.toString()));
-
-					f.addTelefoneFornecedor(new TelefoneFornecedor(
-							Extras.FormatDDDBD(Extras.FormatFoneBD(JFFFone
-									.getText())), Extras.FormatNumeroBD(Extras
-									.FormatFoneBD(JFFFone.getText())),
-							JCBOperadora.getSelectedItem().toString()));
-
-					if (JFFFone1.getValue() != null) {
-						f.addTelefoneFornecedor(new TelefoneFornecedor(Extras
-								.FormatDDDBD(Extras.FormatFoneBD(JFFFone1
-										.getText())), Extras
-								.FormatNumeroBD(Extras.FormatFoneBD(JFFFone1
-										.getText())), JCBOperadora1
-								.getSelectedItem().toString()));
-
-					}
-
-					if (JFFFone2.getValue() != null) {
-						f.addTelefoneFornecedor(new TelefoneFornecedor(Extras
-								.FormatDDDBD(Extras.FormatFoneBD(JFFFone2
-										.getText())), Extras
-								.FormatNumeroBD(Extras.FormatFoneBD(JFFFone2
-										.getText())), JCBOperadora2
-								.getSelectedItem().toString()));
-
-					}
-
-					String out = _fornecedorControl.Cadastrar(f);
-					if (out == null) {
-						JOptionPane.showMessageDialog(null,
-								"Forncedor cadastrado");
+					if (id < 1) {
+						Add();
 					} else {
-						JOptionPane.showMessageDialog(null, out);
+						Update();
 					}
+
+					this.id = (int) fornecedor.getId();
+					PreencherCampos();
+
 					/* Acredito que esteja todas as validaÁıes possÌveis */
 
 				}// Final da validaÁ„o
@@ -453,12 +348,6 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 				JTFNome.setText("");
 				JFFCnpj.setText("");
 				JFFRg.setText("");
-				JFFFone.setText("");
-				JFFFone1.setText("");
-				JFFFone2.setText("");
-				JCBOperadora.setSelectedItem("TIM");
-				JCBOperadora1.setSelectedItem("TIM");
-				JCBOperadora2.setSelectedItem("TIM");
 				JTFEmail.setText("");
 				JTFEnd.setText("");
 				JTFBairro.setText("");
@@ -470,34 +359,116 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		}// final do bot„o novo
 
 		if (acao.getSource() == JCBCpfMask) {
-
-			if (JCBCpfMask.isSelected()) {
-				try {
-					JFFCnpj.setBounds(0, 0, 0, 0);
-					maskCnpj = new MaskFormatter(Mascaras.maskCpf);
-					JFFCnpj = new JFormattedTextField(maskCnpj);
-					JFFCnpj.setBounds(48, 36, 118, 20);
-					contentPanel.add(JFFCnpj);
-				} catch (ParseException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage(), "Erro",
-							JOptionPane.ERROR_MESSAGE);
-				}
-
-			} else {
-				try {
-					JFFCnpj.setBounds(0, 0, 0, 0);
-					maskCnpj = new MaskFormatter(Mascaras.maskCnpj);
-					JFFCnpj = new JFormattedTextField(maskCnpj);
-					JFFCnpj.setBounds(48, 36, 118, 20);
-					contentPanel.add(JFFCnpj);
-				} catch (ParseException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage(), "Erro",
-							JOptionPane.ERROR_MESSAGE);
-				}
-
-			} // final marcar se campo ir· usar m·scara de CPF ou CNPJ
-
+			JFFCnpj.setValue(null);
+			formaterCPFCNPJ(JCBCpfMask.isSelected());
 		}
+
+	}
+
+	private void Update() {
+
+		fornecedor.setNome(JTFNome.getText());
+		fornecedor.setCpfcnpj(Extras.FormatCnpjCpf(JFFCnpj.getText()));
+		fornecedor.setValorServico(new BigDecimal(5.00));
+
+		fornecedor.setRg(JFFRg.getText());
+		fornecedor.setEmail(JTFEmail.getText());
+		fornecedor.setSite(JTFSite.getText());
+
+		Endereco endereco = fornecedor.getEndereco();
+
+		endereco.setEndereco(JTFEnd.getText());
+		endereco.setBairro(JTFBairro.getText());
+		endereco.setCep((Integer.parseInt(Extras.FormatCep(JFFCep.getText()))));
+
+		fornecedor.setEndereco(endereco);
+
+		fornecedor.setTipoServico(_fornecedorControl
+				.BuscarTipoServico(JCBTpServ.getSelectedItem().toString()));
+
+		fornecedor.setTelefones(telmodel.getTelefones());
+
+		String out = _fornecedorControl.Atualizar(fornecedor);
+		if (out == null) {
+			JOptionPane.showMessageDialog(null, "Fornecedor atualizado");
+		} else {
+			JOptionPane.showMessageDialog(null, out);
+		}
+
+	}
+
+	private void Add() {
+		fornecedor = new Fornecedor();
+
+		fornecedor.setNome(JTFNome.getText());
+		fornecedor.setCpfcnpj(Extras.FormatCnpjCpf(JFFCnpj.getText()));
+		fornecedor.setValorServico(new BigDecimal(5.00));
+
+		fornecedor.setRg(JFFRg.getText());
+		fornecedor.setEmail(JTFEmail.getText());
+		fornecedor.setSite(JTFSite.getText());
+
+		EnderecoFornecedor endereco = new EnderecoFornecedor();
+
+		endereco.setEndereco(JTFEnd.getText());
+		endereco.setBairro(JTFBairro.getText());
+		endereco.setCep((Integer.parseInt(Extras.FormatCep(JFFCep.getText()))));
+
+		fornecedor.setEndereco(endereco);
+
+		fornecedor.setTipoServico(_fornecedorControl
+				.BuscarTipoServico(JCBTpServ.getSelectedItem().toString()));
+
+		fornecedor.setTelefones(telmodel.getTelefones());
+
+		String out = _fornecedorControl.Cadastrar(fornecedor);
+		if (out == null) {
+			JOptionPane.showMessageDialog(null, "Fornecedor cadastrado");
+		} else {
+			JOptionPane.showMessageDialog(null, out);
+		}
+
+	}
+
+	private void formaterCPFCNPJ(boolean isccpf) {
+		if (isccpf) {
+			JCBCpfMask.setSelected(true);
+			try {
+				MaskFormatter cpfm = new MaskFormatter(Mascaras.maskCpf);
+				JFFCnpj.setFormatterFactory(new DefaultFormatterFactory(cpfm));
+
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+		} else {
+			try {
+				MaskFormatter cnpjm = new MaskFormatter(Mascaras.maskCnpj);
+				JFFCnpj.setFormatterFactory(new DefaultFormatterFactory(cnpjm));
+
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void PreencherCampos() {
+		if (id == 0) {
+			return;
+		}
+		fornecedor = _fornecedorControl.BuscarFornecedor(id);
+		JTFNome.setText(fornecedor.getNome());
+		String cpf = fornecedor.getCpfcnpj();
+		formaterCPFCNPJ(cpf.length() == 11 ? true : false);
+		JFFCnpj.setText(cpf);
+		JFFRg.setText(fornecedor.getRg());
+		JTFEmail.setText(fornecedor.getEmail());
+		JTFEnd.setText(fornecedor.getEndereco().getEndereco());
+		JTFBairro.setText(fornecedor.getEndereco().getBairro());
+		JFFCep.setText(fornecedor.getEndereco().getCep() + "");
+		JTFSite.setText(fornecedor.getSite());
+		telmodel.setTelefones(fornecedor.getTelefones());
+		JCBTpServ.setSelectedItem(fornecedor.getTipoServico().getNome());
 
 	}
 }

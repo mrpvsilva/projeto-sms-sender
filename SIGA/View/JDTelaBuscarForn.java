@@ -150,7 +150,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 		if (acao.getSource() == JBCadForn) {
 
 			try {
-				JDTelaCadForn jdtcf = new JDTelaCadForn();
+				JDTelaCadForn jdtcf = new JDTelaCadForn(0);
 				jdtcf.setVisible(true);
 				jdtcf.setLocationRelativeTo(null);
 			} catch (ParseException e) {
@@ -165,11 +165,16 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 			try {
 				int linha = tabela.getSelectedRow();
 				if (linha > -1) {
-					JDTelaEditForn jdtef = new JDTelaEditForn(
-							Integer.parseInt(String.valueOf(tabela.getValueAt(
-									linha, 0))));
-					jdtef.setVisible(true);
-					jdtef.setLocationRelativeTo(null);
+					// JDTelaEditForn jdtef = new JDTelaEditForn(
+					// Integer.parseInt(String.valueOf(tabela.getValueAt(
+					// linha, 0))));
+					// jdtef.setVisible(true);
+					// jdtef.setLocationRelativeTo(null);
+					int id = Integer.parseInt(String.valueOf(tabela.getValueAt(
+							linha, 0)));
+					JDTelaCadForn jdtcf = new JDTelaCadForn(id);
+					jdtcf.setVisible(true);
+					jdtcf.setLocationRelativeTo(null);
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione uma linha");
 				}

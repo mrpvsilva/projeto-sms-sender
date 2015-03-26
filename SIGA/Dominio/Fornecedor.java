@@ -48,7 +48,7 @@ public class Fornecedor implements Serializable {
 	@JoinTable(name = "telefonesfornecedores", joinColumns = { @JoinColumn(name = "idfornecedor", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idtelefone", referencedColumnName = "id") })
 	private List<Telefone> telefones;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "enderecosfornecedores", joinColumns = { @JoinColumn(name = "idfornecedor", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idendereco", referencedColumnName = "id") })
 	private Endereco endereco;
 

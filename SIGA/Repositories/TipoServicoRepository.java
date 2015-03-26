@@ -24,9 +24,8 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 	}
 
 	public List<TipoServico> FindAll(boolean ativo) {
-		Query q = entityManager.createQuery(
-				"from TipoServico where ativo=:ativo order by nome",
-				TipoServico.class);
+		Query q = entityManager
+				.createQuery("from TipoServico where ativo=:ativo order by nome");
 		q.setParameter("ativo", ativo);
 		return q.getResultList();
 	}
