@@ -16,7 +16,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 	}
 
 	@Override
-	public Usuario GetUsuario(String usuario, String senha) {
+	public Usuario getUsuario(String usuario, String senha) {
 
 		try {
 
@@ -35,7 +35,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 	}
 
 	@Override
-	public List<Usuario> FindAll(String campo, String value) {
+	public List<Usuario> findAll(String campo, String value) {
 		String q = "from Usuario where " + campo + " like :valor";
 		Query query = entityManager.createQuery(q);
 		query.setParameter("valor", "%" + value + "%");
@@ -45,7 +45,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 	}
 
 	@Override
-	public Usuario GetUsuario(String usuario) {
+	public Usuario getUsuario(String usuario) {
 		try {
 
 			String query = "from Usuario where usuario = :usuario";

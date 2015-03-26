@@ -4,13 +4,13 @@ import java.util.List;
 
 public interface IRepositoryBase<E> {
 
-	public boolean Add(E entity);
+	public boolean add(E entity);
 
-	public void Remove(long id);
+	public void remove(long id);
 
-	public boolean Update(E entity);
+	public boolean update(E entity);
 
-	public E GetById(long id);
+	public E find(long id);
 
-	public List<E> FindAll();
+	public List<E> findAll();
 }

@@ -119,7 +119,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 				// Laço necessário para incluir registro na tabela
 				// model.addRow(new Object[]{new
 				// Integer(lanc.getIdLancamento()),formatas.format(lanc.getDtCompra()),lanc.getNAutorizacao(),lanc.getSelectedConveniada()});
-				CarregarGrid(_fornecedorControl.ListarTodos());
+				CarregarGrid(_fornecedorControl.listarTodos());
 				tabela.getColumnModel().getColumn(0).setMinWidth(0);
 				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
 
@@ -192,9 +192,9 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 					: "";
 			String _valor = JTFBuscar.getText();
 			if (!_valor.equals("")) {
-				CarregarGrid(_fornecedorControl.ListarTodos(coluna, _valor));
+				CarregarGrid(_fornecedorControl.listarTodos(coluna, _valor));
 			} else {
-				CarregarGrid(_fornecedorControl.ListarTodos());
+				CarregarGrid(_fornecedorControl.listarTodos());
 			}
 
 		}// final do botão buscar fornecedores

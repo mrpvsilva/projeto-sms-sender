@@ -17,20 +17,20 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 	}
 
 	@Override
-	public List<TipoServico> FindAll() {
+	public List<TipoServico> findAll() {
 		Query q = entityManager.createQuery("from TipoServico order by nome",
 				TipoServico.class);
 		return q.getResultList();
 	}
 
-	public List<TipoServico> FindAll(boolean ativo) {
+	public List<TipoServico> findAll(boolean ativo) {
 		Query q = entityManager
 				.createQuery("from TipoServico where ativo=:ativo order by nome");
 		q.setParameter("ativo", ativo);
 		return q.getResultList();
 	}
 
-	public TipoServico getTipoByName(String nome) {
+	public TipoServico findByName(String nome) {
 		Query q = entityManager
 				.createQuery("from TipoServico where nome=:nome");
 		q.setParameter("nome", nome);

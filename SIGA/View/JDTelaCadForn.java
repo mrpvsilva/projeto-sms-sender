@@ -246,7 +246,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			}
 		}
 
-		PreencherCampos();
+		preencherCampos();
 	}
 
 	@Override
@@ -275,7 +275,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		if (acao.getSource() == btnremovetel) {
 			int linha = table.getSelectedRow();
 			if (linha > -1) {
-				telmodel.Remove(linha);
+				telmodel.remove(linha);
 			} else {
 				JOptionPane.showMessageDialog(null, "Selecione um telefone");
 			}
@@ -324,13 +324,13 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 				else {
 
 					if (id < 1) {
-						Add();
+						cadastrar();
 					} else {
-						Update();
+						atualizar();
 					}
 
 					this.id = (int) fornecedor.getId();
-					PreencherCampos();
+					preencherCampos();
 
 					/* Acredito que esteja todas as validações possíveis */
 
@@ -365,7 +365,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 
 	}
 
-	private void Update() {
+	private void atualizar() {
 
 		fornecedor.setNome(JTFNome.getText());
 		fornecedor.setCpfcnpj(Extras.FormatCnpjCpf(JFFCnpj.getText()));
@@ -384,11 +384,11 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		fornecedor.setEndereco(endereco);
 
 		fornecedor.setTipoServico(_fornecedorControl
-				.BuscarTipoServico(JCBTpServ.getSelectedItem().toString()));
+				.buscarTipoServico(JCBTpServ.getSelectedItem().toString()));
 
 		fornecedor.setTelefones(telmodel.getTelefones());
 
-		String out = _fornecedorControl.Atualizar(fornecedor);
+		String out = _fornecedorControl.atualizar(fornecedor);
 		if (out == null) {
 			JOptionPane.showMessageDialog(null, "Fornecedor atualizado");
 		} else {
@@ -397,7 +397,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 
 	}
 
-	private void Add() {
+	private void cadastrar() {
 		fornecedor = new Fornecedor();
 
 		fornecedor.setNome(JTFNome.getText());
@@ -417,11 +417,11 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		fornecedor.setEndereco(endereco);
 
 		fornecedor.setTipoServico(_fornecedorControl
-				.BuscarTipoServico(JCBTpServ.getSelectedItem().toString()));
+				.buscarTipoServico(JCBTpServ.getSelectedItem().toString()));
 
 		fornecedor.setTelefones(telmodel.getTelefones());
 
-		String out = _fornecedorControl.Cadastrar(fornecedor);
+		String out = _fornecedorControl.cadastrar(fornecedor);
 		if (out == null) {
 			JOptionPane.showMessageDialog(null, "Fornecedor cadastrado");
 		} else {
@@ -452,11 +452,11 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		}
 	}
 
-	private void PreencherCampos() {
+	private void preencherCampos() {
 		if (id == 0) {
 			return;
 		}
-		fornecedor = _fornecedorControl.BuscarFornecedor(id);
+		fornecedor = _fornecedorControl.buscarFornecedor(id);
 		JTFNome.setText(fornecedor.getNome());
 		String cpf = fornecedor.getCpfcnpj();
 		formaterCPFCNPJ(cpf.length() == 11 ? true : false);

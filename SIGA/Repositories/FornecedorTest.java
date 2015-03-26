@@ -17,7 +17,7 @@ public class FornecedorTest {
 		IFornecedorRepository fr = new FornecedorRepository(
 				PersistenceManagerFactory.getPersistanceManager());
 		int esperado = 1;
-		Fornecedor retorno = fr.GetById(id);
+		Fornecedor retorno = fr.find(id);
 		assertEquals(esperado, retorno.getId());
 
 	}

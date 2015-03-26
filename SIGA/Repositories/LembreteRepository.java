@@ -17,7 +17,7 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 	}
 
 	@Override
-	public List<Lembrete> FindAll() {
+	public List<Lembrete> findAll() {
 
 		String q = "from Lembrete order by datahora desc";
 		Query query = entityManager.createQuery(q);
@@ -26,7 +26,7 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 	}
 
 	@Override
-	public List<Lembrete> FindAll(String coluna, String valor) {
+	public List<Lembrete> findAll(String coluna, String valor) {
 		String q = "from Lembrete where " + coluna
 				+ " like :valor order by datahora desc";
 

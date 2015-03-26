@@ -6,8 +6,8 @@ import Dominio.TipoServico;
 
 public interface ITipoServicoRepository extends IRepositoryBase<TipoServico> {
 
-	public TipoServico getTipoByName(String nome);
+	public TipoServico findByName(String nome);
 
-	public List<TipoServico> FindAll(boolean ativo);
+	public List<TipoServico> findAll(boolean ativo);
 
 }

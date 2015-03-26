@@ -35,7 +35,7 @@ public class UsuarioControl {
 
 	public String Cadastrar(Usuario usuario) {
 
-		if (!_usuarioReposiroty.Add(usuario)) {
+		if (!_usuarioReposiroty.add(usuario)) {
 			return "Falha no cadastro do usuário";
 		}
 
@@ -43,20 +43,20 @@ public class UsuarioControl {
 	}
 
 	public List<Usuario> BuscarTodos() {
-		return _usuarioReposiroty.FindAll();
+		return _usuarioReposiroty.findAll();
 	}
 
 	public List<Usuario> BuscarTodos(String campo, String value) {
-		return _usuarioReposiroty.FindAll(campo, value);
+		return _usuarioReposiroty.findAll(campo, value);
 	}
 
 	public Usuario BuscarUsuario(int id) {
-		return _usuarioReposiroty.GetById(id);
+		return _usuarioReposiroty.find(id);
 	}
 
 	public String Atualizar(Usuario usuario) {
 
-		if (!_usuarioReposiroty.Update(usuario))
+		if (!_usuarioReposiroty.update(usuario))
 			return "Falha na atualização do usuário";
 
 		return null;

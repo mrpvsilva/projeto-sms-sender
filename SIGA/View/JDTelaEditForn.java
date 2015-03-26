@@ -298,7 +298,7 @@ public class JDTelaEditForn extends JDialog implements ActionListener {
 							.setCep((Integer.parseInt(Extras.FormatCep(JFFCep
 									.getText()))));
 					fornecedor.setTipoServico(_fornecedorControl
-							.BuscarTipoServico(JCBTpServ.getSelectedItem()
+							.buscarTipoServico(JCBTpServ.getSelectedItem()
 									.toString()));
 
 					fornecedor
@@ -372,7 +372,7 @@ public class JDTelaEditForn extends JDialog implements ActionListener {
 					}
 
 					/* Colocar o método de cadastrar */
-					String out = _fornecedorControl.Atualizar(fornecedor);
+					String out = _fornecedorControl.atualizar(fornecedor);
 					if (out == null) {
 						PreencherCampos();
 						JOptionPane.showMessageDialog(null,
@@ -400,7 +400,7 @@ public class JDTelaEditForn extends JDialog implements ActionListener {
 	}
 
 	private void PreencherCampos() {
-		fornecedor = _fornecedorControl.BuscarFornecedor(_ID);
+		fornecedor = _fornecedorControl.buscarFornecedor(_ID);
 
 		JTFNome.setText(fornecedor.getNome());
 		JFFCnpj.setText(fornecedor.getCpfcnpj());

@@ -17,7 +17,7 @@ public class ItemRepository extends RepositoryBase<Item> implements
 	}
 
 	@Override
-	public List<Item> FindAll(String campo, String txt) {
+	public List<Item> findAll(String campo, String txt) {
 		String q = "from Item where " + campo + " like :txt";
 		Query query = entityManager.createQuery(q);
 		query.setParameter("txt", "%" + txt + "%");

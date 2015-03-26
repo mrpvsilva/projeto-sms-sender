@@ -16,7 +16,7 @@ public class FornecedorRepository extends RepositoryBase<Fornecedor> implements
 	}
 
 	
-	public List<Fornecedor> FindAll(String coluna, String valor) {
+	public List<Fornecedor> findAll(String coluna, String valor) {
 		String q = "from Fornecedor where " + coluna + " like :valor";
 		Query query = entityManager.createQuery(q);
 		query.setParameter("valor", "%" + valor + "%");
