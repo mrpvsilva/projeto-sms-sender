@@ -111,14 +111,14 @@ public class EditFormTelefone extends JDialog implements ActionListener {
 	private void Create() {
 		_telefone = new TelefoneFornecedor(tfddd.getText(), tfnumero.getText(),
 				cboperadoras.getSelectedItem().toString());
-		_model.Add(_telefone);
+		_model.add(_telefone);
 	}
 
 	private void Update() {
 		_telefone.setDdd(tfddd.getText());
 		_telefone.setNumero(tfnumero.getText());
 		_telefone.setOperadora(cboperadoras.getSelectedItem().toString());
-		_model.Update(_linha, _telefone);
+		_model.update(_linha, _telefone);
 	}
 
 	private void PreencherCampos() {

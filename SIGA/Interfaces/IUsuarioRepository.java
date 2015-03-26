@@ -6,10 +6,10 @@ import Dominio.Usuario;
 
 public interface IUsuarioRepository extends IRepositoryBase<Usuario> {
 
-	public Usuario GetUsuario(String usuario, String senha);
+	public Usuario getUsuario(String usuario, String senha);
 
-	public Usuario GetUsuario(String usuario);
+	public Usuario getUsuario(String usuario);
 
-	public List<Usuario> FindAll(String campo, String value);
+	public List<Usuario> findAll(String campo, String value);
 
 }

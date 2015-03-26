@@ -32,13 +32,11 @@ public class TelefoneTableModel extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
 		return colunas.length;
 	}
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
 		return _telefones.size();
 	}
 
@@ -65,17 +63,17 @@ public class TelefoneTableModel extends AbstractTableModel {
 	}
 
 	// CRUD TELEFONES
-	public void Add(Telefone telefone) {
+	public void add(Telefone telefone) {
 		_telefones.add(telefone);
 		this.fireTableDataChanged();
 	}
 
-	public void Update(int linha, Telefone telefone) {
+	public void update(int linha, Telefone telefone) {
 		_telefones.set(linha, telefone);
 		this.fireTableDataChanged();
 	}
 
-	public void Remove(int linha) {
+	public void remove(int linha) {
 		_telefones.remove(linha);
 		this.fireTableRowsDeleted(linha, linha);
 

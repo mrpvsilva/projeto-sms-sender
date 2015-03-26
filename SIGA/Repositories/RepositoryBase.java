@@ -13,11 +13,11 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 	protected EntityManager entityManager;
 
 	public RepositoryBase(IPersistenceManager persistenceManager) {
-		entityManager = persistenceManager.GetEntityManager();
+		entityManager = persistenceManager.getEntityManager();
 	}
 
 	@Override
-	public boolean Add(E entity) {
+	public boolean add(E entity) {
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.persist(entity);
@@ -33,7 +33,7 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void Remove(long id) {
+	public void remove(long id) {
 		try {
 			entityManager.getTransaction().begin();
 			E entity = (E) entityManager.find(GetTypeClass(), id);
@@ -47,7 +47,7 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 	}
 
 	@Override
-	public boolean Update(E entity) {
+	public boolean update(E entity) {
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(entity);
@@ -63,7 +63,7 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public E GetById(long id) {
+	public E find(long id) {
 		try {
 			return (E) entityManager.find(GetTypeClass(), id);
 
@@ -75,7 +75,7 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<E> FindAll() {
+	public List<E> findAll() {
 		try {
 			return entityManager
 					.createQuery("from " + GetTypeClass().getName())

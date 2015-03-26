@@ -1,15 +1,12 @@
 package Control;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
 import persistenceManagerFactory.PersistenceManagerFactory;
 import Dominio.Fornecedor;
 import Dominio.TipoServico;
 import Interfaces.IFornecedorRepository;
 import Interfaces.ITipoServicoRepository;
-import Model.FornecedoresBean;
 import Model.FornecedoresModel;
 import Repositories.FornecedorRepository;
 import Repositories.TipoServicoRepository;
@@ -30,37 +27,35 @@ public class FornecedoresControl {
 
 	}// final do método filtros
 
-	public String Cadastrar(Fornecedor fornecedor) {
+	public String cadastrar(Fornecedor fornecedor) {
 
-		// mudar campo tipo telefone para guardar a operadora
-
-		if (!_fornecedorRepository.Add(fornecedor))
+		if (!_fornecedorRepository.add(fornecedor))
 			return "Falha no cadastro do fornecedor";
 
 		return null;
 	}
 
-	public String Atualizar(Fornecedor fornecedor) {
-		if (!_fornecedorRepository.Update(fornecedor))
+	public String atualizar(Fornecedor fornecedor) {
+		if (!_fornecedorRepository.update(fornecedor))
 			return "Falha na atualização do fornecedor";
 
 		return null;
 	}
 
-	public List<Fornecedor> ListarTodos() {
-		return _fornecedorRepository.FindAll();
+	public List<Fornecedor> listarTodos() {
+		return _fornecedorRepository.findAll();
 	}
 
-	public List<Fornecedor> ListarTodos(String coluna, String valor) {
-		return _fornecedorRepository.FindAll(coluna, valor);
+	public List<Fornecedor> listarTodos(String coluna, String valor) {
+		return _fornecedorRepository.findAll(coluna, valor);
 	}
 
-	public Fornecedor BuscarFornecedor(int id) {
-		return _fornecedorRepository.GetById(id);
+	public Fornecedor buscarFornecedor(int id) {
+		return _fornecedorRepository.find(id);
 	}
 
 	public String[] DDLTipoServico() {
-		List<TipoServico> l = _tipoServicorepository.FindAll(true);
+		List<TipoServico> l = _tipoServicorepository.findAll(true);
 		String[] ddl = new String[l.size() + 1];
 		ddl[0] = "Selecione";
 		for (int i = 0; i < l.size(); i++) {
@@ -70,8 +65,8 @@ public class FornecedoresControl {
 
 	}
 
-	public TipoServico BuscarTipoServico(String nome) {
-		return _tipoServicorepository.getTipoByName(nome);
+	public TipoServico buscarTipoServico(String nome) {
+		return _tipoServicorepository.findByName(nome);
 	}
 
 }

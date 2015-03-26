@@ -26,32 +26,32 @@ public class ServicosControl {
 	}
 
 	public String Cadastrar(ServicosBean servico) {
-		TipoItem tipoItem = _tipoItemRepository.GetById(1);
+		TipoItem tipoItem = _tipoItemRepository.find(1);
 
 		Item item = new Item(servico.getNomeitem(), servico.getDescricaoitem(),
 				servico.getVlrcustoitem(), servico.getVlrcomercialitem(),
 				servico.isAtivoitem(), tipoItem);
 
-		if (!_itemRepository.Add(item))
+		if (!_itemRepository.add(item))
 			return "Falha no cadastro do Serviço";
 
 		return null;
 	}
 
 	public List<Item> BuscarTodos() {
-		return _itemRepository.FindAll();
+		return _itemRepository.findAll();
 	}
 
 	public List<Item> BuscarTodos(String campo, String txt) {
-		return _itemRepository.FindAll(campo, txt);
+		return _itemRepository.findAll(campo, txt);
 	}
 
 	public Item BuscarItem(int ID) {
-		return _itemRepository.GetById(ID);
+		return _itemRepository.find(ID);
 	}
 
 	public String Atualizar(Item item) {
-		if (!_itemRepository.Update(item))
+		if (!_itemRepository.update(item))
 			return "Falha na atualização do serviço";
 
 		return null;

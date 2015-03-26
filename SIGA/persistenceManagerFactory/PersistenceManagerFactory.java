@@ -14,7 +14,7 @@ public class PersistenceManagerFactory {
 	private static EntityManager _entityManager = factory.createEntityManager();
 	private static IPersistenceManager _persistanceManager = new IPersistenceManager() {
 		@Override
-		public EntityManager GetEntityManager() {
+		public EntityManager getEntityManager() {
 
 			return _entityManager;
 		}

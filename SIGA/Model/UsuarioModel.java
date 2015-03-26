@@ -15,7 +15,7 @@ public class UsuarioModel {
 
 	public boolean AutenticarUsuario(UsuarioBean usuario) {
 
-		Usuario u = _usuarioRepository.GetUsuario(usuario.getLogin(),
+		Usuario u = _usuarioRepository.getUsuario(usuario.getLogin(),
 				usuario.getSenha());
 
 		if (u == null)

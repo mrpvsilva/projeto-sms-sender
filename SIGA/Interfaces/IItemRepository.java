@@ -6,6 +6,6 @@ import Dominio.Item;
 
 public interface IItemRepository extends IRepositoryBase<Item> {
 
-	public List<Item> FindAll(String campo, String txt);
+	public List<Item> findAll(String campo, String txt);
 
 }
