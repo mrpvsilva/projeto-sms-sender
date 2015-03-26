@@ -25,9 +25,9 @@ public class Item implements Serializable {
 	@Column
 	private String descricao;
 	@Column
-	private BigDecimal valorCusto;
+	private BigDecimal valorcusto;
 	@Column
-	private BigDecimal valorComercial;
+	private BigDecimal valorcomercial;
 	@Column
 	private boolean ativo;
 	@ManyToOne
@@ -74,19 +74,19 @@ public class Item implements Serializable {
 	}
 
 	public BigDecimal getValorCusto() {
-		return valorCusto;
+		return valorcusto;
 	}
 
 	public void setValorCusto(BigDecimal valorCusto) {
-		this.valorCusto = valorCusto;
+		this.valorcusto = valorCusto;
 	}
 
 	public BigDecimal getValorComercial() {
-		return valorComercial;
+		return valorcomercial;
 	}
 
 	public void setValorComercial(BigDecimal valorComercial) {
-		this.valorComercial = valorComercial;
+		this.valorcomercial = valorComercial;
 	}
 
 	public boolean isAtivo() {

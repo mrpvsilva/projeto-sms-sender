@@ -30,7 +30,7 @@ public class Fornecedor implements Serializable {
 	@Column
 	private String nome;
 	@Column
-	private BigDecimal valorServico;
+	private BigDecimal valorservico;
 	@Column
 	private String email;
 
@@ -86,11 +86,11 @@ public class Fornecedor implements Serializable {
 	}
 
 	public BigDecimal getValorServico() {
-		return valorServico;
+		return valorservico;
 	}
 
 	public void setValorServico(BigDecimal valorServico) {
-		this.valorServico = valorServico;
+		this.valorservico = valorServico;
 	}
 
 	public String getEmail() {

@@ -25,13 +25,8 @@ public class ServicosControl {
 		return servMod.FiltroServ();
 	}
 
-	public String Cadastrar(ServicosBean servico) {
-		TipoItem tipoItem = _tipoItemRepository.find(1);
-
-		Item item = new Item(servico.getNomeitem(), servico.getDescricaoitem(),
-				servico.getVlrcustoitem(), servico.getVlrcomercialitem(),
-				servico.isAtivoitem(), tipoItem);
-
+	public String cadastrar(Item item) {
+		item.setTipoitem(_tipoItemRepository.find(1));
 		if (!_itemRepository.add(item))
 			return "Falha no cadastro do Serviço";
 
