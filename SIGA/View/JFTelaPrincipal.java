@@ -50,6 +50,9 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 	private JMenuItem JMIUsuBuscar;
 	private JMenuItem JMIUsuExcluir;
 	private JMenu JMIRelCont;
+	private JMenu mnTipoDeServios;
+	private JMenuItem JMITSCad;
+	private JMenuItem JMITSBuscar;
 
 	/**
 	 * Launch the application.
@@ -117,6 +120,16 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMIServExcluir = new JMenuItem("Excluir");
 		JMIServExcluir.addActionListener(this);
 		JMServ.add(JMIServExcluir);
+
+		mnTipoDeServios = new JMenu("Tipo de Servi\u00E7os");
+		menuBar.add(mnTipoDeServios);
+
+		JMITSCad = new JMenuItem("Cadastrar");
+		JMITSCad.addActionListener(this);
+		mnTipoDeServios.add(JMITSCad);
+
+		JMITSBuscar = new JMenuItem("Buscar");
+		mnTipoDeServios.add(JMITSBuscar);
 
 		JMenu JMCli = new JMenu("Clientes");
 		menuBar.add(JMCli);
@@ -393,6 +406,13 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 			}
 
 		}// final do JMenuItemUsuário Cadastrar
+
+		if (acao.getSource() == JMITSCad) {
+			JDTelaEditFormTipoServico ef = new JDTelaEditFormTipoServico(0,
+					null);
+			ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			ef.setVisible(true);
+		}
 
 		if (acao.getSource() == JMIUsuBuscar) {
 			JDTelaBuscarUsu jdtbu = new JDTelaBuscarUsu();

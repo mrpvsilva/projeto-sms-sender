@@ -119,7 +119,7 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 				model.fireTableDataChanged();
 				tabela.getColumnModel().getColumn(0).setMinWidth(0);
 				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
-				carregarGrid(_servicoControl.BuscarTodos());
+				carregarGrid(_servicoControl.listarTodos());
 
 			}
 		}
@@ -172,9 +172,9 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 			String txt = JTFBuscar.getText();
 
 			if (txt.equals("")) {
-				carregarGrid(_servicoControl.BuscarTodos());
+				carregarGrid(_servicoControl.listarTodos());
 			} else {
-				carregarGrid(_servicoControl.BuscarTodos(campo, txt));
+				carregarGrid(_servicoControl.listarTodos(campo, txt));
 			}
 
 		}// final do botão buscar serviços

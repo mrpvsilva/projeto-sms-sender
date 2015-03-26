@@ -38,6 +38,8 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 	private JButton JBSalvServ;
 	private JButton JBNovoServ;
 	private ServicosControl sc;
+	private JLabel lblTipoDeServio;
+	private JComboBox ddltiposervico;
 
 	/**
 	 * Launch the application.
@@ -57,7 +59,7 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 	 */
 	public JDTelaCadServ() {
 		sc = new ServicosControl();
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 349);
 		setTitle("SIGA - cadastro de servi\u00E7os");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -95,12 +97,12 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 		contentPanel.add(JMFVlrCusto);
 		{
 			JLabel lblValorComercial = new JLabel("Valor comercial");
-			lblValorComercial.setBounds(10, 203, 90, 14);
+			lblValorComercial.setBounds(10, 191, 90, 14);
 			contentPanel.add(lblValorComercial);
 		}
 
 		JMFVlrCom = new JMoneyField();
-		JMFVlrCom.setBounds(101, 200, 170, 20);
+		JMFVlrCom.setBounds(101, 188, 170, 20);
 		contentPanel.add(JMFVlrCom);
 		{
 			JLabel JLAtivo = new JLabel("Ativo");
@@ -114,6 +116,16 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 			}
 			JCBStatus.setBounds(317, 160, 107, 20);
 			contentPanel.add(JCBStatus);
+		}
+		{
+			lblTipoDeServio = new JLabel("Tipo de servi\u00E7o");
+			lblTipoDeServio.setBounds(10, 222, 90, 14);
+			contentPanel.add(lblTipoDeServio);
+		}
+		{
+			ddltiposervico = new JComboBox(sc.DDLTipoServico());
+			ddltiposervico.setBounds(101, 219, 170, 20);
+			contentPanel.add(ddltiposervico);
 		}
 
 		{
@@ -157,6 +169,11 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 					JOptionPane.showMessageDialog(null,
 							"Valor comercial em branco.", "Erro ao cadastrar",
 							JOptionPane.ERROR_MESSAGE);
+				else if (ddltiposervico.getSelectedItem().toString()
+						.equals("Selecione"))
+					JOptionPane.showMessageDialog(null,
+							"Selecione um tipo de serviço.",
+							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 				else {
 
 					Item item = new Item();
@@ -165,6 +182,8 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 					item.setDescricao(JTADescItem.getText());
 					item.setAtivo(JCBStatus.getSelectedIndex() == 0 ? true
 							: false);
+					item.setTipoitem(sc.buscarTipoItem(ddltiposervico
+							.getSelectedItem().toString()));
 
 					try {
 						item.setValorComercial(JMFVlrCom.getValor());

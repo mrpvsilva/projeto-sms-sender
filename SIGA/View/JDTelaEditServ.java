@@ -186,7 +186,7 @@ public class JDTelaEditServ extends JDialog implements ActionListener {
 					e.printStackTrace();
 				}
 
-				String out = _servicoControl.Atualizar(_item);
+				String out = _servicoControl.atualizar(_item);
 
 				if (out == null) {
 					PreencherCampos();
@@ -206,7 +206,7 @@ public class JDTelaEditServ extends JDialog implements ActionListener {
 	}
 
 	private void PreencherCampos() {
-		_item = _servicoControl.BuscarItem(_ID);
+		_item = _servicoControl.buscarItem(_ID);
 		JTFItem.setText(_item.getNome());
 		JTADescItem.setText(_item.getDescricao());
 		JMFVlrCusto.setValor(_item.getValorCusto());
