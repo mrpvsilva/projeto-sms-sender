@@ -21,7 +21,7 @@ public class Usuario implements Serializable {
 	@Column
 	private String senha;
 	@Column
-	private String nomeCompleto;
+	private String nomecompleto;
 	@Column
 	private String cpf;
 	@Column
@@ -60,11 +60,11 @@ public class Usuario implements Serializable {
 	}
 
 	public String getNomeCompleto() {
-		return nomeCompleto;
+		return nomecompleto;
 	}
 
 	public void setNomeCompleto(String nomeCompleto) {
-		this.nomeCompleto = nomeCompleto;
+		this.nomecompleto = nomeCompleto;
 	}
 
 	public String getCpf() {
