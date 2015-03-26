@@ -155,7 +155,7 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 		if (acao.getSource() == JBCadUsu) {
 
 			try {
-				JDTelaCadUsu jdtcu = new JDTelaCadUsu();
+				JDTelaCadUsu jdtcu = new JDTelaCadUsu(0);
 				jdtcu.setVisible(true);
 				jdtcu.setLocationRelativeTo(null);
 			} catch (ParseException e) {
@@ -171,11 +171,11 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 			if (linha > -1) {
 
 				try {
-					JDTelaEditUsu jdteu = new JDTelaEditUsu(
+					JDTelaCadUsu jdtcu = new JDTelaCadUsu(
 							Integer.parseInt(String.valueOf(tabela.getValueAt(
 									linha, 0))));
-					jdteu.setVisible(true);
-					jdteu.setLocationRelativeTo(null);
+					jdtcu.setVisible(true);
+					jdtcu.setLocationRelativeTo(null);
 				} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
