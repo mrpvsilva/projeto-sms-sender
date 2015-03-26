@@ -223,7 +223,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener{
 			JDTelaCadForn jdtcf;
 			
 			try {
-				jdtcf = new JDTelaCadForn();
+				jdtcf = new JDTelaCadForn(0);
 				jdtcf.setVisible(true);
 				jdtcf.setLocationRelativeTo(null);
 			} catch (ParseException e) {
