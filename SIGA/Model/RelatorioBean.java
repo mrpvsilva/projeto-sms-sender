@@ -55,13 +55,21 @@ public class RelatorioBean {
 	
 	/*Eventos a serem realizados*/
 	
-	private Date dteventserrealizadorel;
+	private String dteventserrealizadorel;
+	private String dteventserrealizadorelfim;
 
-	public Date getDteventserrealizadorel() {
+	public String dteventserrealizadorelfim() {
+		return dteventserrealizadorelfim;
+	}
+
+	public void dteventserrealizadorelfim(String dteventserrealizadorelfim) {
+		this.dteventserrealizadorelfim = dteventserrealizadorelfim;
+	}
+	public String getDteventserrealizadorel() {
 		return dteventserrealizadorel;
 	}
 
-	public void setDteventserrealizadorel(Date dteventserrealizadorel) {
+	public void setDteventserrealizadorel(String dteventserrealizadorel) {
 		this.dteventserrealizadorel = dteventserrealizadorel;
 	}
 	
