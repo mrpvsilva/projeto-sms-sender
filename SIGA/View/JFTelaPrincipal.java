@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import Model.UsuarioBean;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
 
 public class JFTelaPrincipal extends JFrame implements ActionListener {
 
@@ -50,6 +51,10 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 	private JMenuItem JMIUsuBuscar;
 	private JMenuItem JMIUsuExcluir;
 	private JMenu JMIRelCont;
+	private JMenu mnEventos;
+	private JMenuItem mntmCadastrar;
+	private JMenuItem mntmBuscar;
+	private JMenuItem mntmExcluir;
 	private JMenu mnTipoDeServios;
 	private JMenuItem JMITSCad;
 	private JMenuItem JMITSBuscar;
@@ -99,10 +104,12 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMForn.add(JMIFornCad);
 
 		JMIFornBuscar = new JMenuItem("Buscar");
+		JMIFornBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		JMIFornBuscar.addActionListener(this);
 		JMForn.add(JMIFornBuscar);
 
 		JMIFornExcluir = new JMenuItem("Excluir");
+		JMIFornExcluir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
 		JMIFornExcluir.addActionListener(this);
 		JMForn.add(JMIFornExcluir);
 
@@ -110,54 +117,68 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		menuBar.add(JMServ);
 
 		JMIServCad = new JMenuItem("Cadastrar");
+		JMIServCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
 		JMIServCad.addActionListener(this);
 		JMServ.add(JMIServCad);
 
 		JMIServBuscar = new JMenuItem("Buscar");
+		JMIServBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
 		JMIServBuscar.addActionListener(this);
 		JMServ.add(JMIServBuscar);
 
 		JMIServExcluir = new JMenuItem("Excluir");
+		JMIServExcluir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0));
 		JMIServExcluir.addActionListener(this);
 		JMServ.add(JMIServExcluir);
-
-		mnTipoDeServios = new JMenu("Tipo de Servi\u00E7os");
-		menuBar.add(mnTipoDeServios);
-
-		JMITSCad = new JMenuItem("Cadastrar");
-		JMITSCad.addActionListener(this);
-		mnTipoDeServios.add(JMITSCad);
-
-		JMITSBuscar = new JMenuItem("Buscar");
-		mnTipoDeServios.add(JMITSBuscar);
 
 		JMenu JMCli = new JMenu("Clientes");
 		menuBar.add(JMCli);
 
 		JMICliCad = new JMenuItem("Cadastrar");
+		JMICliCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
 		JMICliCad.addActionListener(this);
 		JMCli.add(JMICliCad);
 
 		JMICliBuscar = new JMenuItem("Buscar");
+		JMICliBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0));
 		JMICliBuscar.addActionListener(this);
 		JMCli.add(JMICliBuscar);
 
 		JMICliExcluir = new JMenuItem("Excluir");
+		JMICliExcluir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0));
 		JMICliExcluir.addActionListener(this);
 		JMCli.add(JMICliExcluir);
+		
+		mnEventos = new JMenu("Eventos");
+		menuBar.add(mnEventos);
+		
+		mntmCadastrar = new JMenuItem("Cadastrar");
+		mntmCadastrar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0));
+		mnEventos.add(mntmCadastrar);
+		
+		mntmBuscar = new JMenuItem("Buscar");
+		mntmBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
+		mnEventos.add(mntmBuscar);
+		
+		mntmExcluir = new JMenuItem("Excluir");
+		mntmExcluir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
+		mnEventos.add(mntmExcluir);
 
 		JMenu JMLemb = new JMenu("Lembretes");
 		menuBar.add(JMLemb);
 
 		JMILembCad = new JMenuItem("Cadastrar");
+		JMILembCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, 0));
 		JMILembCad.addActionListener(this);
 		JMLemb.add(JMILembCad);
 
 		JMILembBuscar = new JMenuItem("Buscar");
+		JMILembBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, 0));
 		JMILembBuscar.addActionListener(this);
 		JMLemb.add(JMILembBuscar);
 
 		JMILembExcluir = new JMenuItem("Excluir");
+		JMILembExcluir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
 		JMILembExcluir.addActionListener(this);
 		JMLemb.add(JMILembExcluir);
 
@@ -165,10 +186,12 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		menuBar.add(JMFin);
 
 		JMIFinSincInf = new JMenuItem("Sincronizar info.");
+		JMIFinSincInf.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.CTRL_MASK));
 		JMIFinSincInf.addActionListener(this);
 		JMFin.add(JMIFinSincInf);
 
 		JMIFinFormPag = new JMenuItem("Formas de pag.");
+		JMIFinFormPag.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.CTRL_MASK));
 		JMIFinFormPag.addActionListener(this);
 		JMFin.add(JMIFinFormPag);
 
@@ -179,10 +202,12 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMRel.add(JMIRelCont);
 
 		JMIRelContFormComp = new JMenuItem("Formatura completa");
+		JMIRelContFormComp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, InputEvent.CTRL_MASK));
 		JMIRelContFormComp.addActionListener(this);
 		JMIRelCont.add(JMIRelContFormComp);
 
 		JMIRelContFormCusto = new JMenuItem("Formatura customizada");
+		JMIRelContFormCusto.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4, InputEvent.CTRL_MASK));
 		JMIRelContFormCusto.addActionListener(this);
 		JMIRelCont.add(JMIRelContFormCusto);
 
@@ -190,10 +215,12 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMRel.add(JMIRelEvent);
 
 		JMIRelEventSerRea = new JMenuItem("A ser realizado");
+		JMIRelEventSerRea.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_5, InputEvent.CTRL_MASK));
 		JMIRelEventSerRea.addActionListener(this);
 		JMIRelEvent.add(JMIRelEventSerRea);
 
 		JMIRelEventForn = new JMenuItem("Fornecedores");
+		JMIRelEventForn.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_6, InputEvent.CTRL_MASK));
 		JMIRelEventSerRea.addActionListener(this);
 		JMIRelEvent.add(JMIRelEventForn);
 
@@ -201,10 +228,12 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMRel.add(JMIRelImp);
 
 		JMIRelImpOrc = new JMenuItem("Or\u00E7amento");
+		JMIRelImpOrc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_7, InputEvent.CTRL_MASK));
 		JMIRelImpOrc.addActionListener(this);
 		JMIRelImp.add(JMIRelImpOrc);
 
 		JMIRelImpCont = new JMenuItem("Contrato");
+		JMIRelImpCont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_8, InputEvent.CTRL_MASK));
 		JMIRelImpCont.addActionListener(this);
 		JMIRelImp.add(JMIRelImpCont);
 
@@ -212,14 +241,17 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		menuBar.add(JMUsu);
 
 		JMIUsuCad = new JMenuItem("Cadastrar");
+		JMIUsuCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0));
 		JMIUsuCad.addActionListener(this);
 		JMUsu.add(JMIUsuCad);
 
 		JMIUsuBuscar = new JMenuItem("Buscar");
+		JMIUsuBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, 0));
 		JMIUsuBuscar.addActionListener(this);
 		JMUsu.add(JMIUsuBuscar);
 
 		JMIUsuExcluir = new JMenuItem("Excluir");
+		JMIUsuExcluir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
 		JMIUsuExcluir.addActionListener(this);
 		JMUsu.add(JMIUsuExcluir);
 
@@ -352,6 +384,11 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		if (acao.getSource() == JMIFinFormPag) {
 
+			JDTelaFormPagFin jdtfpf = new JDTelaFormPagFin();
+			jdtfpf.setVisible(true);
+			jdtfpf.setLocationRelativeTo(null);
+			
+			
 		}// final do JMenuItemFinanceiro Formas de pagamentos
 
 		/*
