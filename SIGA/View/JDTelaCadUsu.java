@@ -20,6 +20,7 @@ import Dominio.Usuario;
 import Extra.Extras;
 import Extra.Mascaras;
 import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
 
 public class JDTelaCadUsu extends JDialog implements ActionListener {
 
@@ -110,16 +111,19 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvUsu = new JButton("Salvar");
+				JBSalvUsu.setIcon(new ImageIcon(JDTelaCadUsu.class.getResource("/Img/Confirmar.png")));
 				JBSalvUsu.addActionListener(this);
 				buttonPane.add(JBSalvUsu);
 				getRootPane().setDefaultButton(JBSalvUsu);
 			}
 			{
 				JBNovUsu = new JButton("Novo");
+				JBNovUsu.setIcon(new ImageIcon(JDTelaCadUsu.class.getResource("/Img/user_blue_add216.png")));
 				buttonPane.add(JBNovUsu);
 			}
 
 			btnResetarSenha = new JButton("Resetar senha");
+			btnResetarSenha.setIcon(new ImageIcon(JDTelaCadUsu.class.getResource("/Img/sync.png")));
 			buttonPane.add(btnResetarSenha);
 		}
 
