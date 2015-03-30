@@ -7,10 +7,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 public class JDTelaFornEventRel extends JDialog implements ActionListener{
 
@@ -19,11 +24,15 @@ public class JDTelaFornEventRel extends JDialog implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JButton JBCadCli;
-	private JButton JBEditCli;
-	private JLabel JLFiltro;
-	private JButton JBBuscar;
-	private JTextField JTFBuscar;
+	private JButton JBGerarRel;
+	private JLabel JLDtInicio;
+	private UtilDateModel model;
+	private JDatePanelImpl datePanelDtIni;
+	private JDatePickerImpl datePickerDtIni;
+	private JLabel lblDataFim;
+	private UtilDateModel modelDtF;
+	private JDatePanelImpl datePanelDtF;
+	private JDatePickerImpl datePickerDtF;
 
 	/**
 	 * Launch the application.
@@ -42,42 +51,53 @@ public class JDTelaFornEventRel extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public JDTelaFornEventRel() {
-		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A - relatório eventos por fornecedores");
-		setBounds(100, 100, 450, 300);
+		setTitle("SIGA - relat\u00F3rio eventos por fornecedores");
+		setBounds(100, 100, 532, 191);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JLFiltro = new JLabel("Filtro");
-			JLFiltro.setBounds(10, 11, 46, 14);
-			contentPanel.add(JLFiltro);
+			JLDtInicio = new JLabel("Data in\u00EDcio");
+			JLDtInicio.setBounds(10, 56, 66, 14);
+			contentPanel.add(JLDtInicio);
 		}
 		{
-			JBBuscar = new JButton("Buscar");
-			JBBuscar.setBounds(335, 11, 89, 23);
-			contentPanel.add(JBBuscar);
+			
+			model = new UtilDateModel();
+			datePanelDtIni = new JDatePanelImpl(model);
+			datePanelDtIni.setPreferredSize(new java.awt.Dimension(202, 182));
+			datePickerDtIni = new JDatePickerImpl(datePanelDtIni);
+			datePickerDtIni.setBounds(74, 51, 152, 30);
+			contentPanel.add(datePickerDtIni);
+			
 		}
+		
 		{
-			JTFBuscar = new JTextField();
-			JTFBuscar.setBounds(153, 11, 172, 20);
-			contentPanel.add(JTFBuscar);
-			JTFBuscar.setColumns(10);
+			
+			modelDtF = new UtilDateModel();
+			datePanelDtF = new JDatePanelImpl(modelDtF);
+			datePanelDtF.setPreferredSize(new java.awt.Dimension(202, 182));
+			datePickerDtF = new JDatePickerImpl(datePanelDtF);
+			datePickerDtF.setBounds(323, 51, 152, 30);
+			contentPanel.add(datePickerDtF);
+			
+		}
+		
+		{
+			lblDataFim = new JLabel("Data fim");
+			lblDataFim.setBounds(254, 56, 59, 14);
+			contentPanel.add(lblDataFim);
 		}
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JBCadCli = new JButton("Cadastrar");
-				JBCadCli.setActionCommand("OK");
-				buttonPane.add(JBCadCli);
-				getRootPane().setDefaultButton(JBCadCli);
-			}
-			{
-				JBEditCli = new JButton("Alterar");
-				JBEditCli.setActionCommand("Cancel");
-				buttonPane.add(JBEditCli);
+				JBGerarRel = new JButton("Gerar");
+				JBGerarRel.setActionCommand("OK");
+				buttonPane.add(JBGerarRel);
+				getRootPane().setDefaultButton(JBGerarRel);
 			}
 		}
 	}
@@ -85,14 +105,17 @@ public class JDTelaFornEventRel extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent acao) {
 
-		if(acao.getSource() == JBCadCli){
+		if(acao.getSource() == JBGerarRel){
+			
+			if(datePickerDtIni.getJFormattedTextField().getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "Data início em branco.","Erro ao gerar",JOptionPane.ERROR_MESSAGE);
+			else if(datePickerDtF.getJFormattedTextField().getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "Data fim em branco.","Erro ao gerar",JOptionPane.ERROR_MESSAGE);
+			else{
+				
+			}
 			
 		}// final do botão cadastrar cliente
-		
-		if(acao.getSource() == JBEditCli){
-			
-		}// final do botão atualizar cliente
-		
+				
 	}// final da ação do botão
-
 }
