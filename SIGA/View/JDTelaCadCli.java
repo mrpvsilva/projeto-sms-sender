@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 
 import javax.swing.JButton;
@@ -11,6 +12,7 @@ import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
@@ -21,6 +23,7 @@ import Extra.Extras;
 import Extra.Mascaras;
 import Extra.Validacoes;
 import Model.ClientesBean;
+import javax.swing.ImageIcon;
 
 
 public class JDTelaCadCli extends JDialog implements ActionListener{
@@ -219,11 +222,13 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBCadCli = new JButton("Salvar");
+				JBCadCli.setIcon(new ImageIcon(JDTelaCadCli.class.getResource("/Img/Confirmar.png")));
 				buttonPane.add(JBCadCli);
 				getRootPane().setDefaultButton(JBCadCli);
 			}
 			{
 				JBNovoCad = new JButton("Novo");
+				JBNovoCad.setIcon(new ImageIcon("C:\\Users\\Aru\u00E3Melo\\Downloads\\user_male_add216.png"));
 				JBNovoCad.addActionListener(this);
 				buttonPane.add(JBNovoCad);
 			}
