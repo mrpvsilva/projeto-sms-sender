@@ -166,7 +166,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		JTFSite.setColumns(10);
 
 		JCBTpServ = new JComboBox(_fornecedorControl.DDLTipoServico());
-		JCBTpServ.setBounds(83, 64, 184, 20);
+		JCBTpServ.setBounds(83, 64, 400, 20);
 
 		contentPanel.add(JCBTpServ);
 
@@ -196,7 +196,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		contentPanel.add(JCBCpfMask);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(83, 103, 272, 87);
+		scrollPane.setBounds(83, 103, 370, 87);
 		contentPanel.add(scrollPane);
 
 		telmodel = new TelefoneTableModel();
@@ -206,26 +206,23 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		scrollPane.setViewportView(table);
 
 		btnaddtel = new JButton("");
-		btnaddtel.setIcon(new ImageIcon(JDTelaCadForn.class
-				.getResource("/resources/plus.png")));
+		btnaddtel.setIcon(new ImageIcon(JDTelaCadForn.class.getResource("/Img/plus.png")));
 		btnaddtel.setToolTipText("Adicionar telefone");
-		btnaddtel.setBounds(358, 105, 23, 23);
+		btnaddtel.setBounds(463, 104, 23, 23);
 		btnaddtel.addActionListener(this);
 		contentPanel.add(btnaddtel);
 
 		btnedittel = new JButton("");
 		btnedittel.setToolTipText("Alterar telefone");
-		btnedittel.setIcon(new ImageIcon(JDTelaCadForn.class
-				.getResource("/resources/edit.png")));
-		btnedittel.setBounds(358, 130, 23, 23);
+		btnedittel.setIcon(new ImageIcon(JDTelaCadForn.class.getResource("/Img/edit.png")));
+		btnedittel.setBounds(463, 129, 23, 23);
 		btnedittel.addActionListener(this);
 		contentPanel.add(btnedittel);
 
 		btnremovetel = new JButton("");
 		btnremovetel.setToolTipText("Remover telefone");
-		btnremovetel.setIcon(new ImageIcon(JDTelaCadForn.class
-				.getResource("/resources/trash.png")));
-		btnremovetel.setBounds(357, 154, 23, 23);
+		btnremovetel.setIcon(new ImageIcon(JDTelaCadForn.class.getResource("/Img/trash.png")));
+		btnremovetel.setBounds(462, 153, 23, 23);
 		btnremovetel.addActionListener(this);
 		contentPanel.add(btnremovetel);
 
@@ -235,6 +232,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvForn = new JButton("Salvar");
+				JBSalvForn.setIcon(new ImageIcon(JDTelaCadForn.class.getResource("/Img/Confirmar.png")));
 				JBSalvForn.addActionListener(this);
 				buttonPane.add(JBSalvForn);
 				getRootPane().setDefaultButton(JBSalvForn);
@@ -253,7 +251,8 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent acao) {
 
 		if (acao.getSource() == btnaddtel) {
-			EditFormTelefone ef = new EditFormTelefone(-1, null, telmodel);
+			JDTelaEditTelefone ef = new JDTelaEditTelefone(-1, null, telmodel);
+			ef.setModal(true);
 			ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			ef.setVisible(true);
 		}
@@ -263,7 +262,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 
 			if (linha > -1) {
 				Telefone t = telmodel.getTelefone(linha);
-				EditFormTelefone ef = new EditFormTelefone(linha, t, telmodel);
+				JDTelaEditTelefone ef = new JDTelaEditTelefone(linha, t, telmodel);
 				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				ef.setVisible(true);
 			} else {

@@ -35,7 +35,7 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 	private JButton JBCadUsu;
 	private JButton JBEditUsu;
 	private JLabel JLFiltro;
-	private JButton JBBuscar;
+	public static JButton JBBuscar;
 	private JTextField JTFBuscar;
 	private JComboBox<String> JCBFiltro;
 	private UsuarioControl usuCont = new UsuarioControl();

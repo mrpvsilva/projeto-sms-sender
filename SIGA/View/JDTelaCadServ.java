@@ -21,6 +21,7 @@ import javax.swing.JTextArea;
 import jmoneyfield.JMoneyField;
 
 import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
 
 public class JDTelaCadServ extends JDialog implements ActionListener {
 
@@ -134,6 +135,7 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvServ = new JButton("Salvar");
+				JBSalvServ.setIcon(new ImageIcon(JDTelaCadServ.class.getResource("/Img/Confirmar.png")));
 				JBSalvServ.addActionListener(this);
 				buttonPane.add(JBSalvServ);
 				getRootPane().setDefaultButton(JBSalvServ);

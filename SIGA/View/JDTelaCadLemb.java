@@ -26,6 +26,7 @@ import Dominio.Usuario;
 import Extra.Extras;
 
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 
 public class JDTelaCadLemb extends JDialog implements ActionListener {
 
@@ -81,7 +82,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 			datePanel = new JDatePanelImpl(model);
 			datePanel.setPreferredSize(new java.awt.Dimension(202, 182));
 			datePicker = new JDatePickerImpl(datePanel);
-			datePicker.setBounds(99, 53, 224, 30);
+			datePicker.setBounds(99, 53, 325, 30);
 			contentPanel.add(datePicker);
 
 		}
@@ -91,7 +92,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 		contentPanel.add(JLUsuario);
 
 		JCBUsuario = new JComboBox(_lembreteControl.DDLRemetentes());
-		JCBUsuario.setBounds(99, 94, 224, 20);
+		JCBUsuario.setBounds(99, 94, 325, 20);
 		contentPanel.add(JCBUsuario);
 
 		JLabel lblLembrete = new JLabel("Lembrete");
@@ -108,7 +109,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 		contentPanel.add(lblAssunto);
 
 		JTFAssunto = new JTextField();
-		JTFAssunto.setBounds(99, 19, 224, 20);
+		JTFAssunto.setBounds(99, 19, 325, 20);
 		contentPanel.add(JTFAssunto);
 		JTFAssunto.setColumns(10);
 		{
@@ -117,12 +118,14 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvLemb = new JButton("Salvar");
+				JBSalvLemb.setIcon(new ImageIcon(JDTelaCadLemb.class.getResource("/Img/Confirmar.png")));
 				JBSalvLemb.addActionListener(this);
 				buttonPane.add(JBSalvLemb);
 				getRootPane().setDefaultButton(JBSalvLemb);
 			}
 			{
 				JBNovLemb = new JButton("Novo");
+				JBNovLemb.setIcon(new ImageIcon(JDTelaCadLemb.class.getResource("/Img/lembreteAdd.png")));
 				JBNovLemb.addActionListener(this);
 				buttonPane.add(JBNovLemb);
 			}
