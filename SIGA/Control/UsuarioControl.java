@@ -11,6 +11,7 @@ import Interfaces.IUsuarioRepository;
 import Model.UsuarioBean;
 import Model.UsuarioModel;
 import Repositories.UsuarioRepository;
+import View.JDTelaBuscarUsu;
 
 public class UsuarioControl {
 
@@ -58,7 +59,7 @@ public class UsuarioControl {
 
 		if (!_usuarioReposiroty.update(usuario))
 			return "Falha na atualização do usuário";
-
+		JDTelaBuscarUsu.JBBuscar.doClick();
 		return null;
 	}
 
