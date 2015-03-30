@@ -11,6 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JComboBox;
+
+import Control.EventoControl;
+import Dominio.TipoPagamento;
 
 public class JDTelaFormPagFin extends JDialog implements ActionListener{
 
@@ -21,9 +25,8 @@ public class JDTelaFormPagFin extends JDialog implements ActionListener{
 	private final JPanel contentPanel = new JPanel();
 	private JButton JBCadCli;
 	private JButton JBEditCli;
-	private JLabel JLFiltro;
-	private JButton JBBuscar;
-	private JTextField JTFBuscar;
+	private JComboBox JCBTpPagamento;
+	private EventoControl evtControl = new EventoControl();
 
 	/**
 	 * Launch the application.
@@ -48,22 +51,17 @@ public class JDTelaFormPagFin extends JDialog implements ActionListener{
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		{
-			JLFiltro = new JLabel("Filtro");
-			JLFiltro.setBounds(10, 11, 46, 14);
-			contentPanel.add(JLFiltro);
+		
+		JLabel JLTipoPagamento = new JLabel("Tipo pagamento");
+		JLTipoPagamento.setBounds(10, 11, 111, 14);
+		contentPanel.add(JLTipoPagamento);
+		
+		JCBTpPagamento = new JComboBox();
+		for (TipoPagamento item : evtControl.allTpPagamentos()) {
+			JCBTpPagamento.addItem(item.getDescricao());
 		}
-		{
-			JBBuscar = new JButton("Buscar");
-			JBBuscar.setBounds(335, 11, 89, 23);
-			contentPanel.add(JBBuscar);
-		}
-		{
-			JTFBuscar = new JTextField();
-			JTFBuscar.setBounds(153, 11, 172, 20);
-			contentPanel.add(JTFBuscar);
-			JTFBuscar.setColumns(10);
-		}
+		JCBTpPagamento.setBounds(117, 8, 166, 20);
+		contentPanel.add(JCBTpPagamento);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -94,5 +92,4 @@ public class JDTelaFormPagFin extends JDialog implements ActionListener{
 		}// final do botão atualizar cliente
 		
 	}// final da ação do botão
-
 }
