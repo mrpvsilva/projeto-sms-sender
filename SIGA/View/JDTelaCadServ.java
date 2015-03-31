@@ -4,10 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
 import Control.ServicosControl;
 import Dominio.Item;
 import Extra.Extras;
 import Extra.Validacoes;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -22,6 +25,7 @@ import jmoneyfield.JMoneyField;
 
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class JDTelaCadServ extends JDialog implements ActionListener {
 
@@ -41,6 +45,7 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 	private ServicosControl sc;
 	private JLabel lblTipoDeServio;
 	private JComboBox ddltiposervico;
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
@@ -59,6 +64,7 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaCadServ() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaCadServ.class.getResource("/Img/CNPJ G200.png")));
 		sc = new ServicosControl();
 		setBounds(100, 100, 450, 349);
 		setTitle("SIGA - cadastro de servi\u00E7os");
@@ -136,13 +142,24 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 			{
 				JBSalvServ = new JButton("Salvar");
 				JBSalvServ.setIcon(new ImageIcon(JDTelaCadServ.class.getResource("/Img/Confirmar.png")));
+				JBSalvServ.setMnemonic(KeyEvent.VK_S);
 				JBSalvServ.addActionListener(this);
 				buttonPane.add(JBSalvServ);
 				getRootPane().setDefaultButton(JBSalvServ);
 			}
 			{
 				JBNovoServ = new JButton("Novo");
+				JBNovoServ.setIcon(new ImageIcon(JDTelaCadServ.class.getResource("/Img/window_new16.png")));
+				JBNovoServ.addActionListener(this);
+				JBNovoServ.setMnemonic(KeyEvent.VK_N);
 				buttonPane.add(JBNovoServ);
+			}
+			{
+				JBSair = new JButton("Sair");
+				JBSair.setIcon(new ImageIcon(JDTelaCadServ.class.getResource("/Img/exit16.png")));
+				JBSair.addActionListener(this);
+				JBSair.setMnemonic(KeyEvent.VK_Q);
+				buttonPane.add(JBSair);
 			}
 		}
 	}
@@ -224,5 +241,9 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 			}// final da confirmação
 
 		}// final do botão novo
+		
+		if(acao.getSource() == JBSair){
+			this.dispose();
+		}
 	}
 }

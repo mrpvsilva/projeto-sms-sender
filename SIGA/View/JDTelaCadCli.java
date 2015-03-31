@@ -24,6 +24,7 @@ import Extra.Mascaras;
 import Extra.Validacoes;
 import Model.ClientesBean;
 import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 
 public class JDTelaCadCli extends JDialog implements ActionListener{
@@ -55,6 +56,7 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 	private JComboBox<String> JCBOperadora1;
 	private JComboBox<String> JCBOperadora;
 	private JComboBox<String> JCBSn;
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
@@ -74,6 +76,7 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 	 * @throws ParseException 
 	 */
 	public JDTelaCadCli() throws ParseException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaCadCli.class.getResource("/Img/CNPJ G200.png")));
 		setTitle("SIGA - cadastro de cliente");
 		setBounds(100, 100, 581, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -224,14 +227,22 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 				JBCadCli = new JButton("Salvar");
 				JBCadCli.setIcon(new ImageIcon(JDTelaCadCli.class.getResource("/Img/Confirmar.png")));
 				buttonPane.add(JBCadCli);
+				JBCadCli.setMnemonic(KeyEvent.VK_S);
 				getRootPane().setDefaultButton(JBCadCli);
 			}
 			{
 				JBNovoCad = new JButton("Novo");
 				JBNovoCad.setIcon(new ImageIcon("C:\\Users\\Aru\u00E3Melo\\Downloads\\user_male_add216.png"));
+				JBNovoCad.setMnemonic(KeyEvent.VK_N);
 				JBNovoCad.addActionListener(this);
 				buttonPane.add(JBNovoCad);
 			}
+			
+			JBSair = new JButton("Sair");
+			JBSair.setIcon(new ImageIcon(JDTelaCadCli.class.getResource("/Img/exit16.png")));
+			JBSair.addActionListener(this);
+			JBSair.setMnemonic(KeyEvent.VK_Q);
+			buttonPane.add(JBSair);
 		}
 	}
 
@@ -311,5 +322,8 @@ public class JDTelaCadCli extends JDialog implements ActionListener{
 			
 		}// final do botão atualizar usuário
 		
+		if(acao.getSource() == JBSair){
+			this.dispose();
+		}
 	}// final da ação do botão
 }

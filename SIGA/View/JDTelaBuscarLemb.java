@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -25,6 +26,9 @@ import Control.LembretesControl;
 import Dominio.Lembrete;
 import Extra.Extras;
 
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
+
 public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 
 	/**
@@ -42,6 +46,7 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 	private JTable tabela;
 	private DefaultTableModel model;
 	private LembretesControl _lembreteControl = new LembretesControl();
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
@@ -60,6 +65,7 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaBuscarLemb() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaBuscarLemb.class.getResource("/Img/CNPJ G200.png")));
 		setTitle("SIGA - buscar lembretes");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -73,14 +79,16 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 		}
 		{
 			JBBuscar = new JButton("Buscar");
+			JBBuscar.setIcon(new ImageIcon(JDTelaBuscarLemb.class.getResource("/Img/Procurar.png")));
 			JBBuscar.addActionListener(this);
-			JBBuscar.setBounds(335, 11, 89, 23);
+			JBBuscar.setMnemonic(KeyEvent.VK_F);
+			JBBuscar.setBounds(325, 11, 99, 23);
 			contentPanel.add(JBBuscar);
 		}
 		{
 			JTFBuscar = new JTextField();
 			JTFBuscar.setColumns(10);
-			JTFBuscar.setBounds(153, 11, 172, 20);
+			JTFBuscar.setBounds(149, 11, 172, 20);
 			contentPanel.add(JTFBuscar);
 		}
 		{
@@ -126,14 +134,25 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBCadLemb = new JButton("Cadastrar");
+				JBCadLemb.setIcon(new ImageIcon(JDTelaBuscarLemb.class.getResource("/Img/save16.png")));
 				JBCadLemb.addActionListener(this);
+				JBCadLemb.setMnemonic(KeyEvent.VK_C);
 				buttonPane.add(JBCadLemb);
 				getRootPane().setDefaultButton(JBCadLemb);
 			}
 			{
-				JBEditLemb = new JButton("Alterar");
+				JBEditLemb = new JButton("Editar");
+				JBEditLemb.setIcon(new ImageIcon(JDTelaBuscarLemb.class.getResource("/Img/edit_add16.png")));
 				JBEditLemb.addActionListener(this);
+				JBEditLemb.setMnemonic(KeyEvent.VK_E);
 				buttonPane.add(JBEditLemb);
+			}
+			{
+				JBSair = new JButton("Sair");
+				JBSair.setIcon(new ImageIcon(JDTelaBuscarLemb.class.getResource("/Img/exit16.png")));
+				JBSair.addActionListener(this);
+				JBSair.setMnemonic(KeyEvent.VK_Q);
+				buttonPane.add(JBSair);
 			}
 		}
 	}
@@ -165,6 +184,9 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 			Pesquisar();
 		}// final do botão buscar lembretes
 
+		if(acao.getSource() == JBSair){
+			this.dispose();
+		}
 	}// final da ação do botão
 
 	private void Pesquisar() {

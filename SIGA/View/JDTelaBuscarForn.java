@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.util.List;
 
@@ -23,6 +24,9 @@ import javax.swing.JComboBox;
 import Control.FornecedoresControl;
 import Dominio.Fornecedor;
 
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
+
 public class JDTelaBuscarForn extends JDialog implements ActionListener {
 
 	/**
@@ -41,6 +45,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 	private JTable tabela;
 	private DefaultTableModel model;
 	protected String valor;
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
@@ -59,6 +64,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaBuscarForn() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaBuscarForn.class.getResource("/Img/CNPJ G200.png")));
 		setTitle("SIGA - buscar fornecedores");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -67,8 +73,10 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 		{
 			JBBuscar = new JButton("Buscar");
+			JBBuscar.setIcon(new ImageIcon(JDTelaBuscarForn.class.getResource("/Img/Procurar.png")));
 			JBBuscar.addActionListener(this);
-			JBBuscar.setBounds(335, 11, 89, 23);
+			JBBuscar.setMnemonic(KeyEvent.VK_F);
+			JBBuscar.setBounds(325, 11, 99, 23);
 			contentPanel.add(JBBuscar);
 		}
 		{
@@ -79,7 +87,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 		{
 			JTFBuscar = new JTextField();
 			JTFBuscar.setColumns(10);
-			JTFBuscar.setBounds(153, 11, 172, 20);
+			JTFBuscar.setBounds(149, 11, 172, 20);
 			contentPanel.add(JTFBuscar);
 		}
 		{
@@ -132,14 +140,25 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBCadForn = new JButton("Cadastrar");
+				JBCadForn.setIcon(new ImageIcon(JDTelaBuscarForn.class.getResource("/Img/save16.png")));
 				JBCadForn.addActionListener(this);
+				JBCadForn.setMnemonic(KeyEvent.VK_C);
 				buttonPane.add(JBCadForn);
 				getRootPane().setDefaultButton(JBCadForn);
 			}
 			{
-				JBEditForn = new JButton("Alterar");
+				JBEditForn = new JButton("Editar");
+				JBEditForn.setIcon(new ImageIcon(JDTelaBuscarForn.class.getResource("/Img/edit_add16.png")));
 				JBEditForn.addActionListener(this);
+				JBEditForn.setMnemonic(KeyEvent.VK_E);
 				buttonPane.add(JBEditForn);
+			}
+			{
+				JBSair = new JButton("Sair");
+				JBSair.setIcon(new ImageIcon(JDTelaBuscarForn.class.getResource("/Img/exit16.png")));
+				JBSair.addActionListener(this);
+				JBSair.setMnemonic(KeyEvent.VK_Q);
+				buttonPane.add(JBSair);
 			}
 		}
 	}
@@ -199,6 +218,10 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 
 		}// final do botão buscar fornecedores
 
+		if(acao.getSource() == JBSair){
+			this.dispose();
+		}
+		
 	}// final da ação do botão
 
 	private void CarregarGrid(List<Fornecedor> lista) {
