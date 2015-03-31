@@ -17,6 +17,9 @@ import Model.UsuarioBean;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class JFTelaPrincipal extends JFrame implements ActionListener {
 
@@ -57,6 +60,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 	private JMenu mnTipoServio;
 	private JMenuItem JMITSCad;
 	private JMenuItem JMITSBuscar;
+	private JLabel label;
 
 	/**
 	 * Launch the application.
@@ -78,6 +82,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public JFTelaPrincipal(UsuarioBean usuario) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JFTelaPrincipal.class.getResource("/Img/CNPJ G200.png")));
 
 		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -281,8 +286,13 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		label = new JLabel("");
+		label.setBounds(165, 68, 1168, 531);
+		label.setIcon(new ImageIcon("C:\\Users\\Aru\u00E3Melo\\Downloads\\CNPJ G800.png"));
+		contentPane.add(label);
 	}
 
 	@Override

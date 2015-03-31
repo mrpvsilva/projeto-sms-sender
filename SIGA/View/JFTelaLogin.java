@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import persistenceManagerFactory.PersistenceManagerFactory;
 import Control.UsuarioControl;
 import Model.UsuarioBean;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class JFTelaLogin extends JFrame implements ActionListener {
 
@@ -60,6 +62,7 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public JFTelaLogin() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JFTelaLogin.class.getResource("/Img/CNPJ G200.png")));
 
 		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,6 +95,11 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 		JBAcessar.addActionListener(this);
 		JBAcessar.setBounds(154, 212, 101, 23);
 		contentPane.add(JBAcessar);
+		
+		JLabel JLIcone = new JLabel("");
+		JLIcone.setIcon(new ImageIcon(JFTelaLogin.class.getResource("/Img/CNPJ G200.png")));
+		JLIcone.setBounds(137, 11, 224, 98);
+		contentPane.add(JLIcone);
 	}
 
 	@Override
