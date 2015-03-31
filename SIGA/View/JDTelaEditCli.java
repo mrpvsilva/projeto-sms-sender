@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 
 import javax.swing.JButton;
@@ -20,6 +21,8 @@ import javax.swing.JComboBox;
 import Extra.Extras;
 import Extra.Validacoes;
 import Model.ClientesBean;
+
+import javax.swing.ImageIcon;
 
 
 public class JDTelaEditCli extends JDialog implements ActionListener{
@@ -50,6 +53,7 @@ public class JDTelaEditCli extends JDialog implements ActionListener{
 	private JFormattedTextField JFFCpf;
 	private JFormattedTextField JFFFone2;
 	private JComboBox<String> JCBSn;
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
@@ -216,14 +220,24 @@ public class JDTelaEditCli extends JDialog implements ActionListener{
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBAtuCli = new JButton("Atualizar");
+				JBAtuCli.setIcon(new ImageIcon(JDTelaEditCli.class.getResource("/Img/reload16.png")));
+				JBAtuCli.setMnemonic(KeyEvent.VK_A);
 				buttonPane.add(JBAtuCli);
 				getRootPane().setDefaultButton(JBAtuCli);
 			}
 			{
 				JBExcCli = new JButton("Excluir");
+				JBExcCli.setIcon(new ImageIcon(JDTelaEditCli.class.getResource("/Img/user_male_delete216.png")));
+				JBExcCli.setMnemonic(KeyEvent.VK_X);
 				JBExcCli.addActionListener(this);
 				buttonPane.add(JBExcCli);
 			}
+			
+			JBSair = new JButton("Sair");
+			JBSair.setIcon(new ImageIcon(JDTelaEditCli.class.getResource("/Img/exit16.png")));
+			JBSair.setMnemonic(KeyEvent.VK_Q);
+			JBSair.addActionListener(this);
+			buttonPane.add(JBSair);
 		}
 	}
 
@@ -283,6 +297,10 @@ public class JDTelaEditCli extends JDialog implements ActionListener{
 			}// final da confirmação
 			
 		}// final do botão excluir cliente
+		
+		if(acao.getSource() == JBSair){
+			this.dispose();
+		}
 		
 	}// final da ação do botão
 }

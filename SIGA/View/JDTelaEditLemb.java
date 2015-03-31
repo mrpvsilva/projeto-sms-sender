@@ -6,22 +6,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
 import java.util.Date;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
+
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
+
 import Control.LembretesControl;
 import Dominio.Lembrete;
 
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class JDTelaEditLemb extends JDialog implements ActionListener {
 
@@ -43,6 +50,7 @@ public class JDTelaEditLemb extends JDialog implements ActionListener {
 	private LembretesControl _lembreteControl = new LembretesControl();
 	private Lembrete _lembrete;
 	private JTextField JTFAssunto;
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
@@ -61,6 +69,7 @@ public class JDTelaEditLemb extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaEditLemb(int id) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaEditLemb.class.getResource("/Img/CNPJ G200.png")));
 		_id = id;
 		setBounds(100, 100, 450, 349);
 		setTitle("SIGA - edi\u00E7\u00E3o de lembretes");
@@ -124,15 +133,24 @@ public class JDTelaEditLemb extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBAtuLemb = new JButton("Atualizar");
+				JBAtuLemb.setIcon(new ImageIcon(JDTelaEditLemb.class.getResource("/Img/reload16.png")));
 				JBAtuLemb.addActionListener(this);
+				JBAtuLemb.setMnemonic(KeyEvent.VK_A);
 				buttonPane.add(JBAtuLemb);
 				getRootPane().setDefaultButton(JBAtuLemb);
 			}
 			{
 				JBExcLemb = new JButton("Excluir");
+				JBExcLemb.setIcon(new ImageIcon(JDTelaEditLemb.class.getResource("/Img/close16.png")));
+				JBExcLemb.setMnemonic(KeyEvent.VK_X);
 				JBExcLemb.addActionListener(this);
 				buttonPane.add(JBExcLemb);
 			}
+			
+			JBSair = new JButton("Sair");
+			JBSair.setIcon(new ImageIcon(JDTelaEditLemb.class.getResource("/Img/exit16.png")));
+			JBSair.setMnemonic(KeyEvent.VK_Q);
+			buttonPane.add(JBSair);
 		}
 
 		PreencherCampos();
