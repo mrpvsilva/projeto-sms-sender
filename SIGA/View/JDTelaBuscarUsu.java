@@ -24,6 +24,7 @@ import javax.swing.JComboBox;
 
 import Control.UsuarioControl;
 import Dominio.Usuario;
+import javax.swing.ImageIcon;
 
 public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 
@@ -43,6 +44,7 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 	private JTable tabela;
 	private JScrollPane scroll;
 	protected String valor;
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
@@ -74,7 +76,9 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 		}
 		{
 			JBBuscar = new JButton("Buscar");
+			JBBuscar.setIcon(new ImageIcon(JDTelaBuscarUsu.class.getResource("/Img/Procurar.png")));
 			JBBuscar.addActionListener(this);
+			JBBuscar.setMnemonic(KeyEvent.VK_F);
 			JBBuscar.setBounds(335, 11, 89, 23);
 			contentPanel.add(JBBuscar);
 		}
@@ -136,13 +140,24 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBCadUsu = new JButton("Cadastrar");
+				JBCadUsu.setIcon(new ImageIcon(JDTelaBuscarUsu.class.getResource("/Img/save16.png")));
 				buttonPane.add(JBCadUsu);
 				JBCadUsu.addActionListener(this);
+				JBCadUsu.setMnemonic(KeyEvent.VK_C);
 				getRootPane().setDefaultButton(JBCadUsu);
 			}
 			{
-				JBEditUsu = new JButton("Alterar");
+				JBEditUsu = new JButton("Editar");
+				JBEditUsu.setIcon(new ImageIcon(JDTelaBuscarUsu.class.getResource("/Img/edit_add16.png")));
+				JBEditUsu.setMnemonic(KeyEvent.VK_E);
 				buttonPane.add(JBEditUsu);
+				{
+					JBSair = new JButton("Sair");
+					JBSair.setIcon(new ImageIcon(JDTelaBuscarUsu.class.getResource("/Img/exit16.png")));
+					JBSair.addActionListener(this);
+					JBSair.setMnemonic(KeyEvent.VK_Q);
+					buttonPane.add(JBSair);
+				}
 				JBEditUsu.addActionListener(this);
 			}
 		}
@@ -193,6 +208,10 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 			Pesquisar();
 		}// final do botão buscar usuário
 
+		if(acao.getSource() == JBSair){
+			this.dispose();
+		}
+		
 	}// final da ação do botão
 
 	private void Pesquisar() {

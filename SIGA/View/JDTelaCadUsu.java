@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 
 import javax.swing.JButton;
@@ -15,12 +16,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
+
 import Control.UsuarioControl;
 import Dominio.Usuario;
 import Extra.Extras;
 import Extra.Mascaras;
+
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class JDTelaCadUsu extends JDialog implements ActionListener {
 
@@ -42,6 +46,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 	private int id;
 	private Usuario usuario;
 	private JButton btnResetarSenha;
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
@@ -62,8 +67,9 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 	 * @throws ParseException
 	 */
 	public JDTelaCadUsu(int id) throws ParseException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaCadUsu.class.getResource("/Img/CNPJ G200.png")));
 		this.id = id;
-		setBounds(100, 100, 368, 192);
+		setBounds(100, 100, 417, 172);
 		setTitle("SIGA - cadastro de usu\u00E1rio");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -76,7 +82,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		}
 
 		JTFUsuario = new JTextField();
-		JTFUsuario.setBounds(60, 8, 289, 20);
+		JTFUsuario.setBounds(60, 8, 331, 20);
 		contentPanel.add(JTFUsuario);
 		JTFUsuario.setColumns(10);
 
@@ -85,7 +91,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		contentPanel.add(JLNome);
 
 		JTFNome = new JTextField();
-		JTFNome.setBounds(60, 36, 289, 20);
+		JTFNome.setBounds(60, 36, 331, 20);
 		contentPanel.add(JTFNome);
 		JTFNome.setColumns(10);
 
@@ -99,11 +105,11 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		JFFCpf.setColumns(10);
 
 		JLPerfil = new JLabel("Perfil");
-		JLPerfil.setBounds(10, 89, 46, 14);
+		JLPerfil.setBounds(239, 64, 46, 14);
 		contentPanel.add(JLPerfil);
 
 		JCBPerfil = new JComboBox(_usuarioControl.DDLPerfis());
-		JCBPerfil.setBounds(60, 86, 176, 20);
+		JCBPerfil.setBounds(275, 61, 116, 20);
 		contentPanel.add(JCBPerfil);
 		{
 			JPanel buttonPane = new JPanel();
@@ -113,18 +119,28 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 				JBSalvUsu = new JButton("Salvar");
 				JBSalvUsu.setIcon(new ImageIcon(JDTelaCadUsu.class.getResource("/Img/Confirmar.png")));
 				JBSalvUsu.addActionListener(this);
+				JBSalvUsu.setMnemonic(KeyEvent.VK_S);
 				buttonPane.add(JBSalvUsu);
 				getRootPane().setDefaultButton(JBSalvUsu);
 			}
 			{
 				JBNovUsu = new JButton("Novo");
 				JBNovUsu.setIcon(new ImageIcon(JDTelaCadUsu.class.getResource("/Img/user_blue_add216.png")));
+				JBNovUsu.setMnemonic(KeyEvent.VK_N);
 				buttonPane.add(JBNovUsu);
 			}
 
 			btnResetarSenha = new JButton("Resetar senha");
 			btnResetarSenha.setIcon(new ImageIcon(JDTelaCadUsu.class.getResource("/Img/sync.png")));
+			btnResetarSenha.addActionListener(this);
+			btnResetarSenha.setMnemonic(KeyEvent.VK_R);
 			buttonPane.add(btnResetarSenha);
+			
+			JBSair = new JButton("Sair");
+			JBSair.setIcon(new ImageIcon(JDTelaCadUsu.class.getResource("/Img/exit16.png")));
+			JBSair.addActionListener(this);
+			JBSair.setMnemonic(KeyEvent.VK_Q);
+			buttonPane.add(JBSair);
 		}
 
 		preencherCampos();
@@ -186,6 +202,10 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 				JTFNome.setText("");
 
 			}
+		}
+		
+		if(acao.getSource() == JBSair){
+			this.dispose();
 		}
 
 	}

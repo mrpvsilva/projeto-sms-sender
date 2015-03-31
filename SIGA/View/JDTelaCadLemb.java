@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.Date;
 
 import javax.swing.JButton;
@@ -27,6 +28,7 @@ import Extra.Extras;
 
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class JDTelaCadLemb extends JDialog implements ActionListener {
 
@@ -47,6 +49,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 	private LembretesControl _lembreteControl = new LembretesControl();
 	private JLabel lblAssunto;
 	private JTextField JTFAssunto;
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
@@ -66,6 +69,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaCadLemb() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaCadLemb.class.getResource("/Img/CNPJ G200.png")));
 		
 		setBounds(100, 100, 450, 341);
 		setTitle("SIGA - cadastro de lembretes");
@@ -120,6 +124,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 				JBSalvLemb = new JButton("Salvar");
 				JBSalvLemb.setIcon(new ImageIcon(JDTelaCadLemb.class.getResource("/Img/Confirmar.png")));
 				JBSalvLemb.addActionListener(this);
+				JBSalvLemb.setMnemonic(KeyEvent.VK_S);
 				buttonPane.add(JBSalvLemb);
 				getRootPane().setDefaultButton(JBSalvLemb);
 			}
@@ -127,8 +132,15 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 				JBNovLemb = new JButton("Novo");
 				JBNovLemb.setIcon(new ImageIcon(JDTelaCadLemb.class.getResource("/Img/lembreteAdd.png")));
 				JBNovLemb.addActionListener(this);
+				JBNovLemb.setMnemonic(KeyEvent.VK_N);
 				buttonPane.add(JBNovLemb);
 			}
+			
+			JBSair = new JButton("Sair");
+			JBSair.setIcon(new ImageIcon(JDTelaCadLemb.class.getResource("/Img/exit16.png")));
+			JBSair.addActionListener(this);
+			JBSair.setMnemonic(KeyEvent.VK_Q);
+			buttonPane.add(JBSair);
 		}
 	}
 
@@ -205,5 +217,8 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 
 		}// final do botão novo lembrete
 
+		if(acao.getSource() == JBSair){
+			this.dispose();
+		}
 	}
 }

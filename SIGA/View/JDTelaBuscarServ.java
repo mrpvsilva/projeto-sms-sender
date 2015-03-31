@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
@@ -26,6 +27,9 @@ import Control.ServicosControl;
 import Dominio.Item;
 import Extra.Extras;
 
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
+
 public class JDTelaBuscarServ extends JDialog implements ActionListener {
 
 	/**
@@ -44,6 +48,7 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 	private JTable tabela;
 	private JScrollPane scroll;
 	private ServicosControl _servicoControl = new ServicosControl();
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
@@ -62,6 +67,7 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaBuscarServ() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaBuscarServ.class.getResource("/Img/CNPJ G200.png")));
 		setTitle("SIGA - buscar serviços");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -75,14 +81,16 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 		}
 		{
 			JBBuscar = new JButton("Buscar");
+			JBBuscar.setIcon(new ImageIcon(JDTelaBuscarServ.class.getResource("/Img/Procurar.png")));
+			JBBuscar.setMnemonic(KeyEvent.VK_F);
 			JBBuscar.addActionListener(this);
-			JBBuscar.setBounds(335, 11, 89, 23);
+			JBBuscar.setBounds(325, 11, 99, 23);
 			contentPanel.add(JBBuscar);
 		}
 		{
 			JTFBuscar = new JTextField();
 			JTFBuscar.setColumns(10);
-			JTFBuscar.setBounds(153, 11, 172, 20);
+			JTFBuscar.setBounds(149, 11, 172, 20);
 			contentPanel.add(JTFBuscar);
 		}
 		{
@@ -130,14 +138,25 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBCadServ = new JButton("Cadastrar");
+				JBCadServ.setIcon(new ImageIcon(JDTelaBuscarServ.class.getResource("/Img/save16.png")));
 				JBCadServ.addActionListener(this);
+				JBCadServ.setMnemonic(KeyEvent.VK_C);
 				buttonPane.add(JBCadServ);
 				getRootPane().setDefaultButton(JBCadServ);
 			}
 			{
-				JBEditServ = new JButton("Alterar");
+				JBEditServ = new JButton("Editar");
+				JBEditServ.setMnemonic(KeyEvent.VK_E);
+				JBEditServ.setIcon(new ImageIcon(JDTelaBuscarServ.class.getResource("/Img/edit_add16.png")));
 				JBEditServ.addActionListener(this);
 				buttonPane.add(JBEditServ);
+			}
+			{
+				JBSair = new JButton("Sair");
+				JBSair.setIcon(new ImageIcon(JDTelaBuscarServ.class.getResource("/Img/exit16.png")));
+				JBSair.addActionListener(this);
+				JBSair.setMnemonic(KeyEvent.VK_Q);
+				buttonPane.add(JBSair);
 			}
 		}
 	}
@@ -179,6 +198,9 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 
 		}// final do botão buscar serviços
 
+		if(acao.getSource() == JBSair){
+			this.dispose();
+		}
 	}// final da ação do botão
 
 	private void carregarGrid(List<Item> lista) {

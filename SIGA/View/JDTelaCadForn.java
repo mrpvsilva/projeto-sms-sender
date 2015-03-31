@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.text.ParseException;
 
@@ -34,6 +35,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import java.awt.Toolkit;
 
 public class JDTelaCadForn extends JDialog implements ActionListener {
 
@@ -67,6 +69,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	private JButton btnremovetel;
 	private int id;
 	private Fornecedor fornecedor;
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
@@ -87,6 +90,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	 * @throws ParseException
 	 */
 	public JDTelaCadForn(int id) throws ParseException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaCadForn.class.getResource("/Img/CNPJ G200.png")));
 		this.id = id;
 		_fornecedorControl = new FornecedoresControl();
 		setBounds(0, -20, 512, 379);
@@ -234,14 +238,23 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 				JBSalvForn = new JButton("Salvar");
 				JBSalvForn.setIcon(new ImageIcon(JDTelaCadForn.class.getResource("/Img/Confirmar.png")));
 				JBSalvForn.addActionListener(this);
+				JBSalvForn.setMnemonic(KeyEvent.VK_S);
 				buttonPane.add(JBSalvForn);
 				getRootPane().setDefaultButton(JBSalvForn);
 			}
 			{
 				JBNovForn = new JButton("Novo");
+				JBNovForn.setIcon(new ImageIcon(JDTelaCadForn.class.getResource("/Img/window_new16.png")));
 				JBNovForn.addActionListener(this);
+				JBNovForn.setMnemonic(KeyEvent.VK_N);
 				buttonPane.add(JBNovForn);
 			}
+			
+			JBSair = new JButton("Sair");
+			JBSair.setIcon(new ImageIcon(JDTelaCadForn.class.getResource("/Img/exit16.png")));
+			JBSair.addActionListener(this);
+			JBSair.setMnemonic(KeyEvent.VK_Q);
+			buttonPane.add(JBSair);
 		}
 
 		preencherCampos();
@@ -360,6 +373,10 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		if (acao.getSource() == JCBCpfMask) {
 			JFFCnpj.setValue(null);
 			formaterCPFCNPJ(JCBCpfMask.isSelected());
+		}
+		
+		if(acao.getSource() == JBSair){
+			this.dispose();
 		}
 
 	}
