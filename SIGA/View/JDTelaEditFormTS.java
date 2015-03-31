@@ -19,7 +19,7 @@ import TableModels.TipoItemTableModel;
 import Control.TipoItemControl;
 import Dominio.TipoItem;
 
-public class JDTelaEditFormTipoServico extends JDialog implements
+public class JDTelaEditFormTS extends JDialog implements
 		ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
@@ -37,7 +37,7 @@ public class JDTelaEditFormTipoServico extends JDialog implements
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaEditFormTipoServico dialog = new JDTelaEditFormTipoServico(1,
+			JDTelaEditFormTS dialog = new JDTelaEditFormTS(1,
 					null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
@@ -49,7 +49,7 @@ public class JDTelaEditFormTipoServico extends JDialog implements
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaEditFormTipoServico(int id, TipoItemTableModel model) {
+	public JDTelaEditFormTS(int id, TipoItemTableModel model) {
 		this.id = id;
 		this.model = model;
 		setResizable(false);
