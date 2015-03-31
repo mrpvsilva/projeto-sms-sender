@@ -291,7 +291,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		
 		label = new JLabel("");
 		label.setBounds(165, 68, 1168, 531);
-		label.setIcon(new ImageIcon("C:\\Users\\Aru\u00E3Melo\\Downloads\\CNPJ G800.png"));
+		label.setIcon(new ImageIcon(JFTelaPrincipal.class.getResource("/Img/CNPJ G800.png")));
 		contentPane.add(label);
 	}
 

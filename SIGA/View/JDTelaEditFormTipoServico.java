@@ -104,6 +104,7 @@ public class JDTelaEditFormTipoServico extends JDialog implements
 			JBSair = new JButton("Sair");
 			JBSair.setIcon(new ImageIcon(JDTelaEditFormTipoServico.class.getResource("/Img/exit16.png")));
 			JBSair.setMnemonic(KeyEvent.VK_Q);
+			JBSair.addActionListener(this);
 			buttonPane.add(JBSair);
 		}
 
