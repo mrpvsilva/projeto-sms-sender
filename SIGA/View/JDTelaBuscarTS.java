@@ -22,9 +22,15 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class JDTelaBuscarTS extends JDialog implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
 	private TipoItemControl tipoItemControl = new TipoItemControl();
@@ -66,18 +72,43 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 		}
 		{
 			tffiltronome = new JTextField();
+			tffiltronome.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+
+					if (e.getKeyCode() == 10) {
+						Pesquisar();
+					}
+				}
+			});
 			tffiltronome.setBounds(77, 11, 169, 20);
 			contentPanel.add(tffiltronome);
 			tffiltronome.setColumns(10);
 		}
 
 		jcfiltroativo = new JComboBox();
+		jcfiltroativo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == 10) {
+					Pesquisar();
+				}
+			}
+		});
 		jcfiltroativo.setModel(new DefaultComboBoxModel(new String[] { "Todos",
 				"Ativo", "Inativo" }));
 		jcfiltroativo.setBounds(77, 39, 169, 20);
 		contentPanel.add(jcfiltroativo);
 
 		btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == 10) {
+					Pesquisar();
+				}
+			}
+		});
 		btnPesquisar.setBounds(102, 70, 105, 23);
 		btnPesquisar.addActionListener(this);
 		contentPanel.add(btnPesquisar);
@@ -90,7 +121,7 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 				okButton.setActionCommand("OK");
 				okButton.addActionListener(this);
 				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				// getRootPane().setDefaultButton(okButton);
 			}
 			{
 				cancelButton = new JButton("Alterar");
@@ -104,8 +135,7 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == okButton) {
-			JDTelaEditFormTipoServico ef = new JDTelaEditFormTipoServico(0,
-					model);
+			JDTelaEditFormTS ef = new JDTelaEditFormTS(0, model);
 			ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			ef.setVisible(true);
 		}
@@ -117,8 +147,7 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 			if (linha > -1) {
 				int id = Integer.parseInt(String.valueOf(model.getValueAt(
 						linha, 0)));
-				JDTelaEditFormTipoServico ef = new JDTelaEditFormTipoServico(
-						id, model);
+				JDTelaEditFormTS ef = new JDTelaEditFormTS(id, model);
 				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				ef.setVisible(true);
 			} else {
@@ -126,10 +155,15 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 			}
 		}
 		if (e.getSource() == btnPesquisar) {
-			String nome = tffiltronome.getText();
-			String ativo = jcfiltroativo.getSelectedItem().toString();
-			carregarGrid(tipoItemControl.ListarTodos(nome, ativo));
+			Pesquisar();
 		}
+
+	}
+
+	private void Pesquisar() {
+		String nome = tffiltronome.getText();
+		String ativo = jcfiltroativo.getSelectedItem().toString();
+		carregarGrid(tipoItemControl.ListarTodos(nome, ativo));
 
 	}
 
