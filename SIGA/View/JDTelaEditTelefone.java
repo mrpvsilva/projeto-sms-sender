@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import Dominio.Telefone;
 import Dominio.TelefoneFornecedor;
 
@@ -14,15 +15,20 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
+
 import TableModels.TelefoneTableModel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.ImageIcon;
 
 public class JDTelaEditTelefone extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
-	private JButton okButton;
-	private JButton cancelButton;
+	private JButton JBSalvar;
+	private JButton JBSair;
 	private int _linha = -1;
 	private Telefone _telefone;
 	private TelefoneTableModel _model;
@@ -94,17 +100,19 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				okButton = new JButton("OK");
-				okButton.addActionListener(this);
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				JBSalvar = new JButton("Salvar");
+				JBSalvar.setIcon(new ImageIcon(JDTelaEditTelefone.class.getResource("/Img/Confirmar.png")));
+				JBSalvar.addActionListener(this);
+				JBSalvar.setMnemonic(KeyEvent.VK_S);
+				buttonPane.add(JBSalvar);
+				getRootPane().setDefaultButton(JBSalvar);
 			}
 			{
-				cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(this);
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+				JBSair = new JButton("Sair");
+				JBSair.setIcon(new ImageIcon(JDTelaEditTelefone.class.getResource("/Img/exit16.png")));
+				JBSair.addActionListener(this);
+				JBSair.setMnemonic(KeyEvent.VK_X);
+				buttonPane.add(JBSair);
 			}
 		}
 
@@ -135,7 +143,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == okButton) {
+		if (e.getSource() == JBSalvar) {
 			if (_telefone != null) {
 				Update();
 			} else {
@@ -144,7 +152,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 			this.dispose();
 		}
 
-		if (e.getSource() == cancelButton) {
+		if (e.getSource() == JBSair) {
 			this.dispose();
 		}
 

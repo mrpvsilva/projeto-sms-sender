@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 
 import Control.ServicosControl;
@@ -24,6 +25,7 @@ import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 
 import jmoneyfield.JMoneyField;
+import javax.swing.ImageIcon;
 
 public class JDTelaEditServ extends JDialog implements ActionListener {
 
@@ -36,13 +38,14 @@ public class JDTelaEditServ extends JDialog implements ActionListener {
 	private JComboBox<String> JCBStatus;
 	private Extras ext = new Extras();
 	private JButton JBAtuServ;
-	private JButton JBNovoServ;
+	private JButton JBExcServ;
 	private JMoneyField JMFVlrCom;
 	private JMoneyField JMFVlrCusto;
 	private JTextArea JTADescItem;
 	private ServicosControl _servicoControl = new ServicosControl();
 	private Item _item;
 	private int _ID;
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
@@ -127,14 +130,25 @@ public class JDTelaEditServ extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBAtuServ = new JButton("Atualizar");
+				JBAtuServ.setIcon(new ImageIcon(JDTelaEditServ.class.getResource("/Img/reload16.png")));
 				JBAtuServ.addActionListener(this);
+				JBAtuServ.setMnemonic(KeyEvent.VK_A);
 				buttonPane.add(JBAtuServ);
 
 				getRootPane().setDefaultButton(JBAtuServ);
 			}
 			{
-				JBNovoServ = new JButton("Excluir");
-				buttonPane.add(JBNovoServ);
+				JBExcServ = new JButton("Excluir");
+				JBExcServ.setIcon(new ImageIcon(JDTelaEditServ.class.getResource("/Img/close16.png")));
+				JBExcServ.setMnemonic(KeyEvent.VK_X);
+				buttonPane.add(JBExcServ);
+			}
+			{
+				JBSair = new JButton("Sair");
+				JBSair.setIcon(new ImageIcon(JDTelaEditServ.class.getResource("/Img/exit16.png")));
+				JBSair.addActionListener(this);
+				JBSair.setMnemonic(KeyEvent.VK_Q);
+				buttonPane.add(JBSair);
 			}
 		}
 
@@ -200,9 +214,13 @@ public class JDTelaEditServ extends JDialog implements ActionListener {
 
 		}// final do botão atualizar
 
-		if (acao.getSource() == JBNovoServ) {
+		if (acao.getSource() == JBExcServ) {
 
 		}// final do botão excluir
+		
+		if(acao.getSource() == JBSair){
+			this.dispose();
+		}
 	}
 
 	private void PreencherCampos() {

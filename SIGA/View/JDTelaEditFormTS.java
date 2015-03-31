@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -18,27 +19,34 @@ import javax.swing.JCheckBox;
 import TableModels.TipoItemTableModel;
 import Control.TipoItemControl;
 import Dominio.TipoItem;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class JDTelaEditFormTS extends JDialog implements
+
 		ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JButton okButton;
-	private JButton cancelButton;
+	private JButton JBSalvar;
+	private JButton JBNovo;
 	private int id;
 	private JTextField tfnome;
 	private JCheckBox chckbxAtivo;
 	private TipoItem tipoItem;
 	private TipoItemControl tipoItemControl = new TipoItemControl();
 	private TipoItemTableModel model;
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaEditFormTS dialog = new JDTelaEditFormTS(1,
-					null);
+			JDTelaEditFormTS dialog = new JDTelaEditFormTS(1,null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -50,6 +58,8 @@ public class JDTelaEditFormTS extends JDialog implements
 	 * Create the dialog.
 	 */
 	public JDTelaEditFormTS(int id, TipoItemTableModel model) {
+		setTitle("SIGA - edi\u00E7\u00E3o tipo servi\u00E7o");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaEditFormTS.class.getResource("/Img/CNPJ G200.png")));
 		this.id = id;
 		this.model = model;
 		setResizable(false);
@@ -79,18 +89,25 @@ public class JDTelaEditFormTS extends JDialog implements
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				okButton.addActionListener(this);
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				JBSalvar = new JButton("Salvar");
+				JBSalvar.setIcon(new ImageIcon(JDTelaEditFormTS.class.getResource("/Img/Confirmar.png")));
+				JBSalvar.addActionListener(this);
+				JBSalvar.setMnemonic(KeyEvent.VK_S);
+				buttonPane.add(JBSalvar);
+				getRootPane().setDefaultButton(JBSalvar);
 			}
 			{
-				cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(this);
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+				JBNovo = new JButton("Novo");
+				JBNovo.setIcon(new ImageIcon(JDTelaEditFormTS.class.getResource("/Img/window_new16.png")));
+				JBNovo.addActionListener(this);
+				JBNovo.setMnemonic(KeyEvent.VK_N);
+				buttonPane.add(JBNovo);
 			}
+			
+			JBSair = new JButton("Sair");
+			JBSair.setIcon(new ImageIcon(JDTelaEditFormTS.class.getResource("/Img/exit16.png")));
+			JBSair.setMnemonic(KeyEvent.VK_Q);
+			buttonPane.add(JBSair);
 		}
 
 		preencherCampos();
@@ -135,7 +152,7 @@ public class JDTelaEditFormTS extends JDialog implements
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == okButton) {
+		if (e.getSource() == JBSalvar) {
 			if (id == 0) {
 				cadastrar();
 			} else {
@@ -144,6 +161,10 @@ public class JDTelaEditFormTS extends JDialog implements
 
 			if (model != null)
 				model.setTipoItens(tipoItemControl.ListarTodos());
+		}
+		
+		if(e.getSource() == JBSair){
+			this.dispose();
 		}
 	}
 }
