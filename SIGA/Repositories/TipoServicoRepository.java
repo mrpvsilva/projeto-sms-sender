@@ -37,4 +37,26 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		return (TipoServico) q.getSingleResult();
 	}
 
+	@Override
+	public List<TipoServico> findAll(String nome, String ativo) {
+		String q = "from TipoServico where ";
+
+		if (!nome.equals("")) {
+			q += " nome like '%" + nome + "%' and";
+		}
+
+		if (ativo.equals("Todos")) {
+			q += " ativo in (0,1)";
+		} else if (ativo.equals("Ativo")) {
+			q += " ativo = 1";
+		} else {
+			q += " ativo = 0";
+		}
+
+		q += " order by nome";
+
+		Query query = entityManager.createQuery(q);
+		return query.getResultList();
+	}
+
 }
