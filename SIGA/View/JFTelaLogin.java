@@ -39,6 +39,7 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 				try {
 					JFTelaLogin frame = new JFTelaLogin();
 					frame.setVisible(true);
+					frame.setResizable(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

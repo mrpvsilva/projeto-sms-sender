@@ -14,7 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
 import Control.EventoControl;
+import Control.FinanceiroControl;
+import Dominio.FormaPagamento;
 import Dominio.TipoPagamento;
+
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class JDTelaFormPagFin extends JDialog implements ActionListener{
 
@@ -26,7 +31,9 @@ public class JDTelaFormPagFin extends JDialog implements ActionListener{
 	private JButton JBCadCli;
 	private JButton JBEditCli;
 	private JComboBox JCBTpPagamento;
-	private EventoControl evtControl = new EventoControl();
+	private FinanceiroControl finControl = new FinanceiroControl();
+	private JLabel lblQtdParcelas;
+	private JComboBox JCBFormPag;
 
 	/**
 	 * Launch the application.
@@ -45,7 +52,7 @@ public class JDTelaFormPagFin extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public JDTelaFormPagFin() {
-		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A - formas de pagamento");
+		setTitle("SIGA - formas de pagamento");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -53,15 +60,36 @@ public class JDTelaFormPagFin extends JDialog implements ActionListener{
 		contentPanel.setLayout(null);
 		
 		JLabel JLTipoPagamento = new JLabel("Tipo pagamento");
-		JLTipoPagamento.setBounds(10, 11, 111, 14);
+		JLTipoPagamento.setBounds(10, 11, 97, 14);
 		contentPanel.add(JLTipoPagamento);
 		
 		JCBTpPagamento = new JComboBox();
-		for (TipoPagamento item : evtControl.allTpPagamentos()) {
+		for (TipoPagamento item : finControl.allTpPagamentos()) {
 			JCBTpPagamento.addItem(item.getDescricao());
 		}
-		JCBTpPagamento.setBounds(117, 8, 166, 20);
+		JCBTpPagamento.setBounds(120, 8, 156, 20);
 		contentPanel.add(JCBTpPagamento);
+		{
+			lblQtdParcelas = new JLabel("Qtd. Parcelas");
+			lblQtdParcelas.setBounds(289, 11, 86, 14);
+			contentPanel.add(lblQtdParcelas);
+		}
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spinner.setBounds(374, 8, 50, 20);
+		contentPanel.add(spinner);
+		
+		JLabel lblFormaDePagamento = new JLabel("Forma pagamento");
+		lblFormaDePagamento.setBounds(10, 34, 121, 14);
+		contentPanel.add(lblFormaDePagamento);
+		
+		JCBFormPag = new JComboBox();
+		for(FormaPagamento item : finControl.allFormaPagamento()){
+			JCBFormPag.addItem(item.getForma());
+		}
+		JCBFormPag.setBounds(120, 31, 156, 20);
+		contentPanel.add(JCBFormPag);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));

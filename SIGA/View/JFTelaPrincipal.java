@@ -304,6 +304,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 			try {
 				jdtcf = new JDTelaCadForn(0);
+				jdtcf.setResizable(false);
 				jdtcf.setVisible(true);
 				jdtcf.setLocationRelativeTo(null);
 			} catch (ParseException e) {
@@ -317,6 +318,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		if (acao.getSource() == JMIFornBuscar) {
 			JDTelaBuscarForn jdtbf = new JDTelaBuscarForn();
+			jdtbf.setResizable(false);
 			jdtbf.setVisible(true);
 		}// final do JMenuItemFornecedores Buscar
 
@@ -335,11 +337,13 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		/* JMenu Serviços */
 		if (acao.getSource() == JMIServCad) {
 			JDTelaCadServ jdtcs = new JDTelaCadServ();
+			jdtcs.setResizable(false);
 			jdtcs.setVisible(true);
 		}// final do JMenuItemServiços Cadastro
 
 		if (acao.getSource() == JMIServBuscar) {
 			JDTelaBuscarServ jdtbs = new JDTelaBuscarServ();
+			jdtbs.setResizable(false);
 			jdtbs.setVisible(true);
 		}// final do JMenuItemServiços Buscar
 
@@ -361,6 +365,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 			try {
 				jdtcc = new JDTelaCadCli();
+				jdtcc.setResizable(false);
 				jdtcc.setVisible(true);
 			} catch (ParseException e) {
 
@@ -373,6 +378,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		if (acao.getSource() == JMICliBuscar) {
 			JDTelaBuscarCli jdtbc = new JDTelaBuscarCli();
+			jdtbc.setResizable(false);
 			jdtbc.setVisible(true);
 		}// final do JMenuItemClientes Buscar
 
@@ -391,11 +397,13 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		/* JMenu Lembretes */
 		if (acao.getSource() == JMILembCad) {
 			JDTelaCadLemb jdtcl = new JDTelaCadLemb();
+			jdtcl.setResizable(false);
 			jdtcl.setVisible(true);
 		}// final do JMenuItemLembretes Cadastrar
 
 		if (acao.getSource() == JMILembBuscar) {
 			JDTelaBuscarLemb jdtbl = new JDTelaBuscarLemb();
+			jdtbl.setResizable(false);
 			jdtbl.setVisible(true);
 		}// final do JMenuItemLembretes Buscar
 
@@ -420,6 +428,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 			JDTelaFormPagFin jdtfpf = new JDTelaFormPagFin();
 			jdtfpf.setVisible(true);
+			jdtfpf.setResizable(false);
 			jdtfpf.setLocationRelativeTo(null);
 
 		}// final do JMenuItemFinanceiro Formas de pagamentos
@@ -468,6 +477,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 			try {
 				JDTelaCadUsu jdtcu = new JDTelaCadUsu(0);
+				jdtcu.setResizable(false);
 				jdtcu.setVisible(true);
 				jdtcu.setLocationRelativeTo(null);
 			} catch (ParseException e) {
@@ -479,18 +489,21 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		if (acao.getSource() == JMITSCad) {
 			JDTelaEditFormTS ef = new JDTelaEditFormTS(0, null);
+			ef.setResizable(false);
 			ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			ef.setVisible(true);
 		}
 
 		if (acao.getSource() == JMITSBuscar) {
 			JDTelaBuscarTS bts = new JDTelaBuscarTS();
+			bts.setResizable(false);
 			bts.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			bts.setVisible(true);
 		}
 
 		if (acao.getSource() == JMIUsuBuscar) {
 			JDTelaBuscarUsu jdtbu = new JDTelaBuscarUsu();
+			jdtbu.setResizable(false);
 			jdtbu.setVisible(true);
 		}// final do JMenuItemUsuário Buscar
 
