@@ -15,7 +15,7 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		super(persistenceManager);
 
 	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<TipoItem> findAll() {
 
@@ -23,7 +23,8 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		Query query = entityManager.createQuery(q);
 		return query.getResultList();
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<TipoItem> findAll(String nome, String ativo) {
 		String q = "from TipoItem where ";

@@ -15,7 +15,7 @@ implements IFormaPagamento{
 	public FormaPagamentoRepository(IPersistenceManager persistenceManager) {
 		super(persistenceManager);
 	}
-	
+	@SuppressWarnings("unchecked")
 	public List<FormaPagamento> allFormaPagamento(String coluna,String valor){
 
 		String q = "from formapagamento order by forma";

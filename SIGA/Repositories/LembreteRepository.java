@@ -15,7 +15,7 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 		super(persistenceManager);
 		// TODO Auto-generated constructor stub
 	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Lembrete> findAll() {
 
@@ -24,7 +24,7 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 		return query.getResultList();
 
 	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Lembrete> findAll(String coluna, String valor) {
 		String q = "from Lembrete where " + coluna

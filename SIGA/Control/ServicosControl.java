@@ -19,9 +19,6 @@ public class ServicosControl {
 	private IItemRepository _itemRepository = new ItemRepository(
 			PersistenceManagerFactory.getPersistanceManager());
 
-	private ITipoItemRepository _tipoItemRepository = new TipoItemRepository(
-			PersistenceManagerFactory.getPersistanceManager());
-
 	private ITipoItemRepository tipoItemRepository = new TipoItemRepository(
 			PersistenceManagerFactory.getPersistanceManager());
 

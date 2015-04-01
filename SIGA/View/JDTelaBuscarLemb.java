@@ -5,10 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -21,11 +18,9 @@ import javax.swing.table.TableModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-
 import Control.LembretesControl;
 import Dominio.Lembrete;
 import Extra.Extras;
-
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 
@@ -41,7 +36,7 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 	private JLabel JLFiltro;
 	private JButton JBBuscar;
 	private JTextField JTFBuscar;
-	private JComboBox JCBFiltro;
+	private JComboBox<String> JCBFiltro;
 	private JScrollPane scroll;
 	private JTable tabela;
 	private DefaultTableModel model;
@@ -92,7 +87,7 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 			contentPanel.add(JTFBuscar);
 		}
 		{
-			JCBFiltro = new JComboBox(_lembreteControl.Filtros());
+			JCBFiltro = new JComboBox<String>(_lembreteControl.Filtros());
 			JCBFiltro.setBounds(40, 11, 103, 20);
 			contentPanel.add(JCBFiltro);
 		}

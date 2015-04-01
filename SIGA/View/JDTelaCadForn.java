@@ -52,7 +52,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	private JButton JBSalvForn;
 	private JTextField JFFRg;
 	private JFormattedTextField JFFCnpj;
-	private JComboBox JCBTpServ;
+	private JComboBox<String> JCBTpServ;
 	private MaskFormatter maskCnpj;
 	private JLabel JLBairro;
 	private JTextField JTFBairro;
@@ -169,7 +169,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		contentPanel.add(JTFSite);
 		JTFSite.setColumns(10);
 
-		JCBTpServ = new JComboBox(_fornecedorControl.DDLTipoServico());
+		JCBTpServ = new JComboBox<String>(_fornecedorControl.DDLTipoServico());
 		JCBTpServ.setBounds(83, 64, 400, 20);
 
 		contentPanel.add(JCBTpServ);

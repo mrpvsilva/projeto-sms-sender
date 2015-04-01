@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -13,22 +12,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-
-import Control.EventoControl;
 import Control.FinanceiroControl;
 import Dominio.FormaPagamento;
 import Dominio.TipoPagamento;
-
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JFormattedTextField;
-
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
-
 import javax.swing.ImageIcon;
-
 import jmoneyfield.JMoneyField;
 
 public class JDTelaFormPagFin extends JDialog implements ActionListener{
@@ -40,7 +33,7 @@ public class JDTelaFormPagFin extends JDialog implements ActionListener{
 	private final JPanel contentPanel = new JPanel();
 	private JButton JBCadCli;
 	private JButton JBEditCli;
-	private JComboBox JCBTpPagamento;
+	private JComboBox<String> JCBTpPagamento;
 	private FinanceiroControl finControl = new FinanceiroControl();
 	private JLabel lblQtdParcelas;
 	private JComboBox JCBFormPag;

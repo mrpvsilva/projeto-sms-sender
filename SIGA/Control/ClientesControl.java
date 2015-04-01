@@ -2,11 +2,7 @@ package Control;
 
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import Model.ClientesModel;
-import Model.UsuarioBean;
-import Model.UsuarioModel;
 
 public class ClientesControl {
 	

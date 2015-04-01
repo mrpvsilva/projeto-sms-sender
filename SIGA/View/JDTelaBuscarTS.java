@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -41,7 +42,7 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 	private JLabel lblNome;
 	private JLabel lblAtivo;
 	private JTextField tffiltronome;
-	private JComboBox jcfiltroativo;
+	private JComboBox<String> jcfiltroativo;
 
 	public JDTelaBuscarTS() {
 		setResizable(false);
@@ -86,7 +87,7 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 			tffiltronome.setColumns(10);
 		}
 
-		jcfiltroativo = new JComboBox();
+		jcfiltroativo = new JComboBox<String>();
 		jcfiltroativo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -95,7 +96,7 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 				}
 			}
 		});
-		jcfiltroativo.setModel(new DefaultComboBoxModel(new String[] { "Todos",
+		jcfiltroativo.setModel(new DefaultComboBoxModel<String>(new String[] { "Todos",
 				"Ativo", "Inativo" }));
 		jcfiltroativo.setBounds(77, 39, 169, 20);
 		contentPanel.add(jcfiltroativo);

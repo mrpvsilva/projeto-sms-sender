@@ -9,6 +9,7 @@ import Dominio.TipoItem;
 
 public class TipoItemTableModel extends AbstractTableModel {
 
+	private static final long serialVersionUID = 1L;
 	private String[] colunas = new String[] { "ID", "Nome", "Ativo" };
 	private List<TipoItem> linhas;
 

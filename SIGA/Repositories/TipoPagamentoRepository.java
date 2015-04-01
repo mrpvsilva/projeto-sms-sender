@@ -14,7 +14,7 @@ implements ITipoPagamentoRepository{
 	public TipoPagamentoRepository(IPersistenceManager persistenceManager){
 		super(persistenceManager);
 	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<TipoPagamento> allTpPagamentos(String coluna, String valor) {
 		String q = "from TipoPagamento order by descricao";

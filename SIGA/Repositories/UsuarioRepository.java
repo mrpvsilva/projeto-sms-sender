@@ -34,6 +34,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Usuario> findAll(String campo, String value) {
 		String q = "from Usuario where " + campo + " like :valor";
