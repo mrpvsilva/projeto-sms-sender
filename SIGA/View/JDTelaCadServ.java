@@ -44,7 +44,7 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 	private JButton JBNovoServ;
 	private ServicosControl sc;
 	private JLabel lblTipoDeServio;
-	private JComboBox ddltiposervico;
+	private JComboBox<String> ddltiposervico;
 	private JButton JBSair;
 
 	/**
@@ -130,7 +130,7 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 			contentPanel.add(lblTipoDeServio);
 		}
 		{
-			ddltiposervico = new JComboBox(sc.DDLTipoServico());
+			ddltiposervico = new JComboBox<String>(sc.DDLTipoServico());
 			ddltiposervico.setBounds(101, 219, 170, 20);
 			contentPanel.add(ddltiposervico);
 		}

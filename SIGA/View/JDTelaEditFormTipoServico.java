@@ -26,6 +26,10 @@ import java.awt.Toolkit;
 public class JDTelaEditFormTipoServico extends JDialog implements
 		ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JButton JBSalvar;
 	private JButton JBNovo;

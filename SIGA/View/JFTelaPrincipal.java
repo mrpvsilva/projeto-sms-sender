@@ -1,6 +1,5 @@
 package View;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,12 +51,12 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 	private JMenuItem JMIUsuBuscar;
 	private JMenuItem JMIUsuExcluir;
 	private JMenu JMIRelCont;
-	private JMenu mnEventos;
+	private JMenu JMEventos;
 	private JMenuItem mntmCadastrar;
 	private JMenuItem mntmBuscar;
 	private JMenuItem mntmExcluir;
 
-	private JMenu mnTipoServio;
+	private JMenu JMTipoServio;
 	private JMenuItem JMITSCad;
 	private JMenuItem JMITSBuscar;
 	private JLabel label;
@@ -134,17 +133,16 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMIServExcluir.addActionListener(this);
 		JMServ.add(JMIServExcluir);
 
-		mnTipoServio = new JMenu("Tipo itens");
-
-		menuBar.add(mnTipoServio);
+		JMTipoServio = new JMenu("Tipo itens");
+		JMServ.add(JMTipoServio);
 
 		JMITSCad = new JMenuItem("Cadastrar");
 		JMITSCad.addActionListener(this);
-		mnTipoServio.add(JMITSCad);
+		JMTipoServio.add(JMITSCad);
 
 		JMITSBuscar = new JMenuItem("Buscar");
 		JMITSBuscar.addActionListener(this);
-		mnTipoServio.add(JMITSBuscar);
+		JMTipoServio.add(JMITSBuscar);
 
 		JMenu JMCli = new JMenu("Clientes");
 		menuBar.add(JMCli);
@@ -164,21 +162,21 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMICliExcluir.addActionListener(this);
 		JMCli.add(JMICliExcluir);
 
-		mnEventos = new JMenu("Eventos");
-		menuBar.add(mnEventos);
+		JMEventos = new JMenu("Eventos");
+		menuBar.add(JMEventos);
 
 		mntmCadastrar = new JMenuItem("Cadastrar");
 		mntmCadastrar
 				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0));
-		mnEventos.add(mntmCadastrar);
+		JMEventos.add(mntmCadastrar);
 
 		mntmBuscar = new JMenuItem("Buscar");
 		mntmBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
-		mnEventos.add(mntmBuscar);
+		JMEventos.add(mntmBuscar);
 
 		mntmExcluir = new JMenuItem("Excluir");
 		mntmExcluir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
-		mnEventos.add(mntmExcluir);
+		JMEventos.add(mntmExcluir);
 
 		JMenu JMLemb = new JMenu("Lembretes");
 		menuBar.add(JMLemb);
@@ -215,6 +213,37 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 				InputEvent.CTRL_MASK));
 		JMIFinFormPag.addActionListener(this);
 		JMFin.add(JMIFinFormPag);
+		
+		JMenu JMTipoDePagamento = new JMenu("Tipo de pagamento");
+		JMFin.add(JMTipoDePagamento);
+		
+		JMenuItem JMITpPagCad = new JMenuItem("Cadastrar");
+		JMITpPagCad.addActionListener(this);
+		JMTipoDePagamento.add(JMITpPagCad);
+		
+		
+		JMenuItem JMITpPagBuscar = new JMenuItem("Buscar");
+		JMITpPagBuscar.addActionListener(this);
+		JMTipoDePagamento.add(JMITpPagBuscar);
+		
+		JMenuItem JMITpPagExcluir = new JMenuItem("Excluir");
+		JMITpPagExcluir.addActionListener(this);
+		JMTipoDePagamento.add(JMITpPagExcluir);
+		
+		JMenu JMFormasDePagamento = new JMenu("Formas de pagamento");
+		JMFin.add(JMFormasDePagamento);
+		
+		JMenuItem JMIFormPagCad = new JMenuItem("Cadastrar");
+		JMIFormPagCad.addActionListener(this);
+		JMFormasDePagamento.add(JMIFormPagCad);
+		
+		JMenuItem JMIFormPagBuscar = new JMenuItem("Buscar");
+		JMIFormPagBuscar.addActionListener(this);
+		JMFormasDePagamento.add(JMIFormPagBuscar);
+		
+		JMenuItem JMIFormPagExcluir = new JMenuItem("Excluir");
+		JMIFormPagExcluir.addActionListener(this);
+		JMFormasDePagamento.add(JMIFormPagExcluir);
 
 		JMenu JMRel = new JMenu("Relat\u00F3rios");
 		menuBar.add(JMRel);
@@ -283,6 +312,30 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 				0));
 		JMIUsuExcluir.addActionListener(this);
 		JMUsu.add(JMIUsuExcluir);
+		
+		JMenu mnPerfil = new JMenu("Perfil");
+		JMUsu.add(mnPerfil);
+		
+		JMenuItem mntmCadastrar_3 = new JMenuItem("Cadastrar");
+		mnPerfil.add(mntmCadastrar_3);
+		
+		JMenuItem mntmBuscar_3 = new JMenuItem("Buscar");
+		mnPerfil.add(mntmBuscar_3);
+		
+		JMenuItem mntmExcluir_3 = new JMenuItem("Excluir");
+		mnPerfil.add(mntmExcluir_3);
+		
+		JMenu mnPermisso = new JMenu("Permiss\u00E3o");
+		JMUsu.add(mnPermisso);
+		
+		JMenuItem mntmCadastrar_4 = new JMenuItem("Cadastrar");
+		mnPermisso.add(mntmCadastrar_4);
+		
+		JMenuItem mntmBuscar_4 = new JMenuItem("Buscar");
+		mnPermisso.add(mntmBuscar_4);
+		
+		JMenuItem mntmExcluir_4 = new JMenuItem("Excluir");
+		mnPermisso.add(mntmExcluir_4);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -513,5 +566,4 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		}
 
 	}// final da ação do menu
-
 }

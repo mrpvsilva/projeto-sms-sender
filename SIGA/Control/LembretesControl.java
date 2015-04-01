@@ -1,8 +1,6 @@
 package Control;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import persistenceManagerFactory.PersistenceManagerFactory;
 import Dominio.Lembrete;
 import Dominio.Usuario;

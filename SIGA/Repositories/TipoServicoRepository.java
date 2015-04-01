@@ -15,14 +15,14 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		super(persistenceManager);
 
 	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<TipoServico> findAll() {
 		Query q = entityManager.createQuery("from TipoServico order by nome",
 				TipoServico.class);
 		return q.getResultList();
 	}
-
+	@SuppressWarnings("unchecked")
 	public List<TipoServico> findAll(boolean ativo) {
 		Query q = entityManager
 				.createQuery("from TipoServico where ativo=:ativo order by nome");

@@ -6,26 +6,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Date;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
-
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
-
 import Control.LembretesControl;
 import Dominio.Lembrete;
-import Dominio.Usuario;
-import Extra.Extras;
-
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
@@ -46,7 +39,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 	private UtilDateModel model;
 	private JDatePanelImpl datePanel;
 	private JDatePickerImpl datePicker;
-	private JComboBox JCBUsuario;
+	private JComboBox<String> JCBUsuario;
 	private JTextArea JTALemb;
 	private LembretesControl _lembreteControl = new LembretesControl();
 	private JLabel lblAssunto;
@@ -97,7 +90,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 		JLUsuario.setBounds(10, 95, 74, 14);
 		contentPanel.add(JLUsuario);
 
-		JCBUsuario = new JComboBox(_lembreteControl.DDLRemetentes());
+		JCBUsuario = new JComboBox<String>(_lembreteControl.DDLRemetentes());
 		JCBUsuario.setBounds(99, 94, 325, 20);
 		contentPanel.add(JCBUsuario);
 
@@ -205,7 +198,6 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 					l.setTexto(JTALemb.getText());
 					l.setDatahora((Date) datePicker.getModel().getValue());
 
-					Usuario destinatario = new Usuario();
 					l.setDestinatario(_lembreteControl
 							.BuscarDestinatario(JCBUsuario.getSelectedItem()
 									.toString()));

@@ -41,7 +41,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 	private JTextField JFFCpf;
 	private MaskFormatter maskCpf;
 	private JLabel JLPerfil;
-	private JComboBox JCBPerfil;
+	private JComboBox<String> JCBPerfil;
 	private UsuarioControl _usuarioControl = new UsuarioControl();
 	private int id;
 	private Usuario usuario;
@@ -108,7 +108,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		JLPerfil.setBounds(239, 64, 46, 14);
 		contentPanel.add(JLPerfil);
 
-		JCBPerfil = new JComboBox(_usuarioControl.DDLPerfis());
+		JCBPerfil = new JComboBox<String>(_usuarioControl.DDLPerfis());
 		JCBPerfil.setBounds(275, 61, 116, 20);
 		contentPanel.add(JCBPerfil);
 		{

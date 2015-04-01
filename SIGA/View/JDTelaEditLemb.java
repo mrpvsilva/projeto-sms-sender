@@ -44,7 +44,7 @@ public class JDTelaEditLemb extends JDialog implements ActionListener {
 	private UtilDateModel model;
 	private JDatePanelImpl datePanel;
 	private JDatePickerImpl datePicker;
-	private JComboBox JCBUsuario;
+	private JComboBox<String> JCBUsuario;
 	private JTextArea JTALemb;
 	private int _id;
 	private LembretesControl _lembreteControl = new LembretesControl();
@@ -104,7 +104,7 @@ public class JDTelaEditLemb extends JDialog implements ActionListener {
 		datePicker.setBounds(99, 57, 224, 30);
 		contentPanel.add(datePicker);
 
-		JCBUsuario = new JComboBox(_lembreteControl.DDLRemetentes());
+		JCBUsuario = new JComboBox<String>(_lembreteControl.DDLRemetentes());
 		JCBUsuario.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -214,7 +214,7 @@ public class JDTelaEditLemb extends JDialog implements ActionListener {
 
 	}
 
-	@SuppressWarnings({ "unused", "deprecation" })
+	@SuppressWarnings({ "deprecation" })
 	private void PreencherCampos() {
 		_lembrete = _lembreteControl.BuscarLembrete(_id);
 		JTFAssunto.setText(_lembrete.getAssunto());

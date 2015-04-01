@@ -26,6 +26,10 @@ import javax.swing.ImageIcon;
 
 public class JDTelaEditTelefone extends JDialog implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JButton JBSalvar;
 	private JButton JBSair;
@@ -34,7 +38,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	private TelefoneTableModel _model;
 	private JTextField tfddd;
 	private JTextField tfnumero;
-	private JComboBox cboperadoras;
+	private JComboBox<String> cboperadoras;
 	private String[] operadoras = new String[] { "CLARO", "OI", "TIM", "VIVO" };
 
 	/**
@@ -92,7 +96,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 		lblOperadora.setBounds(0, 67, 62, 14);
 		contentPanel.add(lblOperadora);
 
-		cboperadoras = new JComboBox(operadoras);
+		cboperadoras = new JComboBox<String>(operadoras);
 		cboperadoras.setBounds(65, 65, 128, 20);
 		contentPanel.add(cboperadoras);
 		{

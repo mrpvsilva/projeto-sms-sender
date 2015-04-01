@@ -15,7 +15,7 @@ public class FornecedorRepository extends RepositoryBase<Fornecedor> implements
 		super(persistenceManager);
 	}
 
-	
+	@SuppressWarnings("unchecked")
 	public List<Fornecedor> findAll(String coluna, String valor) {
 		String q = "from Fornecedor where " + coluna + " like :valor";
 		Query query = entityManager.createQuery(q);
