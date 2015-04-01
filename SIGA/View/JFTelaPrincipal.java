@@ -60,6 +60,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 	private JMenuItem JMITSCad;
 	private JMenuItem JMITSBuscar;
 	private JLabel label;
+	private JMenu mnTipoServio_1;
 
 	/**
 	 * Launch the application.
@@ -81,7 +82,8 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public JFTelaPrincipal(UsuarioBean usuario) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JFTelaPrincipal.class.getResource("/Img/CNPJ G200.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				JFTelaPrincipal.class.getResource("/Img/CNPJ G200.png")));
 
 		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -113,6 +115,29 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
 		JMIFornExcluir.addActionListener(this);
 		JMForn.add(JMIFornExcluir);
+
+		mnTipoServio_1 = new JMenu("Tipo Servi\u00E7o");
+		menuBar.add(mnTipoServio_1);
+
+		JMenuItem mntmCadastrar_1 = new JMenuItem("Cadastrar");
+		mntmCadastrar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JDTelaCadTipoServico tscad = new JDTelaCadTipoServico(null, 0);
+				tscad.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				tscad.setVisible(true);
+			}
+		});
+		mnTipoServio_1.add(mntmCadastrar_1);
+
+		JMenuItem mntmBuscar_1 = new JMenuItem("Buscar");
+		mntmBuscar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JDTelaBuscaTipoServico tsb = new JDTelaBuscaTipoServico();
+				tsb.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				tsb.setVisible(true);
+			}
+		});
+		mnTipoServio_1.add(mntmBuscar_1);
 
 		JMenu JMServ = new JMenu("Itens");
 		menuBar.add(JMServ);
@@ -216,34 +241,33 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 				InputEvent.CTRL_MASK));
 		JMIFinFormPag.addActionListener(this);
 		JMFin.add(JMIFinFormPag);
-		
+
 		JMenu JMTipoDePagamento = new JMenu("Tipo de pagamento");
 		JMFin.add(JMTipoDePagamento);
-		
+
 		JMenuItem JMITpPagCad = new JMenuItem("Cadastrar");
 		JMITpPagCad.addActionListener(this);
 		JMTipoDePagamento.add(JMITpPagCad);
-		
-		
+
 		JMenuItem JMITpPagBuscar = new JMenuItem("Buscar");
 		JMITpPagBuscar.addActionListener(this);
 		JMTipoDePagamento.add(JMITpPagBuscar);
-		
+
 		JMenuItem JMITpPagExcluir = new JMenuItem("Excluir");
 		JMITpPagExcluir.addActionListener(this);
 		JMTipoDePagamento.add(JMITpPagExcluir);
-		
+
 		JMenu JMFormasDePagamento = new JMenu("Formas de pagamento");
 		JMFin.add(JMFormasDePagamento);
-		
+
 		JMenuItem JMIFormPagCad = new JMenuItem("Cadastrar");
 		JMIFormPagCad.addActionListener(this);
 		JMFormasDePagamento.add(JMIFormPagCad);
-		
+
 		JMenuItem JMIFormPagBuscar = new JMenuItem("Buscar");
 		JMIFormPagBuscar.addActionListener(this);
 		JMFormasDePagamento.add(JMIFormPagBuscar);
-		
+
 		JMenuItem JMIFormPagExcluir = new JMenuItem("Excluir");
 		JMIFormPagExcluir.addActionListener(this);
 		JMFormasDePagamento.add(JMIFormPagExcluir);
@@ -316,28 +340,28 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 				0));
 		JMIUsuExcluir.addActionListener(this);
 		JMUsu.add(JMIUsuExcluir);
-		
+
 		JMenu mnPerfil = new JMenu("Perfil");
 		JMUsu.add(mnPerfil);
-		
+
 		JMenuItem mntmCadastrar_3 = new JMenuItem("Cadastrar");
 		mnPerfil.add(mntmCadastrar_3);
-		
+
 		JMenuItem mntmBuscar_3 = new JMenuItem("Buscar");
 		mnPerfil.add(mntmBuscar_3);
-		
+
 		JMenuItem mntmExcluir_3 = new JMenuItem("Excluir");
 		mnPerfil.add(mntmExcluir_3);
-		
+
 		JMenu mnPermisso = new JMenu("Permiss\u00E3o");
 		JMUsu.add(mnPermisso);
-		
+
 		JMenuItem mntmCadastrar_4 = new JMenuItem("Cadastrar");
 		mnPermisso.add(mntmCadastrar_4);
-		
+
 		JMenuItem mntmBuscar_4 = new JMenuItem("Buscar");
 		mnPermisso.add(mntmBuscar_4);
-		
+
 		JMenuItem mntmExcluir_4 = new JMenuItem("Excluir");
 		mnPermisso.add(mntmExcluir_4);
 
@@ -345,10 +369,11 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		label = new JLabel("");
 		label.setBounds(165, 68, 1168, 531);
-		label.setIcon(new ImageIcon(JFTelaPrincipal.class.getResource("/Img/CNPJ G800.png")));
+		label.setIcon(new ImageIcon(JFTelaPrincipal.class
+				.getResource("/Img/CNPJ G800.png")));
 		contentPane.add(label);
 	}
 
