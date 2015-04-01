@@ -29,6 +29,8 @@ import Extra.Extras;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class JDTelaCadLemb extends JDialog implements ActionListener {
 
@@ -86,7 +88,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 			datePanel = new JDatePanelImpl(model);
 			datePanel.setPreferredSize(new java.awt.Dimension(202, 182));
 			datePicker = new JDatePickerImpl(datePanel);
-			datePicker.setBounds(99, 53, 325, 30);
+			datePicker.setBounds(99, 53, 154, 30);
 			contentPanel.add(datePicker);
 
 		}
@@ -116,6 +118,24 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 		JTFAssunto.setBounds(99, 19, 325, 20);
 		contentPanel.add(JTFAssunto);
 		JTFAssunto.setColumns(10);
+		
+		JLabel JLHora = new JLabel("Hora");
+		JLHora.setBounds(263, 53, 46, 14);
+		contentPanel.add(JLHora);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(0, 0, 23, 1));
+		spinner.setBounds(310, 50, 29, 20);
+		contentPanel.add(spinner);
+		
+		JLabel lblMinuto = new JLabel("Minuto");
+		lblMinuto.setBounds(349, 53, 46, 14);
+		contentPanel.add(lblMinuto);
+		
+		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerNumberModel(0, 0, 59, 1));
+		spinner_1.setBounds(395, 50, 29, 20);
+		contentPanel.add(spinner_1);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));

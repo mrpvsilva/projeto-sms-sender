@@ -115,7 +115,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMIFornExcluir.addActionListener(this);
 		JMForn.add(JMIFornExcluir);
 
-		JMenu JMServ = new JMenu("Servi\u00E7os");
+		JMenu JMServ = new JMenu("Itens");
 		menuBar.add(JMServ);
 
 		JMIServCad = new JMenuItem("Cadastrar");
@@ -134,7 +134,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMIServExcluir.addActionListener(this);
 		JMServ.add(JMIServExcluir);
 
-		mnTipoServio = new JMenu("Tipo Servi\u00E7o");
+		mnTipoServio = new JMenu("Tipo itens");
 
 		menuBar.add(mnTipoServio);
 
