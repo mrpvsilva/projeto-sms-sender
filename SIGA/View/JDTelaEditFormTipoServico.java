@@ -164,5 +164,11 @@ public class JDTelaEditFormTipoServico extends JDialog implements
 		if(e.getSource() == JBSair){
 			this.dispose();
 		}
+		
+		if(e.getSource() == JBNovo){
+			tfnome.setText("");
+			chckbxAtivo.setSelected(true);
+		}
+		
 	}
 }

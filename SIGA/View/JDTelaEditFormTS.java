@@ -107,6 +107,7 @@ public class JDTelaEditFormTS extends JDialog implements
 			JBSair = new JButton("Sair");
 			JBSair.setIcon(new ImageIcon(JDTelaEditFormTS.class.getResource("/Img/exit16.png")));
 			JBSair.setMnemonic(KeyEvent.VK_Q);
+			JBSair.addActionListener(this);
 			buttonPane.add(JBSair);
 		}
 
@@ -161,6 +162,11 @@ public class JDTelaEditFormTS extends JDialog implements
 
 			if (model != null)
 				model.setTipoItens(tipoItemControl.ListarTodos());
+		}
+		
+		if(e.getSource() == JBNovo){
+			tfnome.setText("");
+			chckbxAtivo.setSelected(true);
 		}
 		
 		if(e.getSource() == JBSair){
