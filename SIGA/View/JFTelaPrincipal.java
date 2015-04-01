@@ -145,6 +145,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMTipoServio.add(JMITSBuscar);
 
 		JMenu JMCli = new JMenu("Clientes");
+		JMCli.setEnabled(false);
 		menuBar.add(JMCli);
 
 		JMICliCad = new JMenuItem("Cadastrar");
@@ -163,6 +164,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMCli.add(JMICliExcluir);
 
 		JMEventos = new JMenu("Eventos");
+		JMEventos.setEnabled(false);
 		menuBar.add(JMEventos);
 
 		mntmCadastrar = new JMenuItem("Cadastrar");
@@ -200,6 +202,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMLemb.add(JMILembExcluir);
 
 		JMenu JMFin = new JMenu("Financeiro");
+		JMFin.setEnabled(false);
 		menuBar.add(JMFin);
 
 		JMIFinSincInf = new JMenuItem("Sincronizar info.");
@@ -246,6 +249,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMFormasDePagamento.add(JMIFormPagExcluir);
 
 		JMenu JMRel = new JMenu("Relat\u00F3rios");
+		JMRel.setEnabled(false);
 		menuBar.add(JMRel);
 
 		JMIRelCont = new JMenu("Contrato");
