@@ -125,16 +125,16 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 		
 		JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(0, 0, 23, 1));
-		spinner.setBounds(310, 50, 29, 20);
+		spinner.setBounds(296, 50, 35, 20);
 		contentPanel.add(spinner);
 		
 		JLabel lblMinuto = new JLabel("Minuto");
-		lblMinuto.setBounds(349, 53, 46, 14);
+		lblMinuto.setBounds(341, 53, 46, 14);
 		contentPanel.add(lblMinuto);
 		
 		JSpinner spinner_1 = new JSpinner();
 		spinner_1.setModel(new SpinnerNumberModel(0, 0, 59, 1));
-		spinner_1.setBounds(395, 50, 29, 20);
+		spinner_1.setBounds(389, 50, 35, 20);
 		contentPanel.add(spinner_1);
 		{
 			JPanel buttonPane = new JPanel();
