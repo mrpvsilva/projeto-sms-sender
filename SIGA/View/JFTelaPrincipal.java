@@ -116,8 +116,8 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMIFornExcluir.addActionListener(this);
 		JMForn.add(JMIFornExcluir);
 
-		mnTipoServio_1 = new JMenu("Tipo Servi\u00E7o");
-		menuBar.add(mnTipoServio_1);
+		mnTipoServio_1 = new JMenu("Tipo Servi\u00E7os");
+		JMForn.add(mnTipoServio_1);
 
 		JMenuItem mntmCadastrar_1 = new JMenuItem("Cadastrar");
 		mntmCadastrar_1.addActionListener(new ActionListener() {
@@ -321,7 +321,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMIRelImpCont.addActionListener(this);
 		JMIRelImp.add(JMIRelImpCont);
 
-		JMenu JMUsu = new JMenu("Usu\u00E1rio");
+		JMenu JMUsu = new JMenu("Usu\u00E1rios");
 		menuBar.add(JMUsu);
 
 		JMIUsuCad = new JMenuItem("Cadastrar");
@@ -342,6 +342,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMUsu.add(JMIUsuExcluir);
 
 		JMenu mnPerfil = new JMenu("Perfil");
+		mnPerfil.setEnabled(false);
 		JMUsu.add(mnPerfil);
 
 		JMenuItem mntmCadastrar_3 = new JMenuItem("Cadastrar");
@@ -354,6 +355,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		mnPerfil.add(mntmExcluir_3);
 
 		JMenu mnPermisso = new JMenu("Permiss\u00E3o");
+		mnPermisso.setEnabled(false);
 		JMUsu.add(mnPermisso);
 
 		JMenuItem mntmCadastrar_4 = new JMenuItem("Cadastrar");

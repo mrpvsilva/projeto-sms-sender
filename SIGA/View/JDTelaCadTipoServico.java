@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -21,17 +22,20 @@ import javax.swing.SwingConstants;
 
 import TableModels.TipoServicoTableModel;
 
+import javax.swing.ImageIcon;
+
 public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tfNome;
 	private JCheckBox chkAtivo;
-	private JButton btnSalvar;
-	private JButton btnCancelar;
+	private JButton JBSalvar;
+	private JButton JBSair;
 	private int id;
 	private TipoServico tipoServico;
 	private TipoServicoControl tipoServicoControl = new TipoServicoControl();
 	private TipoServicoTableModel model;
+	private JButton JBNovo;
 
 	/**
 	 * Launch the application.
@@ -41,6 +45,7 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaCadTipoServico(TipoServicoTableModel model, int id) {
+		setTitle("SIGA - cadastro de tipo de servi\u00E7o");
 		this.model = model;
 		this.id = id;
 		setBounds(100, 100, 340, 147);
@@ -68,18 +73,27 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				btnSalvar = new JButton("Salvar");
-				btnSalvar.setActionCommand("OK");
-				buttonPane.add(btnSalvar);
-				btnSalvar.addActionListener(this);
-				getRootPane().setDefaultButton(btnSalvar);
+				JBSalvar = new JButton("Salvar");
+				JBSalvar.setIcon(new ImageIcon(JDTelaCadTipoServico.class.getResource("/Img/Confirmar.png")));
+				JBSalvar.setMnemonic(KeyEvent.VK_S);
+				buttonPane.add(JBSalvar);
+				JBSalvar.addActionListener(this);
+				getRootPane().setDefaultButton(JBSalvar);
 			}
 			{
-				btnCancelar = new JButton("Cancelar");
-				btnCancelar.addActionListener(this);
-				btnCancelar.setActionCommand("Cancel");
-				buttonPane.add(btnCancelar);
+				
+				JBNovo = new JButton("Novo");
+				JBNovo.setIcon(new ImageIcon(JDTelaCadTipoServico.class.getResource("/Img/window_new16.png")));
+				JBNovo.setMnemonic(KeyEvent.VK_N);
+				buttonPane.add(JBNovo);
+				
+				
 			}
+			JBSair = new JButton("Sair");
+			JBSair.setIcon(new ImageIcon(JDTelaCadTipoServico.class.getResource("/Img/exit16.png")));
+			JBSair.setMnemonic(KeyEvent.VK_Q);
+			JBSair.addActionListener(this);
+			buttonPane.add(JBSair);
 		}
 
 		preencherCampos();
@@ -130,7 +144,7 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnSalvar) {
+		if (e.getSource() == JBSalvar) {
 			if (tfNome.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "Campo nome obrigatório.");
 				return;
@@ -145,7 +159,7 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 			model.setTipoServico(tipoServicoControl.listarTodos());
 		}
 
-		if (e.getSource() == btnCancelar) {
+		if (e.getSource() == JBSair) {
 			this.dispose();
 		}
 	}
