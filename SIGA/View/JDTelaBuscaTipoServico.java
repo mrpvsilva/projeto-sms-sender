@@ -16,12 +16,15 @@ import TableModels.TipoServicoTableModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
 
-public class JDTelaBuscaTipoServico extends JDialog {
+public class JDTelaBuscaTipoServico extends JDialog implements ActionListener{
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
@@ -29,6 +32,9 @@ public class JDTelaBuscaTipoServico extends JDialog {
 	private TipoServicoControl tipoServicoControl = new TipoServicoControl();
 	private JTextField tfNome;
 	private JComboBox cbAtivo;
+	private JButton JBPesquisar;
+	private JButton JBCadastrar;
+	private JButton JBEditar;
 
 	/**
 	 * Launch the application.
@@ -47,6 +53,7 @@ public class JDTelaBuscaTipoServico extends JDialog {
 	 * Create the dialog.
 	 */
 	public JDTelaBuscaTipoServico() {
+		setTitle("SIGA - buscar tipo de servi\u00E7o");
 		setBounds(100, 100, 450, 461);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -83,21 +90,25 @@ public class JDTelaBuscaTipoServico extends JDialog {
 		cbAtivo.setBounds(93, 31, 141, 20);
 		contentPanel.add(cbAtivo);
 
-		JButton btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.addActionListener(new ActionListener() {
+		JBPesquisar = new JButton("Pesquisar");
+		JBPesquisar.setMnemonic(KeyEvent.VK_F);
+		JBPesquisar.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class.getResource("/Img/Procurar.png")));
+		JBPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				pesquisar();
 			}
 		});
-		btnPesquisar.setBounds(178, 65, 110, 23);
-		contentPanel.add(btnPesquisar);
+		JBPesquisar.setBounds(178, 65, 120, 23);
+		contentPanel.add(JBPesquisar);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton btnNovo = new JButton("Cadastrar");
-				btnNovo.addActionListener(new ActionListener() {
+				JBCadastrar = new JButton("Cadastrar");
+				JBCadastrar.setMnemonic(KeyEvent.VK_C);
+				JBCadastrar.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class.getResource("/Img/save16.png")));
+				JBCadastrar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						JDTelaCadTipoServico tscad = new JDTelaCadTipoServico(
 								model, 0);
@@ -106,13 +117,13 @@ public class JDTelaBuscaTipoServico extends JDialog {
 						tscad.setVisible(true);
 					}
 				});
-				btnNovo.setActionCommand("OK");
-				buttonPane.add(btnNovo);
-				getRootPane().setDefaultButton(btnNovo);
+				buttonPane.add(JBCadastrar);
+				getRootPane().setDefaultButton(JBCadastrar);
 			}
 			{
-				JButton btnAlterar = new JButton("Alterar");
-				btnAlterar.addActionListener(new ActionListener() {
+				JBEditar = new JButton("Edit");
+				JBEditar.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class.getResource("/Img/edit_add16.png")));
+				JBEditar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						int linha = table.getSelectedRow();
 						if (linha > -1) {
@@ -129,9 +140,15 @@ public class JDTelaBuscaTipoServico extends JDialog {
 						}
 					}
 				});
-				btnAlterar.setActionCommand("Cancel");
-				buttonPane.add(btnAlterar);
+				JBEditar.setMnemonic(KeyEvent.VK_A);
+				buttonPane.add(JBEditar);
 			}
+			
+			JButton JBSair = new JButton("Sair");
+			JBSair.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class.getResource("/Img/exit16.png")));
+			JBSair.addActionListener(this);
+			JBSair.setMnemonic(KeyEvent.VK_Q);
+			buttonPane.add(JBSair);
 		}
 	}
 
@@ -142,5 +159,11 @@ public class JDTelaBuscaTipoServico extends JDialog {
 
 		model.setTipoServico(tipoServicoControl.listarTodos(nome, ativo));
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

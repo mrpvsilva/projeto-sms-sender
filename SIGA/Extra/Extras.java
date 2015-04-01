@@ -11,8 +11,7 @@ public class Extras {
 
 	private static Usuario _usuarioLogado;
 	private static final int[] pesoCPF = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-	private static final int[] pesoCNPJ = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3,
-			2 };
+	private static final int[] pesoCNPJ = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3,2 };
 
 	public static Usuario getUsuarioLogado() {
 		return _usuarioLogado;
