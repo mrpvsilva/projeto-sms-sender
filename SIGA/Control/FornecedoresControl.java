@@ -2,7 +2,7 @@ package Control;
 
 import java.util.ArrayList;
 import java.util.List;
-import persistenceManagerFactory.PersistenceManagerFactory;
+
 import Dominio.Fornecedor;
 import Dominio.TipoServico;
 import Interfaces.IFornecedorRepository;
@@ -14,11 +14,8 @@ import Repositories.TipoServicoRepository;
 public class FornecedoresControl {
 
 	FornecedoresModel fornMod = new FornecedoresModel();
-	private IFornecedorRepository _fornecedorRepository = new FornecedorRepository(
-			PersistenceManagerFactory.getPersistanceManager());
-
-	private ITipoServicoRepository _tipoServicorepository = new TipoServicoRepository(
-			PersistenceManagerFactory.getPersistanceManager());
+	private IFornecedorRepository _fornecedorRepository = new FornecedorRepository();
+	private ITipoServicoRepository _tipoServicorepository = new TipoServicoRepository();
 
 	/* Envia filtros para a JDTelaBuscarForn */
 	public ArrayList<String> Filtros() {

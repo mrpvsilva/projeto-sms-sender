@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
+import TableModels.AbstractDefaultTableModel;
 import TableModels.TelefoneTableModel;
 
 import java.awt.event.ActionListener;
@@ -35,7 +36,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	private JButton JBSair;
 	private int _linha = -1;
 	private Telefone _telefone;
-	private TelefoneTableModel _model;
+	private AbstractDefaultTableModel<Telefone> _model;
 	private JTextField tfddd;
 	private JTextField tfnumero;
 	private JComboBox<String> cboperadoras;
@@ -50,7 +51,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 			dialog.setModal(true);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,7 +61,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaEditTelefone(int linha, Telefone telefone,
-			TelefoneTableModel model) {
+			AbstractDefaultTableModel<Telefone> model) {
 		setTitle("SIGA - cad. telefone");
 		_telefone = telefone;
 		_model = model;
@@ -105,7 +106,8 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvar = new JButton("Salvar");
-				JBSalvar.setIcon(new ImageIcon(JDTelaEditTelefone.class.getResource("/Img/Confirmar.png")));
+				JBSalvar.setIcon(new ImageIcon(JDTelaEditTelefone.class
+						.getResource("/Img/Confirmar.png")));
 				JBSalvar.addActionListener(this);
 				JBSalvar.setMnemonic(KeyEvent.VK_S);
 				buttonPane.add(JBSalvar);
@@ -113,7 +115,8 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 			}
 			{
 				JBSair = new JButton("Sair");
-				JBSair.setIcon(new ImageIcon(JDTelaEditTelefone.class.getResource("/Img/exit16.png")));
+				JBSair.setIcon(new ImageIcon(JDTelaEditTelefone.class
+						.getResource("/Img/exit16.png")));
 				JBSair.addActionListener(this);
 				JBSair.setMnemonic(KeyEvent.VK_X);
 				buttonPane.add(JBSair);

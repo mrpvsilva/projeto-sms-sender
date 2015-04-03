@@ -21,9 +21,11 @@ import Control.UsuarioControl;
 import Dominio.Usuario;
 import Extra.Extras;
 import Extra.Mascaras;
+import TableModels.AbstractDefaultTableModel;
 
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
+
 import java.awt.Toolkit;
 
 public class JDTelaCadUsu extends JDialog implements ActionListener {
@@ -41,8 +43,9 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 	private JTextField JFFCpf;
 	private MaskFormatter maskCpf;
 	private JLabel JLPerfil;
-	private JComboBox<String> JCBPerfil;
+	private JComboBox JCBPerfil;
 	private UsuarioControl _usuarioControl = new UsuarioControl();
+	private AbstractDefaultTableModel<Usuario> model;
 	private int id;
 	private Usuario usuario;
 	private JButton btnResetarSenha;
@@ -53,7 +56,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaCadUsu dialog = new JDTelaCadUsu(1);
+			JDTelaCadUsu dialog = new JDTelaCadUsu(1, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -66,9 +69,13 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 	 * 
 	 * @throws ParseException
 	 */
-	public JDTelaCadUsu(int id) throws ParseException {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaCadUsu.class.getResource("/Img/CNPJ G200.png")));
+	public JDTelaCadUsu(int id, AbstractDefaultTableModel<Usuario> model)
+			throws ParseException {
+		setResizable(false);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				JDTelaCadUsu.class.getResource("/Img/CNPJ G200.png")));
 		this.id = id;
+		this.model = model;
 		setBounds(100, 100, 417, 172);
 		setTitle("SIGA - cadastro de usu\u00E1rio");
 		getContentPane().setLayout(new BorderLayout());
@@ -108,7 +115,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		JLPerfil.setBounds(239, 64, 46, 14);
 		contentPanel.add(JLPerfil);
 
-		JCBPerfil = new JComboBox<String>(_usuarioControl.DDLPerfis());
+		JCBPerfil = new JComboBox(_usuarioControl.DDLPerfis());
 		JCBPerfil.setBounds(275, 61, 116, 20);
 		contentPanel.add(JCBPerfil);
 		{
@@ -117,7 +124,8 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvUsu = new JButton("Salvar");
-				JBSalvUsu.setIcon(new ImageIcon(JDTelaCadUsu.class.getResource("/Img/Confirmar.png")));
+				JBSalvUsu.setIcon(new ImageIcon(JDTelaCadUsu.class
+						.getResource("/Img/Confirmar.png")));
 				JBSalvUsu.addActionListener(this);
 				JBSalvUsu.setMnemonic(KeyEvent.VK_S);
 				buttonPane.add(JBSalvUsu);
@@ -125,19 +133,22 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 			}
 			{
 				JBNovUsu = new JButton("Novo");
-				JBNovUsu.setIcon(new ImageIcon(JDTelaCadUsu.class.getResource("/Img/user_blue_add216.png")));
+				JBNovUsu.setIcon(new ImageIcon(JDTelaCadUsu.class
+						.getResource("/Img/user_blue_add216.png")));
 				JBNovUsu.setMnemonic(KeyEvent.VK_N);
 				buttonPane.add(JBNovUsu);
 			}
 
 			btnResetarSenha = new JButton("Resetar senha");
-			btnResetarSenha.setIcon(new ImageIcon(JDTelaCadUsu.class.getResource("/Img/sync.png")));
+			btnResetarSenha.setIcon(new ImageIcon(JDTelaCadUsu.class
+					.getResource("/Img/sync.png")));
 			btnResetarSenha.addActionListener(this);
 			btnResetarSenha.setMnemonic(KeyEvent.VK_R);
 			buttonPane.add(btnResetarSenha);
-			
+
 			JBSair = new JButton("Sair");
-			JBSair.setIcon(new ImageIcon(JDTelaCadUsu.class.getResource("/Img/exit16.png")));
+			JBSair.setIcon(new ImageIcon(JDTelaCadUsu.class
+					.getResource("/Img/exit16.png")));
 			JBSair.addActionListener(this);
 			JBSair.setMnemonic(KeyEvent.VK_Q);
 			buttonPane.add(JBSair);
@@ -152,14 +163,14 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		if (acao.getSource() == JBSalvUsu) {
 
 			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
-					"Deseja cadastrar o usuário?")) {
+					"Deseja salvar o usuário?")) {
 
 				if (JTFUsuario.getText().isEmpty())
 					JOptionPane.showMessageDialog(null, "Usuário em branco.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+							"Erro ao salvar", JOptionPane.ERROR_MESSAGE);
 				else if (JTFNome.getText().isEmpty())
 					JOptionPane.showMessageDialog(null, "Nome em branco.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+							"Erro ao salvar", JOptionPane.ERROR_MESSAGE);
 				else {
 
 					if (id == 0) {
@@ -167,6 +178,8 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 					} else {
 						atualizar();
 					}
+					
+					
 
 				}// final da validação
 
@@ -185,6 +198,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 					preencherCampos();
 					JOptionPane.showMessageDialog(null,
 							"Senha resetada com sucesso.");
+					model.setLinhas(_usuarioControl.BuscarTodos());
 				} else {
 					JOptionPane.showMessageDialog(null,
 							"Falha ao resetar a senha");
@@ -203,8 +217,8 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 
 			}
 		}
-		
-		if(acao.getSource() == JBSair){
+
+		if (acao.getSource() == JBSair) {
 			this.dispose();
 		}
 
@@ -221,6 +235,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		String out = _usuarioControl.Cadastrar(usuario);
 
 		if (out == null) {
+			model.setLinhas(_usuarioControl.BuscarTodos());
 			preencherCampos();
 			JOptionPane.showMessageDialog(null, "Usuário cadastardo.");
 		} else {
@@ -239,6 +254,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		String out = _usuarioControl.Atualizar(usuario);
 
 		if (out == null) {
+			model.setLinhas(_usuarioControl.BuscarTodos());
 			preencherCampos();
 			JOptionPane.showMessageDialog(null, "Usuário atualizado.");
 		} else {

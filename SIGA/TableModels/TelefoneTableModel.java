@@ -1,56 +1,33 @@
 package TableModels;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.table.AbstractTableModel;
 
 import Dominio.Telefone;
 
-public class TelefoneTableModel extends AbstractTableModel {
+public class TelefoneTableModel extends AbstractDefaultTableModel<Telefone> {
 	private static final long serialVersionUID = 1L;
-	private List<Telefone> _telefones;
-	private String[] colunas = new String[] { "Id", "ddd", "Número",
-			"Operadora" };
-	private final int ID = 0;
-	private final int DDD = 1;
-	private final int NUMERO = 2;
-	private final int OPERADORA = 3;
 
 	public TelefoneTableModel() {
-		_telefones = new ArrayList<Telefone>();
-
+		super();
+		super.colunas = new String[] { "ID", "DDD", "Número", "Operadora" };
 	}
 
 	public TelefoneTableModel(List<Telefone> telefones) {
-		_telefones = telefones;
-	}
-
-	public String getColumnName(int num) {
-		return this.colunas[num];
-	}
-
-	@Override
-	public int getColumnCount() {
-		return colunas.length;
-	}
-
-	@Override
-	public int getRowCount() {
-		return _telefones.size();
+		super(telefones);
+		super.colunas = new String[] { "ID", "DDD", "Número", "Operadora" };
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
-		case ID:
-			return _telefones.get(rowIndex).getId();
-		case DDD:
-			return _telefones.get(rowIndex).getDdd();
-		case NUMERO:
-			return _telefones.get(rowIndex).getNumero();
-		case OPERADORA:
-			return _telefones.get(rowIndex).getOperadora();
+		case 0:
+			return getLinhas().get(rowIndex).getId();
+		case 1:
+			return getLinhas().get(rowIndex).getDdd();
+		case 2:
+			return getLinhas().get(rowIndex).getNumero();
+		case 3:
+			return getLinhas().get(rowIndex).getOperadora();
 		default:
 			return null;
 		}
@@ -58,38 +35,10 @@ public class TelefoneTableModel extends AbstractTableModel {
 	}
 
 	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
+	public int getId(int linha) {
+		return (int) getLinhas().get(linha).getId();
 	}
 
-	// CRUD TELEFONES
-	public void add(Telefone telefone) {
-		_telefones.add(telefone);
-		this.fireTableDataChanged();
-	}
-
-	public void update(int linha, Telefone telefone) {
-		_telefones.set(linha, telefone);
-		this.fireTableDataChanged();
-	}
-
-	public void remove(int linha) {
-		_telefones.remove(linha);
-		this.fireTableRowsDeleted(linha, linha);
-
-	}
-
-	public List<Telefone> getTelefones() {
-		return _telefones;
-	}
-
-	public void setTelefones(List<Telefone> telefones) {
-		_telefones = telefones;
-		this.fireTableDataChanged();
-	}
-
-	public Telefone getTelefone(int linha) {
-		return _telefones.get(linha);
-	}
+	
 
 }

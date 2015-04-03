@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
-import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -15,8 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -25,6 +21,10 @@ import Control.FornecedoresControl;
 import Dominio.Fornecedor;
 
 import javax.swing.ImageIcon;
+
+import TableModels.AbstractDefaultTableModel;
+import TableModels.FornecedorTableModel;
+
 import java.awt.Toolkit;
 
 public class JDTelaBuscarForn extends JDialog implements ActionListener {
@@ -43,7 +43,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 	private FornecedoresControl _fornecedorControl = new FornecedoresControl();
 	private JScrollPane scroll;
 	private JTable tabela;
-	private DefaultTableModel model;
+	private AbstractDefaultTableModel<Fornecedor> model;
 	protected String valor;
 	private JButton JBSair;
 
@@ -64,7 +64,8 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaBuscarForn() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaBuscarForn.class.getResource("/Img/CNPJ G200.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				JDTelaBuscarForn.class.getResource("/Img/CNPJ G200.png")));
 		setTitle("SIGA - buscar fornecedores");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -73,7 +74,8 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 		{
 			JBBuscar = new JButton("Buscar");
-			JBBuscar.setIcon(new ImageIcon(JDTelaBuscarForn.class.getResource("/Img/Procurar.png")));
+			JBBuscar.setIcon(new ImageIcon(JDTelaBuscarForn.class
+					.getResource("/Img/Procurar.png")));
 			JBBuscar.addActionListener(this);
 			JBBuscar.setMnemonic(KeyEvent.VK_F);
 			JBBuscar.setBounds(325, 11, 99, 23);
@@ -104,30 +106,12 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 			contentPanel.add(scroll);
 			scroll.setBounds(12, 59, 412, 158);
 			{
-				final TableModel tabelaModel = new DefaultTableModel(
-						new String[][] {}, new String[] { "ID", "CNPJ/CPF",
-								"Nome", "Telefone" }) {
-					/**
-																		 * 
-																		 */
-					private static final long serialVersionUID = 1L;
 
-					public boolean isCellEditable(int row, int col) {
-						return false;
-					}
-				};
-
-				tabela = new JTable();
+				model = new FornecedorTableModel(
+						_fornecedorControl.listarTodos());
+				tabela = new JTable(model);
 				scroll.setViewportView(tabela);
-				tabela.setModel(tabelaModel);
-				model = (DefaultTableModel) tabela.getModel();
-				model.fireTableDataChanged();
 
-				// for (LancamentoBean lanc : lancControl.getLancamentos()) {
-				// Laço necessário para incluir registro na tabela
-				// model.addRow(new Object[]{new
-				// Integer(lanc.getIdLancamento()),formatas.format(lanc.getDtCompra()),lanc.getNAutorizacao(),lanc.getSelectedConveniada()});
-				CarregarGrid(_fornecedorControl.listarTodos());
 				tabela.getColumnModel().getColumn(0).setMinWidth(0);
 				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
 
@@ -140,7 +124,8 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBCadForn = new JButton("Cadastrar");
-				JBCadForn.setIcon(new ImageIcon(JDTelaBuscarForn.class.getResource("/Img/save16.png")));
+				JBCadForn.setIcon(new ImageIcon(JDTelaBuscarForn.class
+						.getResource("/Img/save16.png")));
 				JBCadForn.addActionListener(this);
 				JBCadForn.setMnemonic(KeyEvent.VK_C);
 				buttonPane.add(JBCadForn);
@@ -148,14 +133,16 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 			}
 			{
 				JBEditForn = new JButton("Editar");
-				JBEditForn.setIcon(new ImageIcon(JDTelaBuscarForn.class.getResource("/Img/edit_add16.png")));
+				JBEditForn.setIcon(new ImageIcon(JDTelaBuscarForn.class
+						.getResource("/Img/edit_add16.png")));
 				JBEditForn.addActionListener(this);
 				JBEditForn.setMnemonic(KeyEvent.VK_E);
 				buttonPane.add(JBEditForn);
 			}
 			{
 				JBSair = new JButton("Sair");
-				JBSair.setIcon(new ImageIcon(JDTelaBuscarForn.class.getResource("/Img/exit16.png")));
+				JBSair.setIcon(new ImageIcon(JDTelaBuscarForn.class
+						.getResource("/Img/exit16.png")));
 				JBSair.addActionListener(this);
 				JBSair.setMnemonic(KeyEvent.VK_Q);
 				buttonPane.add(JBSair);
@@ -169,7 +156,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 		if (acao.getSource() == JBCadForn) {
 
 			try {
-				JDTelaCadForn jdtcf = new JDTelaCadForn(0);
+				JDTelaCadForn jdtcf = new JDTelaCadForn(null,model);
 				jdtcf.setVisible(true);
 				jdtcf.setLocationRelativeTo(null);
 			} catch (ParseException e) {
@@ -184,14 +171,8 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 			try {
 				int linha = tabela.getSelectedRow();
 				if (linha > -1) {
-					// JDTelaEditForn jdtef = new JDTelaEditForn(
-					// Integer.parseInt(String.valueOf(tabela.getValueAt(
-					// linha, 0))));
-					// jdtef.setVisible(true);
-					// jdtef.setLocationRelativeTo(null);
-					int id = Integer.parseInt(String.valueOf(tabela.getValueAt(
-							linha, 0)));
-					JDTelaCadForn jdtcf = new JDTelaCadForn(id);
+					
+					JDTelaCadForn jdtcf = new JDTelaCadForn(model.find(linha),model);
 					jdtcf.setVisible(true);
 					jdtcf.setLocationRelativeTo(null);
 				} else {
@@ -210,33 +191,19 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 			coluna = coluna == "CNPJ" ? "cpfcnpj" : coluna == "NOME" ? "nome"
 					: "";
 			String _valor = JTFBuscar.getText();
+
 			if (!_valor.equals("")) {
-				CarregarGrid(_fornecedorControl.listarTodos(coluna, _valor));
+				model.setLinhas(_fornecedorControl.listarTodos(coluna, _valor));
 			} else {
-				CarregarGrid(_fornecedorControl.listarTodos());
+				model.setLinhas(_fornecedorControl.listarTodos());
 			}
 
 		}// final do botão buscar fornecedores
 
-		if(acao.getSource() == JBSair){
+		if (acao.getSource() == JBSair) {
 			this.dispose();
 		}
-		
+
 	}// final da ação do botão
 
-	private void CarregarGrid(List<Fornecedor> lista) {
-		model.setRowCount(0);
-		for (Fornecedor f : lista) {
-
-			model.addRow(new Object[] {
-					f.getId(),
-					f.getCpfcnpj(),
-					f.getNome(),
-					"(" + f.getTelefones().get(0).getDdd() + ")"
-							+ f.getTelefones().get(0).getNumero() + "-"
-							+ f.getTelefones().get(0).getOperadora() });
-
-		}
-
-	}
 }

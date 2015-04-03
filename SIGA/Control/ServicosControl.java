@@ -3,7 +3,6 @@ package Control;
 import java.util.ArrayList;
 import java.util.List;
 
-import persistenceManagerFactory.PersistenceManagerFactory;
 import Dominio.Item;
 import Dominio.TipoItem;
 import Interfaces.IItemRepository;
@@ -16,11 +15,8 @@ public class ServicosControl {
 
 	private ServicosModel servMod = new ServicosModel();
 
-	private IItemRepository _itemRepository = new ItemRepository(
-			PersistenceManagerFactory.getPersistanceManager());
-
-	private ITipoItemRepository tipoItemRepository = new TipoItemRepository(
-			PersistenceManagerFactory.getPersistanceManager());
+	private IItemRepository _itemRepository = new ItemRepository();
+	private ITipoItemRepository tipoItemRepository = new TipoItemRepository();
 
 	public ArrayList<String> Filtros() {
 		return servMod.FiltroServ();

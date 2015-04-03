@@ -2,27 +2,23 @@ package Repositories;
 
 import Dominio.FormaPagamento;
 import Interfaces.IFormaPagamento;
-import Interfaces.IPersistenceManager;
-
-import java.util.*;
-
-import javax.persistence.Query;
+import java.util.List;
 
 public class FormaPagamentoRepository extends RepositoryBase<FormaPagamento>
-implements IFormaPagamento{
+		implements IFormaPagamento {
 
-	
-	public FormaPagamentoRepository(IPersistenceManager persistenceManager) {
-		super(persistenceManager);
-	}
 	@SuppressWarnings("unchecked")
-	public List<FormaPagamento> allFormaPagamento(String coluna,String valor){
+	public List<FormaPagamento> allFormaPagamento(String coluna, String valor) {
+		// open();
+		// String q = "from formapagamento order by forma";
+		// Query query = entityManager.createQuery(q);
+		//
+		// List<FormaPagamento> l = query.getResultList();
+		// close();
+		// return l;
 
-		String q = "from formapagamento order by forma";
-		Query query = entityManager.createQuery(q);
-		
-		return query.getResultList();	
-		
+		return null;
+
 	}
-	
+
 }

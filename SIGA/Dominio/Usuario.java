@@ -75,4 +75,13 @@ public class Usuario implements Serializable {
 		this.cpf = cpf;
 	}
 
+	public boolean trocarSenha() {
+
+		if (getSenha().equals(getCpf()))
+			return true;
+
+		return false;
+
+	}
+
 }

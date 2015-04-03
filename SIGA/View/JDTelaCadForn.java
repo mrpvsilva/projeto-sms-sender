@@ -29,12 +29,14 @@ import Dominio.Telefone;
 import Extra.Extras;
 import Extra.Mascaras;
 import Extra.Validacoes;
+import TableModels.AbstractDefaultTableModel;
 import TableModels.TelefoneTableModel;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+
 import java.awt.Toolkit;
 
 public class JDTelaCadForn extends JDialog implements ActionListener {
@@ -52,7 +54,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	private JButton JBSalvForn;
 	private JTextField JFFRg;
 	private JFormattedTextField JFFCnpj;
-	private JComboBox<String> JCBTpServ;
+	private JComboBox JCBTpServ;
 	private MaskFormatter maskCnpj;
 	private JLabel JLBairro;
 	private JTextField JTFBairro;
@@ -61,7 +63,8 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	private JCheckBox JCBCpfMask;
 	private MaskFormatter maskCep;
 	private FornecedoresControl _fornecedorControl;
-	private TelefoneTableModel telmodel;
+	private AbstractDefaultTableModel<Telefone> telmodel;
+	private AbstractDefaultTableModel<Fornecedor> forModel;
 	private JScrollPane scrollPane;
 	private JTable table;
 	private JButton btnaddtel;
@@ -76,7 +79,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaCadForn dialog = new JDTelaCadForn(0);
+			JDTelaCadForn dialog = new JDTelaCadForn(null, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -89,12 +92,16 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	 * 
 	 * @throws ParseException
 	 */
-	public JDTelaCadForn(int id) throws ParseException {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaCadForn.class.getResource("/Img/CNPJ G200.png")));
-		this.id = id;
+	public JDTelaCadForn(Fornecedor fornecedor,
+			AbstractDefaultTableModel<Fornecedor> model) throws ParseException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				JDTelaCadForn.class.getResource("/Img/CNPJ G200.png")));
+		// this.id = id;
+		this.forModel = model;
+		this.fornecedor = fornecedor;
 		_fornecedorControl = new FornecedoresControl();
 		setBounds(0, -20, 512, 379);
-		setTitle("SIGA  - cadastro de fornecedores");
+		setTitle("SIGA  - Cadastrar fornecedor");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -169,7 +176,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		contentPanel.add(JTFSite);
 		JTFSite.setColumns(10);
 
-		JCBTpServ = new JComboBox<String>(_fornecedorControl.DDLTipoServico());
+		JCBTpServ = new JComboBox(_fornecedorControl.DDLTipoServico());
 		JCBTpServ.setBounds(83, 64, 400, 20);
 
 		contentPanel.add(JCBTpServ);
@@ -210,7 +217,8 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		scrollPane.setViewportView(table);
 
 		btnaddtel = new JButton("");
-		btnaddtel.setIcon(new ImageIcon(JDTelaCadForn.class.getResource("/Img/plus.png")));
+		btnaddtel.setIcon(new ImageIcon(JDTelaCadForn.class
+				.getResource("/Img/plus.png")));
 		btnaddtel.setToolTipText("Adicionar telefone");
 		btnaddtel.setBounds(463, 104, 23, 23);
 		btnaddtel.addActionListener(this);
@@ -218,14 +226,16 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 
 		btnedittel = new JButton("");
 		btnedittel.setToolTipText("Alterar telefone");
-		btnedittel.setIcon(new ImageIcon(JDTelaCadForn.class.getResource("/Img/edit.png")));
+		btnedittel.setIcon(new ImageIcon(JDTelaCadForn.class
+				.getResource("/Img/edit.png")));
 		btnedittel.setBounds(463, 129, 23, 23);
 		btnedittel.addActionListener(this);
 		contentPanel.add(btnedittel);
 
 		btnremovetel = new JButton("");
 		btnremovetel.setToolTipText("Remover telefone");
-		btnremovetel.setIcon(new ImageIcon(JDTelaCadForn.class.getResource("/Img/trash.png")));
+		btnremovetel.setIcon(new ImageIcon(JDTelaCadForn.class
+				.getResource("/Img/trash.png")));
 		btnremovetel.setBounds(462, 153, 23, 23);
 		btnremovetel.addActionListener(this);
 		contentPanel.add(btnremovetel);
@@ -236,7 +246,8 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvForn = new JButton("Salvar");
-				JBSalvForn.setIcon(new ImageIcon(JDTelaCadForn.class.getResource("/Img/Confirmar.png")));
+				JBSalvForn.setIcon(new ImageIcon(JDTelaCadForn.class
+						.getResource("/Img/Confirmar.png")));
 				JBSalvForn.addActionListener(this);
 				JBSalvForn.setMnemonic(KeyEvent.VK_S);
 				buttonPane.add(JBSalvForn);
@@ -244,14 +255,16 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			}
 			{
 				JBNovForn = new JButton("Novo");
-				JBNovForn.setIcon(new ImageIcon(JDTelaCadForn.class.getResource("/Img/window_new16.png")));
+				JBNovForn.setIcon(new ImageIcon(JDTelaCadForn.class
+						.getResource("/Img/window_new16.png")));
 				JBNovForn.addActionListener(this);
 				JBNovForn.setMnemonic(KeyEvent.VK_N);
 				buttonPane.add(JBNovForn);
 			}
-			
+
 			JBSair = new JButton("Sair");
-			JBSair.setIcon(new ImageIcon(JDTelaCadForn.class.getResource("/Img/exit16.png")));
+			JBSair.setIcon(new ImageIcon(JDTelaCadForn.class
+					.getResource("/Img/exit16.png")));
 			JBSair.addActionListener(this);
 			JBSair.setMnemonic(KeyEvent.VK_Q);
 			buttonPane.add(JBSair);
@@ -274,8 +287,9 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			int linha = table.getSelectedRow();
 
 			if (linha > -1) {
-				Telefone t = telmodel.getTelefone(linha);
-				JDTelaEditTelefone ef = new JDTelaEditTelefone(linha, t, telmodel);
+				Telefone t = telmodel.find(linha);
+				JDTelaEditTelefone ef = new JDTelaEditTelefone(linha, t,
+						telmodel);
 				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				ef.setVisible(true);
 			} else {
@@ -296,7 +310,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		if (acao.getSource() == JBSalvForn) {
 
 			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
-					"Deseja cadastrar o fornecedor?")) {
+					"Deseja salvar o fornecedor?")) {
 
 				if (JTFNome.getText().isEmpty()) // Valida Nome
 					JOptionPane.showMessageDialog(null, "Nome em branco.",
@@ -308,7 +322,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 				else if (JFFRg.getText().trim().isEmpty()) // Valida Rg
 					JOptionPane.showMessageDialog(null, "Rg em branco.",
 							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else if (telmodel.getTelefones().size() < 1)
+				else if (telmodel.getRowCount() < 1)
 
 					JOptionPane.showMessageDialog(null,
 							"Adicione ao menos um telefone",
@@ -335,13 +349,13 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 				else {
 
-					if (id < 1) {
+					if (fornecedor == null) {
 						cadastrar();
 					} else {
 						atualizar();
 					}
 
-					this.id = (int) fornecedor.getId();
+					// this.id = (int) fornecedor.getId();
 					preencherCampos();
 
 					/* Acredito que esteja todas as validações possíveis */
@@ -374,8 +388,8 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			JFFCnpj.setValue(null);
 			formaterCPFCNPJ(JCBCpfMask.isSelected());
 		}
-		
-		if(acao.getSource() == JBSair){
+
+		if (acao.getSource() == JBSair) {
 			this.dispose();
 		}
 
@@ -402,10 +416,11 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		fornecedor.setTipoServico(_fornecedorControl
 				.buscarTipoServico(JCBTpServ.getSelectedItem().toString()));
 
-		fornecedor.setTelefones(telmodel.getTelefones());
+		fornecedor.setTelefones(telmodel.getLinhas());
 
 		String out = _fornecedorControl.atualizar(fornecedor);
 		if (out == null) {
+			carregarGrid();
 			JOptionPane.showMessageDialog(null, "Fornecedor atualizado");
 		} else {
 			JOptionPane.showMessageDialog(null, out);
@@ -435,15 +450,21 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		fornecedor.setTipoServico(_fornecedorControl
 				.buscarTipoServico(JCBTpServ.getSelectedItem().toString()));
 
-		fornecedor.setTelefones(telmodel.getTelefones());
+		fornecedor.setTelefones(telmodel.getLinhas());
 
 		String out = _fornecedorControl.cadastrar(fornecedor);
 		if (out == null) {
+			carregarGrid();
 			JOptionPane.showMessageDialog(null, "Fornecedor cadastrado");
 		} else {
 			JOptionPane.showMessageDialog(null, out);
 		}
 
+	}
+
+	private void carregarGrid() {
+		if (forModel != null)
+			forModel.setLinhas(_fornecedorControl.listarTodos());
 	}
 
 	private void formaterCPFCNPJ(boolean isccpf) {
@@ -469,10 +490,10 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	}
 
 	private void preencherCampos() {
-		if (id == 0) {
+		if (fornecedor == null)
 			return;
-		}
-		fornecedor = _fornecedorControl.buscarFornecedor(id);
+
+		this.setTitle("SIGA - Alterar fornecedor");
 		JTFNome.setText(fornecedor.getNome());
 		String cpf = fornecedor.getCpfcnpj();
 		formaterCPFCNPJ(cpf.length() == 11 ? true : false);
@@ -483,7 +504,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		JTFBairro.setText(fornecedor.getEndereco().getBairro());
 		JFFCep.setText(fornecedor.getEndereco().getCep() + "");
 		JTFSite.setText(fornecedor.getSite());
-		telmodel.setTelefones(fornecedor.getTelefones());
+		telmodel.setLinhas(fornecedor.getTelefones());
 		JCBTpServ.setSelectedItem(fornecedor.getTipoServico().getNome());
 
 	}

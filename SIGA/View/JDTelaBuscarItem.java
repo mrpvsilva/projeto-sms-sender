@@ -5,8 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.text.NumberFormat;
-import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -14,17 +12,21 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+
 import Control.ServicosControl;
 import Dominio.Item;
+
 import javax.swing.ImageIcon;
+
+import TableModels.AbstractDefaultTableModel;
+import TableModels.ItemTableModel;
+
 import java.awt.Toolkit;
 
-public class JDTelaBuscarServ extends JDialog implements ActionListener {
+public class JDTelaBuscarItem extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -38,7 +40,7 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 	private JTextField JTFBuscar;
 	private JComboBox<String> JCBFiltro;
 	private ServicosControl servCont = new ServicosControl();
-	private DefaultTableModel model;
+	private AbstractDefaultTableModel<Item> model;
 	private JTable tabela;
 	private JScrollPane scroll;
 	private ServicosControl _servicoControl = new ServicosControl();
@@ -49,7 +51,7 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaBuscarServ dialog = new JDTelaBuscarServ();
+			JDTelaBuscarItem dialog = new JDTelaBuscarItem();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -60,9 +62,10 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaBuscarServ() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaBuscarServ.class.getResource("/Img/CNPJ G200.png")));
-		setTitle("SIGA - buscar serviços");
+	public JDTelaBuscarItem() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				JDTelaBuscarItem.class.getResource("/Img/CNPJ G200.png")));
+		setTitle("SIGA - buscar itens");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -75,7 +78,8 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 		}
 		{
 			JBBuscar = new JButton("Buscar");
-			JBBuscar.setIcon(new ImageIcon(JDTelaBuscarServ.class.getResource("/Img/Procurar.png")));
+			JBBuscar.setIcon(new ImageIcon(JDTelaBuscarItem.class
+					.getResource("/Img/Procurar.png")));
 			JBBuscar.setMnemonic(KeyEvent.VK_F);
 			JBBuscar.addActionListener(this);
 			JBBuscar.setBounds(325, 11, 99, 23);
@@ -101,27 +105,14 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 			contentPanel.add(scroll);
 			scroll.setBounds(12, 59, 412, 158);
 			{
-				final TableModel tabelaModel = new DefaultTableModel(
-						new String[][] {}, new String[] { "ID", "Item",
-								"Preço custo", "Preço com.", "Ativo" }) {
-					/**
-																		 * 
-																		 */
-					private static final long serialVersionUID = 1L;
 
-					public boolean isCellEditable(int row, int col) {
-						return false;
-					}
-				};
-
-				tabela = new JTable();
+				model = new ItemTableModel(_servicoControl.listarTodos());
+				tabela = new JTable(model);
 				scroll.setViewportView(tabela);
-				tabela.setModel(tabelaModel);
-				model = (DefaultTableModel) tabela.getModel();
-				model.fireTableDataChanged();
+				;
+
 				tabela.getColumnModel().getColumn(0).setMinWidth(0);
 				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
-				carregarGrid(_servicoControl.listarTodos());
 
 			}
 		}
@@ -132,7 +123,8 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBCadServ = new JButton("Cadastrar");
-				JBCadServ.setIcon(new ImageIcon(JDTelaBuscarServ.class.getResource("/Img/save16.png")));
+				JBCadServ.setIcon(new ImageIcon(JDTelaBuscarItem.class
+						.getResource("/Img/save16.png")));
 				JBCadServ.addActionListener(this);
 				JBCadServ.setMnemonic(KeyEvent.VK_C);
 				buttonPane.add(JBCadServ);
@@ -141,13 +133,15 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 			{
 				JBEditServ = new JButton("Editar");
 				JBEditServ.setMnemonic(KeyEvent.VK_E);
-				JBEditServ.setIcon(new ImageIcon(JDTelaBuscarServ.class.getResource("/Img/edit_add16.png")));
+				JBEditServ.setIcon(new ImageIcon(JDTelaBuscarItem.class
+						.getResource("/Img/edit_add16.png")));
 				JBEditServ.addActionListener(this);
 				buttonPane.add(JBEditServ);
 			}
 			{
 				JBSair = new JButton("Sair");
-				JBSair.setIcon(new ImageIcon(JDTelaBuscarServ.class.getResource("/Img/exit16.png")));
+				JBSair.setIcon(new ImageIcon(JDTelaBuscarItem.class
+						.getResource("/Img/exit16.png")));
 				JBSair.addActionListener(this);
 				JBSair.setMnemonic(KeyEvent.VK_Q);
 				buttonPane.add(JBSair);
@@ -159,7 +153,7 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent acao) {
 
 		if (acao.getSource() == JBCadServ) {
-			JDTelaCadServ jdtcs = new JDTelaCadServ();
+			JDTelaCadItem jdtcs = new JDTelaCadItem(null,model);
 			jdtcs.setVisible(true);
 			jdtcs.setLocationRelativeTo(null);
 
@@ -169,10 +163,9 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 
 			int linha = tabela.getSelectedRow();
 			if (linha > -1) {
-				String Id = String.valueOf(tabela.getValueAt(linha, 0));
-				JDTelaEditServ jdtes = new JDTelaEditServ(Integer.parseInt(Id));
-				jdtes.setVisible(true);
-				jdtes.setLocationRelativeTo(null);
+				JDTelaCadItem jdtcs = new JDTelaCadItem(model.find(linha),model);
+				jdtcs.setVisible(true);
+				jdtcs.setLocationRelativeTo(null);
 			} else {
 				JOptionPane.showMessageDialog(null, "Selecione uma linha");
 			}
@@ -182,34 +175,21 @@ public class JDTelaBuscarServ extends JDialog implements ActionListener {
 
 			String campo = JCBFiltro.getSelectedItem().toString() == "ITEM" ? "nome"
 					: "descricao";
-			String txt = JTFBuscar.getText();
+			String val = JTFBuscar.getText();
+			//
+			// if (txt.equals("")) {
+			// model.setLinhas(_servicoControl.listarTodos());
+			// } else {
+			// model.setLinhas(_servicoControl.listarTodos(campo, txt));
+			// }
 
-			if (txt.equals("")) {
-				carregarGrid(_servicoControl.listarTodos());
-			} else {
-				carregarGrid(_servicoControl.listarTodos(campo, txt));
-			}
+			model.setLinhas(_servicoControl.listarTodos(campo, val));
 
 		}// final do botão buscar serviços
 
-		if(acao.getSource() == JBSair){
+		if (acao.getSource() == JBSair) {
 			this.dispose();
 		}
 	}// final da ação do botão
-
-	private void carregarGrid(List<Item> lista) {
-		model.setRowCount(0);
-
-		for (Item i : lista) {
-			model.addRow(new Object[] {
-					i.getId(),
-					i.getNome(),
-					NumberFormat.getCurrencyInstance()
-							.format(i.getValorCusto()),
-					NumberFormat.getCurrencyInstance().format(
-							i.getValorComercial()),
-					i.isAtivo() ? "Ativo" : "Inativo" });
-		}
-	}
 
 }

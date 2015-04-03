@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import TableModels.AbstractDefaultTableModel;
 import TableModels.TipoItemTableModel;
 import Control.TipoItemControl;
 import Dominio.TipoItem;
@@ -26,7 +27,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class JDTelaBuscarTS extends JDialog implements ActionListener {
+public class JDTelaBuscarTipoItem extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -35,7 +36,7 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
 	private TipoItemControl tipoItemControl = new TipoItemControl();
-	private TipoItemTableModel model;
+	private AbstractDefaultTableModel<TipoItem> model;
 	private JButton okButton;
 	private JButton cancelButton;
 	private JButton btnPesquisar;
@@ -44,7 +45,7 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 	private JTextField tffiltronome;
 	private JComboBox<String> jcfiltroativo;
 
-	public JDTelaBuscarTS() {
+	public JDTelaBuscarTipoItem() {
 		setResizable(false);
 		setBounds(100, 100, 304, 439);
 		getContentPane().setLayout(new BorderLayout());
@@ -96,8 +97,8 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 				}
 			}
 		});
-		jcfiltroativo.setModel(new DefaultComboBoxModel<String>(new String[] { "Todos",
-				"Ativo", "Inativo" }));
+		jcfiltroativo.setModel(new DefaultComboBoxModel<String>(new String[] {
+				"Todos", "Ativo", "Inativo" }));
 		jcfiltroativo.setBounds(77, 39, 169, 20);
 		contentPanel.add(jcfiltroativo);
 
@@ -136,7 +137,7 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == okButton) {
-			JDTelaEditFormTS ef = new JDTelaEditFormTS(0, model);
+			JDTelaEditFormTipoItem ef = new JDTelaEditFormTipoItem(0, model);
 			ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			ef.setVisible(true);
 		}
@@ -146,9 +147,9 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 			int linha = table.getSelectedRow();
 
 			if (linha > -1) {
-				int id = Integer.parseInt(String.valueOf(model.getValueAt(
-						linha, 0)));
-				JDTelaEditFormTS ef = new JDTelaEditFormTS(id, model);
+				int id = model.getId(linha);
+				JDTelaEditFormTipoItem ef = new JDTelaEditFormTipoItem(id,
+						model);
 				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				ef.setVisible(true);
 			} else {
@@ -169,7 +170,7 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 	}
 
 	private void carregarGrid(List<TipoItem> lista) {
-		model.setTipoItens(lista);
+		model.setLinhas(lista);
 	}
 
 	/**
@@ -177,7 +178,7 @@ public class JDTelaBuscarTS extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaBuscarTS dialog = new JDTelaBuscarTS();
+			JDTelaBuscarTipoItem dialog = new JDTelaBuscarTipoItem();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

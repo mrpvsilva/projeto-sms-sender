@@ -2,15 +2,13 @@ package Control;
 
 import java.util.List;
 
-import persistenceManagerFactory.PersistenceManagerFactory;
 import Dominio.TipoServico;
 import Interfaces.ITipoServicoRepository;
 import Repositories.TipoServicoRepository;
 
 public class TipoServicoControl {
 
-	private ITipoServicoRepository tipoServicoRepository = new TipoServicoRepository(
-			PersistenceManagerFactory.getPersistanceManager());
+	private ITipoServicoRepository tipoServicoRepository = new TipoServicoRepository();
 
 	public String cadastrar(TipoServico tipoServico) {
 

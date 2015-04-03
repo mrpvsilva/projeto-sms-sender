@@ -2,15 +2,13 @@ package Control;
 
 import java.util.List;
 
-import persistenceManagerFactory.PersistenceManagerFactory;
 import Dominio.TipoItem;
 import Interfaces.ITipoItemRepository;
 import Repositories.TipoItemRepository;
 
 public class TipoItemControl {
 
-	private ITipoItemRepository _tipoItemRepository = new TipoItemRepository(
-			PersistenceManagerFactory.getPersistanceManager());
+	private ITipoItemRepository _tipoItemRepository = new TipoItemRepository();
 
 	public String cadastra(TipoItem tipoItem) {
 

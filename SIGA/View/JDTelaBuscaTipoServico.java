@@ -12,6 +12,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import Control.TipoServicoControl;
+import Dominio.TipoServico;
+import TableModels.AbstractDefaultTableModel;
 import TableModels.TipoServicoTableModel;
 
 import java.awt.event.ActionListener;
@@ -28,7 +30,7 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener{
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
-	private TipoServicoTableModel model;
+	private AbstractDefaultTableModel<TipoServico> model;
 	private TipoServicoControl tipoServicoControl = new TipoServicoControl();
 	private JTextField tfNome;
 	private JComboBox cbAtivo;
@@ -157,7 +159,7 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener{
 		String nome = tfNome.getText();
 		String ativo = cbAtivo.getSelectedItem().toString();
 
-		model.setTipoServico(tipoServicoControl.listarTodos(nome, ativo));
+		model.setLinhas(tipoServicoControl.listarTodos(nome, ativo));
 
 	}
 

@@ -20,6 +20,7 @@ import Dominio.TipoServico;
 
 import javax.swing.SwingConstants;
 
+import TableModels.AbstractDefaultTableModel;
 import TableModels.TipoServicoTableModel;
 
 import javax.swing.ImageIcon;
@@ -34,7 +35,7 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 	private int id;
 	private TipoServico tipoServico;
 	private TipoServicoControl tipoServicoControl = new TipoServicoControl();
-	private TipoServicoTableModel model;
+	private AbstractDefaultTableModel<TipoServico> model;
 	private JButton JBNovo;
 
 	/**
@@ -44,7 +45,8 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaCadTipoServico(TipoServicoTableModel model, int id) {
+	public JDTelaCadTipoServico(AbstractDefaultTableModel<TipoServico> model,
+			int id) {
 		setTitle("SIGA - cadastro de tipo de servi\u00E7o");
 		this.model = model;
 		this.id = id;
@@ -74,23 +76,25 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvar = new JButton("Salvar");
-				JBSalvar.setIcon(new ImageIcon(JDTelaCadTipoServico.class.getResource("/Img/Confirmar.png")));
+				JBSalvar.setIcon(new ImageIcon(JDTelaCadTipoServico.class
+						.getResource("/Img/Confirmar.png")));
 				JBSalvar.setMnemonic(KeyEvent.VK_S);
 				buttonPane.add(JBSalvar);
 				JBSalvar.addActionListener(this);
 				getRootPane().setDefaultButton(JBSalvar);
 			}
 			{
-				
+
 				JBNovo = new JButton("Novo");
-				JBNovo.setIcon(new ImageIcon(JDTelaCadTipoServico.class.getResource("/Img/window_new16.png")));
+				JBNovo.setIcon(new ImageIcon(JDTelaCadTipoServico.class
+						.getResource("/Img/window_new16.png")));
 				JBNovo.setMnemonic(KeyEvent.VK_N);
 				buttonPane.add(JBNovo);
-				
-				
+
 			}
 			JBSair = new JButton("Sair");
-			JBSair.setIcon(new ImageIcon(JDTelaCadTipoServico.class.getResource("/Img/exit16.png")));
+			JBSair.setIcon(new ImageIcon(JDTelaCadTipoServico.class
+					.getResource("/Img/exit16.png")));
 			JBSair.setMnemonic(KeyEvent.VK_Q);
 			JBSair.addActionListener(this);
 			buttonPane.add(JBSair);
@@ -119,6 +123,7 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 		String out = tipoServicoControl.cadastrar(tipoServico);
 
 		if (out == null) {
+			carregarGrid();
 			JOptionPane.showMessageDialog(null,
 					"Tipo serviço cadastrado com sucesso");
 		} else {
@@ -135,6 +140,7 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 		String out = tipoServicoControl.atualizar(tipoServico);
 
 		if (out == null) {
+			carregarGrid();
 			JOptionPane.showMessageDialog(null,
 					"Tipo serviço atualizado com sucesso");
 		} else {
@@ -155,13 +161,17 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 			} else {
 				atualizar();
 			}
-
-			model.setTipoServico(tipoServicoControl.listarTodos());
+			
 		}
 
 		if (e.getSource() == JBSair) {
 			this.dispose();
 		}
+	}
+
+	private void carregarGrid() {
+		if (model != null)
+			model.setLinhas(tipoServicoControl.listarTodos());
 	}
 
 	public static void main(String[] args) {

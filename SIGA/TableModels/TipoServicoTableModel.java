@@ -7,89 +7,44 @@ import javax.swing.table.AbstractTableModel;
 
 import Dominio.TipoServico;
 
-public class TipoServicoTableModel extends AbstractTableModel {
+public class TipoServicoTableModel extends
+		AbstractDefaultTableModel<TipoServico> {
 
-	private List<TipoServico> linhas;
-
-	private String[] colunas = new String[] { "id", "Nome", "Ativo" };
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public TipoServicoTableModel() {
-		linhas = new ArrayList<TipoServico>();
+		super();
+		colunas = new String[] { "id", "Nome", "Ativo" };
+
 	}
 
 	public TipoServicoTableModel(List<TipoServico> lista) {
-		linhas = lista;
+		super(lista);
+		colunas = new String[] { "id", "Nome", "Ativo" };
 	}
 
 	// CRUD
 
+	@Override
 	public int getId(int linha) {
-		return linhas.get(linha).getId().intValue();
-	}
-
-	public List<TipoServico> getTipoItens() {
-		return linhas;
-	}
-
-	public void setTipoServico(List<TipoServico> tipoServicos) {
-		linhas = tipoServicos;
-		this.fireTableDataChanged();
-	}
-
-	public TipoServico getTipoServico(int linha) {
-		return linhas.get(linha);
-	}
-
-	public void add(TipoServico tipoServico) {
-		linhas.add(tipoServico);
-		this.fireTableDataChanged();
-	}
-
-	public void update(int linha, TipoServico tipoServico) {
-		linhas.set(linha, tipoServico);
-		this.fireTableDataChanged();
-	}
-
-	public void remove(int linha) {
-		linhas.remove(linha);
-		this.fireTableRowsDeleted(linha, linha);
-	}
-
-	//
-
-	public String getColumnName(int num) {
-		return this.colunas[num];
-	}
-
-	@Override
-	public int getColumnCount() {
-
-		return colunas.length;
-	}
-
-	@Override
-	public int getRowCount() {
-
-		return linhas.size();
+		return getLinhas().get(linha).getId().intValue();
 	}
 
 	@Override
 	public Object getValueAt(int linha, int coluna) {
 		switch (coluna) {
 		case 0:
-			return linhas.get(linha).getId();
+			return getLinhas().get(linha).getId();
 		case 1:
-			return linhas.get(linha).getNome();
+			return getLinhas().get(linha).getNome();
 		case 2:
-			return linhas.get(linha).isAtivo() ? "Ativo" : "Inativo";
+			return getLinhas().get(linha).isAtivo() ? "Ativo" : "Inativo";
 		default:
 			return null;
 		}
-	}
-
-	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
 	}
 
 }

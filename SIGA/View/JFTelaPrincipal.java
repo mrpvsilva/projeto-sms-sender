@@ -1,24 +1,25 @@
 package View;
 
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JMenuBar;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import Model.UsuarioBean;
+import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import java.awt.event.KeyEvent;
-import java.awt.event.InputEvent;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import java.awt.Toolkit;
+import javax.swing.border.EmptyBorder;
+
+import Model.UsuarioBean;
 
 public class JFTelaPrincipal extends JFrame implements ActionListener {
 
@@ -69,7 +70,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFTelaPrincipal frame = new JFTelaPrincipal(null);
+					JFTelaPrincipal frame = new JFTelaPrincipal();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -81,7 +82,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public JFTelaPrincipal(UsuarioBean usuario) {
+	public JFTelaPrincipal() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				JFTelaPrincipal.class.getResource("/Img/CNPJ G200.png")));
 
@@ -377,6 +378,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		label.setIcon(new ImageIcon(JFTelaPrincipal.class
 				.getResource("/Img/CNPJ G800.png")));
 		contentPane.add(label);
+
 	}
 
 	@Override
@@ -387,7 +389,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 			JDTelaCadForn jdtcf;
 
 			try {
-				jdtcf = new JDTelaCadForn(0);
+				jdtcf = new JDTelaCadForn(null, null);
 				jdtcf.setResizable(false);
 				jdtcf.setVisible(true);
 				jdtcf.setLocationRelativeTo(null);
@@ -420,13 +422,13 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		/* JMenu Serviços */
 		if (acao.getSource() == JMIServCad) {
-			JDTelaCadServ jdtcs = new JDTelaCadServ();
+			JDTelaCadItem jdtcs = new JDTelaCadItem(null, null);
 			jdtcs.setResizable(false);
 			jdtcs.setVisible(true);
 		}// final do JMenuItemServiços Cadastro
 
 		if (acao.getSource() == JMIServBuscar) {
-			JDTelaBuscarServ jdtbs = new JDTelaBuscarServ();
+			JDTelaBuscarItem jdtbs = new JDTelaBuscarItem();
 			jdtbs.setResizable(false);
 			jdtbs.setVisible(true);
 		}// final do JMenuItemServiços Buscar
@@ -560,7 +562,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		if (acao.getSource() == JMIUsuCad) {
 
 			try {
-				JDTelaCadUsu jdtcu = new JDTelaCadUsu(0);
+				JDTelaCadUsu jdtcu = new JDTelaCadUsu(0, null);
 				jdtcu.setResizable(false);
 				jdtcu.setVisible(true);
 				jdtcu.setLocationRelativeTo(null);
@@ -572,14 +574,14 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		}// final do JMenuItemUsuário Cadastrar
 
 		if (acao.getSource() == JMITSCad) {
-			JDTelaEditFormTS ef = new JDTelaEditFormTS(0, null);
+			JDTelaEditFormTipoItem ef = new JDTelaEditFormTipoItem(0, null);
 			ef.setResizable(false);
 			ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			ef.setVisible(true);
 		}
 
 		if (acao.getSource() == JMITSBuscar) {
-			JDTelaBuscarTS bts = new JDTelaBuscarTS();
+			JDTelaBuscarTipoItem bts = new JDTelaBuscarTipoItem();
 			bts.setResizable(false);
 			bts.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			bts.setVisible(true);
@@ -597,4 +599,5 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		}
 
 	}// final da ação do menu
+
 }

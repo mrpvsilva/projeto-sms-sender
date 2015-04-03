@@ -11,22 +11,21 @@ import Interfaces.ITipoItemRepository;
 public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		ITipoItemRepository {
 
-	public TipoItemRepository(IPersistenceManager persistenceManager) {
-		super(persistenceManager);
-
-	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TipoItem> findAll() {
-
+		open();
 		String q = "from TipoItem order by nome";
 		Query query = entityManager.createQuery(q);
-		return query.getResultList();
+		List<TipoItem> l = query.getResultList();
+		close();
+		return l;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TipoItem> findAll(String nome, String ativo) {
+		open();
 		String q = "from TipoItem where ";
 
 		if (!nome.equals("")) {
@@ -44,15 +43,20 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		q += " order by nome";
 
 		Query query = entityManager.createQuery(q);
-		return query.getResultList();
+		List<TipoItem> l = query.getResultList();
+		close();
+		return l;
 	}
 
 	@Override
 	public TipoItem find(String nome) {
+		open();
 		String q = "from TipoItem where nome = :nome";
 		Query query = entityManager.createQuery(q);
 		query.setParameter("nome", nome);
-		return (TipoItem) query.getSingleResult();
+		TipoItem t = (TipoItem) query.getSingleResult();
+		close();
+		return t;
 	}
 
 }

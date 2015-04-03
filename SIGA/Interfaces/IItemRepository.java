@@ -8,4 +8,6 @@ public interface IItemRepository extends IRepositoryBase<Item> {
 
 	public List<Item> findAll(String campo, String txt);
 
+	
+
 }
