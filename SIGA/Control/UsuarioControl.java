@@ -3,33 +3,27 @@ package Control;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
-import persistenceManagerFactory.PersistenceManagerFactory;
 import Dominio.Usuario;
+import Extra.Extras;
 import Interfaces.IUsuarioRepository;
-import Model.UsuarioBean;
 import Model.UsuarioModel;
 import Repositories.UsuarioRepository;
-import View.JDTelaBuscarUsu;
 
 public class UsuarioControl {
 
 	UsuarioModel usuMod = new UsuarioModel();
-	private IUsuarioRepository _usuarioReposiroty = new UsuarioRepository(
-			PersistenceManagerFactory.getPersistanceManager());
+	private IUsuarioRepository _usuarioReposiroty = new UsuarioRepository();
 
-	public UsuarioBean Logar(UsuarioBean usuAut) {
+	public Usuario Logar(Usuario usuario) {
 
-		usuAut.setResposta(usuMod.AutenticarUsuario(usuAut));
-
-		/* Validação da autenticação */
-		if (usuAut.getResposta()) {
-			return usuAut;
+		Usuario u = _usuarioReposiroty.getUsuario(usuario.getUsuario(),
+				usuario.getSenha());
+		if (u != null) {
+			Extras.setUsuarioLogado(u);
+			return u;
 		} else {
-			JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.",
-					"SIGA - Autenticação", JOptionPane.ERROR_MESSAGE);
-			return usuAut;
+
+			return null;
 		}
 
 	}// final do método Logar
@@ -59,7 +53,7 @@ public class UsuarioControl {
 
 		if (!_usuarioReposiroty.update(usuario))
 			return "Falha na atualização do usuário";
-		JDTelaBuscarUsu.JBBuscar.doClick();
+
 		return null;
 	}
 

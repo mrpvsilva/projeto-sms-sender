@@ -1,37 +1,36 @@
 package Repositories;
 
 import java.util.List;
-
 import javax.persistence.Query;
-
 import Dominio.Lembrete;
 import Interfaces.ILembreteRepository;
-import Interfaces.IPersistenceManager;
 
 public class LembreteRepository extends RepositoryBase<Lembrete> implements
 		ILembreteRepository {
 
-	public LembreteRepository(IPersistenceManager persistenceManager) {
-		super(persistenceManager);
-		// TODO Auto-generated constructor stub
-	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Lembrete> findAll() {
-
+		open();
 		String q = "from Lembrete order by datahora desc";
 		Query query = entityManager.createQuery(q);
-		return query.getResultList();
+		List<Lembrete> l = query.getResultList();
+		close();
+		return l;
 
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Lembrete> findAll(String coluna, String valor) {
+		open();
 		String q = "from Lembrete where " + coluna
 				+ " like :valor order by datahora desc";
 
 		Query query = entityManager.createQuery(q);
 		query.setParameter("valor", "%" + valor + "%");
-		return query.getResultList();
+		List<Lembrete> l = query.getResultList();
+		close();
+		return l;
 	}
 }

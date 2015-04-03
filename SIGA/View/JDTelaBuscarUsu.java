@@ -24,7 +24,11 @@ import javax.swing.JComboBox;
 
 import Control.UsuarioControl;
 import Dominio.Usuario;
+
 import javax.swing.ImageIcon;
+
+import TableModels.AbstractDefaultTableModel;
+import TableModels.UsuarioTableModel;
 
 public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 
@@ -40,7 +44,7 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 	private JTextField JTFBuscar;
 	private JComboBox<String> JCBFiltro;
 	private UsuarioControl usuCont = new UsuarioControl();
-	private DefaultTableModel model;
+	private AbstractDefaultTableModel<Usuario> model;
 	private JTable tabela;
 	private JScrollPane scroll;
 	protected String valor;
@@ -63,8 +67,9 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaBuscarUsu() {
+		setResizable(false);
 		setTitle("SIGA - buscar usuário");
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 476, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -76,10 +81,11 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 		}
 		{
 			JBBuscar = new JButton("Buscar");
-			JBBuscar.setIcon(new ImageIcon(JDTelaBuscarUsu.class.getResource("/Img/Procurar.png")));
+			JBBuscar.setIcon(new ImageIcon(JDTelaBuscarUsu.class
+					.getResource("/Img/Procurar.png")));
 			JBBuscar.addActionListener(this);
 			JBBuscar.setMnemonic(KeyEvent.VK_F);
-			JBBuscar.setBounds(335, 11, 89, 23);
+			JBBuscar.setBounds(335, 11, 115, 23);
 			contentPanel.add(JBBuscar);
 		}
 		{
@@ -100,28 +106,12 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 			// Criação da Jtable
 			scroll = new JScrollPane();
 			contentPanel.add(scroll);
-			scroll.setBounds(12, 59, 412, 158);
+			scroll.setBounds(12, 59, 438, 158);
 			{
-				final TableModel tabelaModel = new DefaultTableModel(
-						new String[][] {}, new String[] { "ID", "Usuário",
-								"Nome", "CPF", "Perfil" }) {
-					/**
-																		 * 
-																		 */
-					private static final long serialVersionUID = 1L;
 
-					public boolean isCellEditable(int row, int col) {
-						return false;
-					}
-				};
-
-				tabela = new JTable();
+				model = new UsuarioTableModel(usuCont.BuscarTodos());
+				tabela = new JTable(model);
 				scroll.setViewportView(tabela);
-				tabela.setModel(tabelaModel);
-				model = (DefaultTableModel) tabela.getModel();
-				model.fireTableDataChanged();
-
-				CarregarGrid(usuCont.BuscarTodos());
 				tabela.getColumnModel().getColumn(0).setMinWidth(0);
 				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
 
@@ -140,7 +130,8 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBCadUsu = new JButton("Cadastrar");
-				JBCadUsu.setIcon(new ImageIcon(JDTelaBuscarUsu.class.getResource("/Img/save16.png")));
+				JBCadUsu.setIcon(new ImageIcon(JDTelaBuscarUsu.class
+						.getResource("/Img/save16.png")));
 				buttonPane.add(JBCadUsu);
 				JBCadUsu.addActionListener(this);
 				JBCadUsu.setMnemonic(KeyEvent.VK_C);
@@ -148,12 +139,14 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 			}
 			{
 				JBEditUsu = new JButton("Editar");
-				JBEditUsu.setIcon(new ImageIcon(JDTelaBuscarUsu.class.getResource("/Img/edit_add16.png")));
+				JBEditUsu.setIcon(new ImageIcon(JDTelaBuscarUsu.class
+						.getResource("/Img/edit_add16.png")));
 				JBEditUsu.setMnemonic(KeyEvent.VK_E);
 				buttonPane.add(JBEditUsu);
 				{
 					JBSair = new JButton("Sair");
-					JBSair.setIcon(new ImageIcon(JDTelaBuscarUsu.class.getResource("/Img/exit16.png")));
+					JBSair.setIcon(new ImageIcon(JDTelaBuscarUsu.class
+							.getResource("/Img/exit16.png")));
 					JBSair.addActionListener(this);
 					JBSair.setMnemonic(KeyEvent.VK_Q);
 					buttonPane.add(JBSair);
@@ -170,7 +163,7 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 		if (acao.getSource() == JBCadUsu) {
 
 			try {
-				JDTelaCadUsu jdtcu = new JDTelaCadUsu(0);
+				JDTelaCadUsu jdtcu = new JDTelaCadUsu(0,model);
 				jdtcu.setVisible(true);
 				jdtcu.setLocationRelativeTo(null);
 			} catch (ParseException e) {
@@ -186,9 +179,8 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 			if (linha > -1) {
 
 				try {
-					JDTelaCadUsu jdtcu = new JDTelaCadUsu(
-							Integer.parseInt(String.valueOf(tabela.getValueAt(
-									linha, 0))));
+					int id = model.getId(linha);
+					JDTelaCadUsu jdtcu = new JDTelaCadUsu(id, model);
 					jdtcu.setVisible(true);
 					jdtcu.setLocationRelativeTo(null);
 				} catch (NumberFormatException e) {
@@ -208,10 +200,10 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 			Pesquisar();
 		}// final do botão buscar usuário
 
-		if(acao.getSource() == JBSair){
+		if (acao.getSource() == JBSair) {
 			this.dispose();
 		}
-		
+
 	}// final da ação do botão
 
 	private void Pesquisar() {
@@ -220,17 +212,10 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 						: "cpf";
 		String value = JTFBuscar.getText();
 		if (!value.equals("")) {
-			CarregarGrid(usuCont.BuscarTodos(campo, value));
+			model.setLinhas(usuCont.BuscarTodos(campo, value));
 		} else {
-			CarregarGrid(usuCont.BuscarTodos());
+			model.setLinhas(usuCont.BuscarTodos());
 		}
 	}
 
-	private void CarregarGrid(List<Usuario> lista) {
-		model.setRowCount(0);
-		for (Usuario u : lista) {
-			model.addRow(new Object[] { u.getId(), u.getUsuario(),
-					u.getNomeCompleto(), u.getCpf(), u.getPerfil() });
-		}
-	}
 }

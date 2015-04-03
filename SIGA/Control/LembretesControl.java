@@ -1,7 +1,6 @@
 package Control;
 
 import java.util.List;
-import persistenceManagerFactory.PersistenceManagerFactory;
 import Dominio.Lembrete;
 import Dominio.Usuario;
 import Extra.Extras;
@@ -15,10 +14,8 @@ public class LembretesControl {
 
 	LembretesModel lembMod = new LembretesModel();
 
-	private ILembreteRepository _lembreteRepository = new LembreteRepository(
-			PersistenceManagerFactory.getPersistanceManager());
-	private IUsuarioRepository _usuarioRepository = new UsuarioRepository(
-			PersistenceManagerFactory.getPersistanceManager());
+	private ILembreteRepository _lembreteRepository = new LembreteRepository();
+	private IUsuarioRepository _usuarioRepository = new UsuarioRepository();
 
 	/* Envia filtros para view JDTelaBuscarLemb */
 

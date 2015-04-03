@@ -2,7 +2,6 @@ package Model;
 
 import java.util.ArrayList;
 
-import persistenceManagerFactory.PersistenceManagerFactory;
 import Dominio.Usuario;
 import Extra.Extras;
 import Interfaces.IUsuarioRepository;
@@ -10,8 +9,7 @@ import Repositories.UsuarioRepository;
 
 public class UsuarioModel {
 
-	private IUsuarioRepository _usuarioRepository = new UsuarioRepository(
-			PersistenceManagerFactory.getPersistanceManager());
+	private IUsuarioRepository _usuarioRepository = new UsuarioRepository();
 
 	public boolean AutenticarUsuario(UsuarioBean usuario) {
 

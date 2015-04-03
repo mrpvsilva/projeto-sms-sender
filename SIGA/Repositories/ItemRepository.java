@@ -1,34 +1,39 @@
 package Repositories;
 
 import java.util.List;
-
 import javax.persistence.Query;
-
 import Dominio.Item;
 import Interfaces.IItemRepository;
-import Interfaces.IPersistenceManager;
 
 public class ItemRepository extends RepositoryBase<Item> implements
 		IItemRepository {
 
-	public ItemRepository(IPersistenceManager persistenceManager) {
-		super(persistenceManager);
-
-	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Item> findAll() {
+		open();
 		String q = "from Item order by nome";
 		Query query = entityManager.createQuery(q);
-		return query.getResultList();
+		List<Item> l = query.getResultList();
+		close();
+		return l;
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Item> findAll(String campo, String txt) {
-		String q = "from Item where " + campo + " like :txt order by nome";
+		open();
+		String q = "from Item";
+
+		if (!txt.equals(""))
+			q += " where " + campo + " like '%" + txt + "%'";
+
+		q += " order by nome";
+
 		Query query = entityManager.createQuery(q);
-		query.setParameter("txt", "%" + txt + "%");
-		return query.getResultList();
+		List<Item> l = query.getResultList();
+		close();
+		return l;
 	}
 
 }

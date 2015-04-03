@@ -40,7 +40,7 @@ public class Fornecedor implements Serializable {
 	private String rg;
 	@Column
 	private String site;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "idtiposervico", referencedColumnName = "id")
 	private TipoServico tipoServico;
 

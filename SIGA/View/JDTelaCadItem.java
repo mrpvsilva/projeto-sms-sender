@@ -10,6 +10,7 @@ import Control.ServicosControl;
 import Dominio.Item;
 import Extra.Extras;
 import Extra.Validacoes;
+import TableModels.AbstractDefaultTableModel;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -25,9 +26,10 @@ import jmoneyfield.JMoneyField;
 
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
+
 import java.awt.Toolkit;
 
-public class JDTelaCadServ extends JDialog implements ActionListener {
+public class JDTelaCadItem extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -44,15 +46,17 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 	private JButton JBNovoServ;
 	private ServicosControl sc;
 	private JLabel lblTipoDeServio;
-	private JComboBox<String> ddltiposervico;
+	private JComboBox ddlTipoItem;
 	private JButton JBSair;
+	private Item item;
+	private AbstractDefaultTableModel<Item> model;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaCadServ dialog = new JDTelaCadServ();
+			JDTelaCadItem dialog = new JDTelaCadItem(null, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -63,11 +67,15 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaCadServ() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaCadServ.class.getResource("/Img/CNPJ G200.png")));
+	public JDTelaCadItem(Item item, AbstractDefaultTableModel<Item> model) {
+		this.item = item;
+		this.model = model;
+
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				JDTelaCadItem.class.getResource("/Img/CNPJ G200.png")));
 		sc = new ServicosControl();
 		setBounds(100, 100, 450, 349);
-		setTitle("SIGA - cadastro de servi\u00E7os");
+		setTitle("SIGA - cadastrar item");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -118,8 +126,8 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 		}
 		{
 			JCBStatus = new JComboBox<String>();
-			for (String item : ext.Status()) {
-				JCBStatus.addItem(item);
+			for (String i : ext.Status()) {
+				JCBStatus.addItem(i);
 			}
 			JCBStatus.setBounds(317, 160, 107, 20);
 			contentPanel.add(JCBStatus);
@@ -130,9 +138,9 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 			contentPanel.add(lblTipoDeServio);
 		}
 		{
-			ddltiposervico = new JComboBox<String>(sc.DDLTipoServico());
-			ddltiposervico.setBounds(101, 219, 170, 20);
-			contentPanel.add(ddltiposervico);
+			ddlTipoItem = new JComboBox(sc.DDLTipoServico());
+			ddlTipoItem.setBounds(101, 219, 170, 20);
+			contentPanel.add(ddlTipoItem);
 		}
 
 		{
@@ -141,7 +149,8 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvServ = new JButton("Salvar");
-				JBSalvServ.setIcon(new ImageIcon(JDTelaCadServ.class.getResource("/Img/Confirmar.png")));
+				JBSalvServ.setIcon(new ImageIcon(JDTelaCadItem.class
+						.getResource("/Img/Confirmar.png")));
 				JBSalvServ.setMnemonic(KeyEvent.VK_S);
 				JBSalvServ.addActionListener(this);
 				buttonPane.add(JBSalvServ);
@@ -149,19 +158,23 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 			}
 			{
 				JBNovoServ = new JButton("Novo");
-				JBNovoServ.setIcon(new ImageIcon(JDTelaCadServ.class.getResource("/Img/window_new16.png")));
+				JBNovoServ.setIcon(new ImageIcon(JDTelaCadItem.class
+						.getResource("/Img/window_new16.png")));
 				JBNovoServ.addActionListener(this);
 				JBNovoServ.setMnemonic(KeyEvent.VK_N);
 				buttonPane.add(JBNovoServ);
 			}
 			{
 				JBSair = new JButton("Sair");
-				JBSair.setIcon(new ImageIcon(JDTelaCadServ.class.getResource("/Img/exit16.png")));
+				JBSair.setIcon(new ImageIcon(JDTelaCadItem.class
+						.getResource("/Img/exit16.png")));
 				JBSair.addActionListener(this);
 				JBSair.setMnemonic(KeyEvent.VK_Q);
 				buttonPane.add(JBSair);
 			}
 		}
+
+		preencherCampos();
 	}
 
 	@Override
@@ -188,37 +201,17 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 					JOptionPane.showMessageDialog(null,
 							"Valor comercial em branco.", "Erro ao cadastrar",
 							JOptionPane.ERROR_MESSAGE);
-				else if (ddltiposervico.getSelectedItem().toString()
+				else if (ddlTipoItem.getSelectedItem().toString()
 						.equals("Selecione"))
 					JOptionPane.showMessageDialog(null,
 							"Selecione um tipo de serviço.",
 							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 				else {
 
-					Item item = new Item();
-
-					item.setNome(JTFItem.getText());
-					item.setDescricao(JTADescItem.getText());
-					item.setAtivo(JCBStatus.getSelectedIndex() == 0 ? true
-							: false);
-					item.setTipoitem(sc.buscarTipoItem(ddltiposervico
-							.getSelectedItem().toString()));
-
-					try {
-						item.setValorComercial(JMFVlrCom.getValor());
-						item.setValorCusto(JMFVlrCusto.getValor());
-					} catch (BadLocationException e) {
-						e.printStackTrace();
-					}
-					String out = sc.cadastrar(item);
-
-					if (out != null) {
-						JOptionPane.showMessageDialog(null, out, "Alerta",
-								JOptionPane.ERROR_MESSAGE);
+					if (item == null) {
+						cadastrar();
 					} else {
-						JOptionPane.showMessageDialog(null,
-								"Serviço cadastrado com sucesso", "Sucesso",
-								JOptionPane.WARNING_MESSAGE);
+						atualizar();
 					}
 
 				}// final das validações
@@ -241,9 +234,83 @@ public class JDTelaCadServ extends JDialog implements ActionListener {
 			}// final da confirmação
 
 		}// final do botão novo
-		
-		if(acao.getSource() == JBSair){
+
+		if (acao.getSource() == JBSair) {
 			this.dispose();
 		}
+	}
+
+	private void atualizar() {
+
+		item.setNome(JTFItem.getText());
+		item.setDescricao(JTADescItem.getText());
+		item.setAtivo(JCBStatus.getSelectedIndex() == 0 ? true : false);
+		item.setTipoitem(sc.buscarTipoItem(ddlTipoItem.getSelectedItem()
+				.toString()));
+
+		try {
+			item.setValorComercial(JMFVlrCom.getValor());
+			item.setValorCusto(JMFVlrCusto.getValor());
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+		String out = sc.atualizar(item);
+
+		if (out != null) {
+
+			JOptionPane.showMessageDialog(null, out, "Alerta",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
+			carregarGrid();
+			JOptionPane.showMessageDialog(null, "Item atualizado com sucesso",
+					"Sucesso", JOptionPane.WARNING_MESSAGE);
+		}
+
+	}
+
+	private void cadastrar() {
+		item = new Item();
+		item.setNome(JTFItem.getText());
+		item.setDescricao(JTADescItem.getText());
+		item.setAtivo(JCBStatus.getSelectedIndex() == 0 ? true : false);
+		item.setTipoitem(sc.buscarTipoItem(ddlTipoItem.getSelectedItem()
+				.toString()));
+
+		try {
+			item.setValorComercial(JMFVlrCom.getValor());
+			item.setValorCusto(JMFVlrCusto.getValor());
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+		String out = sc.cadastrar(item);
+
+		if (out != null) {
+
+			JOptionPane.showMessageDialog(null, out, "Alerta",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
+			carregarGrid();
+			JOptionPane.showMessageDialog(null, "Item cadastrado com sucesso",
+					"Sucesso", JOptionPane.WARNING_MESSAGE);
+		}
+
+	}
+
+	private void carregarGrid() {
+		if (model != null)
+			model.setLinhas(sc.listarTodos());
+	}
+
+	private void preencherCampos() {
+		if (item == null)
+			return;
+		setTitle("SIGA - atualizar item");
+		JTFItem.setText(item.getNome());
+		JTADescItem.setText(item.getDescricao());
+		JMFVlrCusto.setValor(item.getValorCusto());
+		JMFVlrCom.setValor(item.getValorComercial());
+		JCBStatus.setSelectedItem(item.isAtivo() ? "ATIVO" : "INATIVO");
+		ddlTipoItem.setSelectedItem(item.getTipoitem().getNome());
+
 	}
 }

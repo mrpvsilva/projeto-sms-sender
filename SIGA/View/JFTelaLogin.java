@@ -1,23 +1,23 @@
 package View;
 
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import persistenceManagerFactory.PersistenceManagerFactory;
 import Control.UsuarioControl;
-import Model.UsuarioBean;
-import javax.swing.ImageIcon;
-import java.awt.Toolkit;
+import Dominio.Usuario;
 
 public class JFTelaLogin extends JFrame implements ActionListener {
 
@@ -34,6 +34,17 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// INICIA UMA SESSIONFACTORY DO HIBERNATE PARA SER UTILIZADO EM
+				// TODA A
+				// APLICAÇÃO.
+				PersistenceManagerFactory.getPersistanceManager();
+				//
+			}
+		}).start();
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -46,24 +57,14 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 			}
 		});
 
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				// INICIA UMA SESSIONFACTORY DO HIBERNATE PARA SER UTILIZADO EM
-				// TODA A
-				// APLICAÇÃO.
-				PersistenceManagerFactory.getPersistanceManager();
-				//
-			}
-		}).start();
 	}
 
 	/**
 	 * Create the frame.
 	 */
 	public JFTelaLogin() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JFTelaLogin.class.getResource("/Img/CNPJ G200.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				JFTelaLogin.class.getResource("/Img/CNPJ G200.png")));
 
 		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,9 +97,10 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 		JBAcessar.addActionListener(this);
 		JBAcessar.setBounds(154, 212, 101, 23);
 		contentPane.add(JBAcessar);
-		
+
 		JLabel JLIcone = new JLabel("");
-		JLIcone.setIcon(new ImageIcon(JFTelaLogin.class.getResource("/Img/CNPJ G200.png")));
+		JLIcone.setIcon(new ImageIcon(JFTelaLogin.class
+				.getResource("/Img/CNPJ G200.png")));
 		JLIcone.setBounds(137, 11, 224, 98);
 		contentPane.add(JLIcone);
 	}
@@ -117,16 +119,26 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 						"Autenticação", JOptionPane.ERROR_MESSAGE);
 			} else {
 				UsuarioControl usuCon = new UsuarioControl();
-				UsuarioBean usuBean = new UsuarioBean();
-				usuBean.setLogin(JTFLogin.getText());
-				usuBean.setSenha(new String(JPFSenha.getPassword()));
+				// UsuarioBean usuBean = new UsuarioBean();
+				Usuario u = new Usuario();
+				u.setUsuario(JTFLogin.getText());
+				u.setSenha(new String(JPFSenha.getPassword()));
 
-				usuBean.setResposta(usuCon.Logar(usuBean).getResposta());
+				// usuBean.setResposta(usuCon.Logar(usuBean).getResposta());
 
-				if (usuBean.getResposta()) {
-					JFTelaPrincipal jftp = new JFTelaPrincipal(usuBean);
-					jftp.setVisible(true);
-					this.dispose();
+				u = usuCon.Logar(u);
+
+				if (u != null) {
+					if (!u.trocarSenha()) {
+						JFTelaPrincipal jftp = new JFTelaPrincipal();
+						jftp.setVisible(true);
+						this.dispose();
+					} else {
+
+						JDTelaTrocarSenha trocar = new JDTelaTrocarSenha(u);
+						trocar.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+						trocar.setVisible(true);
+					}
 				}
 
 			}

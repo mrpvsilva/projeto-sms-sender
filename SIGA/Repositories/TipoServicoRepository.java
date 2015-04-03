@@ -5,40 +5,45 @@ import java.util.List;
 import javax.persistence.Query;
 
 import Dominio.TipoServico;
-import Interfaces.IPersistenceManager;
 import Interfaces.ITipoServicoRepository;
 
 public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		implements ITipoServicoRepository {
 
-	public TipoServicoRepository(IPersistenceManager persistenceManager) {
-		super(persistenceManager);
-
-	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TipoServico> findAll() {
-		Query q = entityManager.createQuery("from TipoServico order by nome",
-				TipoServico.class);
-		return q.getResultList();
+		open();
+		Query q = entityManager.createQuery("from TipoServico order by nome");
+		List<TipoServico> l = q.getResultList();
+		close();
+		return l;
 	}
+
 	@SuppressWarnings("unchecked")
 	public List<TipoServico> findAll(boolean ativo) {
+		open();
 		Query q = entityManager
 				.createQuery("from TipoServico where ativo=:ativo order by nome");
 		q.setParameter("ativo", ativo);
-		return q.getResultList();
+		List<TipoServico> l = q.getResultList();
+		close();
+		return l;
 	}
 
 	public TipoServico findByName(String nome) {
+		open();
 		Query q = entityManager
 				.createQuery("from TipoServico where nome=:nome");
 		q.setParameter("nome", nome);
-		return (TipoServico) q.getSingleResult();
+		TipoServico ts = (TipoServico) q.getSingleResult();
+		close();
+		return ts;
 	}
 
 	@Override
 	public List<TipoServico> findAll(String nome, String ativo) {
+		open();
 		String q = "from TipoServico where ";
 
 		if (!nome.equals("")) {
@@ -56,7 +61,9 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		q += " order by nome";
 
 		Query query = entityManager.createQuery(q);
-		return query.getResultList();
+		List<TipoServico> l = query.getResultList();
+		close();
+		return l;
 	}
 
 }

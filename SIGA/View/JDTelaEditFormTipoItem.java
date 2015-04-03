@@ -2,29 +2,27 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JCheckBox;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
-import TableModels.TipoItemTableModel;
 import Control.TipoItemControl;
 import Dominio.TipoItem;
+import TableModels.AbstractDefaultTableModel;
 
-import javax.swing.ImageIcon;
-import java.awt.Toolkit;
-
-public class JDTelaEditFormTipoServico extends JDialog implements
-		ActionListener {
+public class JDTelaEditFormTipoItem extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -38,7 +36,7 @@ public class JDTelaEditFormTipoServico extends JDialog implements
 	private JCheckBox chckbxAtivo;
 	private TipoItem tipoItem;
 	private TipoItemControl tipoItemControl = new TipoItemControl();
-	private TipoItemTableModel model;
+	private AbstractDefaultTableModel<TipoItem> model;
 	private JButton JBSair;
 
 	/**
@@ -46,8 +44,7 @@ public class JDTelaEditFormTipoServico extends JDialog implements
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaEditFormTipoServico dialog = new JDTelaEditFormTipoServico(1,
-					null);
+			JDTelaEditFormTipoItem dialog = new JDTelaEditFormTipoItem(0, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -58,9 +55,12 @@ public class JDTelaEditFormTipoServico extends JDialog implements
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaEditFormTipoServico(int id, TipoItemTableModel model) {
+	public JDTelaEditFormTipoItem(int id,
+			AbstractDefaultTableModel<TipoItem> model) {
+
 		setTitle("SIGA - edi\u00E7\u00E3o tipo servi\u00E7o");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaEditFormTipoServico.class.getResource("/Img/CNPJ G200.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				JDTelaEditFormTipoItem.class.getResource("/Img/CNPJ G200.png")));
 		this.id = id;
 		this.model = model;
 		setResizable(false);
@@ -91,7 +91,8 @@ public class JDTelaEditFormTipoServico extends JDialog implements
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvar = new JButton("Salvar");
-				JBSalvar.setIcon(new ImageIcon(JDTelaEditFormTipoServico.class.getResource("/Img/Confirmar.png")));
+				JBSalvar.setIcon(new ImageIcon(JDTelaEditFormTipoItem.class
+						.getResource("/Img/Confirmar.png")));
 				JBSalvar.addActionListener(this);
 				JBSalvar.setMnemonic(KeyEvent.VK_S);
 				buttonPane.add(JBSalvar);
@@ -99,14 +100,16 @@ public class JDTelaEditFormTipoServico extends JDialog implements
 			}
 			{
 				JBNovo = new JButton("Novo");
-				JBNovo.setIcon(new ImageIcon(JDTelaEditFormTipoServico.class.getResource("/Img/window_new16.png")));
+				JBNovo.setIcon(new ImageIcon(JDTelaEditFormTipoItem.class
+						.getResource("/Img/window_new16.png")));
 				JBNovo.addActionListener(this);
 				JBNovo.setMnemonic(KeyEvent.VK_N);
 				buttonPane.add(JBNovo);
 			}
-			
+
 			JBSair = new JButton("Sair");
-			JBSair.setIcon(new ImageIcon(JDTelaEditFormTipoServico.class.getResource("/Img/exit16.png")));
+			JBSair.setIcon(new ImageIcon(JDTelaEditFormTipoItem.class
+					.getResource("/Img/exit16.png")));
 			JBSair.setMnemonic(KeyEvent.VK_Q);
 			JBSair.addActionListener(this);
 			buttonPane.add(JBSair);
@@ -132,8 +135,10 @@ public class JDTelaEditFormTipoServico extends JDialog implements
 		String out = tipoItemControl.cadastra(tipoItem);
 
 		if (out == null) {
+			carregarGrid();
 			JOptionPane.showMessageDialog(null,
 					"Tipo serviço cadastrado com sucesso.");
+
 		} else {
 			JOptionPane.showMessageDialog(null, out);
 		}
@@ -145,11 +150,17 @@ public class JDTelaEditFormTipoServico extends JDialog implements
 		String out = tipoItemControl.atualizar(tipoItem);
 
 		if (out == null) {
+			carregarGrid();
 			JOptionPane.showMessageDialog(null,
 					"Tipo serviço atualizado com sucesso.");
 		} else {
 			JOptionPane.showMessageDialog(null, out);
 		}
+	}
+
+	private void carregarGrid() {
+		if (model != null)
+			model.setLinhas(tipoItemControl.ListarTodos());
 	}
 
 	@Override
@@ -160,19 +171,15 @@ public class JDTelaEditFormTipoServico extends JDialog implements
 			} else {
 				atualizar();
 			}
+		}
 
-			if (model != null)
-				model.setTipoItens(tipoItemControl.ListarTodos());
-		}
-		
-		if(e.getSource() == JBSair){
-			this.dispose();
-		}
-		
-		if(e.getSource() == JBNovo){
+		if (e.getSource() == JBNovo) {
 			tfnome.setText("");
 			chckbxAtivo.setSelected(true);
 		}
-		
+
+		if (e.getSource() == JBSair) {
+			this.dispose();
+		}
 	}
 }
