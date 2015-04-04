@@ -1,9 +1,7 @@
 package Repositories;
 
 import java.util.List;
-
 import javax.persistence.Query;
-
 import Dominio.TipoServico;
 import Interfaces.ITipoServicoRepository;
 
@@ -16,7 +14,7 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		open();
 		Query q = entityManager.createQuery("from TipoServico order by nome");
 		List<TipoServico> l = q.getResultList();
-		close();
+		clear();
 		return l;
 	}
 
@@ -27,7 +25,7 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 				.createQuery("from TipoServico where ativo=:ativo order by nome");
 		q.setParameter("ativo", ativo);
 		List<TipoServico> l = q.getResultList();
-		close();
+		clear();
 		return l;
 	}
 
@@ -62,7 +60,7 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 
 		Query query = entityManager.createQuery(q);
 		List<TipoServico> l = query.getResultList();
-		close();
+		clear();
 		return l;
 	}
 
