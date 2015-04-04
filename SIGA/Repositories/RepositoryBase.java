@@ -4,18 +4,11 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import javax.persistence.EntityManager;
 import persistenceManagerFactory.PersistenceManagerFactory;
-import Interfaces.IPersistenceManager;
 import Interfaces.IRepositoryBase;
 
 public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 
 	protected EntityManager entityManager;
-	private IPersistenceManager persistenceManager;
-
-	public RepositoryBase() {
-		this.persistenceManager = PersistenceManagerFactory
-				.getPersistanceManager();
-	}
 
 	@Override
 	public boolean add(E entity) {
@@ -27,7 +20,7 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 			close();
 			return true;
 		} catch (Exception ex) {
-			ex.printStackTrace();
+
 			entityManager.getTransaction().rollback();
 			close();
 			return false;
@@ -46,9 +39,9 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 			entityManager.getTransaction().commit();
 			close();
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
 			close();
+
 		}
 
 	}
@@ -81,7 +74,6 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 			return e;
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			close();
 			return null;
 		}
@@ -94,7 +86,7 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 			open();
 			List<E> l = entityManager.createQuery(
 					"from " + GetTypeClass().getName()).getResultList();
-			close();
+			clear();
 			return l;
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -105,12 +97,18 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 
 	@Override
 	public void open() {
-		entityManager = persistenceManager.getEntityManager();
+		entityManager = PersistenceManagerFactory.getEntityManager();
+	}
+
+	@Override
+	public void clear() {
+		entityManager = null;
 	}
 
 	@Override
 	public void close() {
-		entityManager.close();
+		if (entityManager != null)
+			entityManager.close();
 	}
 
 	private Class<?> GetTypeClass() {

@@ -14,7 +14,7 @@ public class TipoPagamentoRepository extends RepositoryBase<TipoPagamento>
 		// String q = "from TipoPagamento order by descricao";
 		// Query query = entityManager.createQuery(q);
 		// List<TipoPagamento> l = query.getResultList();
-		// close();
+		// clear();
 		// return l;
 
 		return null;

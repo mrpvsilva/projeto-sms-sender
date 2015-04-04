@@ -40,7 +40,7 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 				// INICIA UMA SESSIONFACTORY DO HIBERNATE PARA SER UTILIZADO EM
 				// TODA A
 				// APLICAÇÃO.
-				PersistenceManagerFactory.getPersistanceManager();
+				 PersistenceManagerFactory.getEntityManager();
 				//
 			}
 		}).start();

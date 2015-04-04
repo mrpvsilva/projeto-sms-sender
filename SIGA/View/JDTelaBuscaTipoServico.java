@@ -26,7 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 
-public class JDTelaBuscaTipoServico extends JDialog implements ActionListener{
+public class JDTelaBuscaTipoServico extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
@@ -37,6 +37,7 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener{
 	private JButton JBPesquisar;
 	private JButton JBCadastrar;
 	private JButton JBEditar;
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
@@ -94,12 +95,9 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener{
 
 		JBPesquisar = new JButton("Pesquisar");
 		JBPesquisar.setMnemonic(KeyEvent.VK_F);
-		JBPesquisar.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class.getResource("/Img/Procurar.png")));
-		JBPesquisar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				pesquisar();
-			}
-		});
+		JBPesquisar.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class
+				.getResource("/Img/Procurar.png")));
+		JBPesquisar.addActionListener(this);
 		JBPesquisar.setBounds(178, 65, 120, 23);
 		contentPanel.add(JBPesquisar);
 		{
@@ -109,45 +107,24 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener{
 			{
 				JBCadastrar = new JButton("Cadastrar");
 				JBCadastrar.setMnemonic(KeyEvent.VK_C);
-				JBCadastrar.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class.getResource("/Img/save16.png")));
-				JBCadastrar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						JDTelaCadTipoServico tscad = new JDTelaCadTipoServico(
-								model, 0);
-
-						tscad.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-						tscad.setVisible(true);
-					}
-				});
+				JBCadastrar.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class
+						.getResource("/Img/save16.png")));
+				JBCadastrar.addActionListener(this);
 				buttonPane.add(JBCadastrar);
 				getRootPane().setDefaultButton(JBCadastrar);
 			}
 			{
 				JBEditar = new JButton("Edit");
-				JBEditar.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class.getResource("/Img/edit_add16.png")));
-				JBEditar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						int linha = table.getSelectedRow();
-						if (linha > -1) {
-							int id = model.getId(linha);
-							JDTelaCadTipoServico tscad = new JDTelaCadTipoServico(
-									model, id);
-
-							tscad.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-							tscad.setVisible(true);
-
-						} else {
-							JOptionPane.showMessageDialog(null,
-									"Selecione uma linha");
-						}
-					}
-				});
+				JBEditar.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class
+						.getResource("/Img/edit_add16.png")));
+				JBEditar.addActionListener(this);
 				JBEditar.setMnemonic(KeyEvent.VK_A);
 				buttonPane.add(JBEditar);
 			}
-			
-			JButton JBSair = new JButton("Sair");
-			JBSair.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class.getResource("/Img/exit16.png")));
+
+			JBSair = new JButton("Sair");
+			JBSair.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class
+					.getResource("/Img/exit16.png")));
 			JBSair.addActionListener(this);
 			JBSair.setMnemonic(KeyEvent.VK_Q);
 			buttonPane.add(JBSair);
@@ -165,7 +142,32 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		if (e.getSource() == JBSair) {
+			this.dispose();
+		}
+
+		if (e.getSource() == JBPesquisar) {
+			pesquisar();
+		}
+
+		if (e.getSource() == JBEditar) {
+			int linha = table.getSelectedRow();
+			if (linha > -1) {
+				int id = model.getId(linha);
+				JDTelaCadTipoServico tscad = new JDTelaCadTipoServico(model, id);
+				tscad.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				tscad.setVisible(true);
+
+			} else {
+				JOptionPane.showMessageDialog(null, "Selecione uma linha");
+			}
+		}
+
+		if (e.getSource() == JBCadastrar) {
+			JDTelaCadTipoServico tscad = new JDTelaCadTipoServico(model, 0);
+			tscad.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			tscad.setVisible(true);
+		}
+
 	}
 }

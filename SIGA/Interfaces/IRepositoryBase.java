@@ -16,6 +16,8 @@ public interface IRepositoryBase<E> {
 
 	public void open();
 
+	public void clear();
+
 	public void close();
 
 }

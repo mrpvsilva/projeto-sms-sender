@@ -15,7 +15,7 @@ public class ItemRepository extends RepositoryBase<Item> implements
 		String q = "from Item order by nome";
 		Query query = entityManager.createQuery(q);
 		List<Item> l = query.getResultList();
-		close();
+		clear();
 		return l;
 	}
 
@@ -32,7 +32,7 @@ public class ItemRepository extends RepositoryBase<Item> implements
 
 		Query query = entityManager.createQuery(q);
 		List<Item> l = query.getResultList();
-		close();
+		clear();
 		return l;
 	}
 

@@ -20,7 +20,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 			q.setParameter("usuario", usuario);
 			q.setParameter("senha", senha);
 			Usuario u = (Usuario) q.getSingleResult();
-			close();
+			clear();
 			return u;
 
 		} catch (Exception ex) {
@@ -36,7 +36,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 		String q = "from Usuario order by usuario";
 		Query query = entityManager.createQuery(q);
 		List<Usuario> l = query.getResultList();
-		close();
+		clear();
 		return l;
 
 	}
@@ -50,7 +50,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 		query.setParameter("valor", "%" + value + "%");
 
 		List<Usuario> l = query.getResultList();
-		close();
+		clear();
 		return l;
 
 	}
@@ -63,7 +63,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 			Query q = entityManager.createQuery(query);
 			q.setParameter("usuario", usuario);
 			Usuario u = (Usuario) q.getSingleResult();
-			close();
+			clear();
 			return u;
 
 		} catch (Exception ex) {

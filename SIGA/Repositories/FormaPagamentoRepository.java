@@ -14,7 +14,7 @@ public class FormaPagamentoRepository extends RepositoryBase<FormaPagamento>
 		// Query query = entityManager.createQuery(q);
 		//
 		// List<FormaPagamento> l = query.getResultList();
-		// close();
+		//clear();
 		// return l;
 
 		return null;

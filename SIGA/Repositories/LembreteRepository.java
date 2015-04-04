@@ -15,7 +15,7 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 		String q = "from Lembrete order by datahora desc";
 		Query query = entityManager.createQuery(q);
 		List<Lembrete> l = query.getResultList();
-		close();
+		clear();
 		return l;
 
 	}
@@ -30,7 +30,7 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 		Query query = entityManager.createQuery(q);
 		query.setParameter("valor", "%" + valor + "%");
 		List<Lembrete> l = query.getResultList();
-		close();
+		clear();
 		return l;
 	}
 }

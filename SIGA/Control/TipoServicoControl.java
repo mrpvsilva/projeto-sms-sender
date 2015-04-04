@@ -38,4 +38,8 @@ public class TipoServicoControl {
 		return tipoServicoRepository.findAll(nome, ativo);
 	}
 
+	public void dispose() {
+		tipoServicoRepository.close();
+	}
+
 }
