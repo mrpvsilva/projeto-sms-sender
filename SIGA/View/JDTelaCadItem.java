@@ -56,7 +56,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaCadItem dialog = new JDTelaCadItem(null, null);
+			JDTelaCadItem dialog = new JDTelaCadItem(0, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -67,13 +67,14 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaCadItem(Item item, AbstractDefaultTableModel<Item> model) {
-		this.item = item;
+	public JDTelaCadItem(int id, AbstractDefaultTableModel<Item> model) {
+		sc = new ServicosControl();
+		this.item = sc.buscarItem(id);
 		this.model = model;
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				JDTelaCadItem.class.getResource("/Img/CNPJ G200.png")));
-		sc = new ServicosControl();
+
 		setBounds(100, 100, 450, 349);
 		setTitle("SIGA - cadastrar item");
 		getContentPane().setLayout(new BorderLayout());

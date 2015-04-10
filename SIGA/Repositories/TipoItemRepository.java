@@ -3,6 +3,8 @@ package Repositories;
 import java.util.List;
 
 import javax.persistence.Query;
+
+import persistenceManagerFactory.Factory;
 import Dominio.TipoItem;
 import Interfaces.ITipoItemRepository;
 
@@ -16,7 +18,7 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		String q = "from TipoItem order by nome";
 		Query query = entityManager.createQuery(q);
 		List<TipoItem> l = query.getResultList();
-		clear();
+		
 		return l;
 	}
 
@@ -42,7 +44,7 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 
 		Query query = entityManager.createQuery(q);
 		List<TipoItem> l = query.getResultList();
-		clear();
+		
 		return l;
 	}
 
@@ -53,7 +55,7 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		Query query = entityManager.createQuery(q);
 		query.setParameter("nome", nome);
 		TipoItem t = (TipoItem) query.getSingleResult();
-		clear();
+		
 		return t;
 	}
 

@@ -15,7 +15,6 @@ public class FornecedorRepository extends RepositoryBase<Fornecedor> implements
 		Query query = entityManager.createQuery(q);
 		query.setParameter("valor", "%" + valor + "%");
 		List<Fornecedor> l = query.getResultList();
-		clear();
 		return l;
 	}
 

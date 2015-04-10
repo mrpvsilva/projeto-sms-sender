@@ -31,7 +31,7 @@ public class Item implements Serializable {
 	private BigDecimal valorcomercial;
 	@Column
 	private boolean ativo;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "idtipoitem", referencedColumnName = "id")
 	private TipoItem tipoItem;
 

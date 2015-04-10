@@ -46,7 +46,7 @@ public class Fornecedor implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "telefonesfornecedores", joinColumns = { @JoinColumn(name = "idfornecedor", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idtelefone", referencedColumnName = "id") })
-	private List<Telefone> telefones;
+	private List<TelefoneFornecedor> telefones;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "enderecosfornecedores", joinColumns = { @JoinColumn(name = "idfornecedor", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idendereco", referencedColumnName = "id") })
@@ -133,11 +133,11 @@ public class Fornecedor implements Serializable {
 		this.tipoServico = tipoServico;
 	}
 
-	public List<Telefone> getTelefones() {
+	public List<TelefoneFornecedor> getTelefones() {
 		return telefones;
 	}
 
-	public void setTelefones(List<Telefone> telefones) {
+	public void setTelefones(List<TelefoneFornecedor> telefones) {
 		this.telefones = telefones;
 	}
 
@@ -149,9 +149,9 @@ public class Fornecedor implements Serializable {
 		this.endereco = endereco;
 	}
 
-	public void addTelefoneFornecedor(Telefone telefone) {
+	public void addTelefone(TelefoneFornecedor telefone) {
 		if (this.telefones == null) {
-			this.telefones = new ArrayList<Telefone>();
+			this.telefones = new ArrayList<TelefoneFornecedor>();
 		}
 
 		this.telefones.add(telefone);

@@ -26,6 +26,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 
+import persistenceManagerFactory.Factory;
+
 public class JDTelaBuscaTipoServico extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
@@ -44,6 +46,7 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
+			
 			JDTelaBuscaTipoServico dialog = new JDTelaBuscaTipoServico();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);

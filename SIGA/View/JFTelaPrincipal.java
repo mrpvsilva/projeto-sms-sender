@@ -422,7 +422,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		/* JMenu Serviços */
 		if (acao.getSource() == JMIServCad) {
-			JDTelaCadItem jdtcs = new JDTelaCadItem(null, null);
+			JDTelaCadItem jdtcs = new JDTelaCadItem(0, null);
 			jdtcs.setResizable(false);
 			jdtcs.setVisible(true);
 		}// final do JMenuItemServiços Cadastro
