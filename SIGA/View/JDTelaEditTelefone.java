@@ -35,8 +35,8 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	private JButton JBSalvar;
 	private JButton JBSair;
 	private int _linha = -1;
-	private Telefone _telefone;
-	private AbstractDefaultTableModel<Telefone> _model;
+	private TelefoneFornecedor _telefone;
+	private AbstractDefaultTableModel<TelefoneFornecedor> _model;
 	private JTextField tfddd;
 	private JTextField tfnumero;
 	private JComboBox<String> cboperadoras;
@@ -60,8 +60,8 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaEditTelefone(int linha, Telefone telefone,
-			AbstractDefaultTableModel<Telefone> model) {
+	public JDTelaEditTelefone(int linha, TelefoneFornecedor telefone,
+			AbstractDefaultTableModel<TelefoneFornecedor> model) {
 		setTitle("SIGA - cad. telefone");
 		_telefone = telefone;
 		_model = model;

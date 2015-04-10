@@ -160,7 +160,6 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 		}
 
 		if (e.getSource() == JBSair) {
-			tipoServicoControl.dispose();
 			this.dispose();
 		}
 	}

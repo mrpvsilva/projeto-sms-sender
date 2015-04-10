@@ -13,11 +13,7 @@ public interface IRepositoryBase<E> {
 	public E find(long id);
 
 	public List<E> findAll();
-
+	
 	public void open();
-
-	public void clear();
-
-	public void close();
 
 }

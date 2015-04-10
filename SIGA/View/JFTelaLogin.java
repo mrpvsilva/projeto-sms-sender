@@ -15,7 +15,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import persistenceManagerFactory.PersistenceManagerFactory;
+import persistenceManagerFactory.Factory;
 import Control.UsuarioControl;
 import Dominio.Usuario;
 
@@ -29,8 +29,9 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 	private JTextField JTFLogin;
 	private JPasswordField JPFSenha;
 	private JButton JBAcessar;
+	
 
-	/**
+	/**;
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
@@ -40,7 +41,8 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 				// INICIA UMA SESSIONFACTORY DO HIBERNATE PARA SER UTILIZADO EM
 				// TODA A
 				// APLICAÇÃO.
-				 PersistenceManagerFactory.getEntityManager();
+				 //PersistenceManagerFactory.getEntityManager();
+				Factory.createEntityManager();
 				//
 			}
 		}).start();

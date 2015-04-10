@@ -26,6 +26,7 @@ import Dominio.Endereco;
 import Dominio.EnderecoFornecedor;
 import Dominio.Fornecedor;
 import Dominio.Telefone;
+import Dominio.TelefoneFornecedor;
 import Extra.Extras;
 import Extra.Mascaras;
 import Extra.Validacoes;
@@ -63,7 +64,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	private JCheckBox JCBCpfMask;
 	private MaskFormatter maskCep;
 	private FornecedoresControl _fornecedorControl;
-	private AbstractDefaultTableModel<Telefone> telmodel;
+	private AbstractDefaultTableModel<TelefoneFornecedor> telmodel;
 	private AbstractDefaultTableModel<Fornecedor> forModel;
 	private JScrollPane scrollPane;
 	private JTable table;
@@ -287,7 +288,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			int linha = table.getSelectedRow();
 
 			if (linha > -1) {
-				Telefone t = telmodel.find(linha);
+				TelefoneFornecedor t = telmodel.find(linha);
 				JDTelaEditTelefone ef = new JDTelaEditTelefone(linha, t,
 						telmodel);
 				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);

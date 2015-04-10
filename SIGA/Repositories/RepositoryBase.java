@@ -3,12 +3,16 @@ package Repositories;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import javax.persistence.EntityManager;
-import persistenceManagerFactory.PersistenceManagerFactory;
+import persistenceManagerFactory.Factory;
 import Interfaces.IRepositoryBase;
 
 public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 
 	protected EntityManager entityManager;
+
+	public RepositoryBase() {
+		entityManager = Factory.createEntityManager();
+	}
 
 	@Override
 	public boolean add(E entity) {
@@ -17,12 +21,10 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 			entityManager.getTransaction().begin();
 			entityManager.persist(entity);
 			entityManager.getTransaction().commit();
-			close();
+			entityManager.close();
 			return true;
 		} catch (Exception ex) {
-
 			entityManager.getTransaction().rollback();
-			close();
 			return false;
 		}
 
@@ -37,11 +39,9 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 			E entity = (E) entityManager.find(GetTypeClass(), id);
 			entityManager.remove(entity);
 			entityManager.getTransaction().commit();
-			close();
+			entityManager.close();
 		} catch (Exception ex) {
 			entityManager.getTransaction().rollback();
-			close();
-
 		}
 
 	}
@@ -53,12 +53,10 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 			entityManager.getTransaction().begin();
 			entityManager.merge(entity);
 			entityManager.getTransaction().commit();
-			close();
+			entityManager.close();
 			return true;
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
-			close();
 			return false;
 		}
 
@@ -70,11 +68,8 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 		try {
 			open();
 			E e = (E) entityManager.find(GetTypeClass(), id);
-			close();
 			return e;
-
 		} catch (Exception ex) {
-			close();
 			return null;
 		}
 	}
@@ -86,29 +81,18 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 			open();
 			List<E> l = entityManager.createQuery(
 					"from " + GetTypeClass().getName()).getResultList();
-			clear();
+			entityManager.close();
+			Factory.renewFactory();
 			return l;
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			close();
 			return null;
 		}
 	}
 
-	@Override
 	public void open() {
-		entityManager = PersistenceManagerFactory.getEntityManager();
-	}
-
-	@Override
-	public void clear() {
-		entityManager = null;
-	}
-
-	@Override
-	public void close() {
-		if (entityManager != null)
-			entityManager.close();
+		if (!entityManager.isOpen())
+			entityManager = Factory.createEntityManager();
 	}
 
 	private Class<?> GetTypeClass() {

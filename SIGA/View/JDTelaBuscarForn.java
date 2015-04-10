@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -22,6 +23,7 @@ import Dominio.Fornecedor;
 
 import javax.swing.ImageIcon;
 
+import persistenceManagerFactory.Factory;
 import TableModels.AbstractDefaultTableModel;
 import TableModels.FornecedorTableModel;
 
@@ -52,6 +54,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
+			
 			JDTelaBuscarForn dialog = new JDTelaBuscarForn();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);

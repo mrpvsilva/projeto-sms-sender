@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import persistenceManagerFactory.PersistenceManagerFactory;
+import persistenceManagerFactory.Factory;
 import Dominio.FormaPagamento;
 import Dominio.TipoPagamento;
 import Interfaces.IFormaPagamento;

@@ -1,7 +1,10 @@
 package Repositories;
 
 import java.util.List;
+
 import javax.persistence.Query;
+
+import persistenceManagerFactory.Factory;
 import Dominio.TipoServico;
 import Interfaces.ITipoServicoRepository;
 
@@ -12,9 +15,11 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 	@Override
 	public List<TipoServico> findAll() {
 		open();
-		Query q = entityManager.createQuery("from TipoServico order by nome");
-		List<TipoServico> l = q.getResultList();
-		clear();
+		Query query = entityManager
+				.createQuery("from TipoServico order by nome");
+		List<TipoServico> l = query.getResultList();
+		entityManager.close();
+		Factory.renewFactory();
 		return l;
 	}
 
@@ -25,7 +30,8 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 				.createQuery("from TipoServico where ativo=:ativo order by nome");
 		q.setParameter("ativo", ativo);
 		List<TipoServico> l = q.getResultList();
-		clear();
+		entityManager.close();
+		Factory.renewFactory();
 		return l;
 	}
 
@@ -35,7 +41,7 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 				.createQuery("from TipoServico where nome=:nome");
 		q.setParameter("nome", nome);
 		TipoServico ts = (TipoServico) q.getSingleResult();
-		close();
+
 		return ts;
 	}
 
@@ -60,8 +66,8 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 
 		Query query = entityManager.createQuery(q);
 		List<TipoServico> l = query.getResultList();
-		clear();
+		entityManager.close();
+		Factory.renewFactory();
 		return l;
 	}
-
 }
