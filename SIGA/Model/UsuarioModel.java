@@ -35,8 +35,6 @@ public class UsuarioModel {
 		return lista;
 	}// final do método filtros
 
-	public String[] DDLPerfis() {
-		return new String[] { "SELECIONE", "ADMIN", "VENDEDOR" };
-	}
+	
 
 }

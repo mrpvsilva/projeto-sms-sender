@@ -19,8 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 
-import Model.UsuarioBean;
-
 public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 	/**
@@ -343,17 +341,26 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMUsu.add(JMIUsuExcluir);
 
 		JMenu mnPerfil = new JMenu("Perfil");
-		mnPerfil.setEnabled(false);
 		JMUsu.add(mnPerfil);
 
 		JMenuItem mntmCadastrar_3 = new JMenuItem("Cadastrar");
+		mntmCadastrar_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JDTelaEditFormPerfil efp = new JDTelaEditFormPerfil(null, null);
+				efp.setVisible(true);
+			}
+		});
 		mnPerfil.add(mntmCadastrar_3);
 
 		JMenuItem mntmBuscar_3 = new JMenuItem("Buscar");
+		mntmBuscar_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JDTelaBuscarPerfis bp = new JDTelaBuscarPerfis();
+				bp.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				bp.setVisible(true);
+			}
+		});
 		mnPerfil.add(mntmBuscar_3);
-
-		JMenuItem mntmExcluir_3 = new JMenuItem("Excluir");
-		mnPerfil.add(mntmExcluir_3);
 
 		JMenu mnPermisso = new JMenu("Permiss\u00E3o");
 		mnPermisso.setEnabled(false);
@@ -599,5 +606,4 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		}
 
 	}// final da ação do menu
-
 }

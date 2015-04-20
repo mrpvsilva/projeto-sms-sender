@@ -7,7 +7,6 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("FORNECEDOR")
 public class TelefoneFornecedor extends Telefone {
 
