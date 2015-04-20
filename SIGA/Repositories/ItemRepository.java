@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import persistenceManagerFactory.Factory;
 import Dominio.Item;
 import Interfaces.IItemRepository;
 
@@ -17,6 +18,7 @@ public class ItemRepository extends RepositoryBase<Item> implements
 		String q = "from Item order by nome";
 		Query query = entityManager.createQuery(q);
 		List<Item> l = query.getResultList();
+		Factory.renewFactory();
 		return l;
 	}
 
@@ -31,6 +33,7 @@ public class ItemRepository extends RepositoryBase<Item> implements
 		q += " order by nome";
 		Query query = entityManager.createQuery(q);
 		List<Item> l = query.getResultList();
+		Factory.renewFactory();
 		return l;
 	}
 

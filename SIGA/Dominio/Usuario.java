@@ -4,8 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,14 +27,16 @@ public class Usuario implements Serializable {
 	private String nomecompleto;
 	@Column
 	private String cpf;
-	@Column
-	private String perfil;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "idperfil", referencedColumnName = "id")
+	private Perfil perfil;
 
-	public String getPerfil() {
+	public Perfil getPerfil() {
 		return perfil;
 	}
 
-	public void setPerfil(String perfil) {
+	public void setPerfil(Perfil perfil) {
 		this.perfil = perfil;
 	}
 

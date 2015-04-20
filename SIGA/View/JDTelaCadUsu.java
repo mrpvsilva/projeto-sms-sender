@@ -178,8 +178,6 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 					} else {
 						atualizar();
 					}
-					
-					
 
 				}// final da validação
 
@@ -230,7 +228,8 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		usuario.setSenha(Extras.FormatCnpjCpf(JFFCpf.getText()));
 		usuario.setNomeCompleto(JTFNome.getText());
 		usuario.setCpf(Extras.FormatCnpjCpf(JFFCpf.getText()));
-		usuario.setPerfil(JCBPerfil.getSelectedItem().toString());
+		usuario.setPerfil(_usuarioControl.getPerfil(JCBPerfil.getSelectedItem()
+				.toString()));
 
 		String out = _usuarioControl.Cadastrar(usuario);
 
@@ -249,7 +248,8 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		usuario.setUsuario(JTFUsuario.getText());
 		usuario.setNomeCompleto(JTFNome.getText());
 		usuario.setCpf(Extras.FormatCnpjCpf(JFFCpf.getText()));
-		usuario.setPerfil(JCBPerfil.getSelectedItem().toString());
+		usuario.setPerfil(_usuarioControl.getPerfil(JCBPerfil.getSelectedItem()
+				.toString()));
 
 		String out = _usuarioControl.Atualizar(usuario);
 
@@ -275,7 +275,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		JTFNome.setText(usuario.getNomeCompleto());
 		JTFUsuario.setText(usuario.getUsuario());
 		JFFCpf.setText(usuario.getCpf());
-		JCBPerfil.setSelectedItem(usuario.getPerfil());
+		JCBPerfil.setSelectedItem(usuario.getPerfil().getNome());
 
 	}
 }

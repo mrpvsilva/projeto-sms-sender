@@ -29,7 +29,7 @@ public class UsuarioTableModel extends AbstractDefaultTableModel<Usuario> {
 		case 2:
 			return getLinhas().get(rowIndex).getCpf();
 		case 3:
-			return getLinhas().get(rowIndex).getPerfil();
+			return getLinhas().get(rowIndex).getPerfil().getNome();
 		default:
 			return null;
 		}

@@ -7,6 +7,9 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 		<class>Dominio.Usuario</class>
+		<class>Dominio.Perfil</class>
+		<class>Dominio.Permissao</class>
+		<class>Dominio.Formulario</class>
 		<class>Dominio.Endereco</class>
 		<class>Dominio.EnderecoFornecedor</class>
 		<class>Dominio.Fornecedor</class>
@@ -16,6 +19,7 @@
 		<class>Dominio.TelefoneFornecedor</class>
 		<class>Dominio.TipoItem</class>
 		<class>Dominio.TipoServico</class>
+
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
@@ -28,21 +32,6 @@
 			<property name="hibernate.jdbc.wrap_result_sets" value="false" />
 			<property name="hibernate.hibernate.cache.use_query_cache"
 				value="true" />
-			<!-- <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" 
-				/> -->
-			<!-- <property name="hibernate.hbm2ddl.auto" value="update"/> -->
-
-
-			<!-- <property name="connection.provider_class" -->
-			<!-- value="org.hibernate.connection.C3P0ConnectionProvider" /> -->
-			<!-- <property name="hibernate.c3p0.validate" value="true" /> -->
-			<!-- <property name="hibernate.c3p0.min_size" value="5" /> -->
-			<!-- <property name="hibernate.c3p0.max_size" value="10" /> -->
-			<!-- <property name="hibernate.c3p0.max_statements" value="50" /> -->
-			<!-- <property name="hibernate.c3p0.testConnectionOnCheckout" -->
-			<!-- value="true" /> -->
-			<!-- <property name="hibernate.c3p0.timeout" value="40" /> -->
-
 		</properties>
 	</persistence-unit>
 </persistence> 

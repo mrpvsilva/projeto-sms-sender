@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import persistenceManagerFactory.Factory;
 import Dominio.Usuario;
 import Interfaces.IUsuarioRepository;
 
@@ -35,7 +36,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 		String q = "from Usuario order by usuario";
 		Query query = entityManager.createQuery(q);
 		List<Usuario> l = query.getResultList();
-
+		Factory.renewFactory();
 		return l;
 
 	}
@@ -48,7 +49,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 		Query query = entityManager.createQuery(q);
 		query.setParameter("valor", "%" + value + "%");
 		List<Usuario> l = query.getResultList();
-
+		Factory.renewFactory();
 		return l;
 
 	}

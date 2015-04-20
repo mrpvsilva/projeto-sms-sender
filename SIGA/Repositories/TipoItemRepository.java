@@ -18,7 +18,7 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		String q = "from TipoItem order by nome";
 		Query query = entityManager.createQuery(q);
 		List<TipoItem> l = query.getResultList();
-		
+		Factory.renewFactory();
 		return l;
 	}
 
@@ -44,7 +44,7 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 
 		Query query = entityManager.createQuery(q);
 		List<TipoItem> l = query.getResultList();
-		
+		Factory.renewFactory();
 		return l;
 	}
 

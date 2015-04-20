@@ -3,16 +3,24 @@ package Control;
 import java.util.ArrayList;
 import java.util.List;
 
+import Dominio.Perfil;
 import Dominio.Usuario;
 import Extra.Extras;
+import Interfaces.IPerfilRepository;
 import Interfaces.IUsuarioRepository;
 import Model.UsuarioModel;
+import Repositories.PerfilRepository;
 import Repositories.UsuarioRepository;
 
 public class UsuarioControl {
 
 	UsuarioModel usuMod = new UsuarioModel();
 	private IUsuarioRepository _usuarioReposiroty = new UsuarioRepository();
+	private IPerfilRepository _perfilRepository = new PerfilRepository();
+
+	public UsuarioControl() {
+
+	}
 
 	public Usuario Logar(Usuario usuario) {
 
@@ -57,8 +65,21 @@ public class UsuarioControl {
 		return null;
 	}
 
+	public Perfil getPerfil(String nome) {
+		return _perfilRepository.getPerfil(nome);
+	}
+
 	public String[] DDLPerfis() {
-		return usuMod.DDLPerfis();
+
+		List<Perfil> perfis = _perfilRepository.findAll();
+		String[] ddl = new String[perfis.size() + 1];
+		ddl[0] = "Selecione";
+
+		for (int i = 0; i < perfis.size(); i++) {
+			ddl[i + 1] = perfis.get(i).getNome();
+		}
+
+		return ddl;
 	}
 
 	/* Envia filtros para view JDTelaBuscarCli */
