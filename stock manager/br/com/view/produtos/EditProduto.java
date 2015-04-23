@@ -56,7 +56,7 @@ public class EditProduto extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public EditProduto(Produto produto, DefaultTableModel<Produto> model) {
-		setTitle("Alterar");
+		setTitle("Cadastrar");
 		this.produto = produto;
 		controller = new ProdutoController();
 		this.model = model;
@@ -125,7 +125,7 @@ public class EditProduto extends JDialog implements ActionListener {
 		contentPanel.add(panel_2);
 		panel_2.setLayout(null);
 
-		JLabel lblQuantidade = new JLabel("Quantidade:");
+		JLabel lblQuantidade = new JLabel("Quantidade");
 		lblQuantidade.setBounds(10, 10, 70, 14);
 		panel_2.add(lblQuantidade);
 
@@ -188,8 +188,11 @@ public class EditProduto extends JDialog implements ActionListener {
 		}
 
 		controller.cadastrar(produto);
+		if (model != null)
+			model.setLinhas(controller.listarTodos());
 		JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso.",
 				"Sucesso", JOptionPane.PLAIN_MESSAGE);
+		dispose();
 
 	}
 
@@ -209,8 +212,11 @@ public class EditProduto extends JDialog implements ActionListener {
 			return;
 		}
 		controller.alterar(produto);
+		if (model != null)
+			model.setLinhas(controller.listarTodos());
 		JOptionPane.showMessageDialog(null, "Produto alterado com sucesso.",
 				"Sucesso", JOptionPane.PLAIN_MESSAGE);
+		dispose();
 	}
 
 	private void preencherCampos() {
@@ -218,7 +224,7 @@ public class EditProduto extends JDialog implements ActionListener {
 		if (produto == null)
 			return;
 
-		setTitle("Cadastrar");
+		setTitle("Alterar");
 		tfnome.setText(produto.getNome());
 		tfcusto.setValor(produto.getCusto());
 		tfvalor.setValor(produto.getValor());
@@ -243,8 +249,6 @@ public class EditProduto extends JDialog implements ActionListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
-			model.setLinhas(controller.listarTodos());
 
 		}
 

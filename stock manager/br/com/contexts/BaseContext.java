@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import com.interfaces.IBaseContext;
-import com.jpautil.JpaUtil;
+import com.util.jpautil.JpaUtil;
 
 public abstract class BaseContext<T> implements IBaseContext<T> {
 
