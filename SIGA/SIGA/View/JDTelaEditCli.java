@@ -1,0 +1,308 @@
+package View;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.text.ParseException;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+
+import Extra.Extras;
+import Extra.Validacoes;
+import Model.ClientesBean;
+
+import javax.swing.ImageIcon;
+
+
+public class JDTelaEditCli extends JDialog implements ActionListener{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final JPanel contentPanel = new JPanel();
+	private JButton JBAtuCli;
+	private JButton JBExcCli;
+	private JTextField JTFNome;
+	private JTextField JTFResp;
+	private JTextField JTFRg;
+	private MaskFormatter maskRG;
+	private JTextField JTFEmail;
+	private JTextField JTFEnd;
+	private MaskFormatter maskFone;
+	private JTextField JTFNomeGuerra;
+	private JFormattedTextField JFFFone;
+	private JFormattedTextField JFFConvExtra;
+	private JFormattedTextField JFFFone1;
+	private JComboBox<String> JCBEvento;
+	private Extras ext = new Extras();
+	private JComboBox<String> JCBOperadora;
+	private JComboBox<String> JCBOperadora2;
+	private JComboBox<String> JCBOperadora1;
+	private JFormattedTextField JFFCpf;
+	private JFormattedTextField JFFFone2;
+	private JComboBox<String> JCBSn;
+	private JButton JBSair;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try {
+			JDTelaEditCli dialog = new JDTelaEditCli();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Create the dialog.
+	 * @throws ParseException 
+	 */
+	public JDTelaEditCli() throws ParseException {
+		setResizable(false);
+		setModal(true);
+		setTitle("SIGA - atualiza\u00E7\u00E3o de cliente");
+		setBounds(100, 100, 581, 300);
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(null);
+		
+		JLabel JLNome = new JLabel("Nome");
+		JLNome.setBounds(10, 11, 46, 14);
+		contentPanel.add(JLNome);
+		
+		JLabel JLResponsavel = new JLabel("Resp.");
+		JLResponsavel.setBounds(10, 36, 46, 14);
+		contentPanel.add(JLResponsavel);
+		
+		JLabel JLRg = new JLabel("RG");
+		JLRg.setBounds(10, 61, 46, 14);
+		contentPanel.add(JLRg);
+		
+		JLabel JLTipoEvento = new JLabel("Evento");
+		JLTipoEvento.setBounds(239, 61, 46, 14);
+		contentPanel.add(JLTipoEvento);
+		
+		JLabel JLCpf = new JLabel("CPF");
+		JLCpf.setBounds(10, 86, 46, 14);
+		contentPanel.add(JLCpf);
+		
+		JLabel JLEmail = new JLabel("Email");
+		JLEmail.setBounds(10, 111, 46, 14);
+		contentPanel.add(JLEmail);
+		
+		JLabel JLEnd = new JLabel("End.");
+		JLEnd.setBounds(10, 136, 46, 14);
+		contentPanel.add(JLEnd);
+		
+		JLabel JLFone = new JLabel("Fone");
+		JLFone.setBounds(10, 165, 46, 14);
+		contentPanel.add(JLFone);
+		
+		JLabel JLFone1 = new JLabel("Fone1");
+		JLFone1.setBounds(279, 165, 46, 14);
+		contentPanel.add(JLFone1);
+		
+		JLabel JLFone2 = new JLabel("Fone2");
+		JLFone2.setBounds(10, 190, 46, 14);
+		contentPanel.add(JLFone2);
+		
+		JLabel lblConvExtra = new JLabel("Conv. Extra");
+		lblConvExtra.setBounds(239, 83, 66, 14);
+		contentPanel.add(lblConvExtra);
+		
+		JLabel JLNomeGuerra = new JLabel("Nome Guerra");
+		JLNomeGuerra.setBounds(279, 190, 81, 14);
+		contentPanel.add(JLNomeGuerra);
+		
+		JTFNome = new JTextField();
+		JTFNome.setBounds(58, 8, 428, 20);
+		contentPanel.add(JTFNome);
+		JTFNome.setColumns(10);
+		
+		JTFResp = new JTextField();
+		JTFResp.setBounds(58, 33, 428, 20);
+		contentPanel.add(JTFResp);
+		JTFResp.setColumns(10);
+		
+		
+		JTFRg = new JFormattedTextField(maskRG);
+		JTFRg.setBounds(58, 58, 118, 20);
+		contentPanel.add(JTFRg);
+		JTFRg.setColumns(10);
+		
+		JCBEvento = new JComboBox<String>();
+		JCBEvento.setBounds(368, 58, 118, 20);
+		contentPanel.add(JCBEvento);
+		
+		JFFCpf = new JFormattedTextField();
+		JFFCpf.setBounds(58, 83, 118, 20);
+		contentPanel.add(JFFCpf);
+		
+		JTFEmail = new JTextField();
+		JTFEmail.setBounds(58, 108, 428, 20);
+		contentPanel.add(JTFEmail);
+		JTFEmail.setColumns(10);
+		
+		JTFEnd = new JTextField();
+		JTFEnd.setBounds(58, 133, 428, 20);
+		contentPanel.add(JTFEnd);
+		JTFEnd.setColumns(10);
+		
+		
+		JFFFone = new JFormattedTextField(maskFone);
+		((JFormattedTextField) JFFFone).setFocusLostBehavior(JFormattedTextField.COMMIT);
+		JFFFone.setBounds(58, 161, 118, 20);
+		contentPanel.add(JFFFone);
+		
+		JFFConvExtra = new JFormattedTextField(maskRG);
+		JFFConvExtra.setBounds(368, 83, 118, 20);
+		contentPanel.add(JFFConvExtra);
+		
+		JFFFone1 = new JFormattedTextField(maskFone);
+		((JFormattedTextField) JFFFone1).setFocusLostBehavior(JFormattedTextField.COMMIT);
+		JFFFone1.setBounds(368, 161, 118, 20);
+		contentPanel.add(JFFFone1);
+		
+		JFFFone2 = new JFormattedTextField(maskFone);
+		((JFormattedTextField) JFFFone2).setFocusLostBehavior(JFormattedTextField.COMMIT);
+		JFFFone2.setBounds(58, 187, 118, 20);
+		contentPanel.add(JFFFone2);
+		
+		JTFNomeGuerra = new JTextField();
+		JTFNomeGuerra.setBounds(368, 187, 118, 20);
+		contentPanel.add(JTFNomeGuerra);
+		JTFNomeGuerra.setColumns(10);
+		
+		JCBOperadora = new JComboBox<String>();
+		for(String item : ext.getOperadora()){
+			JCBOperadora.addItem(item);
+		}
+		JCBOperadora.setBounds(186, 162, 59, 20);
+		contentPanel.add(JCBOperadora);
+		
+		JCBOperadora2 = new JComboBox<String>();
+		for(String item : ext.getOperadora()){
+			JCBOperadora2.addItem(item);
+		}
+		JCBOperadora2.setBounds(186, 187, 59, 20);
+		contentPanel.add(JCBOperadora2);
+		
+		JCBOperadora1 = new JComboBox<String>();
+		for(String item : ext.getOperadora()){
+			JCBOperadora1.addItem(item);
+		}
+		JCBOperadora1.setBounds(496, 161, 59, 20);
+		contentPanel.add(JCBOperadora1);
+		
+		JCBSn = new JComboBox<String>();
+		for(String item : ext .getSimNao()){
+			JCBOperadora2.addItem(item);
+		}
+		JCBSn.setBounds(496, 187, 59, 20);
+		contentPanel.add(JCBSn);
+		{
+			JPanel buttonPane = new JPanel();
+			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			{
+				JBAtuCli = new JButton("Atualizar");
+				JBAtuCli.setIcon(new ImageIcon(JDTelaEditCli.class.getResource("/Img/reload16.png")));
+				JBAtuCli.setMnemonic(KeyEvent.VK_A);
+				buttonPane.add(JBAtuCli);
+				getRootPane().setDefaultButton(JBAtuCli);
+			}
+			{
+				JBExcCli = new JButton("Excluir");
+				JBExcCli.setIcon(new ImageIcon(JDTelaEditCli.class.getResource("/Img/user_male_delete216.png")));
+				JBExcCli.setMnemonic(KeyEvent.VK_X);
+				JBExcCli.addActionListener(this);
+				buttonPane.add(JBExcCli);
+			}
+			
+			JBSair = new JButton("Sair");
+			JBSair.setIcon(new ImageIcon(JDTelaEditCli.class.getResource("/Img/exit16.png")));
+			JBSair.setMnemonic(KeyEvent.VK_Q);
+			JBSair.addActionListener(this);
+			buttonPane.add(JBSair);
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent acao) {
+
+		if(acao.getSource() == JBAtuCli){
+			
+			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Deseja atualizar o cliente?")){
+				
+				if(JTFNome.getText().trim().isEmpty())
+					JOptionPane.showMessageDialog(null, "Nome em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+				else if(JTFRg.getText().trim().isEmpty())
+					JOptionPane.showMessageDialog(null, "Rg em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+				else if(Validacoes.ValidaCpfCnpj(JFFCpf.getText()))
+					JOptionPane.showMessageDialog(null, "Cpf inválido.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+				else if(JTFEmail.getText().trim().isEmpty())
+					JOptionPane.showMessageDialog(null, "Email em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+				else if(JTFEnd.getText().trim().isEmpty())
+					JOptionPane.showMessageDialog(null, "Endereço em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+				else if(Validacoes.ValidaTelefone(JFFFone.getText()))
+					JOptionPane.showMessageDialog(null, "Telefone inválido/em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+				else if (JCBSn.getSelectedItem().toString().equals("SIM") && JTFNomeGuerra.getText().trim().isEmpty())
+					JOptionPane.showMessageDialog(null, "Nome guerra em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
+				else{
+					ClientesBean cliBean = new ClientesBean();
+					
+					cliBean.setNomecompcli(JTFNome.getText());
+					cliBean.setRespcli(JTFResp.getText());
+					cliBean.setRgcli(JTFRg.getText());
+					cliBean.setCpfcli(Extras.FormatCnpjCpf(JFFCpf.getText())); 					// Formata depois seta
+					cliBean.setEmailcli(JTFEmail.getText());
+					cliBean.setEndcli(JTFEnd.getText());
+					
+					cliBean.setTelefonecli(Extras.FormatFone(JFFFone.getText())); 				// Formata depois seta
+					cliBean.setTelefonecli1(Extras.FormatFone(JFFFone1.getText())); 			// Formata depois seta
+					cliBean.setTelefonecli2(Extras.FormatFone(JFFFone2.getText())); 			// Formata depois seta
+					
+					cliBean.setTipoeventocli(JCBEvento.getSelectedItem().toString());
+					cliBean.setConvidadosextrascli(Integer.parseInt(JFFConvExtra.getText()));  	// Formata depois seta
+					cliBean.setNomeguerracli(JTFNomeGuerra.getText());
+					
+					cliBean.setOperadora(JCBOperadora.getSelectedItem().toString());
+					cliBean.setOperadora1(JCBOperadora1.getSelectedItem().toString());
+					cliBean.setOperadora2(JCBOperadora2.getSelectedItem().toString());
+					
+				}// final da validação
+				
+			}// final da confirmação
+			
+		}// final do botão atualizar cliente
+		
+		if(acao.getSource() == JBExcCli){
+			
+			if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Deseja excluir o cliente?")){
+				
+			}// final da confirmação
+			
+		}// final do botão excluir cliente
+		
+		if(acao.getSource() == JBSair){
+			this.dispose();
+		}
+		
+	}// final da ação do botão
+}
