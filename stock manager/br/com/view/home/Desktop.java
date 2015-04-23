@@ -8,6 +8,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.Rectangle;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import javax.swing.ImageIcon;
@@ -20,35 +23,25 @@ import java.awt.Insets;
 
 import javax.swing.border.LineBorder;
 
-import com.jpautil.JpaUtil;
+import com.util.jpautil.JpaUtil;
+import com.view.fornecedores.Fornecedores;
 
 import java.awt.Color;
 
-public class desktop extends JFrame {
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Toolkit;
+
+public class Desktop extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel body;
+	private JLabel relogio;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					desktop frame = new desktop();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	public Desktop() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				Desktop.class.getResource("/imagens/logo.png")));
 
-	/**
-	 * Create the frame.
-	 */
-	public desktop() {
 		JpaUtil.createEntityManagerFactory();
 		setLocale(new Locale("pt", "BR"));
 		// setMinimumSize(new Dimension(1024, 768));
@@ -72,11 +65,12 @@ public class desktop extends JFrame {
 				body.removeAll();
 				body.revalidate();
 				body.repaint();
+				createEntityManagerFactory();
 			}
 		});
 		home.setToolTipText("\u00C1rea de trabalho");
 		home.setMargin(new Insets(0, 0, 0, 0));
-		home.setIcon(new ImageIcon(desktop.class
+		home.setIcon(new ImageIcon(Desktop.class
 				.getResource("/imagens/home.png")));
 		menubar.add(home);
 
@@ -91,10 +85,10 @@ public class desktop extends JFrame {
 				body.add(container_produtos, BorderLayout.CENTER);
 				body.revalidate();
 				body.repaint();
-
+				createEntityManagerFactory();
 			}
 		});
-		produtos.setIcon(new ImageIcon(desktop.class
+		produtos.setIcon(new ImageIcon(Desktop.class
 				.getResource("/imagens/produtos.png")));
 		menubar.add(produtos);
 
@@ -102,13 +96,17 @@ public class desktop extends JFrame {
 		fornecedores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				body.removeAll();
+				Fornecedores fornecedores = new Fornecedores();
+				fornecedores.setVisible(true);
+				body.add(fornecedores, BorderLayout.CENTER);
 				body.revalidate();
 				body.repaint();
+				createEntityManagerFactory();
 			}
 		});
 		fornecedores.setToolTipText("Fornecedores");
 		fornecedores.setMargin(new Insets(0, 0, 0, 0));
-		fornecedores.setIcon(new ImageIcon(desktop.class
+		fornecedores.setIcon(new ImageIcon(Desktop.class
 				.getResource("/imagens/fornecedor.png")));
 		menubar.add(fornecedores);
 
@@ -120,5 +118,50 @@ public class desktop extends JFrame {
 		JPanel footer = new JPanel();
 		footer.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
 		contentPane.add(footer, BorderLayout.SOUTH);
+		footer.setLayout(new BorderLayout(0, 0));
+
+		JLabel copyrigth = new JLabel("Copyright " + LocalDate.now().getYear());
+		copyrigth.setHorizontalAlignment(SwingConstants.CENTER);
+		footer.add(copyrigth, BorderLayout.CENTER);
+
+		relogio = new JLabel("New label");
+		relogio.setHorizontalAlignment(SwingConstants.CENTER);
+		footer.add(relogio, BorderLayout.WEST);
+		setRelogio();
+
+	}
+
+	private void createEntityManagerFactory() {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+//				JpaUtil.closeEntityManagerFactory();
+//				JpaUtil.createEntityManagerFactory();
+			}
+		}).start();
+
+	}
+
+	private void setRelogio() {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+					LocalDateTime agora = LocalDateTime.now();
+					String datahora = agora.format(DateTimeFormatter
+							.ofPattern("dd/MM/yyyy HH:mm:ss"));
+					relogio.setText(datahora);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+		}).start();
 	}
 }

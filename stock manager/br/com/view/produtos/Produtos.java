@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,6 +18,10 @@ import com.tablemodels.ProdutoTableModel;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 import java.awt.FlowLayout;
 import java.awt.Dimension;
@@ -24,6 +29,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Produtos extends JPanel {
 	/**
@@ -34,6 +41,7 @@ public class Produtos extends JPanel {
 	private DefaultTableModel<Produto> produtosModel;
 	private ProdutoController pc;
 	private JTextField tfnome;
+	private JButton btnAlterar;
 
 	/**
 	 * Create the panel.
@@ -91,6 +99,27 @@ public class Produtos extends JPanel {
 		scrollPane.setMaximumSize(new Dimension(500, 200));
 
 		table = new JTable(produtosModel);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getSelectionModel().addListSelectionListener(
+				new ListSelectionListener() {
+
+					@Override
+					public void valueChanged(ListSelectionEvent e) {
+						if (e.getValueIsAdjusting())
+							return;
+
+						btnAlterar.setEnabled(true);
+
+					}
+				});
+		table.getModel().addTableModelListener(new TableModelListener() {
+
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				btnAlterar.setEnabled(false);
+
+			}
+		});
 		table.getColumnModel().getColumn(0).setMinWidth(0);
 		table.getColumnModel().getColumn(0).setMaxWidth(0);
 		scrollPane.setViewportView(table);
@@ -99,7 +128,7 @@ public class Produtos extends JPanel {
 		containerprodutos.add(buttonpane, BorderLayout.SOUTH);
 		FlowLayout flowLayout = (FlowLayout) buttonpane.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		flowLayout.setVgap(15);
+		flowLayout.setVgap(10);
 		flowLayout.setHgap(10);
 
 		JButton btnNovo = new JButton("Novo");
@@ -112,7 +141,8 @@ public class Produtos extends JPanel {
 		btnNovo.setVerticalAlignment(SwingConstants.BOTTOM);
 		buttonpane.add(btnNovo);
 
-		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar = new JButton("Alterar");
+		btnAlterar.setEnabled(false);
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int linha = table.getSelectedRow();

@@ -1,4 +1,4 @@
-package com.jpautil;
+package com.util.jpautil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -49,15 +49,9 @@ public final class JpaUtil {
 	}
 
 	public static void createEntityManagerFactory() {
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				if (entityManagerFactory == null) {
-					entityManagerFactory = Persistence
-							.createEntityManagerFactory(PERSISTENCE_UNIT);
-				}
-			}
-		}).start();
+		if (entityManagerFactory == null) {
+			entityManagerFactory = Persistence
+					.createEntityManagerFactory(PERSISTENCE_UNIT);
+		}
 	}
 }

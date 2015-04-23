@@ -9,13 +9,15 @@ public abstract class DefaultTableModel<E> extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
 	private List<E> linhas;
-	protected String[] colunas;
+	private String[] colunas;
 
-	public DefaultTableModel() {
+	public DefaultTableModel(String[] colunas) {
+		this.colunas = colunas;
 		this.linhas = new ArrayList<E>();
 	}
 
-	public DefaultTableModel(List<E> linhas) {
+	public DefaultTableModel(String[] colunas, List<E> linhas) {
+		this.colunas = colunas;
 		this.linhas = linhas;
 	}
 
@@ -49,7 +51,9 @@ public abstract class DefaultTableModel<E> extends AbstractTableModel {
 		return linhas.get(linha);
 	}
 
-	public abstract long getId(int linha);
+	//public abstract long getId(int linha);
+
+	public abstract Class getColumnClass(int col);
 
 	//
 

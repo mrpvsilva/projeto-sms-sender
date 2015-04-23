@@ -26,6 +26,6 @@ public class ProdutoController {
 	}
 
 	public void alterar(Produto produto) {
-		db.Produtos.add(produto);
+		db.Produtos.update(produto);
 	}
 }
