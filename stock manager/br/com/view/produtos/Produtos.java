@@ -29,8 +29,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class Produtos extends JPanel {
 	/**
@@ -42,6 +40,7 @@ public class Produtos extends JPanel {
 	private ProdutoController pc;
 	private JTextField tfnome;
 	private JButton btnAlterar;
+	private JButton btnAdicionarAoCarrinho;
 
 	/**
 	 * Create the panel.
@@ -109,6 +108,7 @@ public class Produtos extends JPanel {
 							return;
 
 						btnAlterar.setEnabled(true);
+						btnAdicionarAoCarrinho.setEnabled(true);
 
 					}
 				});
@@ -117,6 +117,7 @@ public class Produtos extends JPanel {
 			@Override
 			public void tableChanged(TableModelEvent e) {
 				btnAlterar.setEnabled(false);
+				btnAdicionarAoCarrinho.setEnabled(false);
 
 			}
 		});
@@ -158,12 +159,29 @@ public class Produtos extends JPanel {
 			}
 		});
 		buttonpane.add(btnAlterar);
-		
+
+		btnAdicionarAoCarrinho = new JButton("Adicionar ao carrinho");
+		btnAdicionarAoCarrinho.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int linha = table.getSelectedRow();
+				if (linha > -1) {
+					new Quantidade(produtosModel.find(linha)).setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"Selecione um produto.", "Atenção!",
+							JOptionPane.WARNING_MESSAGE);
+				}
+
+			}
+		});
+		btnAdicionarAoCarrinho.setEnabled(false);
+		buttonpane.add(btnAdicionarAoCarrinho);
+
 		JPanel left = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) left.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		containerprodutos.add(left, BorderLayout.WEST);
-		
+
 		JPanel rigth = new JPanel();
 		containerprodutos.add(rigth, BorderLayout.EAST);
 

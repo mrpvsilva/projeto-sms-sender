@@ -1,5 +1,6 @@
 package com.tablemodels;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 import com.dominio.ProdutoVendido;
@@ -17,7 +18,6 @@ public class ProdutoVendidoTableModel extends DefaultTableModel<ProdutoVendido> 
 		ProdutoVendido pv = find(row);
 		switch (col) {
 		case 0:
-
 			return pv.getProdutovendidoId();
 		case 1:
 			return pv.getProduto().getNome();
@@ -38,15 +38,13 @@ public class ProdutoVendidoTableModel extends DefaultTableModel<ProdutoVendido> 
 	public Class getColumnClass(int col) {
 		switch (col) {
 		case 0:
-
 			return Integer.class;
 		case 1:
 			return String.class;
 		case 2:
 			return Integer.class;
-
 		default:
-			return Double.class;
+			return BigDecimal.class;
 		}
 	}
 

@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.time.Instant;
 import java.time.LocalDate;
 
 import javax.swing.ImageIcon;
