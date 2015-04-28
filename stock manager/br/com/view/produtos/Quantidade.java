@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -79,8 +80,13 @@ public class Quantidade extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						Carrinho.add(produto, Integer.parseInt(tfqtd.getText()));
-						dispose();
+						int q = Integer.parseInt(tfqtd.getText());
+						if (produto.getQuantidade() >= q) {
+							Carrinho.add(produto, q);
+							dispose();
+						}else{
+							JOptionPane.showMessageDialog(null, "Quantidade escolhida é maior do que há em estoque.","Atenção",JOptionPane.WARNING_MESSAGE);
+						}
 					}
 				});
 				okButton.setHorizontalAlignment(SwingConstants.LEFT);

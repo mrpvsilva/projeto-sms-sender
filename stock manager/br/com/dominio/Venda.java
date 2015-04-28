@@ -1,7 +1,6 @@
 package com.dominio;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -84,17 +83,25 @@ public class Venda implements Validate {
 		this.produtosvendidos = produtosvendidos;
 	}
 
-	public void addProduto(Produto produto, int quantidade) {
-
+	public void addProduto(Produto produto, int quantidade) {		
 		ProdutoVendido pv = new ProdutoVendido(this, produto, quantidade);
 		produtosvendidos.add(pv);
-		this.valortotal = this.valortotal.add(pv.getTotal());
+		this.valortotal = this.valortotal.add(pv.getSubTotal());
 
+	}
+
+	public void removerProduto(int index) {
+		this.valortotal = new BigDecimal(0);
+		produtosvendidos.remove(index);
+
+		for (int i = 0; i < produtosvendidos.size(); i++) {
+			this.valortotal = this.valortotal.add(produtosvendidos.get(i)
+					.getSubTotal());
+		}
 	}
 
 	@Override
 	public String valid() {
-
 		return "";
 	}
 

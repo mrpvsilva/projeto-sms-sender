@@ -7,9 +7,11 @@ import com.dominio.ProdutoVendido;
 
 public class ProdutoVendidoTableModel extends DefaultTableModel<ProdutoVendido> {
 
+	private static final String[] colunas = new String[] { "id", "Produto",
+			"Quant.", "Valor Unit.", "Subtotal" };
+
 	public ProdutoVendidoTableModel() {
-		super(new String[] { "id", "Nome do produto", "Quant.", "Valor",
-				"Total" });
+		super(colunas);
 
 	}
 
@@ -25,9 +27,9 @@ public class ProdutoVendidoTableModel extends DefaultTableModel<ProdutoVendido> 
 			return pv.getQuantidade();
 		case 3:
 			return NumberFormat.getCurrencyInstance().format(
-					pv.getProduto().getValor());
+					pv.getProduto().getValorUnitario());
 		case 4:
-			return NumberFormat.getCurrencyInstance().format(pv.getTotal());
+			return NumberFormat.getCurrencyInstance().format(pv.getSubTotal());
 
 		default:
 			return null;

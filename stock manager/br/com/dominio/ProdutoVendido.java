@@ -3,6 +3,7 @@ package com.dominio;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,11 +24,11 @@ public class ProdutoVendido implements Serializable, Validate {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
-	private long produtovendidoId;
+	private long produtoVendidoId;
 	@Column
 	private int quantidade;
 	@Column
-	private BigDecimal total;
+	private BigDecimal subTotal;
 	@ManyToOne
 	@JoinColumn(name = "produtoId")
 	private Produto produto;
@@ -36,7 +37,7 @@ public class ProdutoVendido implements Serializable, Validate {
 	private Venda venda;
 
 	public ProdutoVendido() {
-		total = new BigDecimal(0.00);
+		subTotal = new BigDecimal(0.00);
 	}
 
 	public ProdutoVendido(Venda venda, Produto produto, int quantidade) {
@@ -45,16 +46,16 @@ public class ProdutoVendido implements Serializable, Validate {
 		setProduto(produto);
 		setQuantidade(quantidade);
 		BigDecimal qtd = new BigDecimal(this.quantidade);
-		total = produto.getValor().multiply(qtd);
-		setTotal(total);
+		subTotal = produto.getValorUnitario().multiply(qtd);
+		setSubTotal(subTotal);
 	}
 
 	public long getProdutovendidoId() {
-		return produtovendidoId;
+		return produtoVendidoId;
 	}
 
 	public void setProdutovendidoId(long produtovendidoId) {
-		this.produtovendidoId = produtovendidoId;
+		this.produtoVendidoId = produtovendidoId;
 	}
 
 	public int getQuantidade() {
@@ -65,12 +66,12 @@ public class ProdutoVendido implements Serializable, Validate {
 		this.quantidade = quantidade;
 	}
 
-	public BigDecimal getTotal() {
-		return total;
+	public BigDecimal getSubTotal() {
+		return subTotal;
 	}
 
-	public void setTotal(BigDecimal total) {
-		this.total = total;
+	public void setSubTotal(BigDecimal subtotal) {
+		this.subTotal = subtotal;
 	}
 
 	public Produto getProduto() {

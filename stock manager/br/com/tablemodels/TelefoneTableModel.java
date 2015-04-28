@@ -10,14 +10,16 @@ public class TelefoneTableModel extends DefaultTableModel<Telefone> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final String[] colunas = new String[] { "id", "DDD",
+			"Número", "Operadora" };
 
 	public TelefoneTableModel() {
-		super(new String[] { "id", "DDD", "Número", "Operadora" });
+		super(colunas);
 		// TODO Auto-generated constructor stub
 	}
 
 	public TelefoneTableModel(List<Telefone> linhas) {
-		super(new String[] { "id", "DDD", "Número", "Operadora" }, linhas);
+		super(colunas, linhas);
 	}
 
 	@Override
@@ -37,10 +39,10 @@ public class TelefoneTableModel extends DefaultTableModel<Telefone> {
 		}
 	}
 
-//	@Override
-//	public long getId(int linha) {
-//		return getLinhas().get(linha).getTelefoneId();
-//	}
+	// @Override
+	// public long getId(int linha) {
+	// return getLinhas().get(linha).getTelefoneId();
+	// }
 
 	@Override
 	public Class getColumnClass(int col) {

@@ -12,14 +12,15 @@ public class ProdutoTableModel extends DefaultTableModel<Produto> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final String[] colunas = new String[] { "Id", "Nome",
+			"Custo unit.", "Valor unit.", "Quantidade" };
 
 	public ProdutoTableModel() {
-		super(new String[] { "Id", "Nome", "Custo", "Valor", "Quantidade" });
+		super(colunas);
 	}
 
 	public ProdutoTableModel(List<Produto> linhas) {
-		super(new String[] { "Id", "Nome", "Custo", "Valor", "Quantidade" },
-				linhas);
+		super(colunas, linhas);
 	}
 
 	@Override
@@ -48,7 +49,8 @@ public class ProdutoTableModel extends DefaultTableModel<Produto> {
 		case 2:
 			return NumberFormat.getCurrencyInstance().format(p.getCusto());
 		case 3:
-			return NumberFormat.getCurrencyInstance().format(p.getValor());
+			return NumberFormat.getCurrencyInstance().format(
+					p.getValorUnitario());
 		case 4:
 			return p.getQuantidade();
 
@@ -58,9 +60,9 @@ public class ProdutoTableModel extends DefaultTableModel<Produto> {
 		}
 	}
 
-//	@Override
-//	public long getId(int linha) {
-//		return getLinhas().get(linha).getProdutoId();
-//	}
+	// @Override
+	// public long getId(int linha) {
+	// return getLinhas().get(linha).getProdutoId();
+	// }
 
 }

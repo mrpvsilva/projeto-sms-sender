@@ -25,8 +25,8 @@ import java.awt.Insets;
 import javax.swing.border.LineBorder;
 
 import com.util.jpautil.JpaUtil;
+import com.view.caixa.Caixa;
 import com.view.fornecedores.Fornecedores;
-import com.view.vendas.Vendas;
 
 import java.awt.Color;
 
@@ -48,7 +48,7 @@ public class Desktop extends JFrame {
 
 		JpaUtil.createEntityManagerFactory();
 		setLocale(new Locale("pt", "BR"));
-		setMinimumSize(new Dimension(1024, 768));
+		setMinimumSize(new Dimension(1024, 600));
 		setTitle("Stock Manager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1024, 600);
@@ -67,7 +67,7 @@ public class Desktop extends JFrame {
 		home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				body.removeAll();
-				Vendas telavendas = new Vendas();
+				Caixa telavendas = new Caixa();
 				telavendas.setVisible(true);
 				body.add(telavendas, BorderLayout.CENTER);
 				body.revalidate();
@@ -75,7 +75,7 @@ public class Desktop extends JFrame {
 
 			}
 		});
-		home.setToolTipText("Vendas");
+		home.setToolTipText("Caixa");
 		home.setMargin(new Insets(0, 0, 0, 0));
 		home.setIcon(new ImageIcon(Desktop.class
 				.getResource("/imagens/venda.png")));
@@ -136,7 +136,7 @@ public class Desktop extends JFrame {
 		footer.add(relogio, BorderLayout.WEST);
 		setRelogio();
 
-		Vendas telavendas = new Vendas();
+		Caixa telavendas = new Caixa();
 		telavendas.setVisible(true);
 		body.add(telavendas, BorderLayout.CENTER);
 
