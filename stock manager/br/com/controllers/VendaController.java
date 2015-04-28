@@ -1,5 +1,7 @@
 package com.controllers;
 
+import java.util.List;
+
 import com.dominio.Produto;
 import com.dominio.ProdutoVendido;
 import com.dominio.Venda;
@@ -10,6 +12,10 @@ public class VendaController {
 
 	public VendaController() {
 		db = new StockEntities();
+	}
+
+	public List<Venda> listarTodos() {
+		return db.Vendas.findAll();
 	}
 
 	public void cadastrar(Venda venda) {

@@ -27,6 +27,7 @@ import javax.swing.border.LineBorder;
 import com.util.jpautil.JpaUtil;
 import com.view.caixa.Caixa;
 import com.view.fornecedores.Fornecedores;
+import com.view.vendas.Vendas;
 
 import java.awt.Color;
 
@@ -77,8 +78,7 @@ public class Desktop extends JFrame {
 		});
 		home.setToolTipText("Caixa");
 		home.setMargin(new Insets(0, 0, 0, 0));
-		home.setIcon(new ImageIcon(Desktop.class
-				.getResource("/imagens/venda.png")));
+		home.setIcon(new ImageIcon(Desktop.class.getResource("/imagens/caixa.png")));
 		menubar.add(home);
 
 		JButton produtos = new JButton("");
@@ -116,6 +116,21 @@ public class Desktop extends JFrame {
 		fornecedores.setIcon(new ImageIcon(Desktop.class
 				.getResource("/imagens/fornecedor.png")));
 		menubar.add(fornecedores);
+		
+		JButton vendas = new JButton("");
+		vendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				body.removeAll();
+				Vendas vendas = new Vendas();
+				vendas.setVisible(true);
+				body.add(vendas, BorderLayout.CENTER);
+				body.revalidate();
+				body.repaint();
+			}
+		});
+		vendas.setMargin(new Insets(0, 0, 0, 0));
+		vendas.setIcon(new ImageIcon(Desktop.class.getResource("/imagens/vendas.png")));
+		menubar.add(vendas);
 
 		body = new JPanel();
 		body.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));

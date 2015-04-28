@@ -25,8 +25,7 @@ public class SplashScreen extends JWindow {
 	public void showSplash() {
 		JPanel content = (JPanel) getContentPane();
 		content.setBackground(Color.white);
-
-		// Configura a posição e o tamanho da janela
+		
 		int width = 400;
 		int height = 400;
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -45,8 +44,7 @@ public class SplashScreen extends JWindow {
 		content.add(label, BorderLayout.CENTER);
 		content.add(copyrt, BorderLayout.SOUTH);
 		Color oraRed = new Color(156, 20, 20, 255);
-		// content.setBorder(BorderFactory.createLineBorder(oraRed, 10));
-		// Torna visível
+		
 		setVisible(true);
 		try {
 			JpaUtil.createEntityManagerFactory();
@@ -62,7 +60,7 @@ public class SplashScreen extends JWindow {
 	}
 
 	public static void main(String[] args) {
-		// Mostra uma imagem com o título da aplicação
+		
 		SplashScreen splash = new SplashScreen();
 		splash.showSplash();
 		Desktop frame = new Desktop();
