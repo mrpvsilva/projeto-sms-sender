@@ -25,9 +25,9 @@ public class Produto implements Serializable, Validate {
 	@Column
 	private String nome;
 	@Column
-	private BigDecimal custo;
+	private BigDecimal custoUnitario;
 	@Column
-	private BigDecimal valor;
+	private BigDecimal valorUnitario;
 	@Column
 	private int quantidade;
 
@@ -48,19 +48,19 @@ public class Produto implements Serializable, Validate {
 	}
 
 	public BigDecimal getCusto() {
-		return custo;
+		return custoUnitario;
 	}
 
-	public void setCusto(BigDecimal custo) {
-		this.custo = custo;
+	public void setCusto(BigDecimal custounitario) {
+		this.custoUnitario = custounitario;
 	}
 
-	public BigDecimal getValor() {
-		return valor;
+	public BigDecimal getValorUnitario() {
+		return valorUnitario;
 	}
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
+	public void setValorUnitario(BigDecimal valorunitario) {
+		this.valorUnitario = valorunitario;
 	}
 
 	public int getQuantidade() {
@@ -75,9 +75,9 @@ public class Produto implements Serializable, Validate {
 	public String valid() {
 		if (this.nome.isEmpty())
 			return "Nome é obrigatório";
-		else if (this.custo == null)
+		else if (this.custoUnitario == null)
 			return "Custo é obrigatório";
-		else if (this.valor == null)
+		else if (this.valorUnitario == null)
 			return "Valor é obrigatório";
 		else if (this.quantidade == 0)
 			return "Quantidade é obrigatório";

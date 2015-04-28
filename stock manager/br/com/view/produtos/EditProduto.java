@@ -26,6 +26,7 @@ import java.awt.event.KeyEvent;
 import jmoneyfield.JMoneyField;
 
 import java.awt.event.KeyAdapter;
+import java.awt.Font;
 
 public class EditProduto extends JDialog implements ActionListener {
 
@@ -75,11 +76,13 @@ public class EditProduto extends JDialog implements ActionListener {
 		panelnomeproduto.setLayout(null);
 
 		JLabel lblNomeDoProduto = new JLabel("Nome do produto");
+		lblNomeDoProduto.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNomeDoProduto.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNomeDoProduto.setBounds(10, 10, 107, 14);
+		lblNomeDoProduto.setBounds(10, 11, 147, 13);
 		panelnomeproduto.add(lblNomeDoProduto);
 
 		tfnome = new JTextField();
+		tfnome.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tfnome.setHorizontalAlignment(SwingConstants.LEFT);
 		tfnome.setBounds(10, 30, 404, 20);
 		panelnomeproduto.add(tfnome);
@@ -91,12 +94,14 @@ public class EditProduto extends JDialog implements ActionListener {
 		contentPanel.add(panel);
 		panel.setLayout(null);
 
-		JLabel lblCusto = new JLabel("Custo");
+		JLabel lblCusto = new JLabel("Custo unit.");
+		lblCusto.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCusto.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCusto.setBounds(10, 10, 36, 14);
+		lblCusto.setBounds(10, 10, 105, 14);
 		panel.add(lblCusto);
 
 		tfcusto = new JMoneyField();
+		tfcusto.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tfcusto.setHorizontalAlignment(SwingConstants.RIGHT);
 		tfcusto.setBounds(10, 30, 190, 20);
 		panel.add(tfcusto);
@@ -109,13 +114,15 @@ public class EditProduto extends JDialog implements ActionListener {
 		panel_1.setLayout(null);
 
 		tfvalor = new JMoneyField();
+		tfvalor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tfvalor.setHorizontalAlignment(SwingConstants.RIGHT);
 		tfvalor.setBounds(10, 30, 190, 20);
 		tfvalor.setColumns(10);
 		panel_1.add(tfvalor);
 
-		JLabel lblValor = new JLabel("Valor");
-		lblValor.setBounds(10, 10, 34, 14);
+		JLabel lblValor = new JLabel("Valor unit.");
+		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblValor.setBounds(10, 10, 91, 14);
 		lblValor.setHorizontalAlignment(SwingConstants.LEFT);
 		panel_1.add(lblValor);
 
@@ -126,10 +133,12 @@ public class EditProduto extends JDialog implements ActionListener {
 		panel_2.setLayout(null);
 
 		JLabel lblQuantidade = new JLabel("Quantidade");
+		lblQuantidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblQuantidade.setBounds(10, 10, 70, 14);
 		panel_2.add(lblQuantidade);
 
 		tfquantidade = new JTextField();
+		tfquantidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tfquantidade.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -150,6 +159,7 @@ public class EditProduto extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				okButton = new JButton("Salvar");
+				okButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				okButton.addActionListener(this);
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
@@ -157,6 +167,7 @@ public class EditProduto extends JDialog implements ActionListener {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();
@@ -174,7 +185,7 @@ public class EditProduto extends JDialog implements ActionListener {
 		produto = new Produto();
 		produto.setNome(tfnome.getText());
 		produto.setCusto(tfcusto.getValor());
-		produto.setValor(tfvalor.getValor());
+		produto.setValorUnitario(tfvalor.getValor());
 		produto.setQuantidade(!tfquantidade.getText().isEmpty() ? Integer
 				.parseInt(tfquantidade.getText()) : 0);
 
@@ -199,7 +210,7 @@ public class EditProduto extends JDialog implements ActionListener {
 	private void alterar() throws BadLocationException {
 		produto.setNome(tfnome.getText());
 		produto.setCusto(tfcusto.getValor());
-		produto.setValor(tfvalor.getValor());
+		produto.setValorUnitario(tfvalor.getValor());
 		produto.setQuantidade(!tfquantidade.getText().isEmpty() ? Integer
 				.parseInt(tfquantidade.getText()) : 0);
 
@@ -227,7 +238,7 @@ public class EditProduto extends JDialog implements ActionListener {
 		setTitle("Alterar");
 		tfnome.setText(produto.getNome());
 		tfcusto.setValor(produto.getCusto());
-		tfvalor.setValor(produto.getValor());
+		tfvalor.setValor(produto.getValorUnitario());
 		tfquantidade.setText(produto.getQuantidade() + "");
 
 	}

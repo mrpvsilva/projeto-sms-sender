@@ -23,6 +23,7 @@ import javax.swing.text.Document;
 import com.dominio.Telefone;
 import com.tablemodels.DefaultTableModel;
 import com.util.plaindocument.MaxLenghtDocument;
+import java.awt.Font;
 
 public class EditTelefone extends JDialog implements ActionListener {
 
@@ -77,12 +78,14 @@ public class EditTelefone extends JDialog implements ActionListener {
 		panelnomeproduto.setLayout(null);
 
 		JLabel lblNomeDoProduto = new JLabel("DDD");
+		lblNomeDoProduto.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNomeDoProduto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNomeDoProduto.setBounds(10, 10, 118, 14);
 		panelnomeproduto.add(lblNomeDoProduto);
 
 		Document doc = new MaxLenghtDocument(2);
 		tfddd = new JTextField(doc, "", 8);
+		tfddd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tfddd.setHorizontalAlignment(SwingConstants.RIGHT);
 		tfddd.setBounds(10, 30, 40, 20);
 		panelnomeproduto.add(tfddd);
@@ -106,12 +109,14 @@ public class EditTelefone extends JDialog implements ActionListener {
 		panel.setLayout(null);
 
 		JLabel lblCusto = new JLabel("Operadora");
+		lblCusto.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCusto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCusto.setBounds(10, 10, 70, 14);
 		panel.add(lblCusto);
 
-		operadoras = new JComboBox(new String[] { "Claro", "Oi", "Net", "Tim",
+		operadoras = new JComboBox(new String[] { "Claro","Fixo" ,"Oi", "Tim",
 				"Vivo" });
+		operadoras.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		operadoras.setBounds(10, 30, 171, 20);
 		panel.add(operadoras);
 
@@ -123,6 +128,7 @@ public class EditTelefone extends JDialog implements ActionListener {
 
 		Document maxnumero = new MaxLenghtDocument(9);
 		tfnumero = new JTextField(maxnumero, "", 8);
+		tfnumero.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tfnumero.setHorizontalAlignment(SwingConstants.RIGHT);
 		tfnumero.setBounds(10, 30, 100, 20);
 		tfnumero.setColumns(10);
@@ -148,6 +154,7 @@ public class EditTelefone extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				okButton = new JButton("Salvar");
+				okButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				okButton.addActionListener(this);
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
@@ -155,6 +162,7 @@ public class EditTelefone extends JDialog implements ActionListener {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

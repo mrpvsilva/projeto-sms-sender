@@ -20,4 +20,8 @@ public class Carrinho {
 	public static void limparCarrinho() {
 		venda = new Venda();
 	}
+
+	public static void removerProduto(int index) {
+		venda.removerProduto(index);
+	}
 }

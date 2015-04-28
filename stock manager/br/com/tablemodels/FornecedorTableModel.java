@@ -3,7 +3,6 @@ package com.tablemodels;
 import java.util.List;
 
 import com.dominio.Fornecedor;
-import com.dominio.Telefone;
 
 public class FornecedorTableModel extends DefaultTableModel<Fornecedor> {
 
@@ -11,14 +10,15 @@ public class FornecedorTableModel extends DefaultTableModel<Fornecedor> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final String[] colunas = new String[] { "id", "Nome",
+			"Telefone", "Email", "Site" };
 
 	public FornecedorTableModel() {
-		super(new String[] { "id", "Nome", "Telefone", "Email", "Site" });
+		super(colunas);
 	}
 
 	public FornecedorTableModel(List<Fornecedor> linhas) {
-		super(new String[] { "id", "Nome", "Telefone", "Email", "Site" },
-				linhas);
+		super(colunas, linhas);
 	}
 
 	@Override
@@ -53,9 +53,9 @@ public class FornecedorTableModel extends DefaultTableModel<Fornecedor> {
 		}
 	}
 
-//	@Override
-//	public long getId(int linha) {
-//		return getLinhas().get(linha).getFornecedorId();
-//	}
+	// @Override
+	// public long getId(int linha) {
+	// return getLinhas().get(linha).getFornecedorId();
+	// }
 
 }

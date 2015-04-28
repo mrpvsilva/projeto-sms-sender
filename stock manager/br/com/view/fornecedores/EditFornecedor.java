@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -33,6 +31,7 @@ import com.tablemodels.DefaultTableModel;
 import com.tablemodels.TelefoneTableModel;
 
 import javax.swing.ImageIcon;
+import java.awt.Font;
 
 public class EditFornecedor extends JDialog implements ActionListener {
 
@@ -91,11 +90,13 @@ public class EditFornecedor extends JDialog implements ActionListener {
 		panelnomeproduto.setLayout(null);
 
 		JLabel lblNomeDoProduto = new JLabel("Nome do fornecedor");
+		lblNomeDoProduto.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNomeDoProduto.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNomeDoProduto.setBounds(10, 10, 118, 14);
+		lblNomeDoProduto.setBounds(10, 10, 136, 14);
 		panelnomeproduto.add(lblNomeDoProduto);
 
 		tfnome = new JTextField();
+		tfnome.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tfnome.setHorizontalAlignment(SwingConstants.LEFT);
 		tfnome.setBounds(10, 30, 404, 20);
 		panelnomeproduto.add(tfnome);
@@ -108,11 +109,13 @@ public class EditFornecedor extends JDialog implements ActionListener {
 		panel.setLayout(null);
 
 		JLabel lblCusto = new JLabel("Email");
+		lblCusto.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCusto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCusto.setBounds(10, 10, 36, 14);
 		panel.add(lblCusto);
 
 		tfemail = new JTextField();
+		tfemail.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tfemail.setHorizontalAlignment(SwingConstants.LEFT);
 		tfemail.setBounds(10, 30, 404, 20);
 		panel.add(tfemail);
@@ -125,12 +128,14 @@ public class EditFornecedor extends JDialog implements ActionListener {
 		panel_1.setLayout(null);
 
 		tfsite = new JTextField();
+		tfsite.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tfsite.setHorizontalAlignment(SwingConstants.LEFT);
 		tfsite.setBounds(10, 30, 404, 20);
 		tfsite.setColumns(10);
 		panel_1.add(tfsite);
 
 		JLabel lblValor = new JLabel("Site");
+		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblValor.setBounds(10, 10, 34, 14);
 		lblValor.setHorizontalAlignment(SwingConstants.LEFT);
 		panel_1.add(lblValor);
@@ -142,7 +147,8 @@ public class EditFornecedor extends JDialog implements ActionListener {
 		panel_2.setLayout(null);
 
 		JLabel lblQuantidade = new JLabel("Telefones");
-		lblQuantidade.setBounds(10, 10, 70, 14);
+		lblQuantidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblQuantidade.setBounds(10, 10, 79, 14);
 		panel_2.add(lblQuantidade);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -151,6 +157,7 @@ public class EditFornecedor extends JDialog implements ActionListener {
 		panel_2.add(scrollPane);
 
 		table = new JTable(tableModelTelefone);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getSelectionModel().addListSelectionListener(
 				new ListSelectionListener() {
@@ -229,6 +236,7 @@ public class EditFornecedor extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				okButton = new JButton("Salvar");
+				okButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				okButton.addActionListener(this);
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
@@ -236,6 +244,7 @@ public class EditFornecedor extends JDialog implements ActionListener {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

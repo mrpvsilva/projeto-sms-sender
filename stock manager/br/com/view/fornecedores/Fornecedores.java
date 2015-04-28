@@ -25,10 +25,9 @@ import com.tablemodels.FornecedorTableModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Font;
 
 public class Fornecedores extends JPanel {
 	private JTextField textField;
@@ -50,9 +49,11 @@ public class Fornecedores extends JPanel {
 		add(filtrospane, BorderLayout.NORTH);
 
 		JLabel lblNomeDoFornecedor = new JLabel("Nome do fornecedor");
+		lblNomeDoFornecedor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		filtrospane.add(lblNomeDoFornecedor);
 
 		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -68,6 +69,7 @@ public class Fornecedores extends JPanel {
 		textField.setColumns(30);
 
 		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnPesquisar.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -91,6 +93,7 @@ public class Fornecedores extends JPanel {
 		gridpane.add(scrollPane);
 
 		table = new JTable(tablemodel);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getSelectionModel().addListSelectionListener(
 				new ListSelectionListener() {
@@ -119,7 +122,8 @@ public class Fornecedores extends JPanel {
 		add(buttonspane, BorderLayout.SOUTH);
 		buttonspane.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 
-		JButton btnNovo = new JButton("Novo");
+		JButton btnNovo = new JButton("Novo fornecedor");
+		btnNovo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EditFornecedor ef = new EditFornecedor(null, tablemodel);
@@ -128,7 +132,8 @@ public class Fornecedores extends JPanel {
 		});
 		buttonspane.add(btnNovo);
 
-		btnAlterar = new JButton("Alterar");
+		btnAlterar = new JButton("Alterar fornecedor");
+		btnAlterar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnAlterar.setEnabled(false);
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
