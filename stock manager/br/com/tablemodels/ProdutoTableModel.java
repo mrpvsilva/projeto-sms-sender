@@ -49,8 +49,7 @@ public class ProdutoTableModel extends DefaultTableModel<Produto> {
 		case 2:
 			return NumberFormat.getCurrencyInstance().format(p.getCusto());
 		case 3:
-			return NumberFormat.getCurrencyInstance().format(
-					p.getValorUnitario());
+			return NumberFormat.getCurrencyInstance().format(p.getValorUnitario());
 		case 4:
 			return p.getQuantidade();
 
