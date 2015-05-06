@@ -41,7 +41,6 @@ public class Produtos extends JPanel {
 	private ProdutoController pc;
 	private JTextField tfnome;
 	private JButton btnAlterar;
-	private JButton btnAdicionarAoCarrinho;
 	private JButton btnEntradaDeEstoque;
 
 	/**
@@ -114,7 +113,7 @@ public class Produtos extends JPanel {
 							return;
 
 						btnAlterar.setEnabled(true);
-						btnAdicionarAoCarrinho.setEnabled(true);
+					
 						btnEntradaDeEstoque.setEnabled(true);
 
 					}
@@ -123,8 +122,7 @@ public class Produtos extends JPanel {
 
 			@Override
 			public void tableChanged(TableModelEvent e) {
-				btnAlterar.setEnabled(false);
-				btnAdicionarAoCarrinho.setEnabled(false);
+				btnAlterar.setEnabled(false);			
 				btnEntradaDeEstoque.setEnabled(false);
 
 			}
@@ -169,29 +167,6 @@ public class Produtos extends JPanel {
 			}
 		});
 		buttonpane.add(btnAlterar);
-
-		btnAdicionarAoCarrinho = new JButton("Adicionar ao carrinho");
-		btnAdicionarAoCarrinho.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnAdicionarAoCarrinho.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int linha = table.getSelectedRow();
-				if (linha > -1) {
-					Produto p = produtosModel.find(linha);
-					if (p.getQuantidade() > 0) {
-						new Quantidade(p).setVisible(true);
-					} else {
-						JOptionPane.showMessageDialog(null,
-								"Não há produto em estoque", "Atenção",
-								JOptionPane.WARNING_MESSAGE);
-					}
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"Selecione um produto.", "Atenção!",
-							JOptionPane.WARNING_MESSAGE);
-				}
-
-			}
-		});
 		
 				btnEntradaDeEstoque = new JButton("Entrada de estoque");
 				btnEntradaDeEstoque.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -210,8 +185,6 @@ public class Produtos extends JPanel {
 				});
 				btnEntradaDeEstoque.setEnabled(false);
 				buttonpane.add(btnEntradaDeEstoque);
-		btnAdicionarAoCarrinho.setEnabled(false);
-		buttonpane.add(btnAdicionarAoCarrinho);
 
 		JPanel left = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) left.getLayout();

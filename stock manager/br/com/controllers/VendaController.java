@@ -31,4 +31,8 @@ public class VendaController {
 
 		}
 	}
+
+	public List<Produto> pesquisarProduto(String pesquisa) {
+		return db.Produtos.findAll(pesquisa);
+	}
 }
