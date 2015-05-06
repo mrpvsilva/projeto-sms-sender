@@ -51,7 +51,7 @@ public abstract class DefaultTableModel<E> extends AbstractTableModel {
 		return linhas.get(linha);
 	}
 
-	//public abstract long getId(int linha);
+	// public abstract long getId(int linha);
 
 	public abstract Class getColumnClass(int col);
 
@@ -76,6 +76,13 @@ public abstract class DefaultTableModel<E> extends AbstractTableModel {
 	@Override
 	public int getRowCount() {
 		return linhas.size();
+	}
+
+	public void clear() {
+		if (!linhas.isEmpty()) {
+			linhas.clear();
+			this.fireTableDataChanged();
+		}
 	}
 
 }
