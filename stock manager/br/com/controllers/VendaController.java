@@ -35,4 +35,16 @@ public class VendaController {
 	public List<Produto> pesquisarProduto(String pesquisa) {
 		return db.Produtos.findAll(pesquisa);
 	}
+
+	public void gerarRelatorioVendas(String tipoRelatorio) {
+		switch (tipoRelatorio) {
+		case "Mês":
+			break;
+			
+		case "Dia":
+			break;
+
+		}
+
+	}
 }
