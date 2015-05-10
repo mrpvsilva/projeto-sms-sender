@@ -156,6 +156,14 @@ public class Caixa extends JPanel {
 		btnFinalizarVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnFinalizarVenda.setEnabled(false);
+				try {
+					venda.setDesconto(tfdesconto.getValor()!=null?tfdesconto.getValor():new BigDecimal(0));
+					venda.setValorRecebido(tfvalorpago.getValor());
+					venda.setTroco(tftroco.getValor());
+				} catch (BadLocationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				controller.cadastrar(venda);
 				Carrinho.limparCarrinho();
 				carregarVenda();
@@ -315,7 +323,7 @@ public class Caixa extends JPanel {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				String txt = txtpsq.getText();
-				if (e.getKeyCode() == 10 || txt.length() > 2) {
+				if (e.getKeyCode() == 10 || txt.length() > 1) {
 					pesquisarProduto();
 				} else {
 					tableModelProdutos.clear();

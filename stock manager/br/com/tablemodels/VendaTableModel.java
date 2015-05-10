@@ -11,7 +11,7 @@ import com.dominio.Venda;
 public class VendaTableModel extends DefaultTableModel<Venda> {
 
 	private static final String[] colunas = new String[] { "id",
-			"Data da venda", "Valor Total", "Valor desconto" };
+			"Data da venda", "Valor total", "Valor desconto" };
 
 	public VendaTableModel() {
 		super(colunas);

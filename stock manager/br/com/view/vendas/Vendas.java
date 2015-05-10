@@ -21,6 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
+import net.sf.jasperreports.engine.JRException;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -29,7 +31,6 @@ public class Vendas extends JPanel {
 	private JTable table;
 	private DefaultTableModel<Venda> tableModelVenda;
 	private VendaController vc;
-
 
 	/**
 	 * Create the panel.
@@ -53,8 +54,6 @@ public class Vendas extends JPanel {
 		JPanel top = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) top.getLayout();
 		add(top, BorderLayout.NORTH);
-
-		
 
 		JPanel bottom = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) bottom.getLayout();
@@ -89,8 +88,7 @@ public class Vendas extends JPanel {
 		lblRelatrio.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_1.add(lblRelatrio);
 
-		JComboBox comboBox = new JComboBox(new String[] { "Mês",
-				"Dia" });
+		JComboBox comboBox = new JComboBox(new String[] { "Mês", "Dia" });
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_1.add(comboBox);
 
@@ -98,7 +96,13 @@ public class Vendas extends JPanel {
 		btnGerar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String tipo = comboBox.getSelectedItem().toString();
-				
+				try {
+					vc.gerarRelatorioVendas(tipo);
+				} catch (JRException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			}
 		});
 		btnGerar.setFont(new Font("Tahoma", Font.PLAIN, 15));
