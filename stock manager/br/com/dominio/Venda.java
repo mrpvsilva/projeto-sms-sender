@@ -32,6 +32,8 @@ public class Venda implements Validate {
 	private BigDecimal valortotal;
 	@Column
 	private BigDecimal desconto;
+	private BigDecimal valorRecebido;
+	private BigDecimal troco;
 	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ProdutoVendido> produtosvendidos;
 
@@ -75,6 +77,22 @@ public class Venda implements Validate {
 		this.desconto = desconto;
 	}
 
+	public BigDecimal getValorRecebido() {
+		return valorRecebido;
+	}
+
+	public void setValorRecebido(BigDecimal valorRecebido) {
+		this.valorRecebido = valorRecebido;
+	}
+
+	public BigDecimal getTroco() {
+		return troco;
+	}
+
+	public void setTroco(BigDecimal troco) {
+		this.troco = troco;
+	}
+
 	public List<ProdutoVendido> getProdutosvendidos() {
 		return produtosvendidos;
 	}
@@ -83,7 +101,7 @@ public class Venda implements Validate {
 		this.produtosvendidos = produtosvendidos;
 	}
 
-	public void addProduto(Produto produto, int quantidade) {		
+	public void addProduto(Produto produto, int quantidade) {
 		ProdutoVendido pv = new ProdutoVendido(this, produto, quantidade);
 		produtosvendidos.add(pv);
 		this.valortotal = this.valortotal.add(pv.getSubTotal());

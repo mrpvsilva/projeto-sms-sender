@@ -1,5 +1,5 @@
 /*agrupamento por dia*/
-SELECT Date(dataHoraVenda) as Data,sum(valorTotal) as Valor FROM stock.vendas group by Date(dataHoraVenda) order by Data desc;
+SELECT Date(dataHoraVenda) as data,sum(valorTotal) as valor FROM stock.vendas group by Date(dataHoraVenda) order by Data desc;
 
 /*agrupamento por mês*/
 SELECT  MONTH(dataHoraVenda) as Mes,sum(valorTotal) as Valor FROM stock.vendas group by MONTH(dataHoraVenda);

@@ -2,8 +2,6 @@ package com.view.home;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -35,7 +33,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import java.awt.Toolkit;
-import java.awt.FlowLayout;
 
 public class Desktop extends JFrame {
 
@@ -44,6 +41,7 @@ public class Desktop extends JFrame {
 	private JLabel relogio;
 
 	public Desktop() {
+		setExtendedState(MAXIMIZED_BOTH);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Desktop.class.getResource("/imagens/logo_small.png")));
 

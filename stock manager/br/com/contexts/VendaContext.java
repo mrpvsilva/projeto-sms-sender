@@ -1,7 +1,6 @@
 package com.contexts;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,9 +36,7 @@ public class VendaContext extends BaseContext<Venda> implements IVendaContext {
 		open();
 		Calendar cal = Calendar.getInstance();
 
-		String q = String
-				.format("SELECT Date(dataHoraVenda) as data,sum(valorTotal) as valor FROM vendas where dataHoraVenda between '%s-%s-01' and now() group by MONTH(dataHoraVenda)",
-						cal.get(Calendar.YEAR), cal.get(Calendar.MONTH));
+		String q = "SELECT Date(dataHoraVenda) as data,sum(valorTotal) as valor FROM vendas  group by Date(dataHoraVenda)";
 		Query query = manager.createNativeQuery(q);
 		List<Object[]> lista = query.getResultList();
 
@@ -59,7 +56,7 @@ public class VendaContext extends BaseContext<Venda> implements IVendaContext {
 		open();
 		Calendar cal = Calendar.getInstance();
 		String q = String
-				.format("SELECT MONTH(dataHoraVenda) as mes,sum(valorTotal) as valor FROM vendas  where dataHoraVenda between '%s-01-01' and now() group by MONTH(dataHoraVenda)",
+				.format("SELECT MONTH(dataHoraVenda) as mes,sum(valorTotal) as valor FROM vendas  group by MONTH(dataHoraVenda)",
 						cal.get(Calendar.YEAR));
 		Query query = manager.createNativeQuery(q);
 
