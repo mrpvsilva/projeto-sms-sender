@@ -116,6 +116,7 @@ public class Desktop extends JFrame {
 		menubar.add(fornecedores);
 		
 		JButton vendas = new JButton("");
+		vendas.setToolTipText("Vendas");
 		vendas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				body.removeAll();

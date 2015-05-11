@@ -13,6 +13,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 import com.dominio.Produto;
 import com.dominio.ProdutoVendido;
@@ -53,33 +54,30 @@ public class VendaController {
 		InputStream path;
 
 		JasperReport report;
-		JasperPrint print;
+		JasperPrint print = null;
 		switch (tipoRelatorio) {
 		case "Mês":
 			path = EditFornecedor.class
-					.getResourceAsStream("/relatorios/vendasmes.jasper");
-			//report = JasperCompileManager. (path);
+					.getResourceAsStream("/relatorios/vendasmes.jrxml");
+			report = JasperCompileManager.compileReport(path);
 			print = JasperFillManager
-					.fillReport(path, null, new JRBeanCollectionDataSource(
+					.fillReport(report, null, new JRBeanCollectionDataSource(
 							db.Vendas.buscarVendasMes()));
-			JasperExportManager.exportReportToPdfFile(print,
-					"C:/Users/Acer/Desktop/vendasmes.pdf");
 			break;
 
 		case "Dia":
 			path = EditFornecedor.class
-					.getResourceAsStream("/relatorios/vendasdia.jasper");
-			//report = JasperCompileManager.compileReport(path);
+					.getResourceAsStream("/relatorios/vendasdia.jrxml");
+			report = JasperCompileManager.compileReport(path);
 			print = JasperFillManager
-					.fillReport(path, null, new JRBeanCollectionDataSource(
+					.fillReport(report, null, new JRBeanCollectionDataSource(
 							db.Vendas.buscarVendasDia()));
-			JasperExportManager.exportReportToPdfFile(print,
-					"C:/Users/Acer/Desktop/vendasdia.pdf");
+
 			break;
 
 		}
 
-		JOptionPane.showMessageDialog(null, "Relátorio gerado com sucesso");
+		JasperViewer.viewReport(print,false);
 
 	}
 
