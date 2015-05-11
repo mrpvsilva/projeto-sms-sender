@@ -71,6 +71,10 @@ public class Produto implements Serializable, Validate {
 		this.quantidade = quantidade;
 	}
 
+	public void EntrarEstoque(int quantidade) {
+		this.quantidade = this.quantidade + quantidade;
+	}
+
 	@Override
 	public String valid() {
 		if (this.nome.isEmpty())

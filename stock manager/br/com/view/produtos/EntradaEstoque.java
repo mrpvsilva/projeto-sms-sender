@@ -114,7 +114,7 @@ public class EntradaEstoque extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						if (!tfqtd.getText().isEmpty()) {
 							int q = Integer.parseInt(tfqtd.getText());
-							produto.setQuantidade(q + produto.getQuantidade());
+							produto.EntrarEstoque(q);
 							controller.alterar(produto);
 							tableModel.setLinhas(controller.listarTodos());
 							JOptionPane.showMessageDialog(null,
