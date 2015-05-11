@@ -1,5 +1,7 @@
 package com.controllers;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -16,6 +18,7 @@ import com.dominio.Produto;
 import com.dominio.ProdutoVendido;
 import com.dominio.Venda;
 import com.repositorios.StockEntities;
+import com.view.fornecedores.EditFornecedor;
 
 public class VendaController {
 	private StockEntities db;
@@ -47,25 +50,28 @@ public class VendaController {
 	}
 
 	public void gerarRelatorioVendas(String tipoRelatorio) throws JRException {
-		String path = "./br/relatorios/";
+		InputStream path;
+
 		JasperReport report;
 		JasperPrint print;
 		switch (tipoRelatorio) {
 		case "Mês":
-			path += "vendasmes.jrxml";
-			report = JasperCompileManager.compileReport(path);
+			path = EditFornecedor.class
+					.getResourceAsStream("/relatorios/vendasmes.jasper");
+			//report = JasperCompileManager. (path);
 			print = JasperFillManager
-					.fillReport(report, null, new JRBeanCollectionDataSource(
+					.fillReport(path, null, new JRBeanCollectionDataSource(
 							db.Vendas.buscarVendasMes()));
 			JasperExportManager.exportReportToPdfFile(print,
 					"C:/Users/Acer/Desktop/vendasmes.pdf");
 			break;
 
 		case "Dia":
-			path += "vendasdia.jrxml";
-			report = JasperCompileManager.compileReport(path);
+			path = EditFornecedor.class
+					.getResourceAsStream("/relatorios/vendasdia.jasper");
+			//report = JasperCompileManager.compileReport(path);
 			print = JasperFillManager
-					.fillReport(report, null, new JRBeanCollectionDataSource(
+					.fillReport(path, null, new JRBeanCollectionDataSource(
 							db.Vendas.buscarVendasDia()));
 			JasperExportManager.exportReportToPdfFile(print,
 					"C:/Users/Acer/Desktop/vendasdia.pdf");
@@ -80,6 +86,7 @@ public class VendaController {
 	public static void main(String[] args) {
 
 		try {
+
 			new VendaController().gerarRelatorioVendas("Dia");
 		} catch (JRException e) {
 			// TODO Auto-generated catch block
