@@ -28,6 +28,10 @@ import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 
 import java.awt.Toolkit;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JRadioButton;
+import javax.swing.JCheckBox;
 
 public class JDTelaCadItem extends JDialog implements ActionListener {
 
@@ -40,7 +44,6 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 	private JTextArea JTADescItem;
 	private JMoneyField JMFVlrCusto;
 	private JMoneyField JMFVlrCom;
-	private JComboBox<String> JCBStatus;
 	private Extras ext = new Extras();
 	private JButton JBSalvServ;
 	private JButton JBNovoServ;
@@ -50,6 +53,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 	private JButton JBSair;
 	private Item item;
 	private AbstractDefaultTableModel<Item> model;
+	private JCheckBox chckbxAtivo;
 
 	/**
 	 * Launch the application.
@@ -77,7 +81,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				JDTelaCadItem.class.getResource("/Img/CNPJ G200.png")));
 
-		setBounds(100, 100, 450, 349);
+		setBounds(100, 100, 510, 373);
 		setTitle("SIGA - cadastrar item");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -85,66 +89,75 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 		{
 			JLabel JLItem = new JLabel("Item");
-			JLItem.setBounds(10, 11, 46, 14);
+			JLItem.setHorizontalAlignment(SwingConstants.RIGHT);
+			JLItem.setFont(new Font("Tahoma", Font.BOLD, 13));
+			JLItem.setBounds(0, 11, 110, 14);
 			contentPanel.add(JLItem);
 		}
 		{
 			JLabel JLDesItem = new JLabel("Descri\u00E7\u00E3o");
-			JLDesItem.setBounds(10, 43, 106, 14);
+			JLDesItem.setHorizontalAlignment(SwingConstants.RIGHT);
+			JLDesItem.setFont(new Font("Tahoma", Font.BOLD, 13));
+			JLDesItem.setBounds(0, 43, 110, 14);
 			contentPanel.add(JLDesItem);
 		}
 		{
 			JTFItem = new JTextField();
-			JTFItem.setBounds(101, 8, 323, 20);
+			JTFItem.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			JTFItem.setBounds(120, 11, 349, 20);
 			contentPanel.add(JTFItem);
 			JTFItem.setColumns(10);
 		}
 
 		JTADescItem = new JTextArea();
+		JTADescItem.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		JTADescItem.setLineWrap(true);
 		JTADescItem.setWrapStyleWord(true);
-		JTADescItem.setBounds(101, 43, 323, 108);
+		JTADescItem.setBounds(120, 46, 349, 108);
 		contentPanel.add(JTADescItem);
 
 		JLabel JLValorCusto = new JLabel("Valor custo");
-		JLValorCusto.setBounds(10, 163, 72, 14);
+		JLValorCusto.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLValorCusto.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLValorCusto.setBounds(0, 163, 110, 14);
 		contentPanel.add(JLValorCusto);
 
 		JMFVlrCusto = new JMoneyField();
-		JMFVlrCusto.setBounds(101, 160, 170, 20);
+		JMFVlrCusto.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JMFVlrCusto.setBounds(120, 163, 170, 20);
 		contentPanel.add(JMFVlrCusto);
 		{
 			JLabel lblValorComercial = new JLabel("Valor comercial");
-			lblValorComercial.setBounds(10, 191, 90, 14);
+			lblValorComercial.setHorizontalAlignment(SwingConstants.RIGHT);
+			lblValorComercial.setFont(new Font("Tahoma", Font.BOLD, 13));
+			lblValorComercial.setBounds(0, 191, 110, 14);
 			contentPanel.add(lblValorComercial);
 		}
 
 		JMFVlrCom = new JMoneyField();
-		JMFVlrCom.setBounds(101, 188, 170, 20);
+		JMFVlrCom.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JMFVlrCom.setBounds(120, 191, 170, 20);
 		contentPanel.add(JMFVlrCom);
 		{
-			JLabel JLAtivo = new JLabel("Ativo");
-			JLAtivo.setBounds(281, 163, 37, 14);
-			contentPanel.add(JLAtivo);
-		}
-		{
-			JCBStatus = new JComboBox<String>();
-			for (String i : ext.Status()) {
-				JCBStatus.addItem(i);
-			}
-			JCBStatus.setBounds(317, 160, 107, 20);
-			contentPanel.add(JCBStatus);
-		}
-		{
 			lblTipoDeServio = new JLabel("Tipo de servi\u00E7o");
-			lblTipoDeServio.setBounds(10, 222, 90, 14);
+			lblTipoDeServio.setHorizontalAlignment(SwingConstants.RIGHT);
+			lblTipoDeServio.setFont(new Font("Tahoma", Font.BOLD, 13));
+			lblTipoDeServio.setBounds(0, 222, 110, 14);
 			contentPanel.add(lblTipoDeServio);
 		}
 		{
 			ddlTipoItem = new JComboBox(sc.DDLTipoServico());
-			ddlTipoItem.setBounds(101, 219, 170, 20);
+			ddlTipoItem.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			ddlTipoItem.setBounds(120, 222, 170, 20);
 			contentPanel.add(ddlTipoItem);
 		}
+
+		chckbxAtivo = new JCheckBox("Ativo");
+		chckbxAtivo.setSelected(true);
+		chckbxAtivo.setHorizontalAlignment(SwingConstants.RIGHT);
+		chckbxAtivo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		chckbxAtivo.setBounds(339, 163, 130, 23);
+		contentPanel.add(chckbxAtivo);
 
 		{
 			JPanel buttonPane = new JPanel();
@@ -152,6 +165,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvServ = new JButton("Salvar");
+				JBSalvServ.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBSalvServ.setIcon(new ImageIcon(JDTelaCadItem.class
 						.getResource("/Img/Confirmar.png")));
 				JBSalvServ.setMnemonic(KeyEvent.VK_S);
@@ -161,6 +175,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 			}
 			{
 				JBNovoServ = new JButton("Novo");
+				JBNovoServ.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBNovoServ.setIcon(new ImageIcon(JDTelaCadItem.class
 						.getResource("/Img/window_new16.png")));
 				JBNovoServ.addActionListener(this);
@@ -169,6 +184,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 			}
 			{
 				JBSair = new JButton("Sair");
+				JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBSair.setIcon(new ImageIcon(JDTelaCadItem.class
 						.getResource("/Img/exit16.png")));
 				JBSair.addActionListener(this);
@@ -232,7 +248,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 				JTADescItem.setText("");
 				JMFVlrCusto.setText("");
 				JMFVlrCom.setText("");
-				JCBStatus.setSelectedItem("ATIVO");
+				chckbxAtivo.setSelected(true);
 
 			}// final da confirmação
 
@@ -247,7 +263,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 
 		item.setNome(JTFItem.getText());
 		item.setDescricao(JTADescItem.getText());
-		item.setAtivo(JCBStatus.getSelectedIndex() == 0 ? true : false);
+		item.setAtivo(chckbxAtivo.isSelected());
 		item.setTipoitem(sc.buscarTipoItem(ddlTipoItem.getSelectedItem()
 				.toString()));
 
@@ -275,7 +291,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 		item = new Item();
 		item.setNome(JTFItem.getText());
 		item.setDescricao(JTADescItem.getText());
-		item.setAtivo(JCBStatus.getSelectedIndex() == 0 ? true : false);
+		item.setAtivo(chckbxAtivo.isSelected());
 		item.setTipoitem(sc.buscarTipoItem(ddlTipoItem.getSelectedItem()
 				.toString()));
 
@@ -312,8 +328,8 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 		JTADescItem.setText(item.getDescricao());
 		JMFVlrCusto.setValor(item.getValorCusto());
 		JMFVlrCom.setValor(item.getValorComercial());
-		JCBStatus.setSelectedItem(item.isAtivo() ? "ATIVO" : "INATIVO");
 		ddlTipoItem.setSelectedItem(item.getTipoitem().getNome());
+		chckbxAtivo.setSelected(item.isAtivo());
 
 	}
 }

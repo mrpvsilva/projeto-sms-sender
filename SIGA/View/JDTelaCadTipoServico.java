@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 import Control.TipoServicoControl;
 import Dominio.TipoServico;
 import TableModels.AbstractDefaultTableModel;
+import java.awt.Font;
 
 public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 
@@ -55,16 +56,19 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 
 		JLabel lblNome = new JLabel("Nome");
+		lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNome.setBounds(0, 37, 42, 14);
 		contentPanel.add(lblNome);
 
 		tfNome = new JTextField();
+		tfNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		tfNome.setBounds(52, 34, 179, 20);
 		contentPanel.add(tfNome);
 		tfNome.setColumns(10);
 
 		chkAtivo = new JCheckBox("Ativo");
+		chkAtivo.setFont(new Font("Tahoma", Font.BOLD, 13));
 		chkAtivo.setSelected(true);
 		chkAtivo.setBounds(237, 33, 97, 23);
 		contentPanel.add(chkAtivo);
@@ -74,6 +78,7 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvar = new JButton("Salvar");
+				JBSalvar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBSalvar.setIcon(new ImageIcon(JDTelaCadTipoServico.class
 						.getResource("/Img/Confirmar.png")));
 				JBSalvar.setMnemonic(KeyEvent.VK_S);
@@ -84,6 +89,7 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 			{
 
 				JBNovo = new JButton("Novo");
+				JBNovo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBNovo.setIcon(new ImageIcon(JDTelaCadTipoServico.class
 						.getResource("/Img/window_new16.png")));
 				JBNovo.setMnemonic(KeyEvent.VK_N);
@@ -91,6 +97,7 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 
 			}
 			JBSair = new JButton("Sair");
+			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JBSair.setIcon(new ImageIcon(JDTelaCadTipoServico.class
 					.getResource("/Img/exit16.png")));
 			JBSair.setMnemonic(KeyEvent.VK_Q);

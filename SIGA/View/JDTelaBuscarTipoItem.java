@@ -16,7 +16,10 @@ import javax.swing.JTable;
 
 import TableModels.AbstractDefaultTableModel;
 import TableModels.TipoItemTableModel;
+import Util.Modulos;
+import Util.PermissoesManager;
 import Control.TipoItemControl;
+import Dominio.Permissao;
 import Dominio.TipoItem;
 
 import javax.swing.JLabel;
@@ -26,6 +29,7 @@ import javax.swing.DefaultComboBoxModel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Font;
 
 public class JDTelaBuscarTipoItem extends JDialog implements ActionListener {
 
@@ -44,8 +48,10 @@ public class JDTelaBuscarTipoItem extends JDialog implements ActionListener {
 	private JLabel lblAtivo;
 	private JTextField tffiltronome;
 	private JComboBox<String> jcfiltroativo;
+	private Permissao permissao;
 
 	public JDTelaBuscarTipoItem() {
+		permissao = PermissoesManager.buscarPermissao(Modulos.Tipo_itens);
 		setModal(true);
 		setResizable(false);
 		setBounds(100, 100, 304, 439);
@@ -60,21 +66,25 @@ public class JDTelaBuscarTipoItem extends JDialog implements ActionListener {
 
 		model = new TipoItemTableModel(tipoItemControl.ListarTodos());
 		table = new JTable(model);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		table.getColumnModel().getColumn(0).setMinWidth(0);
 		table.getColumnModel().getColumn(0).setMaxWidth(0);
 		scrollPane.setViewportView(table);
 		{
 			lblNome = new JLabel("Nome");
+			lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblNome.setBounds(30, 14, 46, 14);
 			contentPanel.add(lblNome);
 		}
 		{
 			lblAtivo = new JLabel("Ativo");
+			lblAtivo.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblAtivo.setBounds(30, 42, 46, 14);
 			contentPanel.add(lblAtivo);
 		}
 		{
 			tffiltronome = new JTextField();
+			tffiltronome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			tffiltronome.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent e) {
@@ -90,6 +100,7 @@ public class JDTelaBuscarTipoItem extends JDialog implements ActionListener {
 		}
 
 		jcfiltroativo = new JComboBox<String>();
+		jcfiltroativo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jcfiltroativo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -104,6 +115,7 @@ public class JDTelaBuscarTipoItem extends JDialog implements ActionListener {
 		contentPanel.add(jcfiltroativo);
 
 		btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnPesquisar.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -121,6 +133,8 @@ public class JDTelaBuscarTipoItem extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				okButton = new JButton("Cadastrar");
+				okButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				okButton.setVisible(permissao.isCadastrar());
 				okButton.setActionCommand("OK");
 				okButton.addActionListener(this);
 				buttonPane.add(okButton);
@@ -128,6 +142,8 @@ public class JDTelaBuscarTipoItem extends JDialog implements ActionListener {
 			}
 			{
 				cancelButton = new JButton("Alterar");
+				cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				cancelButton.setVisible(permissao.isAlterar());
 				cancelButton.setActionCommand("Cancel");
 				cancelButton.addActionListener(this);
 				buttonPane.add(cancelButton);

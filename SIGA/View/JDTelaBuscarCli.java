@@ -23,8 +23,14 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
 import Control.ClientesControl;
+import Dominio.Permissao;
+import Interfaces.IAcessoManager;
+import Managers.AcessoManager;
+import Util.Modulos;
+import Util.PermissoesManager;
 
 import javax.swing.ImageIcon;
+
 import java.awt.Toolkit;
 
 public class JDTelaBuscarCli extends JDialog implements ActionListener{
@@ -45,7 +51,8 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener{
 	private JTable tabela;
 	private DefaultTableModel model;
 	protected String valor;
-	private JButton JBSair;
+	private JButton JBSair;	
+	private Permissao Clientes;
 	
 	/**
 	 * Launch the application.
@@ -64,6 +71,8 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public JDTelaBuscarCli() {
+		
+		Clientes = PermissoesManager.buscarPermissao(Modulos.Clientes);
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(JDTelaBuscarCli.class.getResource("/Img/CNPJ G200.png")));
@@ -159,6 +168,7 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener{
 				JBCadCli.setIcon(new ImageIcon(JDTelaBuscarCli.class.getResource("/Img/save16.png")));
 				JBCadCli.addActionListener(this);
 				JBCadCli.setMnemonic(KeyEvent.VK_C);
+				JBCadCli.setVisible(Clientes.isCadastrar());
 				buttonPane.add(JBCadCli);
 				getRootPane().setDefaultButton(JBCadCli);
 			}
@@ -166,6 +176,7 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener{
 				JBEditCli = new JButton("Editar");
 				JBEditCli.setIcon(new ImageIcon(JDTelaBuscarCli.class.getResource("/Img/edit_add16.png")));
 				JBEditCli.setMnemonic(KeyEvent.VK_E);
+				JBEditCli.setVisible(Clientes.isAlterar());
 				JBEditCli.addActionListener(this);
 				buttonPane.add(JBEditCli);
 			}
@@ -185,7 +196,7 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener{
 		if(acao.getSource() == JBCadCli){
 			
 			try {
-				JDTelaCadCli cdtcc = new JDTelaCadCli();
+				JDTelaFormCliente cdtcc = new JDTelaFormCliente();
 				cdtcc.setVisible(true);
 				cdtcc.setLocationRelativeTo(null);
 			} catch (ParseException e) {
@@ -196,13 +207,13 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener{
 		
 		if(acao.getSource() == JBEditCli){
 			
-			try {
-				JDTelaEditCli jdtec = new JDTelaEditCli();
-				jdtec.setVisible(true);
-				jdtec.setLocationRelativeTo(null);
-			} catch (ParseException e) {
-				JOptionPane.showMessageDialog(null, "Erro ao carregar máscaras","Error",JOptionPane.ERROR_MESSAGE);
-			}// final do try e catch
+//			try {
+////				JDTelaEditCli jdtec = new JDTelaEditCli();
+////				jdtec.setVisible(true);
+////				jdtec.setLocationRelativeTo(null);
+//			} catch (ParseException e) {
+//				JOptionPane.showMessageDialog(null, "Erro ao carregar máscaras","Error",JOptionPane.ERROR_MESSAGE);
+//			}// final do try e catch
 			
 		}// final do botão atualizar cliente
 		

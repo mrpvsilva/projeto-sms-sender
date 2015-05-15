@@ -18,6 +18,8 @@ import Dominio.Permissao;
 import TableModels.AbstractDefaultTableModel;
 import TableModels.PerfilTableModel;
 import TableModels.PermissaoTableModel;
+import Util.Modulos;
+import Util.PermissoesManager;
 
 import javax.swing.JTable;
 import javax.swing.JTabbedPane;
@@ -25,9 +27,11 @@ import javax.swing.JTabbedPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
 
@@ -40,8 +44,10 @@ public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
 	private JTable tablePerfis;
 	private JTable tablePermissões;
 	private JTextField tfnome;
+	private Permissao Perfis;
 
 	public JDTelaBuscarPerfis() {
+		Perfis = PermissoesManager.buscarPermissao(Modulos.Perfis);
 		setTitle("Buscar perfis");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModal(true);
@@ -60,10 +66,11 @@ public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 86, 262, 483);
+		scrollPane.setBounds(10, 86, 262, 542);
 		contentPanel.add(scrollPane);
 		{
 			tablePerfis = new JTable(tableModelPerfil);
+			tablePerfis.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			tablePerfis.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
@@ -92,16 +99,22 @@ public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
 				panel.add(scrollPane_1);
 
 				tablePermissões = new JTable(tableModelPermissao);
+				tablePermissões.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				tablePermissões.getColumnModel().getColumn(0).setMinWidth(0);
 				tablePermissões.getColumnModel().getColumn(0).setMaxWidth(0);
 				scrollPane_1.setViewportView(tablePermissões);
 			}
 
 			JPanel panel_1 = new JPanel();
+			FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
+			flowLayout.setHgap(15);
+			flowLayout.setAlignment(FlowLayout.LEFT);
 			panel_1.setBounds(10, 472, 701, 38);
 			panel.add(panel_1);
 
 			JButton btnSalvar = new JButton("Salvar");
+			btnSalvar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			btnSalvar.setVisible(Perfis.isAlterar());
 			btnSalvar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
@@ -124,22 +137,25 @@ public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
 
 		JPanel pesquisapanel = new JPanel();
 		pesquisapanel.setBorder(null);
-		pesquisapanel.setBounds(10, 11, 530, 39);
+		pesquisapanel.setBounds(10, 11, 616, 39);
 		contentPanel.add(pesquisapanel);
 		pesquisapanel.setLayout(null);
 
 		JLabel lblNomeDoPerfil = new JLabel("Nome do perfil");
-		lblNomeDoPerfil.setBounds(0, 9, 90, 14);
+		lblNomeDoPerfil.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNomeDoPerfil.setBounds(10, 15, 118, 14);
 		lblNomeDoPerfil.setHorizontalAlignment(SwingConstants.RIGHT);
 		pesquisapanel.add(lblNomeDoPerfil);
 
 		tfnome = new JTextField();
-		tfnome.setBounds(100, 6, 229, 20);
+		tfnome.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		tfnome.setBounds(142, 12, 278, 20);
 		pesquisapanel.add(tfnome);
 		tfnome.setColumns(10);
 
 		JButton btnNewButton = new JButton("Pesquisar");
-		btnNewButton.setBounds(339, 5, 111, 23);
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnNewButton.setBounds(430, 11, 111, 23);
 		pesquisapanel.add(btnNewButton);
 		{
 			JPanel buttonPane = new JPanel();
@@ -147,13 +163,17 @@ public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnCadastrar = new JButton("Cadastrar");
+				btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				btnCadastrar.addActionListener(this);
 				btnCadastrar.setActionCommand("OK");
+				btnCadastrar.setVisible(Perfis.isCadastrar());
 				buttonPane.add(btnCadastrar);
 				getRootPane().setDefaultButton(btnCadastrar);
 			}
 			{
 				btnAlterar = new JButton("Alterar");
+				btnAlterar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				btnAlterar.setVisible(Perfis.isAlterar());
 				btnAlterar.addActionListener(this);
 				btnAlterar.setActionCommand("Cancel");
 				buttonPane.add(btnAlterar);

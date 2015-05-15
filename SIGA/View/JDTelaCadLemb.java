@@ -24,6 +24,8 @@ import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class JDTelaCadLemb extends JDialog implements ActionListener {
 
@@ -39,7 +41,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 	private UtilDateModel model;
 	private JDatePanelImpl datePanel;
 	private JDatePickerImpl datePicker;
-	private JComboBox<String> JCBUsuario;
+	private JComboBox JCBUsuario;
 	private JTextArea JTALemb;
 	private LembretesControl _lembreteControl = new LembretesControl();
 	private JLabel lblAssunto;
@@ -68,68 +70,85 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 				JDTelaCadLemb.class.getResource("/Img/CNPJ G200.png")));
 		setModal(true);
 		setResizable(true);
-		setBounds(100, 100, 450, 341);
+		setBounds(100, 100, 505, 372);
 		setTitle("SIGA - cadastro de lembretes");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JLDataContato = new JLabel("Data contato");
-			JLDataContato.setBounds(10, 53, 74, 14);
+			JLDataContato = new JLabel("Data");
+			JLDataContato.setHorizontalAlignment(SwingConstants.RIGHT);
+			JLDataContato.setFont(new Font("Tahoma", Font.BOLD, 13));
+			JLDataContato.setBounds(0, 53, 96, 14);
 			contentPanel.add(JLDataContato);
 
 			model = new UtilDateModel();
 			datePanel = new JDatePanelImpl(model);
 			datePanel.setPreferredSize(new java.awt.Dimension(202, 182));
 			datePicker = new JDatePickerImpl(datePanel);
-			datePicker.setBounds(99, 53, 154, 30);
+			datePicker.getJFormattedTextField().setFont(new Font("Tahoma", Font.PLAIN, 13));
+			datePicker.setBounds(106, 56, 154, 30);
 			contentPanel.add(datePicker);
 
 		}
 
 		JLabel JLUsuario = new JLabel("Destinatário");
-		JLUsuario.setBounds(10, 95, 74, 14);
+		JLUsuario.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLUsuario.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLUsuario.setBounds(0, 95, 96, 14);
 		contentPanel.add(JLUsuario);
 
-		JCBUsuario = new JComboBox<String>(_lembreteControl.DDLRemetentes());
-		JCBUsuario.setBounds(99, 94, 325, 20);
+		JCBUsuario = new JComboBox(_lembreteControl.DDLRemetentes());
+		JCBUsuario.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JCBUsuario.setBounds(106, 92, 350, 20);
 		contentPanel.add(JCBUsuario);
 
 		JLabel lblLembrete = new JLabel("Lembrete");
-		lblLembrete.setBounds(10, 131, 63, 14);
+		lblLembrete.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblLembrete.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblLembrete.setBounds(0, 131, 96, 14);
 		contentPanel.add(lblLembrete);
 
 		JTALemb = new JTextArea();
 		JTALemb.setLineWrap(true);
-		JTALemb.setBounds(99, 126, 325, 133);
+		JTALemb.setBounds(106, 131, 350, 133);
 		contentPanel.add(JTALemb);
 
 		lblAssunto = new JLabel("Assunto");
-		lblAssunto.setBounds(10, 22, 63, 14);
+		lblAssunto.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblAssunto.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblAssunto.setBounds(0, 22, 96, 14);
 		contentPanel.add(lblAssunto);
 
 		JTFAssunto = new JTextField();
-		JTFAssunto.setBounds(99, 19, 325, 20);
+		JTFAssunto.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JTFAssunto.setBounds(106, 22, 350, 20);
 		contentPanel.add(JTFAssunto);
 		JTFAssunto.setColumns(10);
 
 		JLabel JLHora = new JLabel("Hora");
-		JLHora.setBounds(263, 53, 46, 14);
+		JLHora.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLHora.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLHora.setBounds(270, 53, 46, 14);
 		contentPanel.add(JLHora);
 
 		JSpinner spinner = new JSpinner();
+		spinner.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		spinner.setModel(new SpinnerNumberModel(0, 0, 23, 1));
-		spinner.setBounds(296, 50, 35, 20);
+		spinner.setBounds(326, 53, 35, 20);
 		contentPanel.add(spinner);
 
 		JLabel lblMinuto = new JLabel("Minuto");
-		lblMinuto.setBounds(341, 53, 46, 14);
+		lblMinuto.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblMinuto.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblMinuto.setBounds(371, 53, 46, 14);
 		contentPanel.add(lblMinuto);
 
 		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		spinner_1.setModel(new SpinnerNumberModel(0, 0, 59, 1));
-		spinner_1.setBounds(389, 50, 35, 20);
+		spinner_1.setBounds(421, 53, 35, 20);
 		contentPanel.add(spinner_1);
 		{
 			JPanel buttonPane = new JPanel();
@@ -137,6 +156,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvLemb = new JButton("Salvar");
+				JBSalvLemb.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBSalvLemb.setIcon(new ImageIcon(JDTelaCadLemb.class
 						.getResource("/Img/Confirmar.png")));
 				JBSalvLemb.addActionListener(this);
@@ -146,6 +166,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 			}
 			{
 				JBNovLemb = new JButton("Novo");
+				JBNovLemb.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBNovLemb.setIcon(new ImageIcon(JDTelaCadLemb.class
 						.getResource("/Img/lembreteAdd.png")));
 				JBNovLemb.addActionListener(this);
@@ -154,6 +175,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 			}
 
 			JBSair = new JButton("Sair");
+			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JBSair.setIcon(new ImageIcon(JDTelaCadLemb.class
 					.getResource("/Img/exit16.png")));
 			JBSair.addActionListener(this);

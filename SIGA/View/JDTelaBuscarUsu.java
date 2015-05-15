@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -19,12 +20,17 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
 import Control.UsuarioControl;
+import Dominio.Permissao;
 import Dominio.Usuario;
 
 import javax.swing.ImageIcon;
 
 import TableModels.AbstractDefaultTableModel;
 import TableModels.UsuarioTableModel;
+import Util.Modulos;
+import Util.PermissoesManager;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 
@@ -45,6 +51,7 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 	private JScrollPane scroll;
 	protected String valor;
 	private JButton JBSair;
+	private Permissao permissao;
 
 	/**
 	 * Launch the application.
@@ -63,29 +70,34 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaBuscarUsu() {
+		permissao = PermissoesManager.buscarPermissao(Modulos.Usuarios);
 		setResizable(false);
 		setTitle("SIGA - buscar usuário");
-		setBounds(100, 100, 476, 300);
+		setBounds(100, 100, 574, 333);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
 			JLFiltro = new JLabel("Filtro");
-			JLFiltro.setBounds(10, 11, 46, 14);
+			JLFiltro.setHorizontalAlignment(SwingConstants.RIGHT);
+			JLFiltro.setFont(new Font("Tahoma", Font.BOLD, 13));
+			JLFiltro.setBounds(0, 15, 46, 14);
 			contentPanel.add(JLFiltro);
 		}
 		{
 			JBBuscar = new JButton("Buscar");
+			JBBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JBBuscar.setIcon(new ImageIcon(JDTelaBuscarUsu.class
 					.getResource("/Img/Procurar.png")));
 			JBBuscar.addActionListener(this);
 			JBBuscar.setMnemonic(KeyEvent.VK_F);
-			JBBuscar.setBounds(335, 11, 115, 23);
+			JBBuscar.setBounds(432, 15, 115, 23);
 			contentPanel.add(JBBuscar);
 		}
 		{
 			JTFBuscar = new JTextField();
+			JTFBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JTFBuscar.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent e) {
@@ -95,18 +107,19 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 				}
 			});
 			JTFBuscar.setColumns(10);
-			JTFBuscar.setBounds(153, 11, 172, 20);
+			JTFBuscar.setBounds(199, 15, 223, 20);
 			contentPanel.add(JTFBuscar);
 		}
 		{
 			// Criação da Jtable
 			scroll = new JScrollPane();
 			contentPanel.add(scroll);
-			scroll.setBounds(12, 59, 438, 158);
+			scroll.setBounds(12, 59, 535, 200);
 			{
 
 				model = new UsuarioTableModel(usuCont.BuscarTodos());
 				tabela = new JTable(model);
+				tabela.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				scroll.setViewportView(tabela);
 				tabela.getColumnModel().getColumn(0).setMinWidth(0);
 				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -115,10 +128,11 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 		}
 
 		JCBFiltro = new JComboBox<String>();
+		JCBFiltro.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		for (String item : usuCont.Filtros()) {
 			JCBFiltro.addItem(item);
 		}
-		JCBFiltro.setBounds(40, 11, 103, 20);
+		JCBFiltro.setBounds(58, 15, 131, 20);
 		contentPanel.add(JCBFiltro);
 		{
 			JPanel buttonPane = new JPanel();
@@ -126,21 +140,26 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBCadUsu = new JButton("Cadastrar");
+				JBCadUsu.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBCadUsu.setIcon(new ImageIcon(JDTelaBuscarUsu.class
 						.getResource("/Img/save16.png")));
 				buttonPane.add(JBCadUsu);
 				JBCadUsu.addActionListener(this);
+				JBCadUsu.setVisible(permissao.isCadastrar());
 				JBCadUsu.setMnemonic(KeyEvent.VK_C);
 				getRootPane().setDefaultButton(JBCadUsu);
 			}
 			{
 				JBEditUsu = new JButton("Editar");
+				JBEditUsu.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				JBEditUsu.setVisible(permissao.isAlterar());
 				JBEditUsu.setIcon(new ImageIcon(JDTelaBuscarUsu.class
 						.getResource("/Img/edit_add16.png")));
 				JBEditUsu.setMnemonic(KeyEvent.VK_E);
 				buttonPane.add(JBEditUsu);
 				{
 					JBSair = new JButton("Sair");
+					JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
 					JBSair.setIcon(new ImageIcon(JDTelaBuscarUsu.class
 							.getResource("/Img/exit16.png")));
 					JBSair.addActionListener(this);

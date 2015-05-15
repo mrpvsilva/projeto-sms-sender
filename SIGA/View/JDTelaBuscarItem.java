@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -18,13 +19,18 @@ import javax.swing.JComboBox;
 
 import Control.ServicosControl;
 import Dominio.Item;
+import Dominio.Permissao;
 
 import javax.swing.ImageIcon;
 
 import TableModels.AbstractDefaultTableModel;
 import TableModels.ItemTableModel;
+import Util.Modulos;
+import Util.PermissoesManager;
 
 import java.awt.Toolkit;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class JDTelaBuscarItem extends JDialog implements ActionListener {
 
@@ -45,6 +51,7 @@ public class JDTelaBuscarItem extends JDialog implements ActionListener {
 	private JScrollPane scroll;
 	private ServicosControl _servicoControl = new ServicosControl();
 	private JButton JBSair;
+	private Permissao Itens;
 
 	/**
 	 * Launch the application.
@@ -63,53 +70,60 @@ public class JDTelaBuscarItem extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaBuscarItem() {
+		Itens = PermissoesManager.buscarPermissao(Modulos.Itens);
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				JDTelaBuscarItem.class.getResource("/Img/CNPJ G200.png")));
 		setTitle("SIGA - buscar itens");
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 470, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
 			JLFiltro = new JLabel("Filtro");
-			JLFiltro.setBounds(10, 11, 46, 14);
+			JLFiltro.setHorizontalAlignment(SwingConstants.RIGHT);
+			JLFiltro.setFont(new Font("Tahoma", Font.BOLD, 13));
+			JLFiltro.setBounds(0, 11, 46, 14);
 			contentPanel.add(JLFiltro);
 		}
 		{
 			JBBuscar = new JButton("Buscar");
+			JBBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JBBuscar.setIcon(new ImageIcon(JDTelaBuscarItem.class
 					.getResource("/Img/Procurar.png")));
 			JBBuscar.setMnemonic(KeyEvent.VK_F);
 			JBBuscar.addActionListener(this);
-			JBBuscar.setBounds(325, 11, 99, 23);
+			JBBuscar.setBounds(340, 11, 99, 23);
 			contentPanel.add(JBBuscar);
 		}
 		{
 			JTFBuscar = new JTextField();
+			JTFBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JTFBuscar.setColumns(10);
-			JTFBuscar.setBounds(149, 11, 172, 20);
+			JTFBuscar.setBounds(164, 11, 172, 20);
 			contentPanel.add(JTFBuscar);
 		}
 		{
 			JCBFiltro = new JComboBox<String>();
+			JCBFiltro.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			for (String item : servCont.Filtros()) {
 				JCBFiltro.addItem(item);
 			}
-			JCBFiltro.setBounds(41, 11, 103, 20);
+			JCBFiltro.setBounds(56, 11, 103, 20);
 			contentPanel.add(JCBFiltro);
 		}
 		{
 			// Criação da Jtable
 			scroll = new JScrollPane();
 			contentPanel.add(scroll);
-			scroll.setBounds(12, 59, 412, 158);
+			scroll.setBounds(12, 59, 426, 158);
 			{
 
 				model = new ItemTableModel(_servicoControl.listarTodos());
 				tabela = new JTable(model);
+				tabela.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				scroll.setViewportView(tabela);
 				;
 
@@ -125,23 +139,28 @@ public class JDTelaBuscarItem extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBCadServ = new JButton("Cadastrar");
+				JBCadServ.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBCadServ.setIcon(new ImageIcon(JDTelaBuscarItem.class
 						.getResource("/Img/save16.png")));
 				JBCadServ.addActionListener(this);
 				JBCadServ.setMnemonic(KeyEvent.VK_C);
+				JBCadServ.setVisible(Itens.isCadastrar());
 				buttonPane.add(JBCadServ);
 				getRootPane().setDefaultButton(JBCadServ);
 			}
 			{
 				JBEditServ = new JButton("Editar");
+				JBEditServ.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBEditServ.setMnemonic(KeyEvent.VK_E);
 				JBEditServ.setIcon(new ImageIcon(JDTelaBuscarItem.class
 						.getResource("/Img/edit_add16.png")));
+				JBEditServ.setVisible(Itens.isAlterar());
 				JBEditServ.addActionListener(this);
 				buttonPane.add(JBEditServ);
 			}
 			{
 				JBSair = new JButton("Sair");
+				JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBSair.setIcon(new ImageIcon(JDTelaBuscarItem.class
 						.getResource("/Img/exit16.png")));
 				JBSair.addActionListener(this);

@@ -27,6 +27,8 @@ import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 
 import java.awt.Toolkit;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class JDTelaCadUsu extends JDialog implements ActionListener {
 
@@ -78,7 +80,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		// this.id = id;
 		this.usuario = usuario;
 		this.model = model;
-		setBounds(100, 100, 417, 172);
+		setBounds(100, 100, 458, 174);
 		setTitle("SIGA - cadastro de usu\u00E1rio");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -86,39 +88,50 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 		{
 			JLUsuario = new JLabel("Usu\u00E1rio");
-			JLUsuario.setBounds(10, 11, 46, 14);
+			JLUsuario.setHorizontalAlignment(SwingConstants.RIGHT);
+			JLUsuario.setFont(new Font("Tahoma", Font.BOLD, 13));
+			JLUsuario.setBounds(0, 11, 71, 14);
 			contentPanel.add(JLUsuario);
 		}
 
 		JTFUsuario = new JTextField();
-		JTFUsuario.setBounds(60, 8, 331, 20);
+		JTFUsuario.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JTFUsuario.setBounds(81, 5, 350, 20);
 		contentPanel.add(JTFUsuario);
 		JTFUsuario.setColumns(10);
 
 		JLabel JLNome = new JLabel("Nome");
-		JLNome.setBounds(10, 39, 46, 14);
+		JLNome.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLNome.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLNome.setBounds(0, 36, 71, 14);
 		contentPanel.add(JLNome);
 
 		JTFNome = new JTextField();
-		JTFNome.setBounds(60, 36, 331, 20);
+		JTFNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JTFNome.setBounds(81, 33, 350, 20);
 		contentPanel.add(JTFNome);
 		JTFNome.setColumns(10);
 
 		JLabel JLCpf = new JLabel("CPF");
-		JLCpf.setBounds(10, 64, 46, 14);
+		JLCpf.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLCpf.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLCpf.setBounds(0, 60, 71, 14);
 		contentPanel.add(JLCpf);
 		maskCpf = new MaskFormatter(Mascaras.maskCpf);
 		JFFCpf = new JFormattedTextField(maskCpf);
-		JFFCpf.setBounds(60, 61, 176, 20);
+		JFFCpf.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JFFCpf.setBounds(81, 58, 176, 20);
 		contentPanel.add(JFFCpf);
 		JFFCpf.setColumns(10);
 
 		JLPerfil = new JLabel("Perfil");
-		JLPerfil.setBounds(239, 64, 46, 14);
+		JLPerfil.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLPerfil.setBounds(267, 60, 46, 14);
 		contentPanel.add(JLPerfil);
 
 		JCBPerfil = new JComboBox(_usuarioControl.DDLPerfis());
-		JCBPerfil.setBounds(275, 61, 116, 20);
+		JCBPerfil.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JCBPerfil.setBounds(315, 58, 116, 20);
 		contentPanel.add(JCBPerfil);
 		{
 			JPanel buttonPane = new JPanel();
@@ -126,6 +139,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvUsu = new JButton("Salvar");
+				JBSalvUsu.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBSalvUsu.setIcon(new ImageIcon(JDTelaCadUsu.class
 						.getResource("/Img/Confirmar.png")));
 				JBSalvUsu.addActionListener(this);
@@ -135,6 +149,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 			}
 			{
 				JBNovUsu = new JButton("Novo");
+				JBNovUsu.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBNovUsu.setIcon(new ImageIcon(JDTelaCadUsu.class
 						.getResource("/Img/user_blue_add216.png")));
 				JBNovUsu.setMnemonic(KeyEvent.VK_N);
@@ -142,6 +157,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 			}
 
 			btnResetarSenha = new JButton("Resetar senha");
+			btnResetarSenha.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			btnResetarSenha.setIcon(new ImageIcon(JDTelaCadUsu.class
 					.getResource("/Img/sync.png")));
 			btnResetarSenha.addActionListener(this);
@@ -149,6 +165,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 			buttonPane.add(btnResetarSenha);
 
 			JBSair = new JButton("Sair");
+			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JBSair.setIcon(new ImageIcon(JDTelaCadUsu.class
 					.getResource("/Img/exit16.png")));
 			JBSair.addActionListener(this);

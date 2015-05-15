@@ -24,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
+import java.awt.Font;
 
 public class JDTelaEditTelefone extends JDialog implements ActionListener {
 
@@ -39,8 +40,8 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	private AbstractDefaultTableModel<TelefoneFornecedor> _model;
 	private JTextField tfddd;
 	private JTextField tfnumero;
-	private JComboBox<String> cboperadoras;
-	private String[] operadoras = new String[] { "CLARO", "OI", "TIM", "VIVO" };
+	private JComboBox cboperadoras;
+
 
 	/**
 	 * Launch the application.
@@ -68,46 +69,53 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 		_linha = linha;
 		setModal(true);
 		setResizable(false);
-		setBounds(100, 100, 223, 178);
+		setBounds(100, 100, 265, 179);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
 		JLabel lblDdd = new JLabel("DDD");
+		lblDdd.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblDdd.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDdd.setBounds(0, 13, 62, 14);
+		lblDdd.setBounds(0, 13, 85, 14);
 		contentPanel.add(lblDdd);
 
 		tfddd = new JTextField();
-		tfddd.setBounds(65, 11, 52, 20);
+		tfddd.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		tfddd.setBounds(95, 7, 52, 20);
 		contentPanel.add(tfddd);
 		tfddd.setColumns(10);
 
 		JLabel lblNmero = new JLabel("N\u00FAmero");
+		lblNmero.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNmero.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNmero.setBounds(0, 38, 62, 14);
+		lblNmero.setBounds(0, 38, 85, 14);
 		contentPanel.add(lblNmero);
 
 		tfnumero = new JTextField();
-		tfnumero.setBounds(65, 35, 128, 20);
+		tfnumero.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		tfnumero.setBounds(95, 31, 128, 20);
 		contentPanel.add(tfnumero);
 		tfnumero.setColumns(10);
 
 		JLabel lblOperadora = new JLabel("Operadora");
+		lblOperadora.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblOperadora.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblOperadora.setBounds(0, 67, 62, 14);
+		lblOperadora.setBounds(0, 67, 85, 14);
 		contentPanel.add(lblOperadora);
 
-		cboperadoras = new JComboBox<String>(operadoras);
-		cboperadoras.setBounds(65, 65, 128, 20);
+		cboperadoras = new JComboBox( new String[] { "CLARO", "OI", "TIM", "VIVO" });
+		cboperadoras.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		cboperadoras.setBounds(95, 61, 128, 20);
 		contentPanel.add(cboperadoras);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvar = new JButton("Salvar");
+				JBSalvar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBSalvar.setIcon(new ImageIcon(JDTelaEditTelefone.class
 						.getResource("/Img/Confirmar.png")));
 				JBSalvar.addActionListener(this);
@@ -117,6 +125,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 			}
 			{
 				JBSair = new JButton("Sair");
+				JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBSair.setIcon(new ImageIcon(JDTelaEditTelefone.class
 						.getResource("/Img/exit16.png")));
 				JBSair.addActionListener(this);
