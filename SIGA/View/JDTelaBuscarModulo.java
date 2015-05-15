@@ -35,10 +35,11 @@ public class JDTelaBuscarModulo extends JDialog implements ActionListener {
 	private JTextField tfpesquisa;
 
 	public JDTelaBuscarModulo() {
+		setResizable(false);
 		setModal(true);
 		setTitle("Buscar m\u00F3dulos");
 		moduloControl = new ModuloControl();
-		setBounds(100, 100, 372, 532);
+		setBounds(100, 100, 374, 532);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

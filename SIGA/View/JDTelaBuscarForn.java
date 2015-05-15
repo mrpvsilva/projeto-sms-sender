@@ -28,6 +28,7 @@ import TableModels.AbstractDefaultTableModel;
 import TableModels.FornecedorTableModel;
 
 import java.awt.Toolkit;
+import java.awt.Font;
 
 public class JDTelaBuscarForn extends JDialog implements ActionListener {
 
@@ -115,6 +116,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 				model = new FornecedorTableModel(
 						_fornecedorControl.listarTodos());
 				tabela = new JTable(model);
+				tabela.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				scroll.setViewportView(tabela);
 
 				tabela.getColumnModel().getColumn(0).setMinWidth(0);
