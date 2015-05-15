@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 import Control.UsuarioControl;
 import Dominio.Usuario;
 import PersistenceManagerFactory.Factory;
+import java.awt.Font;
 
 
 public class JFTelaLogin extends JFrame implements ActionListener {
@@ -79,10 +80,12 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 
 		JLabel JLLogin = new JLabel("Login");
+		JLLogin.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLLogin.setBounds(62, 131, 46, 14);
 		contentPane.add(JLLogin);
 
 		JLabel JLSenha = new JLabel("Senha");
+		JLSenha.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLSenha.setBounds(62, 167, 46, 14);
 		contentPane.add(JLSenha);
 

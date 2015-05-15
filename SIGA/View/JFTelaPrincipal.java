@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -17,14 +18,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Dominio.Permissao;
-import Extra.Extras;
 import Interfaces.IAcessoManager;
 import Managers.AcessoManager;
-import java.awt.BorderLayout;
-import javax.swing.SwingConstants;
 
 public class JFTelaPrincipal extends JFrame implements ActionListener {
 
@@ -105,7 +104,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		acessoManager = new AcessoManager();
 		usuarios = acessoManager.buscarPermissao("Usuarios");
 		lembretes = acessoManager.buscarPermissao("Lembretes");
-		tipoServicos = acessoManager.buscarPermissao("Tipo serviços");
+		tipoServicos = acessoManager.buscarPermissao("Tipo servicos");
 		fornecedores = acessoManager.buscarPermissao("Fornecedores");
 		itens = acessoManager.buscarPermissao("Itens");
 		tipoItens = acessoManager.buscarPermissao("Tipo itens");

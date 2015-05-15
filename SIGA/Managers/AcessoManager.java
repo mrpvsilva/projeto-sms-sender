@@ -23,7 +23,7 @@ public class AcessoManager implements IAcessoManager {
 				return permissao;
 		}
 
-		return null;
+		return new Permissao();
 
 	}
 

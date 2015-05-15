@@ -25,9 +25,6 @@ import javax.swing.JTabbedPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import java.awt.Dialog.ModalityType;
-import javax.swing.border.BevelBorder;
-import javax.swing.UIManager;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -55,7 +52,7 @@ public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
 
 		this.tableModelPermissao = new PermissaoTableModel();
 
-		setBounds(100, 100, 1024, 768);
+		setBounds(100, 100, 1024, 700);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -63,7 +60,7 @@ public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 79, 262, 604);
+		scrollPane.setBounds(10, 86, 262, 483);
 		contentPanel.add(scrollPane);
 		{
 			tablePerfis = new JTable(tableModelPerfil);
@@ -83,7 +80,7 @@ public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
 		}
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(282, 79, 726, 604);
+		tabbedPane.setBounds(282, 79, 726, 549);
 		contentPanel.add(tabbedPane);
 		{
 			JPanel panel = new JPanel();
@@ -91,7 +88,7 @@ public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
 			panel.setLayout(null);
 			{
 				JScrollPane scrollPane_1 = new JScrollPane();
-				scrollPane_1.setBounds(10, 11, 701, 505);
+				scrollPane_1.setBounds(10, 11, 701, 450);
 				panel.add(scrollPane_1);
 
 				tablePermissões = new JTable(tableModelPermissao);
@@ -101,7 +98,7 @@ public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
 			}
 
 			JPanel panel_1 = new JPanel();
-			panel_1.setBounds(10, 527, 701, 38);
+			panel_1.setBounds(10, 472, 701, 38);
 			panel.add(panel_1);
 
 			JButton btnSalvar = new JButton("Salvar");
