@@ -17,6 +17,7 @@ import Dominio.Usuario;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class JDTelaTrocarSenha extends JDialog implements ActionListener {
 
@@ -50,28 +51,32 @@ public class JDTelaTrocarSenha extends JDialog implements ActionListener {
 		setModal(true);
 		this.usuario = usuario;
 		setTitle("Alterar senha");
-		setBounds(100, 100, 343, 180);
+		setBounds(100, 100, 357, 180);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
 		JLabel lblNovaSenha = new JLabel("Nova senha");
+		lblNovaSenha.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNovaSenha.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNovaSenha.setBounds(10, 31, 83, 14);
+		lblNovaSenha.setBounds(10, 31, 104, 14);
 		contentPanel.add(lblNovaSenha);
 
 		jpswNova = new JPasswordField();
-		jpswNova.setBounds(103, 28, 215, 20);
+		jpswNova.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		jpswNova.setBounds(124, 25, 215, 20);
 		contentPanel.add(jpswNova);
 
 		JLabel lblRepetirSenha = new JLabel("Repetir senha");
+		lblRepetirSenha.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblRepetirSenha.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblRepetirSenha.setBounds(10, 62, 85, 14);
+		lblRepetirSenha.setBounds(10, 62, 104, 14);
 		contentPanel.add(lblRepetirSenha);
 
 		pswdRepetir = new JPasswordField();
-		pswdRepetir.setBounds(103, 59, 215, 20);
+		pswdRepetir.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		pswdRepetir.setBounds(124, 56, 215, 20);
 		contentPanel.add(pswdRepetir);
 		{
 			JPanel buttonPane = new JPanel();
@@ -79,6 +84,7 @@ public class JDTelaTrocarSenha extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnSalvar = new JButton("Salvar");
+				btnSalvar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				btnSalvar.setActionCommand("OK");
 				btnSalvar.addActionListener(this);
 				buttonPane.add(btnSalvar);
@@ -87,6 +93,7 @@ public class JDTelaTrocarSenha extends JDialog implements ActionListener {
 			}
 			{
 				btnCancelar = new JButton("Cancelar");
+				btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				btnCancelar.setActionCommand("Cancel");
 				btnCancelar.addActionListener(this);
 				buttonPane.add(btnCancelar);

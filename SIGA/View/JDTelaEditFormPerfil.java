@@ -27,6 +27,7 @@ import TableModels.PermissaoTableModel;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.Font;
 
 public class JDTelaEditFormPerfil extends JDialog implements ActionListener {
 
@@ -61,12 +62,14 @@ public class JDTelaEditFormPerfil extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 
 		JLabel lblNome = new JLabel("Nome do perfil");
+		lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNome.setBounds(10, 24, 86, 14);
+		lblNome.setBounds(0, 24, 114, 14);
 		contentPanel.add(lblNome);
 
 		tfnomeperfil = new JTextField();
-		tfnomeperfil.setBounds(106, 21, 405, 20);
+		tfnomeperfil.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		tfnomeperfil.setBounds(124, 21, 451, 20);
 		contentPanel.add(tfnomeperfil);
 		tfnomeperfil.setColumns(10);
 
@@ -83,18 +86,17 @@ public class JDTelaEditFormPerfil extends JDialog implements ActionListener {
 		tabpermissoes.add(scrollPane);
 
 		table = new JTable(modelPermissao);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		table.getColumnModel().getColumn(0).setMinWidth(0);
 		table.getColumnModel().getColumn(0).setMaxWidth(0);
 		scrollPane.setViewportView(table);
-
-		JPanel tabusuarios = new JPanel();
-		tabbedPane.addTab("Usu\u00E1rios", null, tabusuarios, null);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btncadastar = new JButton("Salvar");
+				btncadastar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				btncadastar.addActionListener(this);
 				btncadastar.setActionCommand("OK");
 				buttonPane.add(btncadastar);
@@ -102,6 +104,7 @@ public class JDTelaEditFormPerfil extends JDialog implements ActionListener {
 			}
 			{
 				btncancelar = new JButton("Cancelar");
+				btncancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				btncancelar.addActionListener(this);
 				btncancelar.setActionCommand("Cancel");
 				buttonPane.add(btncancelar);

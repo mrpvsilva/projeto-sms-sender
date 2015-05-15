@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 import Control.TipoItemControl;
 import Dominio.TipoItem;
 import TableModels.AbstractDefaultTableModel;
+import java.awt.Font;
 
 public class JDTelaEditFormTipoItem extends JDialog implements ActionListener {
 
@@ -73,16 +74,20 @@ public class JDTelaEditFormTipoItem extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 
 		JLabel lblNome = new JLabel("Nome");
+		lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNome.setBounds(10, 21, 46, 14);
 		contentPanel.add(lblNome);
 
 		tfnome = new JTextField();
+		tfnome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		tfnome.setBounds(66, 18, 184, 20);
 		contentPanel.add(tfnome);
 		tfnome.setColumns(10);
 
 		chckbxAtivo = new JCheckBox("Ativo");
+		chckbxAtivo.setHorizontalAlignment(SwingConstants.LEFT);
+		chckbxAtivo.setFont(new Font("Tahoma", Font.BOLD, 13));
 		chckbxAtivo.setSelected(true);
 		chckbxAtivo.setBounds(62, 42, 97, 23);
 		contentPanel.add(chckbxAtivo);
@@ -92,6 +97,7 @@ public class JDTelaEditFormTipoItem extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvar = new JButton("Salvar");
+				JBSalvar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBSalvar.setIcon(new ImageIcon(JDTelaEditFormTipoItem.class
 						.getResource("/Img/Confirmar.png")));
 				JBSalvar.addActionListener(this);
@@ -101,6 +107,7 @@ public class JDTelaEditFormTipoItem extends JDialog implements ActionListener {
 			}
 			{
 				JBNovo = new JButton("Novo");
+				JBNovo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBNovo.setIcon(new ImageIcon(JDTelaEditFormTipoItem.class
 						.getResource("/Img/window_new16.png")));
 				JBNovo.addActionListener(this);
@@ -109,6 +116,7 @@ public class JDTelaEditFormTipoItem extends JDialog implements ActionListener {
 			}
 
 			JBSair = new JButton("Sair");
+			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JBSair.setIcon(new ImageIcon(JDTelaEditFormTipoItem.class
 					.getResource("/Img/exit16.png")));
 			JBSair.setMnemonic(KeyEvent.VK_Q);

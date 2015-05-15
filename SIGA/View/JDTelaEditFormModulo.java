@@ -17,6 +17,7 @@ import TableModels.AbstractDefaultTableModel;
 import Control.ModuloControl;
 import Dominio.Modulo;
 import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class JDTelaEditFormModulo extends JDialog implements ActionListener {
 
@@ -43,11 +44,13 @@ public class JDTelaEditFormModulo extends JDialog implements ActionListener {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		JLabel lblNomeDoMdulo = new JLabel("Nome do m\u00F3dulo");
+		lblNomeDoMdulo.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNomeDoMdulo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNomeDoMdulo.setBounds(0, 25, 120, 14);
 		contentPanel.add(lblNomeDoMdulo);
 		{
 			tfnome = new JTextField();
+			tfnome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			tfnome.setBounds(130, 22, 278, 20);
 			contentPanel.add(tfnome);
 			tfnome.setColumns(10);
@@ -58,6 +61,7 @@ public class JDTelaEditFormModulo extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnsalvar = new JButton("Salvar");
+				btnsalvar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				btnsalvar.setActionCommand("OK");
 				btnsalvar.addActionListener(this);
 				buttonPane.add(btnsalvar);
@@ -65,6 +69,7 @@ public class JDTelaEditFormModulo extends JDialog implements ActionListener {
 			}
 			{
 				btncancelar = new JButton("Cancelar");
+				btncancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				btncancelar.addActionListener(this);
 				btncancelar.setActionCommand("Cancel");
 				buttonPane.add(btncancelar);

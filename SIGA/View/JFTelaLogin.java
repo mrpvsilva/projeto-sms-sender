@@ -19,7 +19,9 @@ import Control.UsuarioControl;
 import Dominio.Usuario;
 import PersistenceManagerFactory.Factory;
 import java.awt.Font;
-
+import javax.swing.SwingConstants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class JFTelaLogin extends JFrame implements ActionListener {
 
@@ -31,10 +33,9 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 	private JTextField JTFLogin;
 	private JPasswordField JPFSenha;
 	private JButton JBAcessar;
-	
 
-	/**;
-	 * Launch the application.
+	/**
+	 * ; Launch the application.
 	 */
 	public static void main(String[] args) {
 		new Thread(new Runnable() {
@@ -43,7 +44,7 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 				// INICIA UMA SESSIONFACTORY DO HIBERNATE PARA SER UTILIZADO EM
 				// TODA A
 				// APLICAÇÃO.
-				 //PersistenceManagerFactory.getEntityManager();
+				// PersistenceManagerFactory.getEntityManager();
 				Factory.createEntityManager();
 				//
 			}
@@ -67,6 +68,7 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public JFTelaLogin() {
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				JFTelaLogin.class.getResource("/Img/CNPJ G200.png")));
 
@@ -80,26 +82,34 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 
 		JLabel JLLogin = new JLabel("Login");
-		JLLogin.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JLLogin.setBounds(62, 131, 46, 14);
+		JLLogin.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLLogin.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLLogin.setBounds(64, 130, 46, 15);
 		contentPane.add(JLLogin);
 
 		JLabel JLSenha = new JLabel("Senha");
-		JLSenha.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JLSenha.setBounds(62, 167, 46, 14);
+		JLSenha.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLSenha.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLSenha.setBounds(64, 166, 46, 14);
 		contentPane.add(JLSenha);
 
 		JTFLogin = new JTextField();
+		JLLogin.setLabelFor(JTFLogin);
+		JTFLogin.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JTFLogin.setBounds(118, 128, 224, 20);
 		contentPane.add(JTFLogin);
 		JTFLogin.setColumns(10);
 
 		JPFSenha = new JPasswordField();
+		
+		JPFSenha.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JPFSenha.setEchoChar('*');
 		JPFSenha.setBounds(118, 164, 224, 20);
 		contentPane.add(JPFSenha);
 
-		JBAcessar = new JButton("Acessar");
+		JBAcessar = new JButton("Acessar");		
+
+		JBAcessar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JBAcessar.addActionListener(this);
 		JBAcessar.setBounds(154, 212, 101, 23);
 		contentPane.add(JBAcessar);
@@ -109,49 +119,56 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 				.getResource("/Img/CNPJ G200.png")));
 		JLIcone.setBounds(137, 11, 224, 98);
 		contentPane.add(JLIcone);
+		getRootPane().setDefaultButton(JBAcessar);
+	}
+
+	private void entrar() {
+		/* Validação do usuário e senha */
+		if (JTFLogin.getText().isEmpty()) {
+
+			JOptionPane.showMessageDialog(null, "Usuário em branco",
+					"Autenticação", JOptionPane.ERROR_MESSAGE);
+			JTFLogin.requestFocus();
+		} else if (new String(JPFSenha.getPassword()).isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Senha em branco",
+					"Autenticação", JOptionPane.ERROR_MESSAGE);
+
+		} else {
+			UsuarioControl usuCon = new UsuarioControl();
+			// UsuarioBean usuBean = new UsuarioBean();
+			Usuario u = new Usuario();
+			u.setUsuario(JTFLogin.getText());
+			u.setSenha(new String(JPFSenha.getPassword()));
+
+			// usuBean.setResposta(usuCon.Logar(usuBean).getResposta());
+
+			u = usuCon.Logar(u);
+
+			if (u != null) {
+				if (!u.trocarSenha()) {
+					JFTelaPrincipal jftp = new JFTelaPrincipal();
+					jftp.setVisible(true);
+					this.dispose();
+				} else {
+
+					JDTelaTrocarSenha trocar = new JDTelaTrocarSenha(u);
+					trocar.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+					trocar.setVisible(true);
+				}
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Usuário ou senha incorretos.");
+			}
+
+		}
+		/* Final da validação do usuário */
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent acao) {
 
 		if (acao.getSource() == JBAcessar) {
-
-			/* Validação do usuário e senha */
-			if (JTFLogin.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Usuário em branco",
-						"Autenticação", JOptionPane.ERROR_MESSAGE);
-			} else if (new String(JPFSenha.getPassword()).isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Senha em branco",
-						"Autenticação", JOptionPane.ERROR_MESSAGE);
-			} else {
-				UsuarioControl usuCon = new UsuarioControl();
-				// UsuarioBean usuBean = new UsuarioBean();
-				Usuario u = new Usuario();
-				u.setUsuario(JTFLogin.getText());
-				u.setSenha(new String(JPFSenha.getPassword()));
-
-				// usuBean.setResposta(usuCon.Logar(usuBean).getResposta());
-
-				u = usuCon.Logar(u);
-
-				if (u != null) {
-					if (!u.trocarSenha()) {
-						JFTelaPrincipal jftp = new JFTelaPrincipal();
-						jftp.setVisible(true);
-						this.dispose();
-					} else {
-
-						JDTelaTrocarSenha trocar = new JDTelaTrocarSenha(u);
-						trocar.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-						trocar.setVisible(true);
-					}
-				}else{
-					JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.");
-				}
-
-			}
-			/* Final da validação do usuário */
-
+			entrar();
 		}// final do botão Acessar
 
 	}// final do método de ação dos botões

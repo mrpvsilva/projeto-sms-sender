@@ -15,7 +15,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 	public List<Usuario> findAll() {
 		try {
 			open();
-			String q = "from Usuario order by usuario";
+			String q = "from Usuario where usuario <> 'root' order by usuario";
 			Query query = entityManager.createQuery(q);
 			List<Usuario> l = query.getResultList();
 			return l;
@@ -32,7 +32,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 	public List<Usuario> findAll(String campo, String value) {
 		try {
 			open();
-			String q = "from Usuario where " + campo + " like :valor";
+			String q = "from Usuario where  usuario <> 'root' and " + campo + " like :valor";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("valor", "%" + value + "%");
 			List<Usuario> l = query.getResultList();

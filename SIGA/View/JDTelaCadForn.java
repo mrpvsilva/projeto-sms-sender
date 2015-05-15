@@ -39,6 +39,7 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
 import java.awt.Toolkit;
+import java.awt.Font;
 
 public class JDTelaCadForn extends JDialog implements ActionListener {
 
@@ -74,6 +75,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	private int id;
 	private Fornecedor fornecedor;
 	private JButton JBSair;
+	private JLabel JLCnpj;
 
 	/**
 	 * Launch the application.
@@ -103,7 +105,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		this.forModel = model;
 		this.fornecedor = fornecedor;
 		_fornecedorControl = new FornecedoresControl();
-		setBounds(0, -20, 512, 379);
+		setBounds(0, -20, 530, 379);
 		setTitle("SIGA  - Cadastrar fornecedor");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -111,110 +113,133 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 
 		JLabel JLNome = new JLabel("Nome");
+		JLNome.setFont(new Font("Tahoma", Font.BOLD, 13));
 		JLNome.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLNome.setBounds(0, 11, 73, 14);
+		JLNome.setBounds(0, 11, 101, 15);
 		contentPanel.add(JLNome);
 
-		JLabel JLCnpj = new JLabel("Cnpj");
+		 JLCnpj = new JLabel("CNPJ");
+		JLCnpj.setFont(new Font("Tahoma", Font.BOLD, 13));
 		JLCnpj.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLCnpj.setBounds(0, 36, 73, 14);
+		JLCnpj.setBounds(0, 36, 101, 15);
 		contentPanel.add(JLCnpj);
 
 		JLabel JLRg = new JLabel("Rg");
-		JLRg.setBounds(293, 39, 35, 14);
+		JLRg.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLRg.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLRg.setBounds(303, 38, 35, 15);
 		contentPanel.add(JLRg);
 
 		JLabel JLTelefone1 = new JLabel("Telefones");
+		JLTelefone1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		JLTelefone1.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLTelefone1.setBounds(0, 104, 73, 14);
+		JLTelefone1.setBounds(0, 104, 101, 15);
 		contentPanel.add(JLTelefone1);
 
 		JLabel JLEmail = new JLabel("Email");
+		JLEmail.setFont(new Font("Tahoma", Font.BOLD, 13));
 		JLEmail.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLEmail.setBounds(0, 198, 73, 14);
+		JLEmail.setBounds(0, 201, 101, 15);
 		contentPanel.add(JLEmail);
 
 		JLabel JLEnd = new JLabel("Ender.");
+		JLEnd.setFont(new Font("Tahoma", Font.BOLD, 13));
 		JLEnd.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLEnd.setBounds(0, 229, 73, 14);
+		JLEnd.setBounds(0, 229, 101, 15);
 		contentPanel.add(JLEnd);
 
 		JTFNome = new JTextField();
-		JTFNome.setBounds(83, 11, 400, 20);
+		JTFNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JTFNome.setBounds(111, 11, 400, 20);
 		contentPanel.add(JTFNome);
 		JTFNome.setColumns(10);
 
 		maskCnpj = new MaskFormatter(Mascaras.maskCnpj);
 		JFFCnpj = new JFormattedTextField(maskCnpj);
-		JFFCnpj.setBounds(83, 36, 118, 20);
+		JFFCnpj.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JFFCnpj.setBounds(111, 36, 118, 20);
 		contentPanel.add(JFFCnpj);
 
 		JFFRg = new JTextField();
+		JFFRg.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
-		JFFRg.setBounds(320, 36, 163, 20);
+		JFFRg.setBounds(348, 36, 163, 20);
 		contentPanel.add(JFFRg);
 
 		JLabel JLSite = new JLabel("Site");
+		JLSite.setFont(new Font("Tahoma", Font.BOLD, 13));
 		JLSite.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLSite.setBounds(0, 281, 73, 14);
+		JLSite.setBounds(0, 281, 101, 14);
 		contentPanel.add(JLSite);
 
 		JLabel JLTpServ = new JLabel("Tipo Servi\u00E7o");
+		JLTpServ.setFont(new Font("Tahoma", Font.BOLD, 13));
 		JLTpServ.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLTpServ.setBounds(0, 64, 73, 14);
+		JLTpServ.setBounds(0, 64, 101, 14);
 		contentPanel.add(JLTpServ);
 
 		JTFEmail = new JTextField();
-		JTFEmail.setBounds(83, 201, 400, 20);
+		JTFEmail.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JTFEmail.setBounds(111, 201, 400, 20);
 		contentPanel.add(JTFEmail);
 		JTFEmail.setColumns(10);
 
 		JTFEnd = new JTextField();
-		JTFEnd.setBounds(83, 229, 400, 20);
+		JTFEnd.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JTFEnd.setBounds(111, 229, 400, 20);
 		contentPanel.add(JTFEnd);
 		JTFEnd.setColumns(10);
 
 		JTFSite = new JTextField();
-		JTFSite.setBounds(83, 281, 400, 20);
+		JTFSite.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JTFSite.setBounds(111, 281, 400, 20);
 		contentPanel.add(JTFSite);
 		JTFSite.setColumns(10);
 
 		JCBTpServ = new JComboBox(_fornecedorControl.DDLTipoServico());
-		JCBTpServ.setBounds(83, 64, 400, 20);
+		JCBTpServ.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JCBTpServ.setBounds(111, 64, 400, 20);
 
 		contentPanel.add(JCBTpServ);
 
 		JLBairro = new JLabel("Bairro");
+		JLBairro.setFont(new Font("Tahoma", Font.BOLD, 13));
 		JLBairro.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLBairro.setBounds(0, 253, 73, 14);
+		JLBairro.setBounds(0, 253, 101, 15);
 		contentPanel.add(JLBairro);
 
 		JTFBairro = new JTextField();
-		JTFBairro.setBounds(83, 253, 118, 20);
+		JTFBairro.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JTFBairro.setBounds(111, 253, 118, 20);
 		contentPanel.add(JTFBairro);
 		JTFBairro.setColumns(10);
 
 		lblCep = new JLabel("CEP");
-		lblCep.setBounds(293, 259, 46, 14);
+		lblCep.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCep.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblCep.setBounds(321, 259, 46, 15);
 		contentPanel.add(lblCep);
 
 		maskCep = new MaskFormatter(Mascaras.maskCep);
 		JFFCep = new JFormattedTextField(maskCep);
-		JFFCep.setBounds(365, 256, 118, 20);
+		JFFCep.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JFFCep.setBounds(393, 256, 118, 20);
 		contentPanel.add(JFFCep);
 		JFFCep.setColumns(10);
 
 		JCBCpfMask = new JCheckBox("CPF");
-		JCBCpfMask.setBounds(208, 35, 56, 23);
+		JCBCpfMask.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JCBCpfMask.setBounds(236, 35, 56, 23);
 		JCBCpfMask.addActionListener(this);
 		contentPanel.add(JCBCpfMask);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(83, 103, 370, 87);
+		scrollPane.setBounds(111, 103, 370, 87);
 		contentPanel.add(scrollPane);
 
 		telmodel = new TelefoneTableModel();
 		table = new JTable(telmodel);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		table.getColumnModel().getColumn(0).setMinWidth(0);
 		table.getColumnModel().getColumn(0).setMaxWidth(0);
 		scrollPane.setViewportView(table);
@@ -223,7 +248,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		btnaddtel.setIcon(new ImageIcon(JDTelaCadForn.class
 				.getResource("/Img/plus.png")));
 		btnaddtel.setToolTipText("Adicionar telefone");
-		btnaddtel.setBounds(463, 104, 23, 23);
+		btnaddtel.setBounds(491, 104, 23, 23);
 		btnaddtel.addActionListener(this);
 		contentPanel.add(btnaddtel);
 
@@ -231,7 +256,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		btnedittel.setToolTipText("Alterar telefone");
 		btnedittel.setIcon(new ImageIcon(JDTelaCadForn.class
 				.getResource("/Img/edit.png")));
-		btnedittel.setBounds(463, 129, 23, 23);
+		btnedittel.setBounds(491, 129, 23, 23);
 		btnedittel.addActionListener(this);
 		contentPanel.add(btnedittel);
 
@@ -239,7 +264,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		btnremovetel.setToolTipText("Remover telefone");
 		btnremovetel.setIcon(new ImageIcon(JDTelaCadForn.class
 				.getResource("/Img/trash.png")));
-		btnremovetel.setBounds(462, 153, 23, 23);
+		btnremovetel.setBounds(490, 153, 23, 23);
 		btnremovetel.addActionListener(this);
 		contentPanel.add(btnremovetel);
 
@@ -249,6 +274,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JBSalvForn = new JButton("Salvar");
+				JBSalvForn.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBSalvForn.setIcon(new ImageIcon(JDTelaCadForn.class
 						.getResource("/Img/Confirmar.png")));
 				JBSalvForn.addActionListener(this);
@@ -258,6 +284,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			}
 			{
 				JBNovForn = new JButton("Novo");
+				JBNovForn.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBNovForn.setIcon(new ImageIcon(JDTelaCadForn.class
 						.getResource("/Img/window_new16.png")));
 				JBNovForn.addActionListener(this);
@@ -266,6 +293,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			}
 
 			JBSair = new JButton("Sair");
+			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JBSair.setIcon(new ImageIcon(JDTelaCadForn.class
 					.getResource("/Img/exit16.png")));
 			JBSair.addActionListener(this);
@@ -470,8 +498,10 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			forModel.setLinhas(_fornecedorControl.listarTodos());
 	}
 
-	private void formaterCPFCNPJ(boolean isccpf) {
-		if (isccpf) {
+	private void formaterCPFCNPJ(boolean iscpf) {
+		
+		if (iscpf) {
+			JLCnpj.setText("CPF");
 			JCBCpfMask.setSelected(true);
 			try {
 				MaskFormatter cpfm = new MaskFormatter(Mascaras.maskCpf);
@@ -482,6 +512,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			}
 
 		} else {
+			JLCnpj.setText("CNPJ");
 			try {
 				MaskFormatter cnpjm = new MaskFormatter(Mascaras.maskCnpj);
 				JFFCnpj.setFormatterFactory(new DefaultFormatterFactory(cnpjm));

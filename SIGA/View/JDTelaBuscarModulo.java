@@ -15,14 +15,19 @@ import javax.swing.JTable;
 
 import Control.ModuloControl;
 import Dominio.Modulo;
+import Dominio.Permissao;
 import TableModels.AbstractDefaultTableModel;
 import TableModels.ModuloTableModel;
+import Util.PermissoesManager;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Window.Type;
+import java.awt.Font;
 
 public class JDTelaBuscarModulo extends JDialog implements ActionListener {
 
@@ -33,8 +38,10 @@ public class JDTelaBuscarModulo extends JDialog implements ActionListener {
 	private JButton btncadastrar;
 	private JButton btnalterar;
 	private JTextField tfpesquisa;
+	private Permissao Modulos;
 
 	public JDTelaBuscarModulo() {
+		Modulos = PermissoesManager.buscarPermissao(Util.Modulos.Modulos);
 		setResizable(false);
 		setModal(true);
 		setTitle("Buscar m\u00F3dulos");
@@ -51,16 +58,19 @@ public class JDTelaBuscarModulo extends JDialog implements ActionListener {
 
 		model = new ModuloTableModel(moduloControl.listarTodos());
 		table = new JTable(model);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		table.getColumnModel().getColumn(0).setMinWidth(0);
 		table.getColumnModel().getColumn(0).setMaxWidth(0);
 		scrollPane.setViewportView(table);
 
 		JLabel lblNomeDoMdulo = new JLabel("Nome do m\u00F3dulo");
+		lblNomeDoMdulo.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNomeDoMdulo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNomeDoMdulo.setBounds(0, 14, 115, 14);
 		contentPanel.add(lblNomeDoMdulo);
 
 		tfpesquisa = new JTextField();
+		tfpesquisa.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		tfpesquisa.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent key) {
@@ -76,6 +86,7 @@ public class JDTelaBuscarModulo extends JDialog implements ActionListener {
 		tfpesquisa.setColumns(10);
 
 		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnPesquisar.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -88,7 +99,7 @@ public class JDTelaBuscarModulo extends JDialog implements ActionListener {
 				pesquisar();
 			}
 		});
-		btnPesquisar.setBounds(117, 46, 104, 23);
+		btnPesquisar.setBounds(135, 42, 104, 23);
 		contentPanel.add(btnPesquisar);
 		{
 			JPanel buttonPane = new JPanel();
@@ -97,15 +108,19 @@ public class JDTelaBuscarModulo extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btncadastrar = new JButton("Cadastrar");
+				btncadastrar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				btncadastrar.setActionCommand("OK");
 				btncadastrar.addActionListener(this);
+				btncadastrar.setVisible(Modulos.isCadastrar());
 				buttonPane.add(btncadastrar);
 				// getRootPane().setDefaultButton(btncadastrar);
 			}
 			{
 				btnalterar = new JButton("Alterar");
+				btnalterar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				btnalterar.addActionListener(this);
 				btnalterar.setActionCommand("Cancel");
+				btnalterar.setVisible(Modulos.isAlterar());
 				buttonPane.add(btnalterar);
 			}
 		}

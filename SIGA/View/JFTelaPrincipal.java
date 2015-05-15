@@ -22,8 +22,13 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Dominio.Permissao;
+import Extra.Extras;
 import Interfaces.IAcessoManager;
 import Managers.AcessoManager;
+import Util.Modulos;
+import Util.PermissoesManager;
+
+import java.awt.Font;
 
 public class JFTelaPrincipal extends JFrame implements ActionListener {
 
@@ -66,8 +71,6 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 	private JMenuItem JMITSBuscar;
 	private JLabel label;
 	private JMenu mnTipoServio_1;
-
-	private IAcessoManager acessoManager;
 	private Permissao usuarios;
 	private Permissao lembretes;
 	private Permissao tipoServicos;
@@ -79,6 +82,9 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 	private Permissao clientes;
 	private Permissao eventos;
 	private Permissao financeiro;
+	private JMenu user;
+	private JMenuItem mntmSair;
+	private JMenuItem mntmTrocarSenha;
 
 	/**
 	 * Launch the application.
@@ -101,18 +107,18 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 	 */
 	public JFTelaPrincipal() {
 		// buscar as permissões
-		acessoManager = new AcessoManager();
-		usuarios = acessoManager.buscarPermissao("Usuarios");
-		lembretes = acessoManager.buscarPermissao("Lembretes");
-		tipoServicos = acessoManager.buscarPermissao("Tipo servicos");
-		fornecedores = acessoManager.buscarPermissao("Fornecedores");
-		itens = acessoManager.buscarPermissao("Itens");
-		tipoItens = acessoManager.buscarPermissao("Tipo itens");
-		perfis = acessoManager.buscarPermissao("Perfis");
-		modulos = acessoManager.buscarPermissao("Modulos");
-		clientes = acessoManager.buscarPermissao("Clientes");
-		eventos = acessoManager.buscarPermissao("Eventos");
-		financeiro = acessoManager.buscarPermissao("Financeiro");
+
+		usuarios = PermissoesManager.buscarPermissao(Modulos.Usuarios);
+		lembretes = PermissoesManager.buscarPermissao(Modulos.Lembretes);
+		tipoServicos = PermissoesManager.buscarPermissao(Modulos.Tipo_servicos);
+		fornecedores = PermissoesManager.buscarPermissao(Modulos.Fornecedores);
+		itens = PermissoesManager.buscarPermissao(Modulos.Itens);
+		tipoItens = PermissoesManager.buscarPermissao(Modulos.Tipo_itens);
+		perfis = PermissoesManager.buscarPermissao(Modulos.Perfis);
+		modulos = PermissoesManager.buscarPermissao(Modulos.Modulos);
+		clientes = PermissoesManager.buscarPermissao(Modulos.Clientes);
+		eventos = PermissoesManager.buscarPermissao(Modulos.Eventos);
+		financeiro = PermissoesManager.buscarPermissao(Modulos.Financeiro);
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				JFTelaPrincipal.class.getResource("/Img/CNPJ G200.png")));
@@ -131,21 +137,25 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		// MENU FORNECEDORES
 		JMenu JMForn = new JMenu("Fornecedores");
+		JMForn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMForn.setVisible(fornecedores.isVisualizar());
 		menuBar.add(JMForn);
 
 		JMIFornCad = new JMenuItem("Cadastrar");
+		JMIFornCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIFornCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		JMIFornCad.addActionListener(this);
 		JMIFornCad.setVisible(fornecedores.isCadastrar());
 		JMForn.add(JMIFornCad);
 
 		JMIFornBuscar = new JMenuItem("Buscar");
+		JMIFornBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIFornBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		JMIFornBuscar.addActionListener(this);
 		JMForn.add(JMIFornBuscar);
 
 		JMIFornExcluir = new JMenuItem("Excluir");
+		JMIFornExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIFornExcluir
 				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
 		JMIFornExcluir.addActionListener(this);
@@ -154,10 +164,12 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		// MENU TIPO SERVICOS
 		mnTipoServio_1 = new JMenu("Tipo Servi\u00E7os");
+		mnTipoServio_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mnTipoServio_1.setVisible(tipoServicos.isVisualizar());
 		JMForn.add(mnTipoServio_1);
 
 		JMenuItem mntmCadastrar_1 = new JMenuItem("Cadastrar");
+		mntmCadastrar_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmCadastrar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JDTelaCadTipoServico tscad = new JDTelaCadTipoServico(null, 0);
@@ -169,6 +181,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		mnTipoServio_1.add(mntmCadastrar_1);
 
 		JMenuItem mntmBuscar_1 = new JMenuItem("Buscar");
+		mntmBuscar_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmBuscar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JDTelaBuscaTipoServico tsb = new JDTelaBuscaTipoServico();
@@ -180,21 +193,25 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		// MENU ITENS
 		JMenu JMServ = new JMenu("Itens");
+		JMServ.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMServ.setVisible(itens.isVisualizar());
 		menuBar.add(JMServ);
 
 		JMIServCad = new JMenuItem("Cadastrar");
+		JMIServCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIServCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
 		JMIServCad.addActionListener(this);
 		JMIServCad.setVisible(itens.isCadastrar());
 		JMServ.add(JMIServCad);
 
 		JMIServBuscar = new JMenuItem("Buscar");
+		JMIServBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIServBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
 		JMIServBuscar.addActionListener(this);
 		JMServ.add(JMIServBuscar);
 
 		JMIServExcluir = new JMenuItem("Excluir");
+		JMIServExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIServExcluir
 				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0));
 		JMIServExcluir.addActionListener(this);
@@ -203,36 +220,43 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		// MENUT TIPO ITENS
 		JMTipoServio = new JMenu("Tipo itens");
+		JMTipoServio.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMTipoServio.setVisible(tipoItens.isVisualizar());
 		JMServ.add(JMTipoServio);
 
 		JMITSCad = new JMenuItem("Cadastrar");
+		JMITSCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMITSCad.addActionListener(this);
 		JMITSCad.setVisible(tipoItens.isCadastrar());
 		JMTipoServio.add(JMITSCad);
 
 		JMITSBuscar = new JMenuItem("Buscar");
+		JMITSBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMITSBuscar.addActionListener(this);
 		JMTipoServio.add(JMITSBuscar);
 
 		// MENU CLIENTES
 		JMenu JMCli = new JMenu("Clientes");
+		JMCli.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMCli.setEnabled(false);
 		JMCli.setVisible(clientes.isVisualizar());
 		menuBar.add(JMCli);
 
 		JMICliCad = new JMenuItem("Cadastrar");
+		JMICliCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMICliCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
 		JMICliCad.addActionListener(this);
 		JMICliCad.setVisible(clientes.isCadastrar());
 		JMCli.add(JMICliCad);
 
 		JMICliBuscar = new JMenuItem("Buscar");
+		JMICliBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMICliBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0));
 		JMICliBuscar.addActionListener(this);
 		JMCli.add(JMICliBuscar);
 
 		JMICliExcluir = new JMenuItem("Excluir");
+		JMICliExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMICliExcluir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0));
 		JMICliExcluir.addActionListener(this);
 		JMICliExcluir.setVisible(clientes.isExcluir());
@@ -240,32 +264,38 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		// MENU EVENTOS
 		JMEventos = new JMenu("Eventos");
+		JMEventos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMEventos.setEnabled(false);
 		JMEventos.setVisible(eventos.isVisualizar());
 		menuBar.add(JMEventos);
 
 		mntmCadastrar = new JMenuItem("Cadastrar");
+		mntmCadastrar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmCadastrar
 				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0));
 		mntmCadastrar.setVisible(eventos.isCadastrar());
 		JMEventos.add(mntmCadastrar);
 
 		mntmBuscar = new JMenuItem("Buscar");
+		mntmBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
 		JMEventos.add(mntmBuscar);
 
 		mntmExcluir = new JMenuItem("Excluir");
+		mntmExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmExcluir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
 		mntmExcluir.setVisible(eventos.isExcluir());
 		JMEventos.add(mntmExcluir);
 
 		// MENU LEMBRETES
 		JMenu JMLemb = new JMenu("Lembretes");
+		JMLemb.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		// permissão de visualização dos lembretes
 		JMLemb.setVisible(lembretes.isVisualizar());
 		menuBar.add(JMLemb);
 
 		JMILembCad = new JMenuItem("Cadastrar");
+		JMILembCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMILembCad.setAccelerator(KeyStroke
 				.getKeyStroke(KeyEvent.VK_PAGE_UP, 0));
 		JMILembCad.addActionListener(this);
@@ -274,12 +304,14 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMLemb.add(JMILembCad);
 
 		JMILembBuscar = new JMenuItem("Buscar");
+		JMILembBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMILembBuscar.setAccelerator(KeyStroke.getKeyStroke(
 				KeyEvent.VK_PAGE_DOWN, 0));
 		JMILembBuscar.addActionListener(this);
 		JMLemb.add(JMILembBuscar);
 
 		JMILembExcluir = new JMenuItem("Excluir");
+		JMILembExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMILembExcluir.setAccelerator(KeyStroke
 				.getKeyStroke(KeyEvent.VK_END, 0));
 		JMILembExcluir.addActionListener(this);
@@ -288,17 +320,20 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		// MENU FINANCEIRO
 		JMenu JMFin = new JMenu("Financeiro");
+		JMFin.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMFin.setEnabled(false);
 		JMFin.setVisible(financeiro.isVisualizar());
 		menuBar.add(JMFin);
 
 		JMIFinSincInf = new JMenuItem("Sincronizar info.");
+		JMIFinSincInf.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIFinSincInf.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
 				InputEvent.CTRL_MASK));
 		JMIFinSincInf.addActionListener(this);
 		JMFin.add(JMIFinSincInf);
 
 		JMIFinFormPag = new JMenuItem("Formas de pag.");
+		JMIFinFormPag.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIFinFormPag.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
 				InputEvent.CTRL_MASK));
 		JMIFinFormPag.addActionListener(this);
@@ -306,81 +341,99 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		// MENU TIPO PAGAMENTO
 		JMenu JMTipoDePagamento = new JMenu("Tipo de pagamento");
+		JMTipoDePagamento.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMFin.add(JMTipoDePagamento);
 
 		JMenuItem JMITpPagCad = new JMenuItem("Cadastrar");
+		JMITpPagCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMITpPagCad.addActionListener(this);
 		JMTipoDePagamento.add(JMITpPagCad);
 
 		JMenuItem JMITpPagBuscar = new JMenuItem("Buscar");
+		JMITpPagBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMITpPagBuscar.addActionListener(this);
 		JMTipoDePagamento.add(JMITpPagBuscar);
 
 		JMenuItem JMITpPagExcluir = new JMenuItem("Excluir");
+		JMITpPagExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMITpPagExcluir.addActionListener(this);
 		JMTipoDePagamento.add(JMITpPagExcluir);
 
 		// MENU FORMAS DE PAGAMENTO
 		JMenu JMFormasDePagamento = new JMenu("Formas de pagamento");
+		JMFormasDePagamento.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMFin.add(JMFormasDePagamento);
 
 		JMenuItem JMIFormPagCad = new JMenuItem("Cadastrar");
+		JMIFormPagCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIFormPagCad.addActionListener(this);
 		JMFormasDePagamento.add(JMIFormPagCad);
 
 		JMenuItem JMIFormPagBuscar = new JMenuItem("Buscar");
+		JMIFormPagBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIFormPagBuscar.addActionListener(this);
 		JMFormasDePagamento.add(JMIFormPagBuscar);
 
 		JMenuItem JMIFormPagExcluir = new JMenuItem("Excluir");
+		JMIFormPagExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIFormPagExcluir.addActionListener(this);
 		JMFormasDePagamento.add(JMIFormPagExcluir);
 
 		// MENU RELATORIOS
 		JMenu JMRel = new JMenu("Relat\u00F3rios");
+		JMRel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMRel.setEnabled(false);
 		menuBar.add(JMRel);
 
 		JMIRelCont = new JMenu("Contrato");
+		JMIRelCont.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMRel.add(JMIRelCont);
 
 		JMIRelContFormComp = new JMenuItem("Formatura completa");
+		JMIRelContFormComp.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIRelContFormComp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3,
 				InputEvent.CTRL_MASK));
 		JMIRelContFormComp.addActionListener(this);
 		JMIRelCont.add(JMIRelContFormComp);
 
 		JMIRelContFormCusto = new JMenuItem("Formatura customizada");
+		JMIRelContFormCusto.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIRelContFormCusto.setAccelerator(KeyStroke.getKeyStroke(
 				KeyEvent.VK_4, InputEvent.CTRL_MASK));
 		JMIRelContFormCusto.addActionListener(this);
 		JMIRelCont.add(JMIRelContFormCusto);
 
 		JMenu JMIRelEvent = new JMenu("Eventos");
+		JMIRelEvent.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMRel.add(JMIRelEvent);
 
 		JMIRelEventSerRea = new JMenuItem("A ser realizado");
+		JMIRelEventSerRea.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIRelEventSerRea.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_5,
 				InputEvent.CTRL_MASK));
 		JMIRelEventSerRea.addActionListener(this);
 		JMIRelEvent.add(JMIRelEventSerRea);
 
 		JMIRelEventForn = new JMenuItem("Fornecedores");
+		JMIRelEventForn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIRelEventForn.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_6,
 				InputEvent.CTRL_MASK));
 		JMIRelEventSerRea.addActionListener(this);
 		JMIRelEvent.add(JMIRelEventForn);
 
 		JMenu JMIRelImp = new JMenu("Impress\u00E3o");
+		JMIRelImp.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMRel.add(JMIRelImp);
 
 		JMIRelImpOrc = new JMenuItem("Or\u00E7amento");
+		JMIRelImpOrc.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIRelImpOrc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_7,
 				InputEvent.CTRL_MASK));
 		JMIRelImpOrc.addActionListener(this);
 		JMIRelImp.add(JMIRelImpOrc);
 
 		JMIRelImpCont = new JMenuItem("Contrato");
+		JMIRelImpCont.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIRelImpCont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_8,
 				InputEvent.CTRL_MASK));
 		JMIRelImpCont.addActionListener(this);
@@ -388,24 +441,28 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		// MENU USUARIOS
 		JMenu JMUsu = new JMenu("Usu\u00E1rios");
+		JMUsu.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 
 		// permissão de visualização do menu usuários
 		JMUsu.setVisible(usuarios.isVisualizar());
 		menuBar.add(JMUsu);
 
 		JMIUsuCad = new JMenuItem("Cadastrar");
+		JMIUsuCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIUsuCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0));
 		JMIUsuCad.addActionListener(this);
 		JMUsu.setVisible(usuarios.isCadastrar());
 		JMUsu.add(JMIUsuCad);
 
 		JMIUsuBuscar = new JMenuItem("Buscar");
+		JMIUsuBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIUsuBuscar
 				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, 0));
 		JMIUsuBuscar.addActionListener(this);
 		JMUsu.add(JMIUsuBuscar);
 
 		JMIUsuExcluir = new JMenuItem("Excluir");
+		JMIUsuExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIUsuExcluir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,
 				0));
 		JMIUsuExcluir.addActionListener(this);
@@ -414,10 +471,12 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		// MENU PERFIL
 		JMenu mnPerfil = new JMenu("Perfil");
+		mnPerfil.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mnPerfil.setVisible(perfis.isVisualizar());
 		JMUsu.add(mnPerfil);
 
 		JMenuItem mntmCadastrar_3 = new JMenuItem("Cadastrar");
+		mntmCadastrar_3.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmCadastrar_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JDTelaEditFormPerfil efp = new JDTelaEditFormPerfil(null, null);
@@ -428,6 +487,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		mnPerfil.add(mntmCadastrar_3);
 
 		JMenuItem mntmBuscar_3 = new JMenuItem("Buscar");
+		mntmBuscar_3.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmBuscar_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JDTelaBuscarPerfis bp = new JDTelaBuscarPerfis();
@@ -439,10 +499,12 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		// MENU MODULOS
 		JMenu mnPermisso = new JMenu("M\u00F3dulos");
+		mnPermisso.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIUsuExcluir.setVisible(modulos.isVisualizar());
 		JMUsu.add(mnPermisso);
 
 		JMenuItem mntmCadastrar_4 = new JMenuItem("Cadastrar");
+		mntmCadastrar_4.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmCadastrar_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JDTelaEditFormModulo efm = new JDTelaEditFormModulo(null, null);
@@ -453,6 +515,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		mnPermisso.add(mntmCadastrar_4);
 
 		JMenuItem mntmBuscar_4 = new JMenuItem("Buscar");
+		mntmBuscar_4.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmBuscar_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JDTelaBuscarModulo bm = new JDTelaBuscarModulo();
@@ -461,6 +524,20 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		});
 
 		mnPermisso.add(mntmBuscar_4);
+
+		user = new JMenu(Extras.getUsuarioLogado().getUsuario());
+		user.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		menuBar.add(user);
+
+		mntmTrocarSenha = new JMenuItem("Trocar senha");
+		mntmTrocarSenha.addActionListener(this);
+		mntmTrocarSenha.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		user.add(mntmTrocarSenha);
+
+		mntmSair = new JMenuItem("Sair");
+		mntmSair.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		mntmSair.addActionListener(this);
+		user.add(mntmSair);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -542,10 +619,10 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		/* JMenu Clientes */
 		if (acao.getSource() == JMICliCad) {
-			JDTelaCadCli jdtcc;
+			JDTelaFormCliente jdtcc;
 
 			try {
-				jdtcc = new JDTelaCadCli();
+				jdtcc = new JDTelaFormCliente();
 				jdtcc.setResizable(false);
 				jdtcc.setVisible(true);
 			} catch (ParseException e) {
@@ -691,6 +768,17 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		if (acao.getSource() == JMIUsuExcluir) {
 			JOptionPane
 					.showInputDialog("Digite o login do usuário para exclusão");
+		}
+
+		if (acao.getSource() == mntmSair) {
+			JFTelaLogin login = new JFTelaLogin();
+			login.setVisible(true);
+			this.dispose();
+		}
+		if (acao.getSource() == mntmTrocarSenha) {
+			JDTelaTrocarSenha ts = new JDTelaTrocarSenha(
+					Extras.getUsuarioLogado());
+			ts.setVisible(true);
 		}
 
 	}// final da ação do menu

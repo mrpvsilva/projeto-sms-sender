@@ -25,18 +25,17 @@
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 
 			<!-- CONFIGURAÇÕES DE ACESSO GDA -->
-
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.1.8:3306/siga" />
-			<property name="javax.persistence.jdbc.user" value="arua" />
-			<property name="javax.persistence.jdbc.password" value="gda@eventos432" />
+			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.1.8:3306/siga" 
+				/> -->
+			<!-- <property name="javax.persistence.jdbc.user" value="arua" /> -->
+			<!-- <property name="javax.persistence.jdbc.password" value="gda@eventos432" 
+				/> -->
 			<!-- FIM -->
 
 			<!-- CONFIGURAÇÕES DE ACESSO LOCALHOST -->
-			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/siga" 
-				/> -->
-			<!-- <property name="javax.persistence.jdbc.user" value="user" /> -->
-			<!-- <property name="javax.persistence.jdbc.password" value="user123456" 
-				/> -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/siga" />
+			<property name="javax.persistence.jdbc.user" value="user" />
+			<property name="javax.persistence.jdbc.password" value="user123456" />
 			<!-- FIM -->
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="false" />
