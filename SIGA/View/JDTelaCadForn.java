@@ -2,24 +2,30 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.text.ParseException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JFormattedTextField;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
 
 import Control.FornecedoresControl;
 import Dominio.Endereco;
@@ -32,14 +38,6 @@ import Extra.Mascaras;
 import Extra.Validacoes;
 import TableModels.AbstractDefaultTableModel;
 import TableModels.TelefoneTableModel;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-
-import java.awt.Toolkit;
-import java.awt.Font;
 
 public class JDTelaCadForn extends JDialog implements ActionListener {
 
@@ -65,7 +63,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	private JCheckBox JCBCpfMask;
 	private MaskFormatter maskCep;
 	private FornecedoresControl _fornecedorControl;
-	private AbstractDefaultTableModel<TelefoneFornecedor> telmodel;
+	private AbstractDefaultTableModel<Telefone> telmodel;
 	private AbstractDefaultTableModel<Fornecedor> forModel;
 	private JScrollPane scrollPane;
 	private JTable table;
@@ -118,7 +116,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		JLNome.setBounds(0, 11, 101, 15);
 		contentPanel.add(JLNome);
 
-		 JLCnpj = new JLabel("CNPJ");
+		JLCnpj = new JLabel("CNPJ");
 		JLCnpj.setFont(new Font("Tahoma", Font.BOLD, 13));
 		JLCnpj.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLCnpj.setBounds(0, 36, 101, 15);
@@ -308,7 +306,8 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent acao) {
 
 		if (acao.getSource() == btnaddtel) {
-			JDTelaEditTelefone ef = new JDTelaEditTelefone(-1, null, telmodel);
+			JDTelaEditTelefone ef = new JDTelaEditTelefone(-1,
+					new TelefoneFornecedor(), telmodel);
 			ef.setModal(true);
 			ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			ef.setVisible(true);
@@ -318,7 +317,8 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			int linha = table.getSelectedRow();
 
 			if (linha > -1) {
-				TelefoneFornecedor t = telmodel.find(linha);
+				TelefoneFornecedor t = (TelefoneFornecedor) telmodel
+						.find(linha);
 				JDTelaEditTelefone ef = new JDTelaEditTelefone(linha, t,
 						telmodel);
 				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -499,7 +499,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	}
 
 	private void formaterCPFCNPJ(boolean iscpf) {
-		
+
 		if (iscpf) {
 			JLCnpj.setText("CPF");
 			JCBCpfMask.setSelected(true);

@@ -26,8 +26,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
-import Extra.Extras;
+import Control.ClientesControl;
+import Dominio.Cliente;
+import Dominio.Endereco;
+import Dominio.Telefone;
+import Dominio.TelefoneCliente;
 import Extra.Mascaras;
+import TableModels.AbstractDefaultTableModel;
+import TableModels.TelefoneTableModel;
 
 public class JDTelaFormCliente extends JDialog implements ActionListener {
 
@@ -36,25 +42,30 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JButton JBCadCli;
+	private JButton salvar;
 	private JButton JBNovoCad;
-	private JTextField JTFNome;
-	private JTextField JTFResp;
-	private JTextField JTFRg;
+	private JTextField nomeCompleto;
+	private JTextField nomeResponsavel;
+	private JTextField rg;
 	private MaskFormatter maskRG;
 	private MaskFormatter maskCpf;
-	private JTextField JTFEnd;
+	private JTextField endereco;
 	private MaskFormatter maskFone;
-	private Extras ext = new Extras();
-	private JFormattedTextField JFFCpf;
-	private JButton JBSair;
-	private JPanel endereco;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_4;
-	private JPanel panel;
+	private JFormattedTextField cpf;
+	private JButton sair;
+	private JPanel endereco_pane;
+	private JTextField cep;
+	private JTextField bairro;
+	private JTextField cidade;
+	private JTextField complemento;
+	private JPanel telefones_pane;
 	private JTable table;
+	private AbstractDefaultTableModel<Telefone> telefones;
+	private JTextField email;
+	private Cliente cliente;
+	private AbstractDefaultTableModel<Cliente> modelCliente;
+	private ClientesControl controller;
+	private boolean edit;
 
 	/**
 	 * Launch the application.
@@ -69,12 +80,47 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 * 
-	 * @throws ParseException
-	 */
+	// CONSTRUTOR CHAMADO PELA TELA PRINCIPAL DO SISTEMA
 	public JDTelaFormCliente() throws ParseException {
+		edit = false;
+		cliente = new Cliente();
+		telefones = new TelefoneTableModel();
+		start();
+	}
+
+	// CONTRUTOR CHAMADO PELA TELA DE BUSCA DE CLIENTE PARA CADASTRO DO CLIENTE
+	public JDTelaFormCliente(AbstractDefaultTableModel<Cliente> modelCliente)
+			throws ParseException {
+		edit = false;
+		this.modelCliente = modelCliente;
+		cliente = new Cliente();
+		telefones = new TelefoneTableModel();
+		start();
+	}
+
+	// CONTRUTOR CHAMADO PELA TELA DE BUSCA DE CLIENTE PARA EDIÇÃO DO CLIENTE
+	public JDTelaFormCliente(AbstractDefaultTableModel<Cliente> modelCliente,
+			Cliente cliente) throws ParseException {
+		edit = true;
+		this.modelCliente = modelCliente;
+		this.cliente = cliente;
+		telefones = new TelefoneTableModel(cliente.getTelefones());
+		start();
+		carregarCampos();
+	}
+
+	// CONTRUTOR CHAMADO PELA TELA DE BUSCA DE CLIENTE PARA VISUALIZACAO DO
+	// CLIENTE
+	public JDTelaFormCliente(Cliente cliente) throws ParseException {
+		edit = false;
+		this.cliente = cliente;
+		telefones = new TelefoneTableModel(cliente.getTelefones());
+		start();
+		carregarCampos();
+	}
+
+	public void start() throws ParseException {
+		controller = new ClientesControl();
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
@@ -91,78 +137,79 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		maskCpf = new MaskFormatter(Mascaras.maskCpf);
 
 		maskFone = new MaskFormatter(Mascaras.mask9digi);
-		// for(String item : ext.getOperadora()){
-		// JCBOperadora1.addItem(item);
-		// }
-		// for(String item : ext.getOperadora()){
-		// JCBOperadora.addItem(item);
-		// }
-		// for(String item : ext.getOperadora()){
-		// JCBOperadora2.addItem(item);
-		// }
-		// for(String item : ext.getSimNao()){
-		// JCBOperadora2.addItem(item);
-		// }
 
-		JPanel dadospessoais = new JPanel();
-		dadospessoais.setBorder(new TitledBorder(UIManager
+		JPanel dadospessoais_pane = new JPanel();
+		dadospessoais_pane.setBorder(new TitledBorder(UIManager
 				.getBorder("TitledBorder.border"), "Dados pessoais",
 				TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
-		dadospessoais.setBounds(10, 26, 554, 157);
-		contentPanel.add(dadospessoais);
-		dadospessoais.setLayout(null);
+		dadospessoais_pane.setBounds(10, 26, 554, 157);
+		contentPanel.add(dadospessoais_pane);
+		dadospessoais_pane.setLayout(null);
 
 		JLabel JLNome = new JLabel("Nome");
 		JLNome.setBounds(10, 28, 46, 14);
-		dadospessoais.add(JLNome);
+		dadospessoais_pane.add(JLNome);
 		JLNome.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLNome.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
-		JTFNome = new JTextField();
-		JTFNome.setBounds(68, 25, 428, 20);
-		dadospessoais.add(JTFNome);
-		JTFNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JTFNome.setColumns(10);
+		nomeCompleto = new JTextField();
+		nomeCompleto.setBounds(68, 25, 428, 20);
+		dadospessoais_pane.add(nomeCompleto);
+		nomeCompleto.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		nomeCompleto.setColumns(10);
 
 		JLabel JLResponsavel = new JLabel("Resp.");
 		JLResponsavel.setBounds(10, 56, 46, 14);
-		dadospessoais.add(JLResponsavel);
+		dadospessoais_pane.add(JLResponsavel);
 		JLResponsavel.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLResponsavel.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLResponsavel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
-		JTFResp = new JTextField();
-		JTFResp.setBounds(68, 53, 428, 20);
-		dadospessoais.add(JTFResp);
-		JTFResp.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JTFResp.setColumns(10);
-		JTFRg = new JFormattedTextField(maskRG);
-		JTFRg.setBounds(68, 83, 162, 20);
-		dadospessoais.add(JTFRg);
-		JTFRg.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JTFRg.setColumns(10);
+		nomeResponsavel = new JTextField();
+		nomeResponsavel.setBounds(68, 53, 428, 20);
+		dadospessoais_pane.add(nomeResponsavel);
+		nomeResponsavel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		nomeResponsavel.setColumns(10);
+		rg = new JFormattedTextField(maskRG);
+		rg.setBounds(68, 83, 184, 20);
+		dadospessoais_pane.add(rg);
+		rg.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		rg.setColumns(10);
 
 		JLabel JLRg = new JLabel("RG");
 		JLRg.setBounds(10, 86, 46, 14);
-		dadospessoais.add(JLRg);
+		dadospessoais_pane.add(JLRg);
 		JLRg.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLRg.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLRg.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		JLabel JLCpf = new JLabel("CPF");
 		JLCpf.setBounds(251, 86, 46, 14);
-		dadospessoais.add(JLCpf);
+		dadospessoais_pane.add(JLCpf);
 		JLCpf.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLCpf.setFont(new Font("Tahoma", Font.BOLD, 13));
-		JFFCpf = new JFormattedTextField(maskCpf);
-		JFFCpf.setBounds(312, 84, 184, 20);
-		dadospessoais.add(JFFCpf);
-		JFFCpf.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JLCpf.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		cpf = new JFormattedTextField(maskCpf);
+		cpf.setBounds(312, 84, 184, 20);
+		dadospessoais_pane.add(cpf);
+		cpf.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		JLabel lblEmail = new JLabel("Email");
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblEmail.setBounds(10, 117, 46, 14);
-		dadospessoais.add(lblEmail);
+		dadospessoais_pane.add(lblEmail);
+
+		email = new JTextField();
+		email.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		email.setColumns(10);
+		email.setBounds(68, 115, 184, 20);
+		dadospessoais_pane.add(email);
+
+		// JFormattedTextField formattedTextField = new JFormattedTextField(
+		// (AbstractFormatter) null);
+		// formattedTextField.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		// formattedTextField.setColumns(10);
+		// formattedTextField.setBounds(68, 115, 184, 20);
+		// dadospessoais.add(formattedTextField);
 
 		// JFormattedTextField formattedTextField = new
 		// JFormattedTextField((AbstractFormatter) null);
@@ -171,103 +218,163 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		// formattedTextField.setBounds(68, 114, 162, 20);
 		// dadospessoais.add(formattedTextField);
 
-		endereco = new JPanel();
-		endereco.setLayout(null);
-		endereco.setBorder(new TitledBorder(UIManager
-				.getBorder("TitledBorder.border"), "Endereco",
+		endereco_pane = new JPanel();
+		endereco_pane.setLayout(null);
+		endereco_pane.setBorder(new TitledBorder(UIManager
+				.getBorder("TitledBorder.border"), "Endere\u00E7o",
 				TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
-		endereco.setBounds(10, 194, 554, 157);
-		contentPanel.add(endereco);
+		endereco_pane.setBounds(10, 194, 554, 157);
+		contentPanel.add(endereco_pane);
 
-		JLabel JLEnd = new JLabel("Logradouro");
+		JLabel JLEnd = new JLabel("Endere\u00E7o");
 		JLEnd.setBounds(0, 27, 95, 15);
-		endereco.add(JLEnd);
+		endereco_pane.add(JLEnd);
 		JLEnd.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLEnd.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLEnd.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
-		JTFEnd = new JTextField();
-		JTFEnd.setBounds(105, 24, 391, 20);
-		endereco.add(JTFEnd);
-		JTFEnd.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JTFEnd.setColumns(10);
+		endereco = new JTextField();
+		endereco.setBounds(105, 24, 391, 20);
+		endereco_pane.add(endereco);
+		endereco.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		endereco.setColumns(10);
 
 		JLabel lblCep = new JLabel("CEP");
 		lblCep.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCep.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblCep.setBounds(0, 56, 95, 15);
-		endereco.add(lblCep);
+		endereco_pane.add(lblCep);
 
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textField.setColumns(10);
-		textField.setBounds(105, 53, 146, 20);
-		endereco.add(textField);
+		cep = new JTextField();
+		cep.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		cep.setColumns(10);
+		cep.setBounds(105, 53, 146, 20);
+		endereco_pane.add(cep);
 
 		JLabel lblBairro = new JLabel("Bairro");
 		lblBairro.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblBairro.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblBairro.setBounds(265, 55, 62, 15);
-		endereco.add(lblBairro);
+		endereco_pane.add(lblBairro);
 
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textField_1.setColumns(10);
-		textField_1.setBounds(340, 55, 156, 20);
-		endereco.add(textField_1);
+		bairro = new JTextField();
+		bairro.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		bairro.setColumns(10);
+		bairro.setBounds(340, 55, 156, 20);
+		endereco_pane.add(bairro);
 
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textField_2.setColumns(10);
-		textField_2.setBounds(105, 82, 146, 20);
-		endereco.add(textField_2);
+		cidade = new JTextField();
+		cidade.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		cidade.setColumns(10);
+		cidade.setBounds(105, 82, 146, 20);
+		endereco_pane.add(cidade);
 
 		JLabel lblN = new JLabel("Cidade");
 		lblN.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblN.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblN.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblN.setBounds(0, 85, 95, 15);
-		endereco.add(lblN);
+		endereco_pane.add(lblN);
 
-		textField_4 = new JTextField();
-		textField_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textField_4.setColumns(10);
-		textField_4.setBounds(105, 113, 391, 20);
-		endereco.add(textField_4);
+		complemento = new JTextField();
+		complemento.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		complemento.setColumns(10);
+		complemento.setBounds(105, 113, 391, 20);
+		endereco_pane.add(complemento);
 
 		JLabel lblComplemento = new JLabel("Complemento");
 		lblComplemento.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblComplemento.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblComplemento.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblComplemento.setBounds(0, 116, 95, 15);
-		endereco.add(lblComplemento);
+		endereco_pane.add(lblComplemento);
 
-		panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBorder(new TitledBorder(UIManager
+		telefones_pane = new JPanel();
+		telefones_pane.setLayout(null);
+		telefones_pane.setBorder(new TitledBorder(UIManager
 				.getBorder("TitledBorder.border"), "Telefones",
 				TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
-		panel.setBounds(10, 362, 554, 157);
-		contentPanel.add(panel);
+		telefones_pane.setBounds(10, 362, 554, 157);
+		contentPanel.add(telefones_pane);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 21, 534, 87);
-		panel.add(scrollPane);
+		scrollPane.setBounds(10, 25, 534, 87);
+		telefones_pane.add(scrollPane);
 
-		table = new JTable();
+		table = new JTable(telefones);
+		table.getColumnModel().getColumn(0).setMinWidth(0);
+		table.getColumnModel().getColumn(0).setMaxWidth(0);
 		scrollPane.setViewportView(table);
+
+		JButton button = new JButton("");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JDTelaEditTelefone ef = new JDTelaEditTelefone(-1,
+						new TelefoneCliente(), telefones);
+				ef.setModal(true);
+				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				ef.setVisible(true);
+			}
+		});
+		button.setIcon(new ImageIcon(JDTelaFormCliente.class
+				.getResource("/Img/plus.png")));
+		button.setToolTipText("Adicionar telefone");
+		button.setBounds(10, 115, 23, 23);
+		telefones_pane.add(button);
+
+		JButton button_1 = new JButton("");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				int linha = table.getSelectedRow();
+				if (linha > -1) {
+					Telefone t = telefones.find(linha);
+					JDTelaEditTelefone ef = new JDTelaEditTelefone(linha, t,
+							telefones);
+					ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+					ef.setVisible(true);
+				} else {
+					JOptionPane
+							.showMessageDialog(null, "Selecione um telefone");
+				}
+			}
+		});
+		button_1.setIcon(new ImageIcon(JDTelaFormCliente.class
+				.getResource("/Img/edit.png")));
+		button_1.setToolTipText("Alterar telefone");
+		button_1.setBounds(35, 115, 23, 23);
+		telefones_pane.add(button_1);
+
+		JButton button_2 = new JButton("");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int linha = table.getSelectedRow();
+				if (linha > -1) {
+					telefones.remove(linha);
+				} else {
+					JOptionPane
+							.showMessageDialog(null, "Selecione um telefone");
+				}
+			}
+		});
+		button_2.setIcon(new ImageIcon(JDTelaFormCliente.class
+				.getResource("/Img/trash.png")));
+		button_2.setToolTipText("Remover telefone");
+		button_2.setBounds(61, 115, 23, 23);
+		telefones_pane.add(button_2);
 
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JBCadCli = new JButton("Salvar");
-				JBCadCli.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBCadCli.setIcon(new ImageIcon(JDTelaFormCliente.class
+				salvar = new JButton("Salvar");
+				salvar.addActionListener(this);
+				salvar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				salvar.setIcon(new ImageIcon(JDTelaFormCliente.class
 						.getResource("/Img/Confirmar.png")));
-				buttonPane.add(JBCadCli);
-				JBCadCli.setMnemonic(KeyEvent.VK_S);
-				getRootPane().setDefaultButton(JBCadCli);
+				buttonPane.add(salvar);
+				salvar.setMnemonic(KeyEvent.VK_S);
+				getRootPane().setDefaultButton(salvar);
 			}
 			{
 				JBNovoCad = new JButton("Novo");
@@ -279,108 +386,66 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 				buttonPane.add(JBNovoCad);
 			}
 
-			JBSair = new JButton("Sair");
-			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBSair.setIcon(new ImageIcon(JDTelaFormCliente.class
+			sair = new JButton("Sair");
+			sair.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			sair.setIcon(new ImageIcon(JDTelaFormCliente.class
 					.getResource("/Img/exit16.png")));
-			JBSair.addActionListener(this);
-			JBSair.setMnemonic(KeyEvent.VK_Q);
-			buttonPane.add(JBSair);
+			sair.addActionListener(this);
+			sair.setMnemonic(KeyEvent.VK_Q);
+			buttonPane.add(sair);
 		}
+	}
+
+	private void carregarCampos() {
+
+		nomeCompleto.setText(cliente.getNomeCompleto());
+		nomeResponsavel.setText(cliente.getResponsavel());
+		rg.setText(cliente.getRg());
+		cpf.setValue(cliente.getCpfCnpj());
+		email.setText(cliente.getEmail());
+
+		Endereco e = cliente.getEndereco();
+		endereco.setText(e.getEndereco());
+		cep.setText(e.getCep() + "");
+		bairro.setText(e.getBairro());
+		cidade.setText(e.getCidade());
+		complemento.setText(e.getComplemento());
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent acao) {
 
-		if (acao.getSource() == JBCadCli) {
+		if (acao.getSource() == salvar) {
 
 			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
-					"Deseja cadastrar o cliente?")) {
+					"Deseja salvar o cliente?")) {
 
-				// if(JTFNome.getText().trim().isEmpty())
-				// JOptionPane.showMessageDialog(null,
-				// "Nome em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
-				// else if(JTFRg.getText().trim().isEmpty())
-				// JOptionPane.showMessageDialog(null,
-				// "Rg em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
-				// else if(Validacoes.ValidaCpfCnpj(JFFCpf.getText()))
-				// JOptionPane.showMessageDialog(null,
-				// "Cpf inválido.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
-				// else if(JTFEmail.getText().trim().isEmpty())
-				// JOptionPane.showMessageDialog(null,
-				// "Email em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
-				// else if(JTFEnd.getText().trim().isEmpty())
-				// JOptionPane.showMessageDialog(null,
-				// "Endereço em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
-				// else if(Validacoes.ValidaTelefone(JFFFone.getText()))
-				// JOptionPane.showMessageDialog(null,
-				// "Telefone inválido/em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
-				// else if (JCBSn.getSelectedItem().toString().equals("SIM") &&
-				// JTFNomeGuerra.getText().trim().isEmpty())
-				// JOptionPane.showMessageDialog(null,
-				// "Nome guerra em branco.","Erro ao cadastrar",JOptionPane.ERROR_MESSAGE);
-				// else{
-				// ClientesBean cliBean = new ClientesBean();
-				//
-				// cliBean.setNomecompcli(JTFNome.getText());
-				// cliBean.setRespcli(JTFResp.getText());
-				// cliBean.setRgcli(JTFRg.getText());
-				// cliBean.setCpfcli(Extras.FormatCnpjCpf(JFFCpf.getText())); //
-				// Formata depois seta
-				// cliBean.setEmailcli(JTFEmail.getText());
-				// cliBean.setEndcli(JTFEnd.getText());
-				//
-				// cliBean.setTelefonecli(Extras.FormatFone(JFFFone.getText()));
-				// // Formata depois seta
-				// cliBean.setTelefonecli1(Extras.FormatFone(JFFFone1.getText()));
-				// // Formata depois seta
-				// cliBean.setTelefonecli2(Extras.FormatFone(JFFFone2.getText()));
-				// // Formata depois seta
-				//
-				// cliBean.setTipoeventocli(JCBEvento.getSelectedItem().toString());
-				// cliBean.setConvidadosextrascli(Integer.parseInt(JFFConvExtra.getText()));
-				// // Formata depois seta
-				// cliBean.setNomeguerracli(JTFNomeGuerra.getText());
-				//
-				// cliBean.setOperadora(JCBOperadora.getSelectedItem().toString());
-				// cliBean.setOperadora1(JCBOperadora1.getSelectedItem().toString());
-				// cliBean.setOperadora2(JCBOperadora2.getSelectedItem().toString());
+				cliente.setNomeCompleto(nomeCompleto.getText());
+				cliente.setResponsavel(nomeResponsavel.getText());
+				cliente.setRg(rg.getText());
+				cliente.setEmail(email.getText());
+				cliente.setCpfCnpj(cpf.getText());
 
-				// }// final da validação
+				Endereco e = cliente.getEndereco();
+				e.setEndereco(endereco.getText());
+				e.setCep(Integer.parseInt(cep.getText()));
+				e.setBairro(bairro.getText());
+				e.setCidade(cidade.getText());
+				e.setComplemento(complemento.getText());
+				cliente.setEndereco(e);
+				cliente.setTelefones(telefones.getLinhas());
+
+				if (!edit)
+					controller.cadastrar(cliente);
+				else
+					controller.atualizar(cliente);
 
 			}// final da confirmação
 
 		}// final do botão cadastrar usuário
 
-		// if(acao.getSource() == JBNovoCad){
-		//
-		// if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
-		// "Deseja cadastrar o cliente?")){
-		//
-		// JTFNome.setText("");
-		// JTFResp.setText("");
-		// JTFRg.setText("");
-		// JFFCpf.setText("");
-		// JTFEmail.setText("");
-		// JTFEnd.setText("");
-		//
-		// JFFFone.setText("");
-		// JFFFone1.setText("");
-		// JFFFone2.setText("");
-		//
-		// JCBEvento.setSelectedItem("");
-		// JFFConvExtra.setText("");
-		// JTFNomeGuerra.setText("");
-		//
-		// JCBOperadora.setSelectedItem("TIM");
-		// JCBOperadora1.setSelectedItem("TIM");
-		// JCBOperadora2.setSelectedItem("TIm");
-		//
-		// }// final da confirmação
-		//
-		// }// final do botão atualizar usuário
-
-		if (acao.getSource() == JBSair) {
+		if (acao.getSource() == sair) {
 			this.dispose();
 		}
 	}// final da ação do botão

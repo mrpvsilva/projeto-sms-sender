@@ -2,29 +2,23 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import Dominio.Telefone;
-import Dominio.TelefoneFornecedor;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.SwingConstants;
-
-import TableModels.AbstractDefaultTableModel;
-import TableModels.TelefoneTableModel;
-
-import java.awt.event.ActionListener;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
-import java.awt.Font;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import Dominio.Telefone;
+import TableModels.AbstractDefaultTableModel;
 
 public class JDTelaEditTelefone extends JDialog implements ActionListener {
 
@@ -36,12 +30,11 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	private JButton JBSalvar;
 	private JButton JBSair;
 	private int _linha = -1;
-	private TelefoneFornecedor _telefone;
-	private AbstractDefaultTableModel<TelefoneFornecedor> _model;
+	private Telefone _telefone;
+	private AbstractDefaultTableModel<Telefone> _model;
 	private JTextField tfddd;
 	private JTextField tfnumero;
 	private JComboBox cboperadoras;
-
 
 	/**
 	 * Launch the application.
@@ -61,11 +54,11 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaEditTelefone(int linha, TelefoneFornecedor telefone,
-			AbstractDefaultTableModel<TelefoneFornecedor> model) {
+	public JDTelaEditTelefone(int linha, Telefone telefone,
+			AbstractDefaultTableModel<Telefone> telmodel) {
 		setTitle("SIGA - cad. telefone");
 		_telefone = telefone;
-		_model = model;
+		_model = telmodel;
 		_linha = linha;
 		setModal(true);
 		setResizable(false);
@@ -105,7 +98,8 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 		lblOperadora.setBounds(0, 67, 85, 14);
 		contentPanel.add(lblOperadora);
 
-		cboperadoras = new JComboBox( new String[] { "CLARO", "OI", "TIM", "VIVO" });
+		cboperadoras = new JComboBox(new String[] { "CLARO", "OI", "TIM",
+				"VIVO" });
 		cboperadoras.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		cboperadoras.setBounds(95, 61, 128, 20);
 		contentPanel.add(cboperadoras);
@@ -138,8 +132,9 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	}
 
 	private void Create() {
-		_telefone = new TelefoneFornecedor(tfddd.getText(), tfnumero.getText(),
-				cboperadoras.getSelectedItem().toString());
+		_telefone.setDdd(tfddd.getText());
+		_telefone.setNumero(tfnumero.getText());
+		_telefone.setOperadora(cboperadoras.getSelectedItem().toString());
 		_model.add(_telefone);
 	}
 
@@ -151,7 +146,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	}
 
 	private void PreencherCampos() {
-		if (_telefone != null) {
+		if (_linha > -1) {
 			tfddd.setText(_telefone.getDdd());
 			tfnumero.setText(_telefone.getNumero());
 			cboperadoras.setSelectedItem(_telefone.getOperadora());
@@ -162,7 +157,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == JBSalvar) {
-			if (_telefone != null) {
+			if (_linha > -1) {
 				Update();
 			} else {
 				Create();

@@ -40,13 +40,13 @@ public class Fornecedor implements Serializable {
 	private String rg;
 	@Column
 	private String site;
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idtiposervico", referencedColumnName = "id")
 	private TipoServico tipoServico;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,targetEntity=Telefone.class)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Telefone.class)
 	@JoinTable(name = "telefonesfornecedores", joinColumns = { @JoinColumn(name = "idfornecedor", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idtelefone", referencedColumnName = "id") })
-	private List<TelefoneFornecedor> telefones;
+	private List<Telefone> telefones;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "enderecosfornecedores", joinColumns = { @JoinColumn(name = "idfornecedor", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idendereco", referencedColumnName = "id") })
@@ -133,12 +133,12 @@ public class Fornecedor implements Serializable {
 		this.tipoServico = tipoServico;
 	}
 
-	public List<TelefoneFornecedor> getTelefones() {
+	public List<Telefone> getTelefones() {
 		return telefones;
 	}
 
-	public void setTelefones(List<TelefoneFornecedor> telefones) {
-		this.telefones = telefones;
+	public void setTelefones(List<Telefone> list) {
+		this.telefones = list;
 	}
 
 	public Endereco getEndereco() {
@@ -151,7 +151,7 @@ public class Fornecedor implements Serializable {
 
 	public void addTelefone(TelefoneFornecedor telefone) {
 		if (this.telefones == null) {
-			this.telefones = new ArrayList<TelefoneFornecedor>();
+			this.telefones = new ArrayList<Telefone>();
 		}
 
 		this.telefones.add(telefone);
