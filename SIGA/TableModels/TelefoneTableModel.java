@@ -1,9 +1,9 @@
 package TableModels;
 
 import java.util.List;
-import Dominio.TelefoneFornecedor;
+import Dominio.Telefone;
 
-public class TelefoneTableModel extends AbstractDefaultTableModel<TelefoneFornecedor> {
+public class TelefoneTableModel extends AbstractDefaultTableModel<Telefone> {
 	private static final long serialVersionUID = 1L;
 
 	public TelefoneTableModel() {
@@ -11,7 +11,7 @@ public class TelefoneTableModel extends AbstractDefaultTableModel<TelefoneFornec
 		super.colunas = new String[] { "ID", "DDD", "Número", "Operadora" };
 	}
 
-	public TelefoneTableModel(List<TelefoneFornecedor> telefones) {
+	public TelefoneTableModel(List<Telefone> telefones) {
 		super(telefones);
 		super.colunas = new String[] { "ID", "DDD", "Número", "Operadora" };
 	}

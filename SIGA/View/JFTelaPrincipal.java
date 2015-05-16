@@ -23,8 +23,6 @@ import javax.swing.border.EmptyBorder;
 
 import Dominio.Permissao;
 import Extra.Extras;
-import Interfaces.IAcessoManager;
-import Managers.AcessoManager;
 import Util.Modulos;
 import Util.PermissoesManager;
 
@@ -237,8 +235,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		// MENU CLIENTES
 		JMenu JMCli = new JMenu("Clientes");
-		JMCli.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMCli.setEnabled(false);
+		JMCli.setFont(new Font("Segoe UI", Font.PLAIN, 13));		
 		JMCli.setVisible(clientes.isVisualizar());
 		menuBar.add(JMCli);
 

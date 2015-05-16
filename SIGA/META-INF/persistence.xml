@@ -20,6 +20,11 @@
 		<class>Dominio.TipoItem</class>
 		<class>Dominio.TipoServico</class>
 
+
+		<class>Dominio.EnderecoCliente</class>
+		<class>Dominio.Cliente</class>
+		<class>Dominio.TelefoneCliente</class>
+
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
