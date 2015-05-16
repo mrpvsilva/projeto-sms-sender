@@ -1,20 +1,21 @@
 package TableModels;
 
 import java.util.List;
+
 import Dominio.Usuario;
 
-public class UsuarioTableModel extends AbstractDefaultTableModel<Usuario> {
+public class UsuarioTableModel extends DefaultTableModel<Usuario> {
 
 	private static final long serialVersionUID = 1L;
+	private final static String[] colunas = new String[] { "ID", "Usuário",
+			"CPF", "Perfil" };
 
 	public UsuarioTableModel() {
-		super();
-		super.colunas = new String[] { "ID", "Usuário", "CPF", "Perfil" };
+		super(colunas);
 	}
 
 	public UsuarioTableModel(List<Usuario> linhas) {
-		super(linhas);
-		super.colunas = new String[] { "ID", "Usuário", "CPF", "Perfil" };
+		super(colunas, linhas);
 
 	}
 

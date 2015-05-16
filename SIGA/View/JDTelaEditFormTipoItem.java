@@ -20,7 +20,7 @@ import javax.swing.border.EmptyBorder;
 
 import Control.TipoItemControl;
 import Dominio.TipoItem;
-import TableModels.AbstractDefaultTableModel;
+import TableModels.DefaultTableModel;
 import java.awt.Font;
 
 public class JDTelaEditFormTipoItem extends JDialog implements ActionListener {
@@ -37,7 +37,7 @@ public class JDTelaEditFormTipoItem extends JDialog implements ActionListener {
 	private JCheckBox chckbxAtivo;
 	private TipoItem tipoItem;
 	private TipoItemControl tipoItemControl = new TipoItemControl();
-	private AbstractDefaultTableModel<TipoItem> model;
+	private DefaultTableModel<TipoItem> model;
 	private JButton JBSair;
 
 	/**
@@ -57,7 +57,7 @@ public class JDTelaEditFormTipoItem extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaEditFormTipoItem(int id,
-			AbstractDefaultTableModel<TipoItem> model) {
+			DefaultTableModel<TipoItem> model) {
 		setResizable(false);
 		setModal(true);
 

@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import TableModels.AbstractDefaultTableModel;
+import TableModels.DefaultTableModel;
 import TableModels.TipoItemTableModel;
 import Util.Modulos;
 import Util.PermissoesManager;
@@ -40,7 +40,7 @@ public class JDTelaBuscarTipoItem extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
 	private TipoItemControl tipoItemControl = new TipoItemControl();
-	private AbstractDefaultTableModel<TipoItem> model;
+	private DefaultTableModel<TipoItem> model;
 	private JButton okButton;
 	private JButton cancelButton;
 	private JButton btnPesquisar;

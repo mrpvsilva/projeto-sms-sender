@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
@@ -16,9 +17,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.Document;
 
 import Dominio.Telefone;
-import TableModels.AbstractDefaultTableModel;
+import TableModels.DefaultTableModel;
+
+import java.awt.Color;
 
 public class JDTelaEditTelefone extends JDialog implements ActionListener {
 
@@ -31,10 +35,11 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	private JButton JBSair;
 	private int _linha = -1;
 	private Telefone _telefone;
-	private AbstractDefaultTableModel<Telefone> _model;
+	private DefaultTableModel<Telefone> _model;
 	private JTextField tfddd;
 	private JTextField tfnumero;
 	private JComboBox cboperadoras;
+	private JLabel msg_erro;
 
 	/**
 	 * Launch the application.
@@ -55,7 +60,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaEditTelefone(int linha, Telefone telefone,
-			AbstractDefaultTableModel<Telefone> telmodel) {
+			DefaultTableModel<Telefone> telmodel) {
 		setTitle("SIGA - cad. telefone");
 		_telefone = telefone;
 		_model = telmodel;
@@ -74,9 +79,23 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 		lblDdd.setBounds(0, 13, 85, 14);
 		contentPanel.add(lblDdd);
 
-		tfddd = new JTextField();
+		Document doc = new Util.MaxLenghtDocument(2);
+		tfddd = new JTextField(doc, "", 8);
 		tfddd.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		tfddd.setBounds(95, 7, 52, 20);
+		tfddd.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				msg_erro.setText("");
+				char c = e.getKeyChar();
+				if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+					getToolkit().beep();
+					e.consume();
+				}
+
+			}
+		});
 		contentPanel.add(tfddd);
 		tfddd.setColumns(10);
 
@@ -85,11 +104,23 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 		lblNmero.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNmero.setBounds(0, 38, 85, 14);
 		contentPanel.add(lblNmero);
-
-		tfnumero = new JTextField();
+		Document maxnumero = new Util.MaxLenghtDocument(9);
+		tfnumero = new JTextField(maxnumero, "", 8);
 		tfnumero.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		tfnumero.setBounds(95, 31, 128, 20);
 		contentPanel.add(tfnumero);
+		tfnumero.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				msg_erro.setText("");
+				char c = e.getKeyChar();
+				if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+					getToolkit().beep();
+					e.consume();
+				}
+
+			}
+		});
 		tfnumero.setColumns(10);
 
 		JLabel lblOperadora = new JLabel("Operadora");
@@ -103,6 +134,11 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 		cboperadoras.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		cboperadoras.setBounds(95, 61, 128, 20);
 		contentPanel.add(cboperadoras);
+
+		msg_erro = new JLabel("");
+		msg_erro.setForeground(Color.RED);
+		msg_erro.setBounds(10, 91, 213, 14);
+		contentPanel.add(msg_erro);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -131,6 +167,22 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 		PreencherCampos();
 	}
 
+	private void showErro(String msg) {
+		msg_erro.setText("* " + msg);
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(3000);
+					msg_erro.setText("");
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
+
+	}
+
 	private void Create() {
 		_telefone.setDdd(tfddd.getText());
 		_telefone.setNumero(tfnumero.getText());
@@ -157,6 +209,16 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == JBSalvar) {
+			if (tfddd.getText().length() < 1) {
+				tfddd.requestFocus();
+				showErro("DDD é obirgatório");
+				return;
+			} else if (tfnumero.getText().length() < 1) {
+				tfnumero.requestFocus();
+				showErro("Número é obrigatório");
+				return;
+			}
+
 			if (_linha > -1) {
 				Update();
 			} else {

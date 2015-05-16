@@ -1,19 +1,20 @@
 package TableModels;
 
 import java.util.List;
+
 import Dominio.Telefone;
 
-public class TelefoneTableModel extends AbstractDefaultTableModel<Telefone> {
+public class TelefoneTableModel extends DefaultTableModel<Telefone> {
 	private static final long serialVersionUID = 1L;
+	private final static String[] colunas = new String[] { "ID", "DDD",
+			"Número", "Operadora" };
 
 	public TelefoneTableModel() {
-		super();
-		super.colunas = new String[] { "ID", "DDD", "Número", "Operadora" };
+		super(colunas);
 	}
 
-	public TelefoneTableModel(List<Telefone> telefones) {
-		super(telefones);
-		super.colunas = new String[] { "ID", "DDD", "Número", "Operadora" };
+	public TelefoneTableModel(List<Telefone> linhas) {
+		super(colunas, linhas);
 	}
 
 	@Override
@@ -37,7 +38,5 @@ public class TelefoneTableModel extends AbstractDefaultTableModel<Telefone> {
 	public int getId(int linha) {
 		return (int) getLinhas().get(linha).getId();
 	}
-
-	
 
 }

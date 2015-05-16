@@ -1,6 +1,7 @@
 package Control;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.HibernateException;
 
@@ -15,6 +16,10 @@ public class ClientesControl {
 
 	public ClientesControl() {
 		clientes = new ClienteRepository();
+	}
+
+	public List<Cliente> listarTodos() {
+		return clientes.findAll();
 	}
 
 	public boolean cadastrar(Cliente cliente) {

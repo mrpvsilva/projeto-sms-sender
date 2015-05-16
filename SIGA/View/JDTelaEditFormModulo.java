@@ -13,7 +13,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import TableModels.AbstractDefaultTableModel;
+import TableModels.DefaultTableModel;
 import Control.ModuloControl;
 import Dominio.Modulo;
 import javax.swing.SwingConstants;
@@ -25,12 +25,12 @@ public class JDTelaEditFormModulo extends JDialog implements ActionListener {
 	private JTextField tfnome;
 	private ModuloControl moduloControl;
 	private Modulo modulo;
-	private AbstractDefaultTableModel<Modulo> model;
+	private DefaultTableModel<Modulo> model;
 	private JButton btnsalvar;
 	private JButton btncancelar;
 
 	public JDTelaEditFormModulo(Modulo modulo,
-			AbstractDefaultTableModel<Modulo> model) {
+			DefaultTableModel<Modulo> model) {
 		setResizable(false);
 		setModal(true);
 		moduloControl = new ModuloControl();

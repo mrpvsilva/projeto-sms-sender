@@ -22,7 +22,7 @@ import Control.PerfilControl;
 import Dominio.Modulo;
 import Dominio.Perfil;
 import Dominio.Permissao;
-import TableModels.AbstractDefaultTableModel;
+import TableModels.DefaultTableModel;
 import TableModels.PermissaoTableModel;
 
 import javax.swing.JScrollPane;
@@ -34,8 +34,8 @@ public class JDTelaEditFormPerfil extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tfnomeperfil;
 	// private int linha;
-	private AbstractDefaultTableModel<Perfil> modelPerfil;
-	private AbstractDefaultTableModel<Permissao> modelPermissao;
+	private DefaultTableModel<Perfil> modelPerfil;
+	private DefaultTableModel<Permissao> modelPermissao;
 	private Perfil perfil;
 	private PerfilControl perfilControl;
 	private JButton btncancelar;
@@ -46,7 +46,7 @@ public class JDTelaEditFormPerfil extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public JDTelaEditFormPerfil(Perfil perfil,
-			AbstractDefaultTableModel<Perfil> modelPerfil) {
+			DefaultTableModel<Perfil> modelPerfil) {
 		setResizable(false);
 		setModal(true);
 		setLocationRelativeTo(null);

@@ -25,7 +25,7 @@ import Dominio.Usuario;
 
 import javax.swing.ImageIcon;
 
-import TableModels.AbstractDefaultTableModel;
+import TableModels.DefaultTableModel;
 import TableModels.UsuarioTableModel;
 import Util.Modulos;
 import Util.PermissoesManager;
@@ -46,7 +46,7 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 	private JTextField JTFBuscar;
 	private JComboBox<String> JCBFiltro;
 	private UsuarioControl usuCont = new UsuarioControl();
-	private AbstractDefaultTableModel<Usuario> model;
+	private DefaultTableModel<Usuario> model;
 	private JTable tabela;
 	private JScrollPane scroll;
 	protected String valor;

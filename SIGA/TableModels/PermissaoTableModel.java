@@ -1,20 +1,20 @@
 package TableModels;
 
 import java.util.List;
+
 import Dominio.Permissao;
 
-public class PermissaoTableModel extends AbstractDefaultTableModel<Permissao> {
+public class PermissaoTableModel extends DefaultTableModel<Permissao> {
+
+	private final static String[] colunas = new String[] { "ID", "Formulário",
+			"Visualizar", "Cadastrar", "Alterar", "Excluir", "Imprimir" };
 
 	public PermissaoTableModel() {
-		super();
-		this.colunas = new String[] { "ID", "Formulário", "Visualizar",
-				"Cadastrar", "Alterar", "Excluir", "Imprimir" };
+		super(colunas);
 	}
 
 	public PermissaoTableModel(List<Permissao> linhas) {
-		super(linhas);
-		this.colunas = new String[] { "ID", "Formulário", "Visualizar",
-				"Cadastrar", "Alterar", "Excluir", "Imprimir" };
+		super(colunas, linhas);
 	}
 
 	@Override
