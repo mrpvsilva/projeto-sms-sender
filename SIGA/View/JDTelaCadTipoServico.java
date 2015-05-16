@@ -19,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 
 import Control.TipoServicoControl;
 import Dominio.TipoServico;
-import TableModels.AbstractDefaultTableModel;
+import TableModels.DefaultTableModel;
 import java.awt.Font;
 
 public class JDTelaCadTipoServico extends JDialog implements ActionListener {
@@ -32,7 +32,7 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 	private int id;
 	private TipoServico tipoServico;
 	private TipoServicoControl tipoServicoControl = new TipoServicoControl();
-	private AbstractDefaultTableModel<TipoServico> model;
+	private DefaultTableModel<TipoServico> model;
 	private JButton JBNovo;
 
 	/**
@@ -42,7 +42,7 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaCadTipoServico(AbstractDefaultTableModel<TipoServico> model,
+	public JDTelaCadTipoServico(DefaultTableModel<TipoServico> model,
 			int id) {
 		setResizable(false);
 		setModal(true);

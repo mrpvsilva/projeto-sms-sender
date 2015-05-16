@@ -1,21 +1,22 @@
 package TableModels;
 
 import java.util.List;
+
 import Dominio.TipoItem;
 
-public class TipoItemTableModel extends AbstractDefaultTableModel<TipoItem> {
+public class TipoItemTableModel extends DefaultTableModel<TipoItem> {
 
 	private static final long serialVersionUID = 1L;
+	private final static String[] colunas = new String[] { "ID", "Nome",
+			"Ativo" };
 
 	public TipoItemTableModel() {
-		super();
-		this.colunas = new String[] { "ID", "Nome", "Ativo" };
+		super(colunas);
 
 	}
 
-	public TipoItemTableModel(List<TipoItem> tipoItens) {
-		super(tipoItens);
-		this.colunas = new String[] { "ID", "Nome", "Ativo" };
+	public TipoItemTableModel(List<TipoItem> linhas) {
+		super(colunas, linhas);
 	}
 
 	@Override

@@ -4,20 +4,17 @@ import java.util.List;
 
 import Dominio.Modulo;
 
-public class ModuloTableModel extends AbstractDefaultTableModel<Modulo> {
+public class ModuloTableModel extends DefaultTableModel<Modulo> {
 
-	/**
-	 * 
-	 */
+	private final static String[] colunas = new String[] { "ID", "Nome" };
 	private static final long serialVersionUID = 1L;
 
 	public ModuloTableModel() {
-		this.colunas = new String[] { "ID", "Nome" };
+		super(colunas);
 	}
 
 	public ModuloTableModel(List<Modulo> linhas) {
-		super(linhas);
-		this.colunas = new String[] { "ID", "Nome" };
+		super(colunas, linhas);
 	}
 
 	@Override

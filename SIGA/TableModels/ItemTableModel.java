@@ -5,18 +5,19 @@ import java.util.List;
 
 import Dominio.Item;
 
-public class ItemTableModel extends AbstractDefaultTableModel<Item> {
+public class ItemTableModel extends DefaultTableModel<Item> {
+
+	private final static String[] colunas = new String[] { "ID", "Item",
+			"Preço custo", "Preço comerc.", "Ativo" };
 
 	public ItemTableModel() {
-		super();
-		colunas = new String[] { "ID", "Item", "Preço custo", "Preço comerc.",
-				"Ativo" };
+		super(colunas);
+
 	}
 
 	public ItemTableModel(List<Item> linhas) {
-		super(linhas);
-		colunas = new String[] { "ID", "Item", "Preço custo", "Preço comerc.",
-				"Ativo" };
+		super(colunas, linhas);
+
 	}
 
 	@Override

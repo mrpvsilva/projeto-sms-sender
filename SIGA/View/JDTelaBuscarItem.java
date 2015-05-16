@@ -23,7 +23,7 @@ import Dominio.Permissao;
 
 import javax.swing.ImageIcon;
 
-import TableModels.AbstractDefaultTableModel;
+import TableModels.DefaultTableModel;
 import TableModels.ItemTableModel;
 import Util.Modulos;
 import Util.PermissoesManager;
@@ -46,7 +46,7 @@ public class JDTelaBuscarItem extends JDialog implements ActionListener {
 	private JTextField JTFBuscar;
 	private JComboBox<String> JCBFiltro;
 	private ServicosControl servCont = new ServicosControl();
-	private AbstractDefaultTableModel<Item> model;
+	private DefaultTableModel<Item> model;
 	private JTable tabela;
 	private JScrollPane scroll;
 	private ServicosControl _servicoControl = new ServicosControl();

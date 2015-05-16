@@ -36,7 +36,7 @@ import Dominio.TelefoneFornecedor;
 import Extra.Extras;
 import Extra.Mascaras;
 import Extra.Validacoes;
-import TableModels.AbstractDefaultTableModel;
+import TableModels.DefaultTableModel;
 import TableModels.TelefoneTableModel;
 
 public class JDTelaCadForn extends JDialog implements ActionListener {
@@ -63,8 +63,8 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	private JCheckBox JCBCpfMask;
 	private MaskFormatter maskCep;
 	private FornecedoresControl _fornecedorControl;
-	private AbstractDefaultTableModel<Telefone> telmodel;
-	private AbstractDefaultTableModel<Fornecedor> forModel;
+	private DefaultTableModel<Telefone> telmodel;
+	private DefaultTableModel<Fornecedor> forModel;
 	private JScrollPane scrollPane;
 	private JTable table;
 	private JButton btnaddtel;
@@ -94,7 +94,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	 * @throws ParseException
 	 */
 	public JDTelaCadForn(Fornecedor fornecedor,
-			AbstractDefaultTableModel<Fornecedor> model) throws ParseException {
+			DefaultTableModel<Fornecedor> model) throws ParseException {
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(

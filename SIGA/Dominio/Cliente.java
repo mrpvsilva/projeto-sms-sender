@@ -2,6 +2,7 @@ package Dominio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -36,7 +37,8 @@ public class Cliente implements Serializable {
 	private String cpfCnpj;
 	@Column
 	private String nomeresponsavel;
-
+	@Column
+	private Date datanascimento;
 	@Column
 	private int convidadosExtras;
 
@@ -165,6 +167,14 @@ public class Cliente implements Serializable {
 
 	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
+	}
+
+	public Date getDatanascimento() {
+		return datanascimento;
+	}
+
+	public void setDatanascimento(Date datanascimento) {
+		this.datanascimento = datanascimento;
 	}
 
 	// public void addEvento(Evento evento) {

@@ -16,7 +16,7 @@ import javax.swing.JTable;
 import Control.ModuloControl;
 import Dominio.Modulo;
 import Dominio.Permissao;
-import TableModels.AbstractDefaultTableModel;
+import TableModels.DefaultTableModel;
 import TableModels.ModuloTableModel;
 import Util.PermissoesManager;
 
@@ -33,7 +33,7 @@ public class JDTelaBuscarModulo extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
-	private AbstractDefaultTableModel<Modulo> model;
+	private DefaultTableModel<Modulo> model;
 	private ModuloControl moduloControl;
 	private JButton btncadastrar;
 	private JButton btnalterar;

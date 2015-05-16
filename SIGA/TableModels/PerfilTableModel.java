@@ -4,21 +4,17 @@ import java.util.List;
 
 import Dominio.Perfil;
 
-public class PerfilTableModel extends AbstractDefaultTableModel<Perfil> {
+public class PerfilTableModel extends DefaultTableModel<Perfil> {
 
-	/**
-	 * 
-	 */
+	private final static String[] colunas = new String[] { "ID", "Nome" };
 	private static final long serialVersionUID = 1L;
 
 	public PerfilTableModel() {
-		super();
-		super.colunas = new String[] { "ID", "Nome" };
+		super(colunas);
 	}
 
 	public PerfilTableModel(List<Perfil> linhas) {
-		super(linhas);
-		super.colunas = new String[] { "ID", "Nome" };
+		super(colunas, linhas);
 	}
 
 	@Override

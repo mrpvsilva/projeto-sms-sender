@@ -5,17 +5,19 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-public abstract class AbstractDefaultTableModel<E> extends AbstractTableModel {
+public abstract class DefaultTableModel<E> extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
 	private List<E> linhas;
 	protected String[] colunas;
 
-	public AbstractDefaultTableModel() {
+	public DefaultTableModel(String[] colunas) {
+		this.colunas = colunas;
 		this.linhas = new ArrayList<E>();
 	}
 
-	public AbstractDefaultTableModel(List<E> linhas) {
+	public DefaultTableModel(String[] colunas, List<E> linhas) {
+		this.colunas = colunas;
 		this.linhas = linhas;
 	}
 

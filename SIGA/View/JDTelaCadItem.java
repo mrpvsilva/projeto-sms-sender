@@ -10,7 +10,7 @@ import Control.ServicosControl;
 import Dominio.Item;
 import Extra.Extras;
 import Extra.Validacoes;
-import TableModels.AbstractDefaultTableModel;
+import TableModels.DefaultTableModel;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -52,7 +52,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 	private JComboBox ddlTipoItem;
 	private JButton JBSair;
 	private Item item;
-	private AbstractDefaultTableModel<Item> model;
+	private DefaultTableModel<Item> model;
 	private JCheckBox chckbxAtivo;
 
 	/**
@@ -71,7 +71,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaCadItem(int id, AbstractDefaultTableModel<Item> model) {
+	public JDTelaCadItem(int id, DefaultTableModel<Item> model) {
 		setResizable(false);
 		setModal(true);
 		sc = new ServicosControl();

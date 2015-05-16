@@ -27,7 +27,7 @@ import javax.swing.ImageIcon;
 
 import Managers.AcessoManager;
 import PersistenceManagerFactory.Factory;
-import TableModels.AbstractDefaultTableModel;
+import TableModels.DefaultTableModel;
 import TableModels.FornecedorTableModel;
 import Util.Modulos;
 import Util.PermissoesManager;
@@ -52,7 +52,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 	private FornecedoresControl _fornecedorControl = new FornecedoresControl();
 	private JScrollPane scroll;
 	private JTable tabela;
-	private AbstractDefaultTableModel<Fornecedor> model;
+	private DefaultTableModel<Fornecedor> model;
 	protected String valor;
 	private JButton JBSair;
 	

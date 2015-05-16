@@ -21,7 +21,7 @@ import Control.UsuarioControl;
 import Dominio.Usuario;
 import Extra.Extras;
 import Extra.Mascaras;
-import TableModels.AbstractDefaultTableModel;
+import TableModels.DefaultTableModel;
 
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
@@ -47,7 +47,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 	private JLabel JLPerfil;
 	private JComboBox JCBPerfil;
 	private UsuarioControl _usuarioControl = new UsuarioControl();
-	private AbstractDefaultTableModel<Usuario> model;
+	private DefaultTableModel<Usuario> model;
 	//private int id;
 	private Usuario usuario;
 	private JButton btnResetarSenha;
@@ -72,7 +72,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 	 * @throws ParseException
 	 */
 	public JDTelaCadUsu(Usuario usuario,
-			AbstractDefaultTableModel<Usuario> model) throws ParseException {
+			DefaultTableModel<Usuario> model) throws ParseException {
 		setModal(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(

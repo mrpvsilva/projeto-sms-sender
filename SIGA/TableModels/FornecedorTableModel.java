@@ -3,21 +3,19 @@ package TableModels;
 import java.util.List;
 import Dominio.Fornecedor;
 
-public class FornecedorTableModel extends AbstractDefaultTableModel<Fornecedor> {
+public class FornecedorTableModel extends DefaultTableModel<Fornecedor> {
 
-	/**
-	 * 
-	 */
+	private final static String[] colunas = new String[] { "ID", "Nome",
+			"CPFCNPJ", "Telefone" };
 	private static final long serialVersionUID = 1L;
 
 	public FornecedorTableModel() {
-		super();
-		colunas = new String[] { "ID", "Nome", "CPFCNPJ", "Telefone" };
+		super(colunas);
+
 	}
 
 	public FornecedorTableModel(List<Fornecedor> linhas) {
-		super(linhas);
-		colunas = new String[] { "ID", "Nome", "CPFCNPJ", "Telefone" };
+		super(colunas, linhas);
 	}
 
 	@Override

@@ -15,7 +15,7 @@ import Control.TipoServicoControl;
 import Dominio.Permissao;
 import Dominio.TipoServico;
 import PersistenceManagerFactory.Factory;
-import TableModels.AbstractDefaultTableModel;
+import TableModels.DefaultTableModel;
 import TableModels.TipoServicoTableModel;
 import Util.Modulos;
 import Util.PermissoesManager;
@@ -35,7 +35,7 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
-	private AbstractDefaultTableModel<TipoServico> model;
+	private DefaultTableModel<TipoServico> model;
 	private TipoServicoControl tipoServicoControl = new TipoServicoControl();
 	private JTextField tfNome;
 	private JComboBox cbAtivo;
