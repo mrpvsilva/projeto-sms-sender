@@ -111,37 +111,37 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 
 		JLabel JLNome = new JLabel("Nome");
-		JLNome.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLNome.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLNome.setBounds(0, 11, 101, 15);
 		contentPanel.add(JLNome);
 
 		JLCnpj = new JLabel("CNPJ");
-		JLCnpj.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLCnpj.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLCnpj.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLCnpj.setBounds(0, 36, 101, 15);
 		contentPanel.add(JLCnpj);
 
 		JLabel JLRg = new JLabel("Rg");
-		JLRg.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLRg.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLRg.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLRg.setBounds(303, 38, 35, 15);
 		contentPanel.add(JLRg);
 
 		JLabel JLTelefone1 = new JLabel("Telefones");
-		JLTelefone1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLTelefone1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLTelefone1.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLTelefone1.setBounds(0, 104, 101, 15);
 		contentPanel.add(JLTelefone1);
 
 		JLabel JLEmail = new JLabel("Email");
-		JLEmail.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLEmail.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLEmail.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLEmail.setBounds(0, 201, 101, 15);
 		contentPanel.add(JLEmail);
 
 		JLabel JLEnd = new JLabel("Ender.");
-		JLEnd.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLEnd.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLEnd.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLEnd.setBounds(0, 229, 101, 15);
 		contentPanel.add(JLEnd);
@@ -165,13 +165,13 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		contentPanel.add(JFFRg);
 
 		JLabel JLSite = new JLabel("Site");
-		JLSite.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLSite.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLSite.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLSite.setBounds(0, 281, 101, 14);
 		contentPanel.add(JLSite);
 
 		JLabel JLTpServ = new JLabel("Tipo Servi\u00E7o");
-		JLTpServ.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLTpServ.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLTpServ.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLTpServ.setBounds(0, 64, 101, 14);
 		contentPanel.add(JLTpServ);
@@ -201,7 +201,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		contentPanel.add(JCBTpServ);
 
 		JLBairro = new JLabel("Bairro");
-		JLBairro.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLBairro.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLBairro.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLBairro.setBounds(0, 253, 101, 15);
 		contentPanel.add(JLBairro);
@@ -214,7 +214,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 
 		lblCep = new JLabel("CEP");
 		lblCep.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCep.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblCep.setBounds(321, 259, 46, 15);
 		contentPanel.add(lblCep);
 
@@ -226,7 +226,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		JFFCep.setColumns(10);
 
 		JCBCpfMask = new JCheckBox("CPF");
-		JCBCpfMask.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JCBCpfMask.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JCBCpfMask.setBounds(236, 35, 56, 23);
 		JCBCpfMask.addActionListener(this);
 		contentPanel.add(JCBCpfMask);

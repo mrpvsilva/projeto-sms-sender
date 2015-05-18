@@ -34,12 +34,15 @@ import Dominio.Cliente;
 import Dominio.Endereco;
 import Dominio.Telefone;
 import Dominio.TelefoneCliente;
+import Extra.Extras;
 import Extra.Mascaras;
 import Extra.Validacoes;
 import TableModels.DefaultTableModel;
 import TableModels.TelefoneTableModel;
+import Util.Validate;
 
 import javax.swing.JTabbedPane;
+import javax.swing.border.LineBorder;
 
 public class JDTelaFormCliente extends JDialog implements ActionListener {
 
@@ -63,11 +66,13 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 	private JTextField complemento;
 	private JPanel aba_telefones;
 	private JTable table;
-	private DefaultTableModel<Telefone> telefones;
+	private DefaultTableModel<Telefone> modeltelefone;
+	private DefaultTableModel<Cliente> modelCliente;
 	private JTextField email;
 	private Cliente cliente;
 	private ClientesControl controller;
-	private boolean edit;
+	private boolean editando;
+	private boolean visualizando;
 	private JTextField nomeguerra;
 	private JFormattedTextField datanascimento;
 	private JLabel msg_erro_dado_pessoais;
@@ -75,6 +80,8 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 	private JLabel msg_erro_telefones;
 	private JButton add_telefone;
 	private JTabbedPane tabbedPane;
+	private JButton remove_telefone;
+	private JButton edit_telefone;
 
 	/**
 	 * Launch the application.
@@ -89,39 +96,46 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		}
 	}
 
-	// CONSTRUTOR CHAMADO PELA TELA PRINCIPAL DO SISTEMA
+	/** CONSTRUTOR CHAMADO PELA TELA PRINCIPAL DO SISTEMA */
 	public JDTelaFormCliente() throws ParseException {
-		edit = false;
+		visualizando = editando = false;
 		cliente = new Cliente();
-		telefones = new TelefoneTableModel();
+		modeltelefone = new TelefoneTableModel();
 		start();
 	}
 
-	// CONTRUTOR CHAMADO PELA TELA DE BUSCA DE CLIENTE PARA CADASTRO DO CLIENTE
+	/** CONTRUTOR CHAMADO PELA TELA DE BUSCA DE CLIENTE PARA CADASTRO DO CLIENTE */
 	public JDTelaFormCliente(DefaultTableModel<Cliente> modelCliente)
 			throws ParseException {
-		edit = false;
+		visualizando = editando = false;
+		this.modelCliente = modelCliente;
 		cliente = new Cliente();
-		telefones = new TelefoneTableModel();
+		modeltelefone = new TelefoneTableModel();
+
 		start();
 	}
 
-	// CONTRUTOR CHAMADO PELA TELA DE BUSCA DE CLIENTE PARA EDIÇÃO DO CLIENTE
+	/** CONTRUTOR CHAMADO PELA TELA DE BUSCA DE CLIENTE PARA EDIÇÃO DO CLIENTE */
 	public JDTelaFormCliente(DefaultTableModel<Cliente> modelCliente,
 			Cliente cliente) throws ParseException {
-		edit = true;
+		visualizando = false;
+		editando = true;
+		this.modelCliente = modelCliente;
 		this.cliente = cliente;
-		telefones = new TelefoneTableModel(cliente.getTelefones());
+		modeltelefone = new TelefoneTableModel(cliente.getTelefones());
 		start();
 		carregarCampos();
 	}
 
-	// CONTRUTOR CHAMADO PELA TELA DE BUSCA DE CLIENTE PARA VISUALIZACAO DO
-	// CLIENTE
+	/**
+	 * CONTRUTOR CHAMADO PELA TELA DE BUSCA DE CLIENTE PARA VISUALIZACAO DO
+	 * CLIENTE
+	 */
 	public JDTelaFormCliente(Cliente cliente) throws ParseException {
-		edit = false;
+		visualizando = true;
+		editando = false;
 		this.cliente = cliente;
-		telefones = new TelefoneTableModel(cliente.getTelefones());
+		modeltelefone = new TelefoneTableModel(cliente.getTelefones());
 		start();
 		carregarCampos();
 	}
@@ -158,7 +172,6 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		JLNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		nomeCompleto = new JTextField();
-		nomeCompleto.setBackground(new Color(255, 255, 255));
 		nomeCompleto.setBounds(116, 28, 428, 20);
 		dadospessoais_pane.add(nomeCompleto);
 		nomeCompleto.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -321,7 +334,7 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		scrollPane.setBounds(10, 25, 534, 165);
 		aba_telefones.add(scrollPane);
 
-		table = new JTable(telefones);
+		table = new JTable(modeltelefone);
 		table.getColumnModel().getColumn(0).setMinWidth(0);
 		table.getColumnModel().getColumn(0).setMaxWidth(0);
 		scrollPane.setViewportView(table);
@@ -330,7 +343,7 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		add_telefone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JDTelaEditTelefone ef = new JDTelaEditTelefone(-1,
-						new TelefoneCliente(), telefones);
+						new TelefoneCliente(), modeltelefone);
 				ef.setModal(true);
 				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				ef.setVisible(true);
@@ -342,15 +355,15 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		add_telefone.setBounds(10, 191, 23, 23);
 		aba_telefones.add(add_telefone);
 
-		JButton button_1 = new JButton("");
-		button_1.addActionListener(new ActionListener() {
+		edit_telefone = new JButton("");
+		edit_telefone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				int linha = table.getSelectedRow();
 				if (linha > -1) {
-					Telefone t = telefones.find(linha);
+					Telefone t = modeltelefone.find(linha);
 					JDTelaEditTelefone ef = new JDTelaEditTelefone(linha, t,
-							telefones);
+							modeltelefone);
 					ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 					ef.setVisible(true);
 				} else {
@@ -359,29 +372,29 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 				}
 			}
 		});
-		button_1.setIcon(new ImageIcon(JDTelaFormCliente.class
+		edit_telefone.setIcon(new ImageIcon(JDTelaFormCliente.class
 				.getResource("/Img/edit.png")));
-		button_1.setToolTipText("Alterar telefone");
-		button_1.setBounds(35, 191, 23, 23);
-		aba_telefones.add(button_1);
+		edit_telefone.setToolTipText("Alterar telefone");
+		edit_telefone.setBounds(35, 191, 23, 23);
+		aba_telefones.add(edit_telefone);
 
-		JButton button_2 = new JButton("");
-		button_2.addActionListener(new ActionListener() {
+		remove_telefone = new JButton("");
+		remove_telefone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int linha = table.getSelectedRow();
 				if (linha > -1) {
-					telefones.remove(linha);
+					modeltelefone.remove(linha);
 				} else {
 					JOptionPane
 							.showMessageDialog(null, "Selecione um telefone");
 				}
 			}
 		});
-		button_2.setIcon(new ImageIcon(JDTelaFormCliente.class
+		remove_telefone.setIcon(new ImageIcon(JDTelaFormCliente.class
 				.getResource("/Img/trash.png")));
-		button_2.setToolTipText("Remover telefone");
-		button_2.setBounds(60, 191, 23, 23);
-		aba_telefones.add(button_2);
+		remove_telefone.setToolTipText("Remover telefone");
+		remove_telefone.setBounds(60, 191, 23, 23);
+		aba_telefones.add(remove_telefone);
 
 		msg_erro_telefones = new JLabel("");
 		msg_erro_telefones.setForeground(Color.RED);
@@ -422,6 +435,31 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		}
 	}
 
+	private void visualizando() {
+		boolean enabled = !visualizando;
+		nomeCompleto.setEditable(enabled);
+		nomeResponsavel.setEditable(enabled);
+		nomeguerra.setEditable(enabled);
+		rg.setEditable(enabled);
+		cpf.setEditable(enabled);
+		email.setEditable(enabled);
+		datanascimento.setEditable(enabled);
+		endereco.setEditable(enabled);
+		cep.setEditable(enabled);
+		bairro.setEditable(enabled);
+		cidade.setEditable(enabled);
+		complemento.setEditable(enabled);
+
+		salvar.setVisible(enabled);
+		JBNovoCad.setVisible(enabled);
+		add_telefone.setVisible(enabled);
+		edit_telefone.setVisible(enabled);
+		remove_telefone.setVisible(enabled);
+
+		getRootPane().setDefaultButton(sair);
+
+	}
+
 	private void carregarCampos() {
 
 		nomeCompleto.setText(cliente.getNomeCompleto());
@@ -429,7 +467,7 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		rg.setText(cliente.getRg());
 		cpf.setValue(cliente.getCpfCnpj());
 		email.setText(cliente.getEmail());
-		datanascimento.setText(new SimpleDateFormat("dd/MM/yyyy")
+		datanascimento.setValue(new SimpleDateFormat("dd/MM/yyyy")
 				.format(cliente.getDatanascimento()));
 		Endereco e = cliente.getEndereco();
 		endereco.setText(e.getEndereco());
@@ -438,21 +476,7 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		cidade.setText(e.getCidade());
 		complemento.setText(e.getComplemento());
 
-	}
-
-	private void showErro(final JLabel label_erro, String msg) {
-		label_erro.setText("* " + msg);
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(3000);
-					label_erro.setText("");
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}).start();
+		visualizando();
 
 	}
 
@@ -463,47 +487,54 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		if (acao.getSource() == salvar) {
 
 			if (nomeCompleto.getText().length() < 1) {
-				nomeCompleto.requestFocus();
-				showErro(msg_erro_dado_pessoais,
+				Validate.validarJTextField(nomeCompleto,
+						msg_erro_dado_pessoais,
 						"Campo nome completo é obrigatório.");
 				return;
-			} else if (rg.getText().length() < 1) {
-				rg.requestFocus();
-				showErro(msg_erro_dado_pessoais, "Campo RG é obrigatório.");
+			} else if (rg.getText().trim().length() < 1) {
+				Validate.validarJTextField(rg, msg_erro_dado_pessoais,
+						"Campo RG é obrigatório.");
 				return;
 			} else if (cpf.getValue() == null) {
-				cpf.requestFocus();
-				showErro(msg_erro_dado_pessoais, "Campo CPF é obrigatório.");
+
+				Validate.validarJFormatTextField(cpf, msg_erro_dado_pessoais,
+						"Campo CPF é obrigatório.");
 				return;
 			} else if (!Validacoes.ValidaCpfCnpj(cpf.getValue().toString())) {
-				cpf.requestFocus();
-				showErro(msg_erro_dado_pessoais, "Campo CPF é inválido.");
+
+				Validate.validarJFormatTextField(cpf, msg_erro_dado_pessoais,
+						"Campo CPF é inválido.");
 				return;
 			} else if (datanascimento.getValue() == null) {
-				datanascimento.requestFocus();
-				showErro(msg_erro_dado_pessoais,
+
+				Validate.validarJFormatTextField(datanascimento,
+						msg_erro_dado_pessoais,
 						"Campo Data de nascimento é obrigatório.");
 				return;
 			} else if (endereco.getText().length() < 1) {
-				endereco.requestFocus();
-				showErro(msg_erro_endereco, "Campo Endereço é obrigatório.");
+
+				Validate.validarJTextField(endereco, msg_erro_endereco,
+						"Campo Endereço é obrigatório.");
 				return;
 			} else if (cep.getText().length() < 1) {
-				cep.requestFocus();
-				showErro(msg_erro_endereco, "Campo CEP é obrigatório.");
+
+				Validate.validarJTextField(cep, msg_erro_endereco,
+						"Campo CEP é obrigatório.");
 				return;
 			} else if (bairro.getText().length() < 1) {
-				bairro.requestFocus();
-				showErro(msg_erro_endereco, "Campo Bairro é obrigatório.");
+
+				Validate.validarJTextField(bairro, msg_erro_endereco,
+						"Campo Bairro é obrigatório.");
 				return;
 			} else if (cidade.getText().length() < 1) {
-				cidade.requestFocus();
-				showErro(msg_erro_endereco, "Campo Cidade é obrigatório.");
+
+				Validate.validarJTextField(cidade, msg_erro_endereco,
+						"Campo Cidade é obrigatório.");
 				return;
-			} else if (telefones.getLinhas().isEmpty()) {
+			} else if (modeltelefone.getLinhas().isEmpty()) {
 				tabbedPane.setSelectedIndex(1);
-				add_telefone.requestFocus();
-				showErro(msg_erro_telefones, "Telefone é obrigatório.");
+				Validate.validarJTable(table, msg_erro_telefones,
+						"Telefone é obrigatório.");
 				return;
 			}
 
@@ -514,7 +545,8 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 				cliente.setResponsavel(nomeResponsavel.getText());
 				cliente.setRg(rg.getText());
 				cliente.setEmail(email.getText());
-				cliente.setCpfCnpj(cpf.getText());
+				cliente.setCpfCnpj(Extras.FormatCnpjCpf(cpf.getValue()
+						.toString()));
 				cliente.setNomeGuerraMilitar(nomeguerra.getText());
 				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -532,12 +564,25 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 				e.setCidade(cidade.getText());
 				e.setComplemento(complemento.getText());
 				cliente.setEndereco(e);
-				cliente.setTelefones(telefones.getLinhas());
+				cliente.setTelefones(modeltelefone.getLinhas());
 
-				if (!edit)
-					controller.cadastrar(cliente);
-				else
-					controller.atualizar(cliente);
+				boolean sucesso = false;
+
+				if (!editando) {
+					sucesso = controller.cadastrar(cliente);
+				} else {
+					sucesso = controller.atualizar(cliente);
+				}
+
+				String txt = sucesso ? "Cliente salvo com sucesso"
+						: "Falha ao salvar o cliente";
+
+				if (modelCliente != null)
+					modelCliente.setLinhas(controller.listarTodos());
+
+				JOptionPane.showMessageDialog(null, txt, "",
+						sucesso ? JOptionPane.INFORMATION_MESSAGE
+								: JOptionPane.WARNING_MESSAGE);
 
 			}// final da confirmação
 

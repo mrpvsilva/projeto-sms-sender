@@ -142,7 +142,7 @@ public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
 		pesquisapanel.setLayout(null);
 
 		JLabel lblNomeDoPerfil = new JLabel("Nome do perfil");
-		lblNomeDoPerfil.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNomeDoPerfil.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNomeDoPerfil.setBounds(10, 15, 118, 14);
 		lblNomeDoPerfil.setHorizontalAlignment(SwingConstants.RIGHT);
 		pesquisapanel.add(lblNomeDoPerfil);

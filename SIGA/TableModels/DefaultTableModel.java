@@ -77,4 +77,9 @@ public abstract class DefaultTableModel<E> extends AbstractTableModel {
 		return linhas.size();
 	}
 
+	public void clear() {
+		linhas.clear();
+		this.fireTableDataChanged();
+	}
+
 }

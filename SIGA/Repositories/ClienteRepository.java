@@ -26,4 +26,21 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 
 	}
 
+	@Override
+	public List<Cliente> findAll(String valor, String campo) {
+		try {
+			open();
+			String q = "from Cliente where " + campo + " like '%" + valor
+					+ "%' order by nomecompleto";
+			@SuppressWarnings("unchecked")
+			List<Cliente> l = entityManager.createQuery(q).getResultList();
+			return l;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		} finally {
+			entityManager.close();
+		}
+	}
+
 }

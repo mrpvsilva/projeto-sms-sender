@@ -58,7 +58,7 @@ public class JDTelaTrocarSenha extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 
 		JLabel lblNovaSenha = new JLabel("Nova senha");
-		lblNovaSenha.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNovaSenha.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNovaSenha.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNovaSenha.setBounds(10, 31, 104, 14);
 		contentPanel.add(lblNovaSenha);
@@ -69,7 +69,7 @@ public class JDTelaTrocarSenha extends JDialog implements ActionListener {
 		contentPanel.add(jpswNova);
 
 		JLabel lblRepetirSenha = new JLabel("Repetir senha");
-		lblRepetirSenha.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblRepetirSenha.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblRepetirSenha.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblRepetirSenha.setBounds(10, 62, 104, 14);
 		contentPanel.add(lblRepetirSenha);

@@ -2,34 +2,31 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import Control.TipoServicoControl;
 import Dominio.Permissao;
 import Dominio.TipoServico;
-import PersistenceManagerFactory.Factory;
 import TableModels.DefaultTableModel;
 import TableModels.TipoServicoTableModel;
 import Util.Modulos;
 import Util.PermissoesManager;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
-import javax.swing.ImageIcon;
-import java.awt.Font;
 
 public class JDTelaBuscaTipoServico extends JDialog implements ActionListener {
 
@@ -86,7 +83,7 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener {
 		scrollPane.setViewportView(table);
 
 		JLabel lblNome = new JLabel("Nome");
-		lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNome.setBounds(32, 11, 46, 14);
 		contentPanel.add(lblNome);
@@ -98,7 +95,7 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener {
 		tfNome.setColumns(10);
 
 		JLabel lblAtivo = new JLabel("Ativo");
-		lblAtivo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblAtivo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAtivo.setBounds(32, 34, 46, 14);
 		contentPanel.add(lblAtivo);

@@ -56,7 +56,7 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 
 		JLabel lblNome = new JLabel("Nome");
-		lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNome.setBounds(0, 37, 42, 14);
 		contentPanel.add(lblNome);
@@ -68,7 +68,7 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 		tfNome.setColumns(10);
 
 		chkAtivo = new JCheckBox("Ativo");
-		chkAtivo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		chkAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chkAtivo.setSelected(true);
 		chkAtivo.setBounds(237, 33, 97, 23);
 		contentPanel.add(chkAtivo);

@@ -84,8 +84,8 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 		{
 			JLFiltro = new JLabel("Filtro");
 			JLFiltro.setHorizontalAlignment(SwingConstants.RIGHT);
-			JLFiltro.setFont(new Font("Tahoma", Font.BOLD, 13));
-			JLFiltro.setBounds(0, 11, 46, 14);
+			JLFiltro.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			JLFiltro.setBounds(0, 13, 46, 14);
 			contentPanel.add(JLFiltro);
 		}
 		{

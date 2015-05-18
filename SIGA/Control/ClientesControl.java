@@ -18,6 +18,10 @@ public class ClientesControl {
 		clientes = new ClienteRepository();
 	}
 
+	public List<Cliente> pesquisar(String valor, String campo) {
+		return clientes.findAll(valor, campo);
+	}
+
 	public List<Cliente> listarTodos() {
 		return clientes.findAll();
 	}
