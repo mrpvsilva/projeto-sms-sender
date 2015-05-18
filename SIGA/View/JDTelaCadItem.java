@@ -2,36 +2,32 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.BadLocationException;
+
+import jmoneyfield.JMoneyField;
 import Control.ServicosControl;
 import Dominio.Item;
 import Extra.Extras;
 import Extra.Validacoes;
 import TableModels.DefaultTableModel;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.text.BadLocationException;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-
-import jmoneyfield.JMoneyField;
-
-import javax.swing.JComboBox;
-import javax.swing.ImageIcon;
-
-import java.awt.Toolkit;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JRadioButton;
-import javax.swing.JCheckBox;
 
 public class JDTelaCadItem extends JDialog implements ActionListener {
 
@@ -90,14 +86,14 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 		{
 			JLabel JLItem = new JLabel("Item");
 			JLItem.setHorizontalAlignment(SwingConstants.RIGHT);
-			JLItem.setFont(new Font("Tahoma", Font.BOLD, 13));
+			JLItem.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JLItem.setBounds(0, 11, 110, 14);
 			contentPanel.add(JLItem);
 		}
 		{
 			JLabel JLDesItem = new JLabel("Descri\u00E7\u00E3o");
 			JLDesItem.setHorizontalAlignment(SwingConstants.RIGHT);
-			JLDesItem.setFont(new Font("Tahoma", Font.BOLD, 13));
+			JLDesItem.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JLDesItem.setBounds(0, 43, 110, 14);
 			contentPanel.add(JLDesItem);
 		}
@@ -118,7 +114,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 
 		JLabel JLValorCusto = new JLabel("Valor custo");
 		JLValorCusto.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLValorCusto.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLValorCusto.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLValorCusto.setBounds(0, 163, 110, 14);
 		contentPanel.add(JLValorCusto);
 
@@ -129,7 +125,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 		{
 			JLabel lblValorComercial = new JLabel("Valor comercial");
 			lblValorComercial.setHorizontalAlignment(SwingConstants.RIGHT);
-			lblValorComercial.setFont(new Font("Tahoma", Font.BOLD, 13));
+			lblValorComercial.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			lblValorComercial.setBounds(0, 191, 110, 14);
 			contentPanel.add(lblValorComercial);
 		}
@@ -141,7 +137,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 		{
 			lblTipoDeServio = new JLabel("Tipo de servi\u00E7o");
 			lblTipoDeServio.setHorizontalAlignment(SwingConstants.RIGHT);
-			lblTipoDeServio.setFont(new Font("Tahoma", Font.BOLD, 13));
+			lblTipoDeServio.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			lblTipoDeServio.setBounds(0, 222, 110, 14);
 			contentPanel.add(lblTipoDeServio);
 		}
@@ -155,7 +151,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 		chckbxAtivo = new JCheckBox("Ativo");
 		chckbxAtivo.setSelected(true);
 		chckbxAtivo.setHorizontalAlignment(SwingConstants.RIGHT);
-		chckbxAtivo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		chckbxAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxAtivo.setBounds(339, 163, 130, 23);
 		contentPanel.add(chckbxAtivo);
 

@@ -74,7 +74,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 
 		JLabel lblDdd = new JLabel("DDD");
-		lblDdd.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblDdd.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblDdd.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDdd.setBounds(0, 13, 85, 14);
 		contentPanel.add(lblDdd);
@@ -100,7 +100,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 		tfddd.setColumns(10);
 
 		JLabel lblNmero = new JLabel("N\u00FAmero");
-		lblNmero.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNmero.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNmero.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNmero.setBounds(0, 38, 85, 14);
 		contentPanel.add(lblNmero);
@@ -124,7 +124,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 		tfnumero.setColumns(10);
 
 		JLabel lblOperadora = new JLabel("Operadora");
-		lblOperadora.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblOperadora.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblOperadora.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblOperadora.setBounds(0, 67, 85, 14);
 		contentPanel.add(lblOperadora);

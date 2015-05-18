@@ -20,8 +20,6 @@ import Dominio.Usuario;
 import PersistenceManagerFactory.Factory;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class JFTelaLogin extends JFrame implements ActionListener {
 
@@ -83,13 +81,13 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 
 		JLabel JLLogin = new JLabel("Login");
 		JLLogin.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLLogin.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLLogin.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLLogin.setBounds(64, 130, 46, 15);
 		contentPane.add(JLLogin);
 
 		JLabel JLSenha = new JLabel("Senha");
 		JLSenha.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLSenha.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLSenha.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLSenha.setBounds(64, 166, 46, 14);
 		contentPane.add(JLSenha);
 

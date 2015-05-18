@@ -44,7 +44,7 @@ public class JDTelaEditFormModulo extends JDialog implements ActionListener {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		JLabel lblNomeDoMdulo = new JLabel("Nome do m\u00F3dulo");
-		lblNomeDoMdulo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNomeDoMdulo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNomeDoMdulo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNomeDoMdulo.setBounds(0, 25, 120, 14);
 		contentPanel.add(lblNomeDoMdulo);

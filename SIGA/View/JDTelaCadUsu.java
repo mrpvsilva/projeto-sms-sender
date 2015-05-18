@@ -89,7 +89,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		{
 			JLUsuario = new JLabel("Usu\u00E1rio");
 			JLUsuario.setHorizontalAlignment(SwingConstants.RIGHT);
-			JLUsuario.setFont(new Font("Tahoma", Font.BOLD, 13));
+			JLUsuario.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JLUsuario.setBounds(0, 11, 71, 14);
 			contentPanel.add(JLUsuario);
 		}
@@ -102,7 +102,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 
 		JLabel JLNome = new JLabel("Nome");
 		JLNome.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLNome.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLNome.setBounds(0, 36, 71, 14);
 		contentPanel.add(JLNome);
 
@@ -114,7 +114,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 
 		JLabel JLCpf = new JLabel("CPF");
 		JLCpf.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLCpf.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLCpf.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLCpf.setBounds(0, 60, 71, 14);
 		contentPanel.add(JLCpf);
 		maskCpf = new MaskFormatter(Mascaras.maskCpf);
@@ -125,7 +125,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 		JFFCpf.setColumns(10);
 
 		JLPerfil = new JLabel("Perfil");
-		JLPerfil.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLPerfil.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLPerfil.setBounds(267, 60, 46, 14);
 		contentPanel.add(JLPerfil);
 

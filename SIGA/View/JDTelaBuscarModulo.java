@@ -2,16 +2,22 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import Control.ModuloControl;
 import Dominio.Modulo;
@@ -19,15 +25,6 @@ import Dominio.Permissao;
 import TableModels.DefaultTableModel;
 import TableModels.ModuloTableModel;
 import Util.PermissoesManager;
-
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.Window.Type;
-import java.awt.Font;
 
 public class JDTelaBuscarModulo extends JDialog implements ActionListener {
 
@@ -64,7 +61,7 @@ public class JDTelaBuscarModulo extends JDialog implements ActionListener {
 		scrollPane.setViewportView(table);
 
 		JLabel lblNomeDoMdulo = new JLabel("Nome do m\u00F3dulo");
-		lblNomeDoMdulo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNomeDoMdulo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNomeDoMdulo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNomeDoMdulo.setBounds(0, 14, 115, 14);
 		contentPanel.add(lblNomeDoMdulo);

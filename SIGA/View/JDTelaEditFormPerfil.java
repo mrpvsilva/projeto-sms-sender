@@ -62,7 +62,7 @@ public class JDTelaEditFormPerfil extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 
 		JLabel lblNome = new JLabel("Nome do perfil");
-		lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNome.setBounds(0, 24, 114, 14);
 		contentPanel.add(lblNome);

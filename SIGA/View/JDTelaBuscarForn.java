@@ -21,12 +21,8 @@ import javax.swing.JComboBox;
 import Control.FornecedoresControl;
 import Dominio.Fornecedor;
 import Dominio.Permissao;
-import Interfaces.IAcessoManager;
-
 import javax.swing.ImageIcon;
 
-import Managers.AcessoManager;
-import PersistenceManagerFactory.Factory;
 import TableModels.DefaultTableModel;
 import TableModels.FornecedorTableModel;
 import Util.Modulos;
@@ -95,14 +91,14 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 					.getResource("/Img/Procurar.png")));
 			JBBuscar.addActionListener(this);
 			JBBuscar.setMnemonic(KeyEvent.VK_F);
-			JBBuscar.setBounds(338, 12, 99, 23);
+			JBBuscar.setBounds(338, 11, 99, 23);
 			contentPanel.add(JBBuscar);
 		}
 		{
 			JLFiltro = new JLabel("Filtro");
 			JLFiltro.setHorizontalAlignment(SwingConstants.RIGHT);
-			JLFiltro.setFont(new Font("Tahoma", Font.BOLD, 13));
-			JLFiltro.setBounds(0, 12, 46, 14);
+			JLFiltro.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			JLFiltro.setBounds(0, 14, 46, 14);
 			contentPanel.add(JLFiltro);
 		}
 		{

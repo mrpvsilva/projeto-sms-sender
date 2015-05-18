@@ -79,7 +79,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 		{
 			JLDataContato = new JLabel("Data");
 			JLDataContato.setHorizontalAlignment(SwingConstants.RIGHT);
-			JLDataContato.setFont(new Font("Tahoma", Font.BOLD, 13));
+			JLDataContato.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JLDataContato.setBounds(0, 53, 96, 14);
 			contentPanel.add(JLDataContato);
 
@@ -95,7 +95,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 
 		JLabel JLUsuario = new JLabel("Destinatário");
 		JLUsuario.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLUsuario.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLUsuario.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLUsuario.setBounds(0, 95, 96, 14);
 		contentPanel.add(JLUsuario);
 
@@ -106,7 +106,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 
 		JLabel lblLembrete = new JLabel("Lembrete");
 		lblLembrete.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblLembrete.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblLembrete.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblLembrete.setBounds(0, 131, 96, 14);
 		contentPanel.add(lblLembrete);
 
@@ -117,7 +117,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 
 		lblAssunto = new JLabel("Assunto");
 		lblAssunto.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblAssunto.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblAssunto.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblAssunto.setBounds(0, 22, 96, 14);
 		contentPanel.add(lblAssunto);
 
@@ -129,7 +129,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 
 		JLabel JLHora = new JLabel("Hora");
 		JLHora.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLHora.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLHora.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLHora.setBounds(270, 53, 46, 14);
 		contentPanel.add(JLHora);
 
@@ -141,7 +141,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 
 		JLabel lblMinuto = new JLabel("Minuto");
 		lblMinuto.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblMinuto.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblMinuto.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblMinuto.setBounds(371, 53, 46, 14);
 		contentPanel.add(lblMinuto);
 

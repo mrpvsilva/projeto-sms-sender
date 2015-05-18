@@ -30,6 +30,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class JDTelaBuscarTipoItem extends JDialog implements ActionListener {
 
@@ -72,14 +73,16 @@ public class JDTelaBuscarTipoItem extends JDialog implements ActionListener {
 		scrollPane.setViewportView(table);
 		{
 			lblNome = new JLabel("Nome");
-			lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
-			lblNome.setBounds(30, 14, 46, 14);
+			lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
+			lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			lblNome.setBounds(10, 17, 57, 14);
 			contentPanel.add(lblNome);
 		}
 		{
 			lblAtivo = new JLabel("Ativo");
-			lblAtivo.setFont(new Font("Tahoma", Font.BOLD, 13));
-			lblAtivo.setBounds(30, 42, 46, 14);
+			lblAtivo.setHorizontalAlignment(SwingConstants.RIGHT);
+			lblAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			lblAtivo.setBounds(10, 42, 57, 14);
 			contentPanel.add(lblAtivo);
 		}
 		{

@@ -1,0 +1,19 @@
+INSERT INTO `siga`.`modulos` (`id`, `nome`) VALUES ('1', 'Fornecedores');
+INSERT INTO `siga`.`modulos` (`id`, `nome`) VALUES ('2', 'Lembretes');
+INSERT INTO `siga`.`modulos` (`id`, `nome`) VALUES ('3', 'Usuarios');
+INSERT INTO `siga`.`modulos` (`id`, `nome`) VALUES ('4', 'Clientes');
+INSERT INTO `siga`.`modulos` (`id`, `nome`) VALUES ('5', 'Modulos');
+INSERT INTO `siga`.`modulos` (`id`, `nome`) VALUES ('6', 'Perfis');
+INSERT INTO `siga`.`modulos` (`id`, `nome`) VALUES ('7', 'Itens');
+INSERT INTO `siga`.`modulos` (`id`, `nome`) VALUES ('8', 'Tipo_itens');
+INSERT INTO `siga`.`modulos` (`id`, `nome`) VALUES ('9', 'Tipo_servicos');
+INSERT INTO `siga`.`modulos` (`id`, `nome`) VALUES ('10', 'Relatorios');
+INSERT INTO `siga`.`modulos` (`id`, `nome`) VALUES ('11', 'Eventos');
+INSERT INTO `siga`.`modulos` (`id`, `nome`) VALUES ('12', 'Financeiro')
+
+
+
+
+
+
+

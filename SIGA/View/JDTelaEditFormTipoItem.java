@@ -74,7 +74,7 @@ public class JDTelaEditFormTipoItem extends JDialog implements ActionListener {
 		contentPanel.setLayout(null);
 
 		JLabel lblNome = new JLabel("Nome");
-		lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNome.setBounds(10, 21, 46, 14);
 		contentPanel.add(lblNome);
@@ -87,7 +87,7 @@ public class JDTelaEditFormTipoItem extends JDialog implements ActionListener {
 
 		chckbxAtivo = new JCheckBox("Ativo");
 		chckbxAtivo.setHorizontalAlignment(SwingConstants.LEFT);
-		chckbxAtivo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		chckbxAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxAtivo.setSelected(true);
 		chckbxAtivo.setBounds(62, 42, 97, 23);
 		contentPanel.add(chckbxAtivo);
