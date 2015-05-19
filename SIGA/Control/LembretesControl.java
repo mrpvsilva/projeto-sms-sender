@@ -1,6 +1,8 @@
 package Control;
 
+import java.util.Date;
 import java.util.List;
+
 import Dominio.Lembrete;
 import Dominio.Usuario;
 import Extra.Extras;
@@ -18,7 +20,7 @@ public class LembretesControl {
 	private IUsuarioRepository _usuarioRepository = new UsuarioRepository();
 
 	/* Envia filtros para view JDTelaBuscarLemb */
-
+	/** Função de cadastro de lembrete */
 	public String Cadastrar(Lembrete lembrete) {
 
 		lembrete.setRemetente(Extras.getUsuarioLogado());
@@ -29,6 +31,7 @@ public class LembretesControl {
 		return null;
 	}
 
+	/** Função de atualização de lembrete */
 	public String Atualizar(Lembrete lembrete) {
 
 		lembrete.setRemetente(_usuarioRepository.find(2));
@@ -39,19 +42,31 @@ public class LembretesControl {
 		return null;
 	}
 
+	/** Função de listagem de todos os lembrete */
 	public List<Lembrete> BuscarTodos() {
 		return _lembreteRepository.findAll();
 	}
 
-	public List<Lembrete> BuscarTodos(String campo, String valor) {
-		return _lembreteRepository.findAll(campo, valor);
+	/**
+	 * Função de listagem de todos os lembrete com filtro de data e destinatário
+	 */
+	public List<Lembrete> BuscarTodos(Date dataInicial, Date dataFinal,
+			String destinatario) {
+		return _lembreteRepository.findAll(dataInicial, dataFinal,
+				destinatario.equals("Selecione") ? null : destinatario);
 	}
 
+	/**
+	 * Função de buscar do destinatario pelo nome
+	 */
 	public Usuario BuscarDestinatario(String usuario) {
 		return _usuarioRepository.getUsuario(usuario);
 	}
 
-	public String[] DDLRemetentes() {
+	/**
+	 * Função de listagem dos nomes dos destinatarios
+	 */
+	public String[] DDLDestinatarios() {
 		List<Usuario> l = _usuarioRepository.findAll();
 		String[] ddl = new String[l.size() + 1];
 		ddl[0] = "Selecione";
@@ -62,12 +77,11 @@ public class LembretesControl {
 
 	}
 
+	/**
+	 * Função de busca de um lembrete pelo id
+	 */
 	public Lembrete BuscarLembrete(int id) {
 		return _lembreteRepository.find(id);
 	}
-
-	public String[] Filtros() {
-		return lembMod.FiltroLemb();
-	}// final do método filtros
 
 }

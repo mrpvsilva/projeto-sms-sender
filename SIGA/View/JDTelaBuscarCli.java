@@ -199,7 +199,7 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener {
 					try {
 						int linha = table.getSelectedRow();
 						Cliente c = modelClientes.find(linha);
-						JDTelaFormCliente jf = new JDTelaFormCliente(c);
+						JDTelaFormCliente jf = new JDTelaFormCliente(false, c);
 						jf.setVisible(true);
 					} catch (ParseException e1) {
 						// TODO Auto-generated catch block
@@ -251,8 +251,7 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener {
 				Cliente c = modelClientes.find(linha);
 
 				try {
-					JDTelaFormCliente cdtcc = new JDTelaFormCliente(
-							modelClientes, c);
+					JDTelaFormCliente cdtcc = new JDTelaFormCliente(true, c);
 					cdtcc.setVisible(true);
 					cdtcc.setLocationRelativeTo(null);
 				} catch (ParseException e) {
@@ -299,7 +298,7 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener {
 		if (acao.getSource() == JBCadCli) {
 
 			try {
-				JDTelaFormCliente cdtcc = new JDTelaFormCliente(modelClientes);
+				JDTelaFormCliente cdtcc = new JDTelaFormCliente();
 				cdtcc.setVisible(true);
 				cdtcc.setLocationRelativeTo(null);
 			} catch (ParseException e) {

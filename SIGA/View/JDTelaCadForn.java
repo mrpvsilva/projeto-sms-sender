@@ -70,7 +70,6 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	private JButton btnaddtel;
 	private JButton btnedittel;
 	private JButton btnremovetel;
-	private int id;
 	private Fornecedor fornecedor;
 	private JButton JBSair;
 	private JLabel JLCnpj;

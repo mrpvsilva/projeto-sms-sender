@@ -67,12 +67,10 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 	private JPanel aba_telefones;
 	private JTable table;
 	private DefaultTableModel<Telefone> modeltelefone;
-	private DefaultTableModel<Cliente> modelCliente;
 	private JTextField email;
 	private Cliente cliente;
 	private ClientesControl controller;
 	private boolean editando;
-	private boolean visualizando;
 	private JTextField nomeguerra;
 	private JFormattedTextField datanascimento;
 	private JLabel msg_erro_dado_pessoais;
@@ -96,48 +94,23 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		}
 	}
 
-	/** CONSTRUTOR CHAMADO PELA TELA PRINCIPAL DO SISTEMA */
+	/** Contrutor chamada para o cadastro do cliente */
 	public JDTelaFormCliente() throws ParseException {
-		visualizando = editando = false;
 		cliente = new Cliente();
 		modeltelefone = new TelefoneTableModel();
 		start();
 	}
 
-	/** CONTRUTOR CHAMADO PELA TELA DE BUSCA DE CLIENTE PARA CADASTRO DO CLIENTE */
-	public JDTelaFormCliente(DefaultTableModel<Cliente> modelCliente)
+	/** Construtor chamado para edição e visualização do cliente */
+	public JDTelaFormCliente(boolean editando, Cliente cliente)
 			throws ParseException {
-		visualizando = editando = false;
-		this.modelCliente = modelCliente;
-		cliente = new Cliente();
-		modeltelefone = new TelefoneTableModel();
-
-		start();
-	}
-
-	/** CONTRUTOR CHAMADO PELA TELA DE BUSCA DE CLIENTE PARA EDIÇÃO DO CLIENTE */
-	public JDTelaFormCliente(DefaultTableModel<Cliente> modelCliente,
-			Cliente cliente) throws ParseException {
-		visualizando = false;
-		editando = true;
-		this.modelCliente = modelCliente;
+		this.editando = editando;
 		this.cliente = cliente;
 		modeltelefone = new TelefoneTableModel(cliente.getTelefones());
 		start();
 		carregarCampos();
-	}
-
-	/**
-	 * CONTRUTOR CHAMADO PELA TELA DE BUSCA DE CLIENTE PARA VISUALIZACAO DO
-	 * CLIENTE
-	 */
-	public JDTelaFormCliente(Cliente cliente) throws ParseException {
-		visualizando = true;
-		editando = false;
-		this.cliente = cliente;
-		modeltelefone = new TelefoneTableModel(cliente.getTelefones());
-		start();
-		carregarCampos();
+		if (!editando)
+			visualizando();
 	}
 
 	public void start() throws ParseException {
@@ -436,7 +409,7 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 	}
 
 	private void visualizando() {
-		boolean enabled = !visualizando;
+		boolean enabled = editando;
 		nomeCompleto.setEditable(enabled);
 		nomeResponsavel.setEditable(enabled);
 		nomeguerra.setEditable(enabled);
@@ -464,8 +437,8 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 
 		nomeCompleto.setText(cliente.getNomeCompleto());
 		nomeResponsavel.setText(cliente.getResponsavel());
-		rg.setText(cliente.getRg());
-		cpf.setValue(cliente.getCpfCnpj());
+		rg.setText(cliente.getRg());	
+		cpf.setText(cliente.getCpfCnpj());
 		email.setText(cliente.getEmail());
 		datanascimento.setValue(new SimpleDateFormat("dd/MM/yyyy")
 				.format(cliente.getDatanascimento()));
@@ -475,8 +448,6 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		bairro.setText(e.getBairro());
 		cidade.setText(e.getCidade());
 		complemento.setText(e.getComplemento());
-
-		visualizando();
 
 	}
 
@@ -576,9 +547,6 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 
 				String txt = sucesso ? "Cliente salvo com sucesso"
 						: "Falha ao salvar o cliente";
-
-				if (modelCliente != null)
-					modelCliente.setLinhas(controller.listarTodos());
 
 				JOptionPane.showMessageDialog(null, txt, "",
 						sucesso ? JOptionPane.INFORMATION_MESSAGE
