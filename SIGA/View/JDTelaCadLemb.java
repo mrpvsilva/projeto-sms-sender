@@ -6,26 +6,38 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Date;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
+import net.sourceforge.jdatepicker.DateModel;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
+
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
+
 import Control.LembretesControl;
 import Dominio.Lembrete;
+
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
+
 import java.awt.Toolkit;
+
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
+
+import TableModels.DefaultTableModel;
 
 public class JDTelaCadLemb extends JDialog implements ActionListener {
 
@@ -38,15 +50,18 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 	private JButton JBNovLemb;
 	private JLabel JLDataContato;
 
-	private UtilDateModel model;
+	private DateModel<Date> model;
 	private JDatePanelImpl datePanel;
 	private JDatePickerImpl datePicker;
+
 	private JComboBox JCBUsuario;
 	private JTextArea JTALemb;
-	private LembretesControl _lembreteControl = new LembretesControl();
+	private LembretesControl _lembreteControl;
 	private JLabel lblAssunto;
 	private JTextField JTFAssunto;
 	private JButton JBSair;
+	private DefaultTableModel<Lembrete> _modelLembretes;
+	private Lembrete _lembrete;
 
 	/**
 	 * Launch the application.
@@ -54,7 +69,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 	public static void main(String[] args) {
 		try {
 
-			JDTelaCadLemb dialog = new JDTelaCadLemb();
+			JDTelaCadLemb dialog = new JDTelaCadLemb(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -63,13 +78,44 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 	}
 
 	/**
-	 * Create the dialog.
+	 * Construtor padrão para cadastro de lembrete apartir da tela inicial do
+	 * sistema
 	 */
 	public JDTelaCadLemb() {
+		_lembrete = new Lembrete();
+		start();
+	}
+
+	/**
+	 * Construtor utilizado para cadastro de lembrete apartir da tela de busca
+	 * de lembretes
+	 */
+	public JDTelaCadLemb(DefaultTableModel<Lembrete> modelLembretes) {
+		_modelLembretes = modelLembretes;
+		_lembrete = new Lembrete();
+		start();
+
+	}
+
+	/**
+	 * Construtor utilizado para edição de lembrete apartir da tela de busca de
+	 * lembretes
+	 */
+	public JDTelaCadLemb(DefaultTableModel<Lembrete> modelLembretes,
+			Lembrete lembrete) {
+		_modelLembretes = modelLembretes;
+		_lembrete = lembrete;
+		start();
+		carregarCampos();
+	}
+
+	private void start() {
+		_lembreteControl = new LembretesControl();
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				JDTelaCadLemb.class.getResource("/Img/CNPJ G200.png")));
 		setModal(true);
-		setResizable(true);
+		setResizable(false);
 		setBounds(100, 100, 505, 372);
 		setTitle("SIGA - cadastro de lembretes");
 		getContentPane().setLayout(new BorderLayout());
@@ -87,7 +133,8 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 			datePanel = new JDatePanelImpl(model);
 			datePanel.setPreferredSize(new java.awt.Dimension(202, 182));
 			datePicker = new JDatePickerImpl(datePanel);
-			datePicker.getJFormattedTextField().setFont(new Font("Tahoma", Font.PLAIN, 13));
+			datePicker.getJFormattedTextField().setFont(
+					new Font("Tahoma", Font.PLAIN, 13));
 			datePicker.setBounds(106, 56, 154, 30);
 			contentPanel.add(datePicker);
 
@@ -99,7 +146,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 		JLUsuario.setBounds(0, 95, 96, 14);
 		contentPanel.add(JLUsuario);
 
-		JCBUsuario = new JComboBox(_lembreteControl.DDLRemetentes());
+		JCBUsuario = new JComboBox(_lembreteControl.DDLDestinatarios());
 		JCBUsuario.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JCBUsuario.setBounds(106, 92, 350, 20);
 		contentPanel.add(JCBUsuario);
@@ -184,6 +231,15 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 		}
 	}
 
+	private void carregarCampos() {
+
+		JTFAssunto.setText(_lembrete.getAssunto());
+		JTALemb.setText(_lembrete.getTexto());
+		model.setValue(_lembrete.getDatahora());
+		JCBUsuario.setSelectedItem(_lembrete.getDestinatario().getUsuario());
+
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent acao) {
 
@@ -211,28 +267,29 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 				else {
 
-					// LembretesBean lembBean = new LembretesBean();
-					//
-					// // lembBean.setDtcontatolemb(dtcontatolemb); o que seria
-					// // aqui? Não lembro //
-					// // lembBean.setDtagendadalemb(); Converter para DateTime
-					// lembBean.setUsuario(JCBUsuario.getSelectedItem().toString());
-					// lembBean.setAssunto(JTALemb.getText());
+					_lembrete.setAssunto(JTFAssunto.getText());
+					_lembrete.setTexto(JTALemb.getText());
+					_lembrete.setDatahora((Date) datePicker.getModel()
+							.getValue());
 
-					Lembrete l = new Lembrete();
-
-					l.setAssunto(JTFAssunto.getText());
-					l.setTexto(JTALemb.getText());
-					l.setDatahora((Date) datePicker.getModel().getValue());
-
-					l.setDestinatario(_lembreteControl
+					_lembrete.setDestinatario(_lembreteControl
 							.BuscarDestinatario(JCBUsuario.getSelectedItem()
 									.toString()));
 
-					String out = _lembreteControl.Cadastrar(l);
+					String out = "";
+					if (_lembrete.getId() == 0)
+						out = _lembreteControl.Cadastrar(_lembrete);
+					else
+						out = _lembreteControl.Atualizar(_lembrete);
+
 					if (out == null) {
+
+						if (_modelLembretes != null)
+							_modelLembretes.setLinhas(_lembreteControl
+									.BuscarTodos());
+
 						JOptionPane.showMessageDialog(null,
-								"Lembrete cadastrado com sucesso");
+								"Lembrete salvo com sucesso");
 					} else {
 						JOptionPane.showMessageDialog(null, out);
 					}
