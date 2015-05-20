@@ -34,8 +34,6 @@ public class LembretesControl {
 	/** Função de atualização de lembrete */
 	public String Atualizar(Lembrete lembrete) {
 
-		lembrete.setRemetente(_usuarioRepository.find(2));
-
 		if (!_lembreteRepository.update(lembrete))
 			return "Falha no atualização do lembrete";
 
