@@ -4,38 +4,32 @@ import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.AbstractTableModel;
-
-import TableModels.DefaultTableModel;
 
 public class Validate {
 
 	/**
 	 * APLICA NO JTEXTFIELD A MENSAGEM DE ERRO.
 	 * */
-	public static void validarJTextField(final JTextField campo,
+	public static void validarJTextField(final JComponent campo,
 			final JLabel label_erro, final String msg) {
-
 		label_erro.setText(msg);
 		campo.requestFocus();
 		campo.setBorder(new LineBorder(new Color(255, 0, 0)));
 		campo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (campo.getText().trim().length() > 0) {
-					campo.setBorder(new LineBorder(new Color(171, 173, 179)));
-					label_erro.setText("");
-				} else {
-					label_erro.setText(msg);
-					campo.setBorder(new LineBorder(new Color(255, 0, 0)));
-				}
+				if (e.getKeyCode() == 10)
+					return;
+
+				label_erro.setText("");
+				campo.setBorder(new LineBorder(new Color(171, 173, 179)));
 			}
 		});
 

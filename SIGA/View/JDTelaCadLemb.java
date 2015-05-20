@@ -38,6 +38,9 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import TableModels.DefaultTableModel;
+import Util.Validate;
+
+import java.awt.Color;
 
 public class JDTelaCadLemb extends JDialog implements ActionListener {
 
@@ -62,6 +65,9 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 	private JButton JBSair;
 	private DefaultTableModel<Lembrete> _modelLembretes;
 	private Lembrete _lembrete;
+	private SpinnerNumberModel modelHora;
+	private SpinnerNumberModel modelMinuto;
+	private JLabel erro_message;
 
 	/**
 	 * Launch the application.
@@ -180,23 +186,31 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 		JLHora.setBounds(270, 53, 46, 14);
 		contentPanel.add(JLHora);
 
-		JSpinner spinner = new JSpinner();
-		spinner.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		spinner.setModel(new SpinnerNumberModel(0, 0, 23, 1));
-		spinner.setBounds(326, 53, 35, 20);
-		contentPanel.add(spinner);
+		JSpinner hora = new JSpinner();
+		modelHora = new SpinnerNumberModel(0, 0, 59, 1);
+		hora.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		hora.setModel(modelHora);
+		hora.setBounds(326, 53, 35, 20);
+		contentPanel.add(hora);
 
 		JLabel lblMinuto = new JLabel("Minuto");
+		modelMinuto = new SpinnerNumberModel(0, 0, 59, 1);
 		lblMinuto.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblMinuto.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblMinuto.setBounds(371, 53, 46, 14);
 		contentPanel.add(lblMinuto);
 
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		spinner_1.setModel(new SpinnerNumberModel(0, 0, 59, 1));
-		spinner_1.setBounds(421, 53, 35, 20);
-		contentPanel.add(spinner_1);
+		JSpinner minuto = new JSpinner();
+		minuto.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		minuto.setModel(modelMinuto);
+		minuto.setBounds(421, 53, 35, 20);
+		contentPanel.add(minuto);
+
+		erro_message = new JLabel("");
+		erro_message.setForeground(Color.RED);
+		erro_message.setFont(new Font("Tahoma", Font.BOLD, 13));
+		erro_message.setBounds(106, 275, 350, 15);
+		contentPanel.add(erro_message);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -235,7 +249,10 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 
 		JTFAssunto.setText(_lembrete.getAssunto());
 		JTALemb.setText(_lembrete.getTexto());
-		model.setValue(_lembrete.getDatahora());
+		Date data = _lembrete.getDatahora();
+		model.setValue(data);
+		modelHora.setValue(data.getHours());
+		modelMinuto.setValue(data.getMinutes());
 		JCBUsuario.setSelectedItem(_lembrete.getDestinatario().getUsuario());
 
 	}
@@ -245,22 +262,29 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 
 		if (acao.getSource() == JBSalvLemb) {
 
+			int hora = (int) modelHora.getValue();
+			int min = (int) modelMinuto.getValue();
+
 			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
 					"Deseja cadastrar o lembrete?")) {
 
 				if (JTFAssunto.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Assunto em branco.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+					Validate.validarJTextField(JTFAssunto, erro_message,
+							"*Campo assunto é obrigatótio");
 				} else if (datePicker.getJFormattedTextField().getText()
 						.isEmpty())
+					Validate.validarJFormatTextField(
+							datePicker.getJFormattedTextField(), erro_message,
+							"*Campo data é obrigatório");
+				else if (hora == 0)
 					JOptionPane.showMessageDialog(null,
-							"Data do lembrete em branco.", "Erro ao cadastrar",
-							JOptionPane.ERROR_MESSAGE);
+							"Coloque um horário para o lembrete.",
+							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 				else if (JCBUsuario.getSelectedItem().toString()
 						.equals("Selecione"))
 					JOptionPane.showMessageDialog(null,
-							"Destinatário do lembrete em branco.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+							"Selecione um destinatário.", "Erro ao cadastrar",
+							JOptionPane.ERROR_MESSAGE);
 				else if (JTALemb.getText().isEmpty())
 					JOptionPane.showMessageDialog(null,
 							"Anotações do lembrete em branco.",
@@ -269,8 +293,12 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 
 					_lembrete.setAssunto(JTFAssunto.getText());
 					_lembrete.setTexto(JTALemb.getText());
-					_lembrete.setDatahora((Date) datePicker.getModel()
-							.getValue());
+
+					Date data = (Date) datePicker.getModel().getValue();
+					data.setHours(hora);
+					data.setMinutes(min);
+
+					_lembrete.setDatahora(data);
 
 					_lembrete.setDestinatario(_lembreteControl
 							.BuscarDestinatario(JCBUsuario.getSelectedItem()
