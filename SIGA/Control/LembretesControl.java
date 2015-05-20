@@ -42,16 +42,17 @@ public class LembretesControl {
 
 	/** Função de listagem de todos os lembrete */
 	public List<Lembrete> BuscarTodos() {
-		return _lembreteRepository.findAll();
+		return _lembreteRepository.findAll(Extras.getUsuarioLogado());
 	}
 
 	/**
-	 * Função de listagem de todos os lembrete com filtro de data e destinatário
+	 * Função de listagem de todos os lembrete com filtro de data e assunto
 	 */
 	public List<Lembrete> BuscarTodos(Date dataInicial, Date dataFinal,
-			String destinatario) {
+			String assunto) {
 		return _lembreteRepository.findAll(dataInicial, dataFinal,
-				destinatario.equals("Selecione") ? null : destinatario);
+				assunto.equals("Selecione") ? null : assunto,
+				Extras.getUsuarioLogado());
 	}
 
 	/**

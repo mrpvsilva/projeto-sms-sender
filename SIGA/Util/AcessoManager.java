@@ -1,4 +1,4 @@
-package Managers;
+package Util;
 
 import Dominio.Permissao;
 import Extra.Extras;

@@ -8,7 +8,7 @@ import javax.persistence.Query;
 
 import Dominio.Item;
 import Interfaces.IItemRepository;
-import PersistenceManagerFactory.Factory;
+import Util.Factory;
 
 public class ItemRepository extends RepositoryBase<Item> implements
 		IItemRepository {

@@ -14,7 +14,7 @@ import javax.swing.JWindow;
 
 import org.hibernate.HibernateException;
 
-import PersistenceManagerFactory.Factory;
+import Util.Factory;
 
 public class Splash extends JWindow {
 	public Splash() {
