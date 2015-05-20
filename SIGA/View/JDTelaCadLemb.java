@@ -268,17 +268,19 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
 					"Deseja cadastrar o lembrete?")) {
 
-				if (JTFAssunto.getText().isEmpty()) {
-					Validate.validarJTextField(JTFAssunto, erro_message,
-							"*Campo assunto é obrigatótio");
-				} else if (datePicker.getJFormattedTextField().getText()
+				if (JTFAssunto.getText().isEmpty())
+					JOptionPane.showMessageDialog(null,
+							"O campo assunto é obrigatótio",
+							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+
+				else if (datePicker.getJFormattedTextField().getText()
 						.isEmpty())
-					Validate.validarJFormatTextField(
-							datePicker.getJFormattedTextField(), erro_message,
-							"*Campo data é obrigatório");
+					JOptionPane.showMessageDialog(null,
+							"O campo data é obrigatótio", "Erro ao cadastrar",
+							JOptionPane.ERROR_MESSAGE);
 				else if (hora == 0)
 					JOptionPane.showMessageDialog(null,
-							"Coloque um horário para o lembrete.",
+							"O campo horário é obrigatótio",
 							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 				else if (JCBUsuario.getSelectedItem().toString()
 						.equals("Selecione"))
@@ -287,7 +289,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 							JOptionPane.ERROR_MESSAGE);
 				else if (JTALemb.getText().isEmpty())
 					JOptionPane.showMessageDialog(null,
-							"Anotações do lembrete em branco.",
+							"Mensagem do lembrete é obrigatároio.",
 							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 				else {
 

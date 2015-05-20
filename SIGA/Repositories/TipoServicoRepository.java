@@ -6,7 +6,7 @@ import javax.persistence.Query;
 
 import Dominio.TipoServico;
 import Interfaces.ITipoServicoRepository;
-import PersistenceManagerFactory.Factory;
+import Util.Factory;
 
 public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		implements ITipoServicoRepository {

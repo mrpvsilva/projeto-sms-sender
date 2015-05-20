@@ -2,7 +2,6 @@ package Util;
 
 import Dominio.Permissao;
 import Interfaces.IAcessoManager;
-import Managers.AcessoManager;
 
 public class PermissoesManager {
 

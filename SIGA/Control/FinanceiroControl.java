@@ -10,9 +10,9 @@ import Interfaces.IFormaPagamento;
 import Interfaces.ITipoPagamentoRepository;
 import Model.UsuarioBean;
 import Model.UsuarioModel;
-import PersistenceManagerFactory.Factory;
 import Repositories.FormaPagamentoRepository;
 import Repositories.TipoPagamentoRepository;
+import Util.Factory;
 
 public class FinanceiroControl {
 	private IFormaPagamento _formpag = new FormaPagamentoRepository();

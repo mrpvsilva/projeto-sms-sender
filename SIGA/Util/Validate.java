@@ -11,13 +11,14 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.JTextComponent;
 
 public class Validate {
 
 	/**
 	 * APLICA NO JTEXTFIELD A MENSAGEM DE ERRO.
 	 * */
-	public static void validarJTextField(final JComponent campo,
+	public static JTextComponent validarJTextField(final JTextComponent campo,
 			final JLabel label_erro, final String msg) {
 		label_erro.setText(msg);
 		campo.requestFocus();
@@ -27,12 +28,16 @@ public class Validate {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == 10)
 					return;
-
-				label_erro.setText("");
-				campo.setBorder(new LineBorder(new Color(171, 173, 179)));
+				if (campo.getText().length() > 0) {
+					label_erro.setText("");
+					campo.setBorder(new LineBorder(new Color(171, 173, 179)));
+				}else{
+					label_erro.setText(msg);					
+					campo.setBorder(new LineBorder(new Color(255, 0, 0)));
+				}
 			}
 		});
-
+		return campo;
 	}
 
 	public static void validarJFormatTextField(final JFormattedTextField campo,

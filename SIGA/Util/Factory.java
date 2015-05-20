@@ -1,4 +1,4 @@
-package PersistenceManagerFactory;
+package Util;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,15 +15,4 @@ public class Factory {
 		return factory.createEntityManager();
 	}
 
-//	public static void renewFactory() {
-//		new Thread(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				factory.close();
-//				factory = Persistence.createEntityManagerFactory("siga");
-//			}
-//		}).start();
-//
-//	}
 }

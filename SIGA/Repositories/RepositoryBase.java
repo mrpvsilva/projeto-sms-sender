@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import Interfaces.IRepositoryBase;
-import PersistenceManagerFactory.Factory;
+import Util.Factory;
 
 public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 
@@ -24,7 +24,7 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 			entityManager.persist(entity);
 			entityManager.getTransaction().commit();
 			return true;
-		} catch (Exception ex) {			
+		} catch (Exception ex) {
 			entityManager.getTransaction().rollback();
 			return false;
 		} finally {
@@ -74,8 +74,8 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 	public E find(long id) {
 		try {
 			open();
-			E e = (E) entityManager.find(GetTypeClass(), id);
-			return e;
+			return (E) entityManager.find(GetTypeClass(), id);
+
 		} catch (Exception ex) {
 			return null;
 		} finally {
@@ -88,10 +88,10 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 	public List<E> findAll() {
 		try {
 			open();
-			List<E> l = entityManager.createQuery(
-					"from " + GetTypeClass().getName()).getResultList();
+			return entityManager
+					.createQuery("from " + GetTypeClass().getName())
+					.getResultList();
 
-			return l;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;

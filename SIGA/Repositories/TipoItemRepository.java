@@ -6,7 +6,7 @@ import javax.persistence.Query;
 
 import Dominio.TipoItem;
 import Interfaces.ITipoItemRepository;
-import PersistenceManagerFactory.Factory;
+import Util.Factory;
 
 public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		ITipoItemRepository {

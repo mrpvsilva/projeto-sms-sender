@@ -6,7 +6,7 @@ import javax.persistence.Query;
 
 import Dominio.Usuario;
 import Interfaces.IUsuarioRepository;
-import PersistenceManagerFactory.Factory;
+import Util.Factory;
 
 public class UsuarioRepository extends RepositoryBase<Usuario> implements
 		IUsuarioRepository {

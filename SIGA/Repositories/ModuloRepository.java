@@ -6,7 +6,7 @@ import javax.persistence.Query;
 
 import Dominio.Modulo;
 import Interfaces.IModuloRepository;
-import PersistenceManagerFactory.Factory;
+import Util.Factory;
 
 public class ModuloRepository extends RepositoryBase<Modulo> implements
 		IModuloRepository {

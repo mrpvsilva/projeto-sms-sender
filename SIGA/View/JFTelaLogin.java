@@ -17,8 +17,10 @@ import javax.swing.border.EmptyBorder;
 
 import Control.UsuarioControl;
 import Dominio.Usuario;
-import PersistenceManagerFactory.Factory;
+import Util.Factory;
+
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
 
 public class JFTelaLogin extends JFrame implements ActionListener {

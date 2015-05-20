@@ -6,7 +6,7 @@ import javax.persistence.Query;
 
 import Dominio.Perfil;
 import Interfaces.IPerfilRepository;
-import PersistenceManagerFactory.Factory;
+import Util.Factory;
 
 public class PerfilRepository extends RepositoryBase<Perfil> implements
 		IPerfilRepository {
