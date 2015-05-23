@@ -26,7 +26,7 @@ import TableModels.DefaultTableModel;
 import TableModels.ModuloTableModel;
 import Util.PermissoesManager;
 
-public class JDTelaBuscarModulo extends JDialog implements ActionListener {
+public class BuscarModulos extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
@@ -37,7 +37,7 @@ public class JDTelaBuscarModulo extends JDialog implements ActionListener {
 	private JTextField tfpesquisa;
 	private Permissao Modulos;
 
-	public JDTelaBuscarModulo() {
+	public BuscarModulos() {
 		Modulos = PermissoesManager.buscarPermissao(Util.Modulos.Modulos);
 		setResizable(false);
 		setModal(true);
@@ -159,7 +159,7 @@ public class JDTelaBuscarModulo extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaBuscarModulo dialog = new JDTelaBuscarModulo();
+			BuscarModulos dialog = new BuscarModulos();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

@@ -33,7 +33,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
-public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
+public class BuscarPerfis extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JButton btnAlterar;
@@ -46,7 +46,7 @@ public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
 	private JTextField tfnome;
 	private Permissao Perfis;
 
-	public JDTelaBuscarPerfis() {
+	public BuscarPerfis() {
 		Perfis = PermissoesManager.buscarPermissao(Modulos.Perfis);
 		setTitle("Buscar perfis");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -214,7 +214,7 @@ public class JDTelaBuscarPerfis extends JDialog implements ActionListener {
 
 	public static void main(String[] args) {
 		try {
-			JDTelaBuscarPerfis dialog = new JDTelaBuscarPerfis();
+			BuscarPerfis dialog = new BuscarPerfis();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

@@ -32,7 +32,7 @@ import java.awt.event.KeyEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-public class JDTelaBuscarTipoItem extends JDialog implements ActionListener {
+public class BuscarTipoItens extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -51,7 +51,7 @@ public class JDTelaBuscarTipoItem extends JDialog implements ActionListener {
 	private JComboBox<String> jcfiltroativo;
 	private Permissao permissao;
 
-	public JDTelaBuscarTipoItem() {
+	public BuscarTipoItens() {
 		permissao = PermissoesManager.buscarPermissao(Modulos.Tipo_itens);
 		setModal(true);
 		setResizable(false);
@@ -198,7 +198,7 @@ public class JDTelaBuscarTipoItem extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaBuscarTipoItem dialog = new JDTelaBuscarTipoItem();
+			BuscarTipoItens dialog = new BuscarTipoItens();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

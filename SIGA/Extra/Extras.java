@@ -103,8 +103,8 @@ public class Extras {
 		return fone.replace("(", "").replace(")", "").replace("-", "").trim();
 	}
 
-	public static String FormatDate(Date date) {
-		return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(date);
+	public static String FormatDate(Date date,String format) {
+		return new SimpleDateFormat(format).format(date);
 	}
 
 	private static int calcularDigito(String str, int[] peso) {
