@@ -83,6 +83,9 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 	private JMenu user;
 	private JMenuItem mntmSair;
 	private JMenuItem mntmTrocarSenha;
+	private JMenu mnOramentos;
+	private JMenuItem mntmNovo;
+	private JMenuItem mntmBuscar_2;
 
 	/**
 	 * Launch the application.
@@ -139,7 +142,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMForn.setVisible(fornecedores.isVisualizar());
 		menuBar.add(JMForn);
 
-		JMIFornCad = new JMenuItem("Cadastrar");
+		JMIFornCad = new JMenuItem("Novo");
 		JMIFornCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIFornCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		JMIFornCad.addActionListener(this);
@@ -166,7 +169,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		mnTipoServio_1.setVisible(tipoServicos.isVisualizar());
 		JMForn.add(mnTipoServio_1);
 
-		JMenuItem mntmCadastrar_1 = new JMenuItem("Cadastrar");
+		JMenuItem mntmCadastrar_1 = new JMenuItem("Novo");
 		mntmCadastrar_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmCadastrar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -182,7 +185,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		mntmBuscar_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmBuscar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JDTelaBuscaTipoServico tsb = new JDTelaBuscaTipoServico();
+				BuscarTipoServicos tsb = new BuscarTipoServicos();
 				tsb.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				tsb.setVisible(true);
 			}
@@ -195,7 +198,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMServ.setVisible(itens.isVisualizar());
 		menuBar.add(JMServ);
 
-		JMIServCad = new JMenuItem("Cadastrar");
+		JMIServCad = new JMenuItem("Novo");
 		JMIServCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIServCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
 		JMIServCad.addActionListener(this);
@@ -222,7 +225,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMTipoServio.setVisible(tipoItens.isVisualizar());
 		JMServ.add(JMTipoServio);
 
-		JMITSCad = new JMenuItem("Cadastrar");
+		JMITSCad = new JMenuItem("Novo");
 		JMITSCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMITSCad.addActionListener(this);
 		JMITSCad.setVisible(tipoItens.isCadastrar());
@@ -235,11 +238,11 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		// MENU CLIENTES
 		JMenu JMCli = new JMenu("Clientes");
-		JMCli.setFont(new Font("Segoe UI", Font.PLAIN, 13));		
+		JMCli.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMCli.setVisible(clientes.isVisualizar());
 		menuBar.add(JMCli);
 
-		JMICliCad = new JMenuItem("Cadastrar");
+		JMICliCad = new JMenuItem("Novo");
 		JMICliCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMICliCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
 		JMICliCad.addActionListener(this);
@@ -264,9 +267,27 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMEventos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMEventos.setEnabled(false);
 		JMEventos.setVisible(eventos.isVisualizar());
+
+		mnOramentos = new JMenu("Or\u00E7amentos");
+		mnOramentos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		menuBar.add(mnOramentos);
+
+		mntmNovo = new JMenuItem("Novo");
+		mntmNovo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		mnOramentos.add(mntmNovo);
+
+		mntmBuscar_2 = new JMenuItem("Buscar");
+		mntmBuscar_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				BuscarOrcamentos bo = new BuscarOrcamentos();
+				bo.setVisible(true);
+			}
+		});
+		mntmBuscar_2.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		mnOramentos.add(mntmBuscar_2);
 		menuBar.add(JMEventos);
 
-		mntmCadastrar = new JMenuItem("Cadastrar");
+		mntmCadastrar = new JMenuItem("Novo");
 		mntmCadastrar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmCadastrar
 				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0));
@@ -291,7 +312,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMLemb.setVisible(lembretes.isVisualizar());
 		menuBar.add(JMLemb);
 
-		JMILembCad = new JMenuItem("Cadastrar");
+		JMILembCad = new JMenuItem("Novo");
 		JMILembCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMILembCad.setAccelerator(KeyStroke
 				.getKeyStroke(KeyEvent.VK_PAGE_UP, 0));
@@ -444,7 +465,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMUsu.setVisible(usuarios.isVisualizar());
 		menuBar.add(JMUsu);
 
-		JMIUsuCad = new JMenuItem("Cadastrar");
+		JMIUsuCad = new JMenuItem("Novo");
 		JMIUsuCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIUsuCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0));
 		JMIUsuCad.addActionListener(this);
@@ -472,7 +493,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		mnPerfil.setVisible(perfis.isVisualizar());
 		JMUsu.add(mnPerfil);
 
-		JMenuItem mntmCadastrar_3 = new JMenuItem("Cadastrar");
+		JMenuItem mntmCadastrar_3 = new JMenuItem("Novo");
 		mntmCadastrar_3.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmCadastrar_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -487,7 +508,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		mntmBuscar_3.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmBuscar_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JDTelaBuscarPerfis bp = new JDTelaBuscarPerfis();
+				BuscarPerfis bp = new BuscarPerfis();
 				bp.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				bp.setVisible(true);
 			}
@@ -500,7 +521,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		JMIUsuExcluir.setVisible(modulos.isVisualizar());
 		JMUsu.add(mnPermisso);
 
-		JMenuItem mntmCadastrar_4 = new JMenuItem("Cadastrar");
+		JMenuItem mntmCadastrar_4 = new JMenuItem("Novo");
 		mntmCadastrar_4.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmCadastrar_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -515,7 +536,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		mntmBuscar_4.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmBuscar_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JDTelaBuscarModulo bm = new JDTelaBuscarModulo();
+				BuscarModulos bm = new BuscarModulos();
 				bm.setVisible(true);
 			}
 		});
@@ -572,7 +593,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		}// final do JMenuItemFornecedores Cadastro
 
 		if (acao.getSource() == JMIFornBuscar) {
-			JDTelaBuscarForn jdtbf = new JDTelaBuscarForn();
+			BuscarFornecedores jdtbf = new BuscarFornecedores();
 			jdtbf.setResizable(false);
 			jdtbf.setVisible(true);
 		}// final do JMenuItemFornecedores Buscar
@@ -597,7 +618,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		}// final do JMenuItemServiços Cadastro
 
 		if (acao.getSource() == JMIServBuscar) {
-			JDTelaBuscarItem jdtbs = new JDTelaBuscarItem();
+			BuscarItens jdtbs = new BuscarItens();
 			jdtbs.setResizable(false);
 			jdtbs.setVisible(true);
 		}// final do JMenuItemServiços Buscar
@@ -632,7 +653,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		}// final do JMenuItemClientes Cadastrar
 
 		if (acao.getSource() == JMICliBuscar) {
-			JDTelaBuscarCli jdtbc = new JDTelaBuscarCli();
+			BuscarClientes jdtbc = new BuscarClientes();
 			jdtbc.setResizable(false);
 			jdtbc.setVisible(true);
 		}// final do JMenuItemClientes Buscar
@@ -657,7 +678,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		}// final do JMenuItemLembretes Cadastrar
 
 		if (acao.getSource() == JMILembBuscar) {
-			JDTelaBuscarLemb jdtbl = new JDTelaBuscarLemb();
+			BuscarLembretes jdtbl = new BuscarLembretes();
 			jdtbl.setResizable(false);
 			jdtbl.setVisible(true);
 		}// final do JMenuItemLembretes Buscar
@@ -750,14 +771,14 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		}
 
 		if (acao.getSource() == JMITSBuscar) {
-			JDTelaBuscarTipoItem bts = new JDTelaBuscarTipoItem();
+			BuscarTipoItens bts = new BuscarTipoItens();
 			bts.setResizable(false);
 			bts.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			bts.setVisible(true);
 		}
 
 		if (acao.getSource() == JMIUsuBuscar) {
-			JDTelaBuscarUsu jdtbu = new JDTelaBuscarUsu();
+			BuscarUsuarios jdtbu = new BuscarUsuarios();
 			jdtbu.setResizable(false);
 			jdtbu.setVisible(true);
 		}// final do JMenuItemUsuário Buscar

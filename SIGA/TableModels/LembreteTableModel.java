@@ -26,7 +26,7 @@ public class LembreteTableModel extends DefaultTableModel<Lembrete> {
 
 		switch (col) {
 		case 0:
-			return Extras.FormatDate(l.getDatahora());
+			return Extras.FormatDate(l.getDatahora(),"dd/MM/yyyy HH:mm");
 		case 1:
 			return l.getAssunto();
 		case 2:

@@ -43,7 +43,7 @@ import javax.swing.SwingConstants;
 
 import java.awt.event.KeyAdapter;
 
-public class JDTelaBuscarCli extends JDialog implements ActionListener {
+public class BuscarClientes extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -71,7 +71,7 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaBuscarCli dialog = new JDTelaBuscarCli();
+			BuscarClientes dialog = new BuscarClientes();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -82,14 +82,14 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaBuscarCli() {
+	public BuscarClientes() {
 		controller = new ClientesControl();
 		modelClientes = new ClienteTableModel();
 		Clientes = PermissoesManager.buscarPermissao(Modulos.Clientes);
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				JDTelaBuscarCli.class.getResource("/Img/CNPJ G200.png")));
+				BuscarClientes.class.getResource("/Img/CNPJ G200.png")));
 		setTitle("SIGA - buscar clientes");
 		setBounds(100, 100, 797, 700);
 		getContentPane().setLayout(new BorderLayout());
@@ -179,7 +179,7 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener {
 			}
 		});
 		btnPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnPesquisar.setIcon(new ImageIcon(JDTelaBuscarCli.class
+		btnPesquisar.setIcon(new ImageIcon(BuscarClientes.class
 				.getResource("/Img/Procurar.png")));
 		btnPesquisar.setBounds(484, 33, 118, 23);
 		panel.add(btnPesquisar);
@@ -223,7 +223,7 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener {
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
 		JBCadCli = new JButton("Cadastrar");
-		JBCadCli.setIcon(new ImageIcon(JDTelaBuscarCli.class
+		JBCadCli.setIcon(new ImageIcon(BuscarClientes.class
 				.getResource("/Img/save16.png")));
 		JBCadCli.addActionListener(this);
 		JBCadCli.setMnemonic(KeyEvent.VK_C);
@@ -231,7 +231,7 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener {
 		buttonPane.add(JBCadCli);
 
 		JBSair = new JButton("Sair");
-		JBSair.setIcon(new ImageIcon(JDTelaBuscarCli.class
+		JBSair.setIcon(new ImageIcon(BuscarClientes.class
 				.getResource("/Img/exit16.png")));
 		JBSair.addActionListener(this);
 
@@ -261,7 +261,7 @@ public class JDTelaBuscarCli extends JDialog implements ActionListener {
 				}// final do try e catch
 			}
 		});
-		btnAlterar.setIcon(new ImageIcon(JDTelaBuscarCli.class
+		btnAlterar.setIcon(new ImageIcon(BuscarClientes.class
 				.getResource("/Img/edit_add16.png")));
 		buttonPane.add(btnAlterar);
 		btnAlterar.setVisible(Clientes.isAlterar());

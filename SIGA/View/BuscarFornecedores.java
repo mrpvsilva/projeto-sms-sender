@@ -32,7 +32,7 @@ import java.awt.Toolkit;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-public class JDTelaBuscarForn extends JDialog implements ActionListener {
+public class BuscarFornecedores extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -60,7 +60,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 	public static void main(String[] args) {
 		try {
 			
-			JDTelaBuscarForn dialog = new JDTelaBuscarForn();
+			BuscarFornecedores dialog = new BuscarFornecedores();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -71,13 +71,13 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaBuscarForn() {
+	public BuscarFornecedores() {
 		
 		Fornecedores = PermissoesManager.buscarPermissao(Modulos.Fornecedores);
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				JDTelaBuscarForn.class.getResource("/Img/CNPJ G200.png")));
+				BuscarFornecedores.class.getResource("/Img/CNPJ G200.png")));
 		setTitle("SIGA - buscar fornecedores");
 		setBounds(100, 100, 479, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -87,7 +87,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 		{
 			JBBuscar = new JButton("Buscar");
 			JBBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBBuscar.setIcon(new ImageIcon(JDTelaBuscarForn.class
+			JBBuscar.setIcon(new ImageIcon(BuscarFornecedores.class
 					.getResource("/Img/Procurar.png")));
 			JBBuscar.addActionListener(this);
 			JBBuscar.setMnemonic(KeyEvent.VK_F);
@@ -143,7 +143,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 			{
 				JBCadForn = new JButton("Cadastrar");
 				JBCadForn.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBCadForn.setIcon(new ImageIcon(JDTelaBuscarForn.class
+				JBCadForn.setIcon(new ImageIcon(BuscarFornecedores.class
 						.getResource("/Img/save16.png")));
 				JBCadForn.addActionListener(this);
 				JBCadForn.setMnemonic(KeyEvent.VK_C);
@@ -154,7 +154,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 			{
 				JBEditForn = new JButton("Editar");
 				JBEditForn.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBEditForn.setIcon(new ImageIcon(JDTelaBuscarForn.class
+				JBEditForn.setIcon(new ImageIcon(BuscarFornecedores.class
 						.getResource("/Img/edit_add16.png")));
 				JBEditForn.addActionListener(this);
 				JBEditForn.setMnemonic(KeyEvent.VK_E);
@@ -164,7 +164,7 @@ public class JDTelaBuscarForn extends JDialog implements ActionListener {
 			{
 				JBSair = new JButton("Sair");
 				JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBSair.setIcon(new ImageIcon(JDTelaBuscarForn.class
+				JBSair.setIcon(new ImageIcon(BuscarFornecedores.class
 						.getResource("/Img/exit16.png")));
 				JBSair.addActionListener(this);
 				JBSair.setMnemonic(KeyEvent.VK_Q);

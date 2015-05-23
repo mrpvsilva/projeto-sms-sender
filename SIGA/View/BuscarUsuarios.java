@@ -32,7 +32,7 @@ import Util.PermissoesManager;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-public class JDTelaBuscarUsu extends JDialog implements ActionListener {
+public class BuscarUsuarios extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -58,7 +58,7 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaBuscarUsu dialog = new JDTelaBuscarUsu();
+			BuscarUsuarios dialog = new BuscarUsuarios();
 			// dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -69,7 +69,7 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaBuscarUsu() {
+	public BuscarUsuarios() {
 		permissao = PermissoesManager.buscarPermissao(Modulos.Usuarios);
 		setResizable(false);
 		setTitle("SIGA - buscar usuário");
@@ -88,7 +88,7 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 		{
 			JBBuscar = new JButton("Buscar");
 			JBBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBBuscar.setIcon(new ImageIcon(JDTelaBuscarUsu.class
+			JBBuscar.setIcon(new ImageIcon(BuscarUsuarios.class
 					.getResource("/Img/Procurar.png")));
 			JBBuscar.addActionListener(this);
 			JBBuscar.setMnemonic(KeyEvent.VK_F);
@@ -141,7 +141,7 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 			{
 				JBCadUsu = new JButton("Cadastrar");
 				JBCadUsu.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBCadUsu.setIcon(new ImageIcon(JDTelaBuscarUsu.class
+				JBCadUsu.setIcon(new ImageIcon(BuscarUsuarios.class
 						.getResource("/Img/save16.png")));
 				buttonPane.add(JBCadUsu);
 				JBCadUsu.addActionListener(this);
@@ -153,14 +153,14 @@ public class JDTelaBuscarUsu extends JDialog implements ActionListener {
 				JBEditUsu = new JButton("Editar");
 				JBEditUsu.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBEditUsu.setVisible(permissao.isAlterar());
-				JBEditUsu.setIcon(new ImageIcon(JDTelaBuscarUsu.class
+				JBEditUsu.setIcon(new ImageIcon(BuscarUsuarios.class
 						.getResource("/Img/edit_add16.png")));
 				JBEditUsu.setMnemonic(KeyEvent.VK_E);
 				buttonPane.add(JBEditUsu);
 				{
 					JBSair = new JButton("Sair");
 					JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-					JBSair.setIcon(new ImageIcon(JDTelaBuscarUsu.class
+					JBSair.setIcon(new ImageIcon(BuscarUsuarios.class
 							.getResource("/Img/exit16.png")));
 					JBSair.addActionListener(this);
 					JBSair.setMnemonic(KeyEvent.VK_Q);

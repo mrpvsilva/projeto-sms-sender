@@ -28,7 +28,7 @@ import TableModels.TipoServicoTableModel;
 import Util.Modulos;
 import Util.PermissoesManager;
 
-public class JDTelaBuscaTipoServico extends JDialog implements ActionListener {
+public class BuscarTipoServicos extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
@@ -48,7 +48,7 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener {
 	public static void main(String[] args) {
 		try {
 			
-			JDTelaBuscaTipoServico dialog = new JDTelaBuscaTipoServico();
+			BuscarTipoServicos dialog = new BuscarTipoServicos();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -59,7 +59,7 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaBuscaTipoServico() {
+	public BuscarTipoServicos() {
 		permissao =PermissoesManager.buscarPermissao(Modulos.Tipo_servicos);
 		setResizable(false);
 		setModal(true);
@@ -108,7 +108,7 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener {
 		JBPesquisar = new JButton("Pesquisar");
 		JBPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JBPesquisar.setMnemonic(KeyEvent.VK_F);
-		JBPesquisar.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class
+		JBPesquisar.setIcon(new ImageIcon(BuscarTipoServicos.class
 				.getResource("/Img/Procurar.png")));
 		JBPesquisar.addActionListener(this);
 		JBPesquisar.setBounds(178, 65, 120, 23);
@@ -121,7 +121,7 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener {
 				JBCadastrar = new JButton("Cadastrar");
 				JBCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBCadastrar.setMnemonic(KeyEvent.VK_C);
-				JBCadastrar.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class
+				JBCadastrar.setIcon(new ImageIcon(BuscarTipoServicos.class
 						.getResource("/Img/save16.png")));
 				JBCadastrar.setVisible(permissao.isCadastrar());
 				JBCadastrar.addActionListener(this);
@@ -132,7 +132,7 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener {
 				JBEditar = new JButton("Editar");
 				JBEditar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBEditar.setVisible(permissao.isAlterar());
-				JBEditar.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class
+				JBEditar.setIcon(new ImageIcon(BuscarTipoServicos.class
 						.getResource("/Img/edit_add16.png")));
 				JBEditar.addActionListener(this);
 				JBEditar.setMnemonic(KeyEvent.VK_A);
@@ -141,7 +141,7 @@ public class JDTelaBuscaTipoServico extends JDialog implements ActionListener {
 
 			JBSair = new JButton("Sair");
 			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBSair.setIcon(new ImageIcon(JDTelaBuscaTipoServico.class
+			JBSair.setIcon(new ImageIcon(BuscarTipoServicos.class
 					.getResource("/Img/exit16.png")));
 			JBSair.addActionListener(this);
 			JBSair.setMnemonic(KeyEvent.VK_Q);

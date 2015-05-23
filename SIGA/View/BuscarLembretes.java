@@ -49,7 +49,7 @@ import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class JDTelaBuscarLemb extends JDialog implements ActionListener {
+public class BuscarLembretes extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -78,7 +78,7 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 
 	public static void main(String[] args) {
 		try {
-			JDTelaBuscarLemb dialog = new JDTelaBuscarLemb();
+			BuscarLembretes dialog = new BuscarLembretes();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -89,14 +89,14 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaBuscarLemb() {
+	public BuscarLembretes() {
 
 		_lembreteControl = new LembretesControl();
 		modelLembretes = new LembreteTableModel(_lembreteControl.BuscarTodos());
 		Lembretes = PermissoesManager.buscarPermissao(Modulos.Lembretes);
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				JDTelaBuscarLemb.class.getResource("/Img/CNPJ G200.png")));
+				BuscarLembretes.class.getResource("/Img/CNPJ G200.png")));
 		setModal(true);
 		setResizable(false);
 		setTitle("SIGA - buscar lembretes");
@@ -267,7 +267,7 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 				JBBuscar.setBounds(665, 33, 120, 23);
 				filtros.add(JBBuscar);
 				JBBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBBuscar.setIcon(new ImageIcon(JDTelaBuscarLemb.class
+				JBBuscar.setIcon(new ImageIcon(BuscarLembretes.class
 						.getResource("/Img/Procurar.png")));
 				JBBuscar.addActionListener(this);
 				JBBuscar.setMnemonic(KeyEvent.VK_F);
@@ -304,7 +304,7 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 		{
 			JBCadLemb = new JButton("Cadastrar");
 			JBCadLemb.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBCadLemb.setIcon(new ImageIcon(JDTelaBuscarLemb.class
+			JBCadLemb.setIcon(new ImageIcon(BuscarLembretes.class
 					.getResource("/Img/save16.png")));
 			JBCadLemb.addActionListener(this);
 			JBCadLemb.setMnemonic(KeyEvent.VK_C);
@@ -314,7 +314,7 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 		{
 			JBEditLemb = new JButton("Editar");
 			JBEditLemb.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBEditLemb.setIcon(new ImageIcon(JDTelaBuscarLemb.class
+			JBEditLemb.setIcon(new ImageIcon(BuscarLembretes.class
 					.getResource("/Img/edit_add16.png")));
 			JBEditLemb.addActionListener(this);
 			JBEditLemb.setVisible(Lembretes.isAlterar());
@@ -324,7 +324,7 @@ public class JDTelaBuscarLemb extends JDialog implements ActionListener {
 		{
 			JBSair = new JButton("Sair");
 			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBSair.setIcon(new ImageIcon(JDTelaBuscarLemb.class
+			JBSair.setIcon(new ImageIcon(BuscarLembretes.class
 					.getResource("/Img/exit16.png")));
 			JBSair.addActionListener(this);
 			JBSair.setMnemonic(KeyEvent.VK_Q);
