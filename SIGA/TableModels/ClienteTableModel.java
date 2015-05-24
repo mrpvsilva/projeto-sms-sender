@@ -7,8 +7,8 @@ import Dominio.Telefone;
 
 public class ClienteTableModel extends DefaultTableModel<Cliente> {
 
-	private final static String[] colunas = new String[] { "id", "Nome", "CPF",
-			"RG", "Email", "Telefone" };
+	private final static String[] colunas = new String[] { "Nome", "CPF", "RG",
+			"Email", "Telefone" };
 
 	public ClienteTableModel() {
 		super(colunas);
@@ -24,16 +24,14 @@ public class ClienteTableModel extends DefaultTableModel<Cliente> {
 
 		switch (col) {
 		case 0:
-			return c.getId();
-		case 1:
 			return c.getNomeCompleto();
-		case 2:
+		case 1:
 			return c.getCpfCnpj();
-		case 3:
+		case 2:
 			return c.getRg();
-		case 4:
+		case 3:
 			return c.getEmail();
-		case 5:
+		case 4:
 			Telefone t = c.getTelefones().get(0);
 			return "(" + t.getDdd() + ")" + t.getNumero() + " "
 					+ t.getOperadora();
@@ -45,6 +43,18 @@ public class ClienteTableModel extends DefaultTableModel<Cliente> {
 	@Override
 	public int getId(int linha) {
 		return (int) getLinhas().get(linha).getId();
+	}
+
+	@Override
+	public Cliente get(long id) {
+
+		
+		for (Cliente c : linhas) {
+			if (c.getId() == id)
+				return c;
+		}
+
+		return null;
 	}
 
 }

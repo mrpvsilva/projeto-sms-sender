@@ -178,7 +178,7 @@ public class BuscarUsuarios extends JDialog implements ActionListener {
 		if (acao.getSource() == JBCadUsu) {
 
 			try {
-				JDTelaCadUsu jdtcu = new JDTelaCadUsu(null, model);
+				EditFormUsuario jdtcu = new EditFormUsuario(null, model);
 				jdtcu.setVisible(true);
 				jdtcu.setLocationRelativeTo(null);
 			} catch (ParseException e) {
@@ -195,7 +195,7 @@ public class BuscarUsuarios extends JDialog implements ActionListener {
 
 				try {
 					// int id = model.getId(linha);
-					JDTelaCadUsu jdtcu = new JDTelaCadUsu(model.find(linha),
+					EditFormUsuario jdtcu = new EditFormUsuario(model.find(linha),
 							model);
 					jdtcu.setVisible(true);
 					jdtcu.setLocationRelativeTo(null);

@@ -138,13 +138,13 @@ public class BuscarModulos extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == btncadastrar) {
-			JDTelaEditFormModulo efm = new JDTelaEditFormModulo(null, model);
+			EditFormModulo efm = new EditFormModulo(null, model);
 			efm.setVisible(true);
 		} else if (e.getSource() == btnalterar) {
 
 			int linha = table.getSelectedRow();
 			if (linha > -1) {
-				JDTelaEditFormModulo efm = new JDTelaEditFormModulo(
+				EditFormModulo efm = new EditFormModulo(
 						model.find(linha), model);
 				efm.setVisible(true);
 			} else {

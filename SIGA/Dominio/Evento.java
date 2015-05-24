@@ -2,12 +2,14 @@ package Dominio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -17,6 +19,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import Util.StatusEvento;
 
 @Entity
 @Table(name = "eventos")
@@ -38,7 +42,7 @@ public class Evento implements Serializable {
 	private int numeroconvidados;
 
 	@Column
-	private String Nome;
+	private String nome;
 
 	@Column
 	@Temporal(value = TemporalType.DATE)
@@ -48,42 +52,31 @@ public class Evento implements Serializable {
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date dataevento;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinTable(name = "clienteseventos", joinColumns = { @JoinColumn(name = "idevento", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idcliente", referencedColumnName = "id") })
 	private List<Cliente> clientes;
 
-	@OneToMany(mappedBy = "evento", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<EventoItem> itens;
 
 	public Evento() {
-
-	}
-
-	public Evento(String status, String tipo, int numConvidados, String nome,
-			Date dataCriacao, Date dataEvento) {
-		setStatus(status);
-		setTipo(tipo);
-		setNumConvidados(numConvidados);
-		setNome(nome);
-		setDataCriacao(dataCriacao);
-		setDataEvento(dataEvento);
-
+		setStatus(StatusEvento.ORCAMENTO.toString());
+		this.datacriacao = Calendar.getInstance().getTime();
+		
 	}
 
 	public void addCliente(Cliente cliente) {
-		if (this.clientes == null) {
+		if (this.clientes == null)
 			clientes = new ArrayList<Cliente>();
-		}
-
 		this.clientes.add(cliente);
 	}
 
-	public void addItem(Item item, int quantidade) {
+	public void addItem(EventoItem eventoItem) {
 		if (this.itens == null) {
 			itens = new ArrayList<EventoItem>();
 		}
-		EventoItem evi = new EventoItem(this, item, quantidade);
-		this.itens.add(evi);
+
+		this.itens.add(eventoItem);
 	}
 
 	public long getId() {
@@ -119,19 +112,15 @@ public class Evento implements Serializable {
 	}
 
 	public String getNome() {
-		return Nome;
+		return nome;
 	}
 
 	public void setNome(String nome) {
-		Nome = nome;
+		this.nome = nome;
 	}
 
 	public Date getDataCriacao() {
 		return datacriacao;
-	}
-
-	public void setDataCriacao(Date dataCriacao) {
-		this.datacriacao = dataCriacao;
 	}
 
 	public Date getDataEvento() {
@@ -157,6 +146,5 @@ public class Evento implements Serializable {
 	public void setItens(List<EventoItem> itens) {
 		this.itens = itens;
 	}
-	
-	
+
 }

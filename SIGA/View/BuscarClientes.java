@@ -1,25 +1,32 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
-import java.util.List;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
 import Control.ClientesControl;
 import Dominio.Cliente;
@@ -28,20 +35,6 @@ import TableModels.ClienteTableModel;
 import TableModels.DefaultTableModel;
 import Util.Modulos;
 import Util.PermissoesManager;
-
-import javax.swing.ImageIcon;
-
-import java.awt.Toolkit;
-
-import javax.swing.border.TitledBorder;
-
-import java.awt.Color;
-import java.awt.Font;
-
-import javax.swing.JRadioButton;
-import javax.swing.SwingConstants;
-
-import java.awt.event.KeyAdapter;
 
 public class BuscarClientes extends JDialog implements ActionListener {
 
@@ -188,9 +181,7 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		scrollPane.setBounds(10, 129, 765, 483);
 		contentPanel.add(scrollPane);
 
-		table = new JTable(modelClientes);
-		table.getColumnModel().getColumn(0).setMinWidth(0);
-		table.getColumnModel().getColumn(0).setMaxWidth(0);
+		table = new JTable(modelClientes);		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -199,7 +190,7 @@ public class BuscarClientes extends JDialog implements ActionListener {
 					try {
 						int linha = table.getSelectedRow();
 						Cliente c = modelClientes.find(linha);
-						JDTelaFormCliente jf = new JDTelaFormCliente(false, c);
+						EditFormCliente jf = new EditFormCliente(false, c);
 						jf.setVisible(true);
 					} catch (ParseException e1) {
 						// TODO Auto-generated catch block
@@ -251,7 +242,7 @@ public class BuscarClientes extends JDialog implements ActionListener {
 				Cliente c = modelClientes.find(linha);
 
 				try {
-					JDTelaFormCliente cdtcc = new JDTelaFormCliente(true, c);
+					EditFormCliente cdtcc = new EditFormCliente(true, c);
 					cdtcc.setVisible(true);
 					cdtcc.setLocationRelativeTo(null);
 				} catch (ParseException e) {
@@ -298,7 +289,7 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		if (acao.getSource() == JBCadCli) {
 
 			try {
-				JDTelaFormCliente cdtcc = new JDTelaFormCliente();
+				EditFormCliente cdtcc = new EditFormCliente();
 				cdtcc.setVisible(true);
 				cdtcc.setLocationRelativeTo(null);
 			} catch (ParseException e) {

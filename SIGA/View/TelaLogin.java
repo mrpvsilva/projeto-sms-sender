@@ -23,7 +23,7 @@ import java.awt.Font;
 
 import javax.swing.SwingConstants;
 
-public class JFTelaLogin extends JFrame implements ActionListener {
+public class TelaLogin extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -53,7 +53,7 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFTelaLogin frame = new JFTelaLogin();
+					TelaLogin frame = new TelaLogin();
 					frame.setVisible(true);
 					frame.setResizable(false);
 				} catch (Exception e) {
@@ -67,10 +67,10 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public JFTelaLogin() {
+	public TelaLogin() {
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				JFTelaLogin.class.getResource("/Img/CNPJ G200.png")));
+				TelaLogin.class.getResource("/Img/CNPJ G200.png")));
 
 		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -115,7 +115,7 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 		contentPane.add(JBAcessar);
 
 		JLabel JLIcone = new JLabel("");
-		JLIcone.setIcon(new ImageIcon(JFTelaLogin.class
+		JLIcone.setIcon(new ImageIcon(TelaLogin.class
 				.getResource("/Img/CNPJ G200.png")));
 		JLIcone.setBounds(137, 11, 224, 98);
 		contentPane.add(JLIcone);
@@ -146,12 +146,12 @@ public class JFTelaLogin extends JFrame implements ActionListener {
 
 			if (u != null) {
 				if (!u.trocarSenha()) {
-					JFTelaPrincipal jftp = new JFTelaPrincipal();
+					TelaPrincipal jftp = new TelaPrincipal();
 					jftp.setVisible(true);
 					this.dispose();
 				} else {
 
-					JDTelaTrocarSenha trocar = new JDTelaTrocarSenha(u);
+					TrocarSenha trocar = new TrocarSenha(u);
 					trocar.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 					trocar.setVisible(true);
 				}

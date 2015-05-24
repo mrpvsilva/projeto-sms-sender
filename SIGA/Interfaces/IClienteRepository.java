@@ -5,8 +5,9 @@ import java.util.List;
 import Dominio.Cliente;
 
 public interface IClienteRepository extends IRepositoryBase<Cliente> {
-	
-	
-	public List<Cliente> findAll(String valor,String campo);
+
+	public List<Cliente> findAll(String valor, String campo);
+
+	public Cliente find(String cpfcnpj);
 
 }

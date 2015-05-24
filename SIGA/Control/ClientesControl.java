@@ -47,7 +47,6 @@ public class ClientesControl {
 
 	/* Envia filtros para view JDTelaBuscarCli */
 	public ArrayList<String> Filtros() {
-
 		return new ClientesModel().FiltroCli();
 	}
 

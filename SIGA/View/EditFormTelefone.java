@@ -24,7 +24,7 @@ import TableModels.DefaultTableModel;
 
 import java.awt.Color;
 
-public class JDTelaEditTelefone extends JDialog implements ActionListener {
+public class EditFormTelefone extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -46,7 +46,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaEditTelefone dialog = new JDTelaEditTelefone(-1, null, null);
+			EditFormTelefone dialog = new EditFormTelefone(-1, null, null);
 			dialog.setModal(true);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
@@ -59,7 +59,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaEditTelefone(int linha, Telefone telefone,
+	public EditFormTelefone(int linha, Telefone telefone,
 			DefaultTableModel<Telefone> telmodel) {
 		setTitle("SIGA - cad. telefone");
 		_telefone = telefone;
@@ -146,7 +146,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 			{
 				JBSalvar = new JButton("Salvar");
 				JBSalvar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBSalvar.setIcon(new ImageIcon(JDTelaEditTelefone.class
+				JBSalvar.setIcon(new ImageIcon(EditFormTelefone.class
 						.getResource("/Img/Confirmar.png")));
 				JBSalvar.addActionListener(this);
 				JBSalvar.setMnemonic(KeyEvent.VK_S);
@@ -156,7 +156,7 @@ public class JDTelaEditTelefone extends JDialog implements ActionListener {
 			{
 				JBSair = new JButton("Sair");
 				JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBSair.setIcon(new ImageIcon(JDTelaEditTelefone.class
+				JBSair.setIcon(new ImageIcon(EditFormTelefone.class
 						.getResource("/Img/exit16.png")));
 				JBSair.addActionListener(this);
 				JBSair.setMnemonic(KeyEvent.VK_X);

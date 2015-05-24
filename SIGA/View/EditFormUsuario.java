@@ -30,7 +30,7 @@ import java.awt.Toolkit;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-public class JDTelaCadUsu extends JDialog implements ActionListener {
+public class EditFormUsuario extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -58,7 +58,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaCadUsu dialog = new JDTelaCadUsu(null, null);
+			EditFormUsuario dialog = new EditFormUsuario(null, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -71,12 +71,12 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 	 * 
 	 * @throws ParseException
 	 */
-	public JDTelaCadUsu(Usuario usuario,
+	public EditFormUsuario(Usuario usuario,
 			DefaultTableModel<Usuario> model) throws ParseException {
 		setModal(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				JDTelaCadUsu.class.getResource("/Img/CNPJ G200.png")));
+				EditFormUsuario.class.getResource("/Img/CNPJ G200.png")));
 		// this.id = id;
 		this.usuario = usuario;
 		this.model = model;
@@ -140,7 +140,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 			{
 				JBSalvUsu = new JButton("Salvar");
 				JBSalvUsu.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBSalvUsu.setIcon(new ImageIcon(JDTelaCadUsu.class
+				JBSalvUsu.setIcon(new ImageIcon(EditFormUsuario.class
 						.getResource("/Img/Confirmar.png")));
 				JBSalvUsu.addActionListener(this);
 				JBSalvUsu.setMnemonic(KeyEvent.VK_S);
@@ -150,7 +150,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 			{
 				JBNovUsu = new JButton("Novo");
 				JBNovUsu.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBNovUsu.setIcon(new ImageIcon(JDTelaCadUsu.class
+				JBNovUsu.setIcon(new ImageIcon(EditFormUsuario.class
 						.getResource("/Img/user_blue_add216.png")));
 				JBNovUsu.setMnemonic(KeyEvent.VK_N);
 				buttonPane.add(JBNovUsu);
@@ -158,7 +158,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 
 			btnResetarSenha = new JButton("Resetar senha");
 			btnResetarSenha.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			btnResetarSenha.setIcon(new ImageIcon(JDTelaCadUsu.class
+			btnResetarSenha.setIcon(new ImageIcon(EditFormUsuario.class
 					.getResource("/Img/sync.png")));
 			btnResetarSenha.addActionListener(this);
 			btnResetarSenha.setMnemonic(KeyEvent.VK_R);
@@ -166,7 +166,7 @@ public class JDTelaCadUsu extends JDialog implements ActionListener {
 
 			JBSair = new JButton("Sair");
 			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBSair.setIcon(new ImageIcon(JDTelaCadUsu.class
+			JBSair.setIcon(new ImageIcon(EditFormUsuario.class
 					.getResource("/Img/exit16.png")));
 			JBSair.addActionListener(this);
 			JBSair.setMnemonic(KeyEvent.VK_Q);

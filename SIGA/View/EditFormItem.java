@@ -29,7 +29,7 @@ import Extra.Extras;
 import Extra.Validacoes;
 import TableModels.DefaultTableModel;
 
-public class JDTelaCadItem extends JDialog implements ActionListener {
+public class EditFormItem extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -56,7 +56,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaCadItem dialog = new JDTelaCadItem(0, null);
+			EditFormItem dialog = new EditFormItem(0, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -67,7 +67,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaCadItem(int id, DefaultTableModel<Item> model) {
+	public EditFormItem(int id, DefaultTableModel<Item> model) {
 		setResizable(false);
 		setModal(true);
 		sc = new ServicosControl();
@@ -75,7 +75,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 		this.model = model;
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				JDTelaCadItem.class.getResource("/Img/CNPJ G200.png")));
+				EditFormItem.class.getResource("/Img/CNPJ G200.png")));
 
 		setBounds(100, 100, 510, 373);
 		setTitle("SIGA - cadastrar item");
@@ -162,7 +162,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 			{
 				JBSalvServ = new JButton("Salvar");
 				JBSalvServ.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBSalvServ.setIcon(new ImageIcon(JDTelaCadItem.class
+				JBSalvServ.setIcon(new ImageIcon(EditFormItem.class
 						.getResource("/Img/Confirmar.png")));
 				JBSalvServ.setMnemonic(KeyEvent.VK_S);
 				JBSalvServ.addActionListener(this);
@@ -172,7 +172,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 			{
 				JBNovoServ = new JButton("Novo");
 				JBNovoServ.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBNovoServ.setIcon(new ImageIcon(JDTelaCadItem.class
+				JBNovoServ.setIcon(new ImageIcon(EditFormItem.class
 						.getResource("/Img/window_new16.png")));
 				JBNovoServ.addActionListener(this);
 				JBNovoServ.setMnemonic(KeyEvent.VK_N);
@@ -181,7 +181,7 @@ public class JDTelaCadItem extends JDialog implements ActionListener {
 			{
 				JBSair = new JButton("Sair");
 				JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBSair.setIcon(new ImageIcon(JDTelaCadItem.class
+				JBSair.setIcon(new ImageIcon(EditFormItem.class
 						.getResource("/Img/exit16.png")));
 				JBSair.addActionListener(this);
 				JBSair.setMnemonic(KeyEvent.VK_Q);

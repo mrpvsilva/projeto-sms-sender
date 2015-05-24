@@ -28,7 +28,7 @@ import Util.PermissoesManager;
 
 import java.awt.Font;
 
-public class JFTelaPrincipal extends JFrame implements ActionListener {
+public class TelaPrincipal extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -94,7 +94,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFTelaPrincipal frame = new JFTelaPrincipal();
+					TelaPrincipal frame = new TelaPrincipal();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -106,7 +106,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public JFTelaPrincipal() {
+	public TelaPrincipal() {
 		// buscar as permissões
 
 		usuarios = PermissoesManager.buscarPermissao(Modulos.Usuarios);
@@ -122,7 +122,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		financeiro = PermissoesManager.buscarPermissao(Modulos.Financeiro);
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				JFTelaPrincipal.class.getResource("/Img/CNPJ G200.png")));
+				TelaPrincipal.class.getResource("/Img/CNPJ G200.png")));
 
 		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -173,7 +173,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		mntmCadastrar_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmCadastrar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JDTelaCadTipoServico tscad = new JDTelaCadTipoServico(null, 0);
+				EditFormTipoServico tscad = new EditFormTipoServico(null, 0);
 				tscad.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				tscad.setVisible(true);
 			}
@@ -497,7 +497,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		mntmCadastrar_3.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmCadastrar_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JDTelaEditFormPerfil efp = new JDTelaEditFormPerfil(null, null);
+				EditFormPerfil efp = new EditFormPerfil(null, null);
 				efp.setVisible(true);
 			}
 		});
@@ -525,7 +525,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		mntmCadastrar_4.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmCadastrar_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JDTelaEditFormModulo efm = new JDTelaEditFormModulo(null, null);
+				EditFormModulo efm = new EditFormModulo(null, null);
 				efm.setVisible(true);
 			}
 		});
@@ -564,7 +564,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon(JFTelaPrincipal.class
+		label.setIcon(new ImageIcon(TelaPrincipal.class
 				.getResource("/Img/CNPJ G800.png")));
 		label.setOpaque(true);
 		contentPane.add(label);
@@ -576,10 +576,10 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		/* JMenu Fornecedores */
 		if (acao.getSource() == JMIFornCad) {
-			JDTelaCadForn jdtcf;
+			EditFormFornecedor jdtcf;
 
 			try {
-				jdtcf = new JDTelaCadForn(null, null);
+				jdtcf = new EditFormFornecedor(null, null);
 				jdtcf.setResizable(false);
 				jdtcf.setVisible(true);
 				jdtcf.setLocationRelativeTo(null);
@@ -612,7 +612,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		/* JMenu Serviços */
 		if (acao.getSource() == JMIServCad) {
-			JDTelaCadItem jdtcs = new JDTelaCadItem(0, null);
+			EditFormItem jdtcs = new EditFormItem(0, null);
 			jdtcs.setResizable(false);
 			jdtcs.setVisible(true);
 		}// final do JMenuItemServiços Cadastro
@@ -637,10 +637,10 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		/* JMenu Clientes */
 		if (acao.getSource() == JMICliCad) {
-			JDTelaFormCliente jdtcc;
+			EditFormCliente jdtcc;
 
 			try {
-				jdtcc = new JDTelaFormCliente();
+				jdtcc = new EditFormCliente();
 				jdtcc.setResizable(false);
 				jdtcc.setVisible(true);
 			} catch (ParseException e) {
@@ -672,7 +672,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 
 		/* JMenu Lembretes */
 		if (acao.getSource() == JMILembCad) {
-			JDTelaCadLemb jdtcl = new JDTelaCadLemb();
+			EditFormLembrete jdtcl = new EditFormLembrete();
 			jdtcl.setResizable(false);
 			jdtcl.setVisible(true);
 		}// final do JMenuItemLembretes Cadastrar
@@ -752,7 +752,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		if (acao.getSource() == JMIUsuCad) {
 
 			try {
-				JDTelaCadUsu jdtcu = new JDTelaCadUsu(null, null);
+				EditFormUsuario jdtcu = new EditFormUsuario(null, null);
 				jdtcu.setResizable(false);
 				jdtcu.setVisible(true);
 				jdtcu.setLocationRelativeTo(null);
@@ -764,7 +764,7 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		}// final do JMenuItemUsuário Cadastrar
 
 		if (acao.getSource() == JMITSCad) {
-			JDTelaEditFormTipoItem ef = new JDTelaEditFormTipoItem(0, null);
+			EditFormTipoItem ef = new EditFormTipoItem(0, null);
 			ef.setResizable(false);
 			ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			ef.setVisible(true);
@@ -789,12 +789,12 @@ public class JFTelaPrincipal extends JFrame implements ActionListener {
 		}
 
 		if (acao.getSource() == mntmSair) {
-			JFTelaLogin login = new JFTelaLogin();
+			TelaLogin login = new TelaLogin();
 			login.setVisible(true);
 			this.dispose();
 		}
 		if (acao.getSource() == mntmTrocarSenha) {
-			JDTelaTrocarSenha ts = new JDTelaTrocarSenha(
+			TrocarSenha ts = new TrocarSenha(
 					Extras.getUsuarioLogado());
 			ts.setVisible(true);
 		}

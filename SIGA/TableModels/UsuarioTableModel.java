@@ -42,4 +42,10 @@ public class UsuarioTableModel extends DefaultTableModel<Usuario> {
 		return (int) getLinhas().get(linha).getId();
 	}
 
+	@Override
+	public Usuario get(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

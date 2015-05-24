@@ -193,7 +193,7 @@ public class BuscarPerfis extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCadastrar) {
-			JDTelaEditFormPerfil efp = new JDTelaEditFormPerfil(null,
+			EditFormPerfil efp = new EditFormPerfil(null,
 					tableModelPerfil);
 			efp.setVisible(true);
 		} else if (e.getSource() == btnAlterar) {
@@ -201,7 +201,7 @@ public class BuscarPerfis extends JDialog implements ActionListener {
 			if (linha > -1) {
 				Perfil p = tableModelPerfil.getLinhas().get(
 						tablePerfis.getSelectedRow());
-				JDTelaEditFormPerfil efp = new JDTelaEditFormPerfil(p,
+				EditFormPerfil efp = new EditFormPerfil(p,
 						tableModelPerfil);
 				efp.setVisible(true);
 

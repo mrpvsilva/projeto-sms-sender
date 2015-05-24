@@ -66,7 +66,7 @@ public class Splash extends JWindow {
 
 		Splash splash = new Splash();
 		splash.showSplash();
-		JFTelaLogin frame = new JFTelaLogin();
+		TelaLogin frame = new TelaLogin();
 		frame.setVisible(true);
 	}
 

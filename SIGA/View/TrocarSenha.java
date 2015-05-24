@@ -19,7 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
-public class JDTelaTrocarSenha extends JDialog implements ActionListener {
+public class TrocarSenha extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JPasswordField jpswNova;
@@ -35,7 +35,7 @@ public class JDTelaTrocarSenha extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaTrocarSenha dialog = new JDTelaTrocarSenha(null);
+			TrocarSenha dialog = new TrocarSenha(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -46,7 +46,7 @@ public class JDTelaTrocarSenha extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaTrocarSenha(Usuario usuario) {
+	public TrocarSenha(Usuario usuario) {
 		setResizable(false);
 		setModal(true);
 		this.usuario = usuario;

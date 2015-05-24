@@ -67,10 +67,12 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 	private JLabel lblDataFinal;
 	private JLabel lblDestinatrios;
 	private DefaultTableModel<Lembrete> modelLembretes;
-	private JDatePickerImpl datePickerFinal;
-	private DateModel<Date> datemodelinicio;
+	
+	private JDatePickerImpl datePickerInicial;
+	private DateModel<Date> datemodelinicial;	
+	private JDatePickerImpl datePickerFinal;	
 	private DateModel<Date> datemodelfinal;
-	private JDatePickerImpl datePickerInicio;
+	
 	private JTextArea texto;
 	private JLabel lblMensagem;
 	private JTextField assunto;
@@ -141,17 +143,17 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 			lblDataInicial.setBounds(313, 11, 150, 23);
 			filtros.add(lblDataInicial);
 			{
-				datemodelinicio = new UtilDateModel();
-				datemodelinicio.addChangeListener(new ChangeListener() {
+				datemodelinicial = new UtilDateModel();
+				datemodelinicial.addChangeListener(new ChangeListener() {
 					@Override
 					public void stateChanged(ChangeEvent e) {
 
-						if (datemodelinicio.isSelected()) {
+						if (datemodelinicial.isSelected()) {
 
 							try {
 								SimpleDateFormat sdf = new SimpleDateFormat(
 										"dd/MM/yyyy");
-								String o = sdf.format(datemodelinicio
+								String o = sdf.format(datemodelinicial
 										.getValue());
 								Date ini = sdf.parse(o);
 								Date fim = datemodelfinal.getValue();
@@ -187,17 +189,17 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 
 				});
 				JDatePanelImpl datePanelinicio = new JDatePanelImpl(
-						datemodelinicio);
+						datemodelinicial);
 
 				datePanelinicio.setBounds(72, 57, 200, 180);
-				datePickerInicio = new JDatePickerImpl(datePanelinicio);
-				datePickerInicio.getJFormattedTextField()
+				datePickerInicial = new JDatePickerImpl(datePanelinicio);
+				datePickerInicial.getJFormattedTextField()
 						.setHorizontalAlignment(SwingConstants.RIGHT);
-				datePickerInicio.getJFormattedTextField().setFont(
+				datePickerInicial.getJFormattedTextField().setFont(
 						new Font("Tahoma", Font.PLAIN, 13));
-				datePickerInicio.setBounds(313, 33, 150, 33);
+				datePickerInicial.setBounds(313, 33, 150, 33);
 
-				filtros.add(datePickerInicio);
+				filtros.add(datePickerInicial);
 
 			}
 			{
@@ -212,10 +214,10 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 										"dd/MM/yyyy");
 								String o = sdf.format(datemodelfinal.getValue());
 								Date fim = sdf.parse(o);
-								Date ini = datemodelinicio.getValue();
+								Date ini = datemodelinicial.getValue();
 
 								if (ini == null) {
-									datemodelinicio.setValue(fim);
+									datemodelinicial.setValue(fim);
 								} else {
 									o = sdf.format(ini);
 									ini = sdf.parse(o);
@@ -339,7 +341,7 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent acao) {
 
 		if (acao.getSource() == JBCadLemb) {
-			JDTelaCadLemb jdtcl = new JDTelaCadLemb(modelLembretes);
+			EditFormLembrete jdtcl = new EditFormLembrete(modelLembretes);
 			jdtcl.setVisible(true);
 			jdtcl.setLocationRelativeTo(null);
 		}// final do botão cadastrar lembretes
@@ -348,7 +350,7 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 
 			int linha = tabela.getSelectedRow();
 			if (linha > -1) {
-				JDTelaCadLemb jdtcl = new JDTelaCadLemb(modelLembretes,
+				EditFormLembrete jdtcl = new EditFormLembrete(modelLembretes,
 						modelLembretes.find(linha));
 				jdtcl.setVisible(true);
 				jdtcl.setLocationRelativeTo(null);
@@ -368,7 +370,7 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 
 	private void Pesquisar() {
 		texto.setText("");
-		Date dataInicial = (Date) datePickerInicio.getModel().getValue();
+		Date dataInicial = (Date) datePickerInicial.getModel().getValue();
 		Date dataFinal = (Date) datePickerFinal.getModel().getValue();
 
 		modelLembretes.setLinhas(_lembreteControl.BuscarTodos(dataInicial,

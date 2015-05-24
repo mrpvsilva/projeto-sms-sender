@@ -37,4 +37,10 @@ public class PerfilTableModel extends DefaultTableModel<Perfil> {
 		return (int) getLinhas().get(linha).getId();
 	}
 
+	@Override
+	public Perfil get(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
