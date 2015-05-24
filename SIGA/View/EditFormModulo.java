@@ -19,7 +19,7 @@ import Dominio.Modulo;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
-public class JDTelaEditFormModulo extends JDialog implements ActionListener {
+public class EditFormModulo extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tfnome;
@@ -29,7 +29,7 @@ public class JDTelaEditFormModulo extends JDialog implements ActionListener {
 	private JButton btnsalvar;
 	private JButton btncancelar;
 
-	public JDTelaEditFormModulo(Modulo modulo,
+	public EditFormModulo(Modulo modulo,
 			DefaultTableModel<Modulo> model) {
 		setResizable(false);
 		setModal(true);
@@ -134,7 +134,7 @@ public class JDTelaEditFormModulo extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaEditFormModulo dialog = new JDTelaEditFormModulo(null, null);
+			EditFormModulo dialog = new EditFormModulo(null, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

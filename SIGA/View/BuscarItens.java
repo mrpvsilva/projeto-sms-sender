@@ -174,7 +174,7 @@ public class BuscarItens extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent acao) {
 
 		if (acao.getSource() == JBCadServ) {
-			JDTelaCadItem jdtcs = new JDTelaCadItem(0,model);
+			EditFormItem jdtcs = new EditFormItem(0,model);
 			jdtcs.setVisible(true);
 			jdtcs.setLocationRelativeTo(null);
 
@@ -184,7 +184,7 @@ public class BuscarItens extends JDialog implements ActionListener {
 
 			int linha = tabela.getSelectedRow();
 			if (linha > -1) {
-				JDTelaCadItem jdtcs = new JDTelaCadItem(model.getId(linha),model);
+				EditFormItem jdtcs = new EditFormItem(model.getId(linha),model);
 				jdtcs.setVisible(true);
 				jdtcs.setLocationRelativeTo(null);
 			} else {

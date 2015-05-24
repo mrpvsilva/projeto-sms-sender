@@ -2,6 +2,7 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -17,39 +18,56 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import Control.TipoServicoControl;
-import Dominio.TipoServico;
+import Control.TipoItemControl;
+import Dominio.TipoItem;
 import TableModels.DefaultTableModel;
 import java.awt.Font;
 
-public class JDTelaCadTipoServico extends JDialog implements ActionListener {
+public class EditFormTipoItem extends JDialog implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField tfNome;
-	private JCheckBox chkAtivo;
 	private JButton JBSalvar;
-	private JButton JBSair;
-	private int id;
-	private TipoServico tipoServico;
-	private TipoServicoControl tipoServicoControl = new TipoServicoControl();
-	private DefaultTableModel<TipoServico> model;
 	private JButton JBNovo;
+	private int id;
+	private JTextField tfnome;
+	private JCheckBox chckbxAtivo;
+	private TipoItem tipoItem;
+	private TipoItemControl tipoItemControl = new TipoItemControl();
+	private DefaultTableModel<TipoItem> model;
+	private JButton JBSair;
 
 	/**
 	 * Launch the application.
 	 */
+	public static void main(String[] args) {
+		try {
+			EditFormTipoItem dialog = new EditFormTipoItem(0, null);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaCadTipoServico(DefaultTableModel<TipoServico> model,
-			int id) {
+	public EditFormTipoItem(int id,
+			DefaultTableModel<TipoItem> model) {
 		setResizable(false);
 		setModal(true);
-		setTitle("SIGA - cadastro de tipo de servi\u00E7o");
-		this.model = model;
+
+		setTitle("SIGA - edi\u00E7\u00E3o tipo servi\u00E7o");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				EditFormTipoItem.class.getResource("/Img/CNPJ G200.png")));
 		this.id = id;
-		setBounds(100, 100, 340, 147);
+		this.model = model;
+
+		setBounds(100, 100, 281, 147);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -58,20 +76,21 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNome.setBounds(0, 37, 42, 14);
+		lblNome.setBounds(10, 21, 46, 14);
 		contentPanel.add(lblNome);
 
-		tfNome = new JTextField();
-		tfNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		tfNome.setBounds(52, 34, 179, 20);
-		contentPanel.add(tfNome);
-		tfNome.setColumns(10);
+		tfnome = new JTextField();
+		tfnome.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		tfnome.setBounds(66, 18, 184, 20);
+		contentPanel.add(tfnome);
+		tfnome.setColumns(10);
 
-		chkAtivo = new JCheckBox("Ativo");
-		chkAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		chkAtivo.setSelected(true);
-		chkAtivo.setBounds(237, 33, 97, 23);
-		contentPanel.add(chkAtivo);
+		chckbxAtivo = new JCheckBox("Ativo");
+		chckbxAtivo.setHorizontalAlignment(SwingConstants.LEFT);
+		chckbxAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		chckbxAtivo.setSelected(true);
+		chckbxAtivo.setBounds(62, 42, 97, 23);
+		contentPanel.add(chckbxAtivo);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -79,26 +98,26 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 			{
 				JBSalvar = new JButton("Salvar");
 				JBSalvar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBSalvar.setIcon(new ImageIcon(JDTelaCadTipoServico.class
+				JBSalvar.setIcon(new ImageIcon(EditFormTipoItem.class
 						.getResource("/Img/Confirmar.png")));
+				JBSalvar.addActionListener(this);
 				JBSalvar.setMnemonic(KeyEvent.VK_S);
 				buttonPane.add(JBSalvar);
-				JBSalvar.addActionListener(this);
 				getRootPane().setDefaultButton(JBSalvar);
 			}
 			{
-
 				JBNovo = new JButton("Novo");
 				JBNovo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBNovo.setIcon(new ImageIcon(JDTelaCadTipoServico.class
+				JBNovo.setIcon(new ImageIcon(EditFormTipoItem.class
 						.getResource("/Img/window_new16.png")));
+				JBNovo.addActionListener(this);
 				JBNovo.setMnemonic(KeyEvent.VK_N);
 				buttonPane.add(JBNovo);
-
 			}
+
 			JBSair = new JButton("Sair");
 			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBSair.setIcon(new ImageIcon(JDTelaCadTipoServico.class
+			JBSair.setIcon(new ImageIcon(EditFormTipoItem.class
 					.getResource("/Img/exit16.png")));
 			JBSair.setMnemonic(KeyEvent.VK_Q);
 			JBSair.addActionListener(this);
@@ -112,55 +131,50 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 		if (id == 0)
 			return;
 
-		tipoServico = tipoServicoControl.buscarTipoServico(id);
-
-		tfNome.setText(tipoServico.getNome());
-		chkAtivo.setSelected(tipoServico.isAtivo());
+		tipoItem = tipoItemControl.buscarTipoItem(id);
+		tfnome.setText(tipoItem.getNome());
+		chckbxAtivo.setSelected(tipoItem.isAtivo());
 
 	}
 
 	private void cadastrar() {
-
-		tipoServico = new TipoServico();
-		tipoServico.setNome(tfNome.getText());
-		tipoServico.setAtivo(chkAtivo.isSelected());
-
-		String out = tipoServicoControl.cadastrar(tipoServico);
+		tipoItem = new TipoItem();
+		tipoItem.setNome(tfnome.getText());
+		tipoItem.setAtivo(chckbxAtivo.isSelected());
+		String out = tipoItemControl.cadastra(tipoItem);
 
 		if (out == null) {
 			carregarGrid();
 			JOptionPane.showMessageDialog(null,
-					"Tipo serviço cadastrado com sucesso");
+					"Tipo serviço cadastrado com sucesso.");
+
 		} else {
 			JOptionPane.showMessageDialog(null, out);
 		}
-
 	}
 
 	private void atualizar() {
-
-		tipoServico.setNome(tfNome.getText());
-		tipoServico.setAtivo(chkAtivo.isSelected());
-
-		String out = tipoServicoControl.atualizar(tipoServico);
+		tipoItem.setNome(tfnome.getText());
+		tipoItem.setAtivo(chckbxAtivo.isSelected());
+		String out = tipoItemControl.atualizar(tipoItem);
 
 		if (out == null) {
 			carregarGrid();
 			JOptionPane.showMessageDialog(null,
-					"Tipo serviço atualizado com sucesso");
+					"Tipo serviço atualizado com sucesso.");
 		} else {
 			JOptionPane.showMessageDialog(null, out);
 		}
+	}
+
+	private void carregarGrid() {
+		if (model != null)
+			model.setLinhas(tipoItemControl.ListarTodos());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == JBSalvar) {
-			if (tfNome.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Campo nome obrigatório.");
-				return;
-			}
-
 			if (id == 0) {
 				cadastrar();
 			} else {
@@ -168,23 +182,13 @@ public class JDTelaCadTipoServico extends JDialog implements ActionListener {
 			}
 		}
 
+		if (e.getSource() == JBNovo) {
+			tfnome.setText("");
+			chckbxAtivo.setSelected(true);
+		}
+
 		if (e.getSource() == JBSair) {
 			this.dispose();
-		}
-	}
-
-	private void carregarGrid() {
-		if (model != null)
-			model.setLinhas(tipoServicoControl.listarTodos());
-	}
-
-	public static void main(String[] args) {
-		try {
-			JDTelaCadTipoServico dialog = new JDTelaCadTipoServico(null, 0);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 }

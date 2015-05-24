@@ -44,7 +44,7 @@ import Util.Validate;
 import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
 
-public class JDTelaFormCliente extends JDialog implements ActionListener {
+public class EditFormCliente extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -80,13 +80,14 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 	private JTabbedPane tabbedPane;
 	private JButton remove_telefone;
 	private JButton edit_telefone;
+	private DefaultTableModel<Cliente> _modelCliente;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaFormCliente dialog = new JDTelaFormCliente();
+			EditFormCliente dialog = new EditFormCliente();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -95,14 +96,23 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 	}
 
 	/** Contrutor chamada para o cadastro do cliente */
-	public JDTelaFormCliente() throws ParseException {
+	public EditFormCliente() throws ParseException {
 		cliente = new Cliente();
 		modeltelefone = new TelefoneTableModel();
 		start();
 	}
 
+	/** Contrutor usado pela tela de adicionar cliente ao evento */
+	public EditFormCliente(DefaultTableModel<Cliente> modelCliente)
+			throws ParseException {
+		cliente = new Cliente();
+		_modelCliente = modelCliente;
+		modeltelefone = new TelefoneTableModel();
+		start();
+	}
+
 	/** Construtor chamado para edição e visualização do cliente */
-	public JDTelaFormCliente(boolean editando, Cliente cliente)
+	public EditFormCliente(boolean editando, Cliente cliente)
 			throws ParseException {
 		this.editando = editando;
 		this.cliente = cliente;
@@ -118,7 +128,7 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				JDTelaFormCliente.class.getResource("/Img/CNPJ G200.png")));
+				EditFormCliente.class.getResource("/Img/CNPJ G200.png")));
 		setTitle("SIGA - cadastro de cliente");
 		setBounds(100, 100, 616, 574);
 		getContentPane().setLayout(new BorderLayout());
@@ -315,14 +325,14 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 		add_telefone = new JButton("");
 		add_telefone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JDTelaEditTelefone ef = new JDTelaEditTelefone(-1,
+				EditFormTelefone ef = new EditFormTelefone(-1,
 						new TelefoneCliente(), modeltelefone);
 				ef.setModal(true);
 				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				ef.setVisible(true);
 			}
 		});
-		add_telefone.setIcon(new ImageIcon(JDTelaFormCliente.class
+		add_telefone.setIcon(new ImageIcon(EditFormCliente.class
 				.getResource("/Img/plus.png")));
 		add_telefone.setToolTipText("Adicionar telefone");
 		add_telefone.setBounds(10, 191, 23, 23);
@@ -335,7 +345,7 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 				int linha = table.getSelectedRow();
 				if (linha > -1) {
 					Telefone t = modeltelefone.find(linha);
-					JDTelaEditTelefone ef = new JDTelaEditTelefone(linha, t,
+					EditFormTelefone ef = new EditFormTelefone(linha, t,
 							modeltelefone);
 					ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 					ef.setVisible(true);
@@ -345,7 +355,7 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 				}
 			}
 		});
-		edit_telefone.setIcon(new ImageIcon(JDTelaFormCliente.class
+		edit_telefone.setIcon(new ImageIcon(EditFormCliente.class
 				.getResource("/Img/edit.png")));
 		edit_telefone.setToolTipText("Alterar telefone");
 		edit_telefone.setBounds(35, 191, 23, 23);
@@ -363,7 +373,7 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 				}
 			}
 		});
-		remove_telefone.setIcon(new ImageIcon(JDTelaFormCliente.class
+		remove_telefone.setIcon(new ImageIcon(EditFormCliente.class
 				.getResource("/Img/trash.png")));
 		remove_telefone.setToolTipText("Remover telefone");
 		remove_telefone.setBounds(60, 191, 23, 23);
@@ -382,7 +392,7 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 				salvar = new JButton("Salvar");
 				salvar.addActionListener(this);
 				salvar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				salvar.setIcon(new ImageIcon(JDTelaFormCliente.class
+				salvar.setIcon(new ImageIcon(EditFormCliente.class
 						.getResource("/Img/Confirmar.png")));
 				buttonPane.add(salvar);
 				salvar.setMnemonic(KeyEvent.VK_S);
@@ -391,7 +401,7 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 			{
 				JBNovoCad = new JButton("Novo");
 				JBNovoCad.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBNovoCad.setIcon(new ImageIcon(JDTelaFormCliente.class
+				JBNovoCad.setIcon(new ImageIcon(EditFormCliente.class
 						.getResource("/Img/window_new16.png")));
 				JBNovoCad.setMnemonic(KeyEvent.VK_N);
 				JBNovoCad.addActionListener(this);
@@ -400,7 +410,7 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 
 			sair = new JButton("Sair");
 			sair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			sair.setIcon(new ImageIcon(JDTelaFormCliente.class
+			sair.setIcon(new ImageIcon(EditFormCliente.class
 					.getResource("/Img/exit16.png")));
 			sair.addActionListener(this);
 			sair.setMnemonic(KeyEvent.VK_Q);
@@ -437,7 +447,7 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 
 		nomeCompleto.setText(cliente.getNomeCompleto());
 		nomeResponsavel.setText(cliente.getResponsavel());
-		rg.setText(cliente.getRg());	
+		rg.setText(cliente.getRg());
 		cpf.setText(cliente.getCpfCnpj());
 		email.setText(cliente.getEmail());
 		datanascimento.setValue(new SimpleDateFormat("dd/MM/yyyy")
@@ -541,6 +551,10 @@ public class JDTelaFormCliente extends JDialog implements ActionListener {
 
 				if (!editando) {
 					sucesso = controller.cadastrar(cliente);
+					if (_modelCliente != null) {
+						_modelCliente.add(cliente);
+					}
+
 				} else {
 					sucesso = controller.atualizar(cliente);
 				}

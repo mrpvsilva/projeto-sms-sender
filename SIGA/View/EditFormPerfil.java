@@ -29,7 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Font;
 
-public class JDTelaEditFormPerfil extends JDialog implements ActionListener {
+public class EditFormPerfil extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tfnomeperfil;
@@ -45,7 +45,7 @@ public class JDTelaEditFormPerfil extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public JDTelaEditFormPerfil(Perfil perfil,
+	public EditFormPerfil(Perfil perfil,
 			DefaultTableModel<Perfil> modelPerfil) {
 		setResizable(false);
 		setModal(true);
@@ -193,7 +193,7 @@ public class JDTelaEditFormPerfil extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaEditFormPerfil dialog = new JDTelaEditFormPerfil(null, null);
+			EditFormPerfil dialog = new EditFormPerfil(null, null);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();

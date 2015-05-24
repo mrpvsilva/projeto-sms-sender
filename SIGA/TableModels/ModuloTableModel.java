@@ -37,4 +37,10 @@ public class ModuloTableModel extends DefaultTableModel<Modulo> {
 
 	}
 
+	@Override
+	public Modulo get(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

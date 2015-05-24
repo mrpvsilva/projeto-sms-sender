@@ -8,8 +8,8 @@ import javax.swing.table.AbstractTableModel;
 public abstract class DefaultTableModel<E> extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
-	private List<E> linhas;
-	protected String[] colunas;
+	protected List<E> linhas;
+	private String[] colunas;
 
 	public DefaultTableModel(String[] colunas) {
 		this.colunas = colunas;
@@ -52,6 +52,8 @@ public abstract class DefaultTableModel<E> extends AbstractTableModel {
 	}
 
 	public abstract int getId(int linha);
+
+	public abstract E get(long id);
 
 	//
 

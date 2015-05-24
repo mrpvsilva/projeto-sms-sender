@@ -39,7 +39,7 @@ import Extra.Validacoes;
 import TableModels.DefaultTableModel;
 import TableModels.TelefoneTableModel;
 
-public class JDTelaCadForn extends JDialog implements ActionListener {
+public class EditFormFornecedor extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -79,7 +79,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			JDTelaCadForn dialog = new JDTelaCadForn(null, null);
+			EditFormFornecedor dialog = new EditFormFornecedor(null, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -92,12 +92,12 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	 * 
 	 * @throws ParseException
 	 */
-	public JDTelaCadForn(Fornecedor fornecedor,
+	public EditFormFornecedor(Fornecedor fornecedor,
 			DefaultTableModel<Fornecedor> model) throws ParseException {
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				JDTelaCadForn.class.getResource("/Img/CNPJ G200.png")));
+				EditFormFornecedor.class.getResource("/Img/CNPJ G200.png")));
 		// this.id = id;
 		this.forModel = model;
 		this.fornecedor = fornecedor;
@@ -242,7 +242,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 		scrollPane.setViewportView(table);
 
 		btnaddtel = new JButton("");
-		btnaddtel.setIcon(new ImageIcon(JDTelaCadForn.class
+		btnaddtel.setIcon(new ImageIcon(EditFormFornecedor.class
 				.getResource("/Img/plus.png")));
 		btnaddtel.setToolTipText("Adicionar telefone");
 		btnaddtel.setBounds(491, 104, 23, 23);
@@ -251,7 +251,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 
 		btnedittel = new JButton("");
 		btnedittel.setToolTipText("Alterar telefone");
-		btnedittel.setIcon(new ImageIcon(JDTelaCadForn.class
+		btnedittel.setIcon(new ImageIcon(EditFormFornecedor.class
 				.getResource("/Img/edit.png")));
 		btnedittel.setBounds(491, 129, 23, 23);
 		btnedittel.addActionListener(this);
@@ -259,7 +259,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 
 		btnremovetel = new JButton("");
 		btnremovetel.setToolTipText("Remover telefone");
-		btnremovetel.setIcon(new ImageIcon(JDTelaCadForn.class
+		btnremovetel.setIcon(new ImageIcon(EditFormFornecedor.class
 				.getResource("/Img/trash.png")));
 		btnremovetel.setBounds(490, 153, 23, 23);
 		btnremovetel.addActionListener(this);
@@ -272,7 +272,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			{
 				JBSalvForn = new JButton("Salvar");
 				JBSalvForn.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBSalvForn.setIcon(new ImageIcon(JDTelaCadForn.class
+				JBSalvForn.setIcon(new ImageIcon(EditFormFornecedor.class
 						.getResource("/Img/Confirmar.png")));
 				JBSalvForn.addActionListener(this);
 				JBSalvForn.setMnemonic(KeyEvent.VK_S);
@@ -282,7 +282,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			{
 				JBNovForn = new JButton("Novo");
 				JBNovForn.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBNovForn.setIcon(new ImageIcon(JDTelaCadForn.class
+				JBNovForn.setIcon(new ImageIcon(EditFormFornecedor.class
 						.getResource("/Img/window_new16.png")));
 				JBNovForn.addActionListener(this);
 				JBNovForn.setMnemonic(KeyEvent.VK_N);
@@ -291,7 +291,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 
 			JBSair = new JButton("Sair");
 			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBSair.setIcon(new ImageIcon(JDTelaCadForn.class
+			JBSair.setIcon(new ImageIcon(EditFormFornecedor.class
 					.getResource("/Img/exit16.png")));
 			JBSair.addActionListener(this);
 			JBSair.setMnemonic(KeyEvent.VK_Q);
@@ -305,7 +305,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent acao) {
 
 		if (acao.getSource() == btnaddtel) {
-			JDTelaEditTelefone ef = new JDTelaEditTelefone(-1,
+			EditFormTelefone ef = new EditFormTelefone(-1,
 					new TelefoneFornecedor(), telmodel);
 			ef.setModal(true);
 			ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -318,7 +318,7 @@ public class JDTelaCadForn extends JDialog implements ActionListener {
 			if (linha > -1) {
 				TelefoneFornecedor t = (TelefoneFornecedor) telmodel
 						.find(linha);
-				JDTelaEditTelefone ef = new JDTelaEditTelefone(linha, t,
+				EditFormTelefone ef = new EditFormTelefone(linha, t,
 						telmodel);
 				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				ef.setVisible(true);

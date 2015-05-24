@@ -1,0 +1,6 @@
+package Dominio;
+
+public enum TiposEvento {
+	TODOS,SELECIONE,ANIVERSARIO,CASAMENTO,FORMATURA,MILITAR,OUTROS
+
+}

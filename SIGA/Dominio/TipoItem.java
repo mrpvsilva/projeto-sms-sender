@@ -1,11 +1,15 @@
 package Dominio;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +25,9 @@ public class TipoItem implements Serializable {
 	private String nome;
 	@Column
 	private boolean ativo;
+
+	@OneToMany(mappedBy = "tipoItem", fetch = FetchType.EAGER)
+	private List<Item> itens;
 
 	public TipoItem() {
 		this.ativo = true;
@@ -53,6 +60,14 @@ public class TipoItem implements Serializable {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public List<Item> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<Item> itens) {
+		this.itens = itens;
 	}
 
 }

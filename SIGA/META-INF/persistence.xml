@@ -19,6 +19,7 @@
 		<class>Dominio.TelefoneFornecedor</class>
 		<class>Dominio.TipoItem</class>
 		<class>Dominio.TipoServico</class>
+		<class>Dominio.Evento</class>
 
 
 		<class>Dominio.EnderecoCliente</class>

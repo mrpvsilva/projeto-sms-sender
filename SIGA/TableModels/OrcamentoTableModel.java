@@ -42,4 +42,10 @@ public class OrcamentoTableModel extends DefaultTableModel<Evento> {
 		return (int) getLinhas().get(linha).getId();
 	}
 
+	@Override
+	public Evento get(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

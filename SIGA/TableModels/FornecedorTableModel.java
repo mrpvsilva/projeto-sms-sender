@@ -46,4 +46,10 @@ public class FornecedorTableModel extends DefaultTableModel<Fornecedor> {
 		return (int) getLinhas().get(linha).getId();
 	}
 
+	@Override
+	public Fornecedor get(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

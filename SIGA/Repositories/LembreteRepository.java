@@ -7,20 +7,15 @@ import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 
 import Dominio.Lembrete;
 import Dominio.Usuario;
 import Interfaces.ILembreteRepository;
-import Util.Factory;
 
 public class LembreteRepository extends RepositoryBase<Lembrete> implements
 		ILembreteRepository {
@@ -58,14 +53,14 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 			List<Predicate> condicoes = new ArrayList<Predicate>();
 
 			{
-				Path<Usuario> usuario = lembrete.get("destinatario");				
+				Path<Usuario> usuario = lembrete.get("destinatario");
 				Predicate where = criteiraBuilder.equal(usuario, destinatario);
 				condicoes.add(where);
 			}
 
 			if (!assunto.isEmpty()) {
 				Path<String> a = lembrete.get("assunto");
-				Predicate where = criteiraBuilder.like(a, "%"+assunto+"%");
+				Predicate where = criteiraBuilder.like(a, "%" + assunto + "%");
 				condicoes.add(where);
 			}
 			if (dataInicial != null && dataFinal != null) {

@@ -42,7 +42,7 @@ import Util.Validate;
 
 import java.awt.Color;
 
-public class JDTelaCadLemb extends JDialog implements ActionListener {
+public class EditFormLembrete extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -75,7 +75,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 	public static void main(String[] args) {
 		try {
 
-			JDTelaCadLemb dialog = new JDTelaCadLemb(null);
+			EditFormLembrete dialog = new EditFormLembrete(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -87,7 +87,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 	 * Construtor padrão para cadastro de lembrete apartir da tela inicial do
 	 * sistema
 	 */
-	public JDTelaCadLemb() {
+	public EditFormLembrete() {
 		_lembrete = new Lembrete();
 		start();
 	}
@@ -96,7 +96,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 	 * Construtor utilizado para cadastro de lembrete apartir da tela de busca
 	 * de lembretes
 	 */
-	public JDTelaCadLemb(DefaultTableModel<Lembrete> modelLembretes) {
+	public EditFormLembrete(DefaultTableModel<Lembrete> modelLembretes) {
 		_modelLembretes = modelLembretes;
 		_lembrete = new Lembrete();
 		start();
@@ -107,7 +107,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 	 * Construtor utilizado para edição de lembrete apartir da tela de busca de
 	 * lembretes
 	 */
-	public JDTelaCadLemb(DefaultTableModel<Lembrete> modelLembretes,
+	public EditFormLembrete(DefaultTableModel<Lembrete> modelLembretes,
 			Lembrete lembrete) {
 		_modelLembretes = modelLembretes;
 		_lembrete = lembrete;
@@ -119,7 +119,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 		_lembreteControl = new LembretesControl();
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				JDTelaCadLemb.class.getResource("/Img/CNPJ G200.png")));
+				EditFormLembrete.class.getResource("/Img/CNPJ G200.png")));
 		setModal(true);
 		setResizable(false);
 		setBounds(100, 100, 505, 372);
@@ -218,7 +218,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 			{
 				JBSalvLemb = new JButton("Salvar");
 				JBSalvLemb.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBSalvLemb.setIcon(new ImageIcon(JDTelaCadLemb.class
+				JBSalvLemb.setIcon(new ImageIcon(EditFormLembrete.class
 						.getResource("/Img/Confirmar.png")));
 				JBSalvLemb.addActionListener(this);
 				JBSalvLemb.setMnemonic(KeyEvent.VK_S);
@@ -228,7 +228,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 			{
 				JBNovLemb = new JButton("Novo");
 				JBNovLemb.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBNovLemb.setIcon(new ImageIcon(JDTelaCadLemb.class
+				JBNovLemb.setIcon(new ImageIcon(EditFormLembrete.class
 						.getResource("/Img/lembreteAdd.png")));
 				JBNovLemb.addActionListener(this);
 				JBNovLemb.setMnemonic(KeyEvent.VK_N);
@@ -237,7 +237,7 @@ public class JDTelaCadLemb extends JDialog implements ActionListener {
 
 			JBSair = new JButton("Sair");
 			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBSair.setIcon(new ImageIcon(JDTelaCadLemb.class
+			JBSair.setIcon(new ImageIcon(EditFormLembrete.class
 					.getResource("/Img/exit16.png")));
 			JBSair.addActionListener(this);
 			JBSair.setMnemonic(KeyEvent.VK_Q);

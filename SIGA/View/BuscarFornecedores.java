@@ -179,7 +179,7 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 		if (acao.getSource() == JBCadForn) {
 
 			try {
-				JDTelaCadForn jdtcf = new JDTelaCadForn(null,model);
+				EditFormFornecedor jdtcf = new EditFormFornecedor(null,model);
 				jdtcf.setVisible(true);
 				jdtcf.setLocationRelativeTo(null);
 			} catch (ParseException e) {
@@ -194,7 +194,7 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 			try {
 				int linha = tabela.getSelectedRow();
 				if (linha > -1) {					
-					JDTelaCadForn jdtcf = new JDTelaCadForn(model.find(linha),model);
+					EditFormFornecedor jdtcf = new EditFormFornecedor(model.find(linha),model);
 					jdtcf.setVisible(true);
 					jdtcf.setLocationRelativeTo(null);
 				} else {

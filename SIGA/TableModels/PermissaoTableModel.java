@@ -87,4 +87,10 @@ public class PermissaoTableModel extends DefaultTableModel<Permissao> {
 		return (int) getLinhas().get(linha).getId();
 	}
 
+	@Override
+	public Permissao get(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

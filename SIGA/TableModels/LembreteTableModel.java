@@ -41,4 +41,10 @@ public class LembreteTableModel extends DefaultTableModel<Lembrete> {
 		return (int) getLinhas().get(linha).getId();
 	}
 
+	@Override
+	public Lembrete get(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

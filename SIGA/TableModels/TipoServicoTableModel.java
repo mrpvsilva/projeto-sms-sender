@@ -40,4 +40,10 @@ public class TipoServicoTableModel extends DefaultTableModel<TipoServico> {
 		}
 	}
 
+	@Override
+	public TipoServico get(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

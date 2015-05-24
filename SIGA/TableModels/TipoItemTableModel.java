@@ -39,4 +39,10 @@ public class TipoItemTableModel extends DefaultTableModel<TipoItem> {
 		return (int) getLinhas().get(linha).getId();
 	}
 
+	@Override
+	public TipoItem get(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
