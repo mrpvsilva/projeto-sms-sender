@@ -48,7 +48,7 @@ public class EditFormUsuario extends JDialog implements ActionListener {
 	private JComboBox JCBPerfil;
 	private UsuarioControl _usuarioControl = new UsuarioControl();
 	private DefaultTableModel<Usuario> model;
-	//private int id;
+	// private int id;
 	private Usuario usuario;
 	private JButton btnResetarSenha;
 	private JButton JBSair;
@@ -71,8 +71,8 @@ public class EditFormUsuario extends JDialog implements ActionListener {
 	 * 
 	 * @throws ParseException
 	 */
-	public EditFormUsuario(Usuario usuario,
-			DefaultTableModel<Usuario> model) throws ParseException {
+	public EditFormUsuario(Usuario usuario, DefaultTableModel<Usuario> model)
+			throws ParseException {
 		setModal(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
@@ -181,26 +181,21 @@ public class EditFormUsuario extends JDialog implements ActionListener {
 
 		if (acao.getSource() == JBSalvUsu) {
 
-			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
-					"Deseja salvar o usuário?")) {
+			if (JTFUsuario.getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "Usuário em branco.",
+						"Erro ao salvar", JOptionPane.ERROR_MESSAGE);
+			else if (JTFNome.getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "Nome em branco.",
+						"Erro ao salvar", JOptionPane.ERROR_MESSAGE);
+			else {
 
-				if (JTFUsuario.getText().isEmpty())
-					JOptionPane.showMessageDialog(null, "Usuário em branco.",
-							"Erro ao salvar", JOptionPane.ERROR_MESSAGE);
-				else if (JTFNome.getText().isEmpty())
-					JOptionPane.showMessageDialog(null, "Nome em branco.",
-							"Erro ao salvar", JOptionPane.ERROR_MESSAGE);
-				else {
+				if (usuario == null) {
+					cadastrar();
+				} else {
+					atualizar();
+				}
 
-					if (usuario == null) {
-						cadastrar();
-					} else {
-						atualizar();
-					}
-
-				}// final da validação
-
-			}// final da confirmação
+			}// final da validação
 
 		}// final do botão salvar usuário
 
@@ -289,7 +284,7 @@ public class EditFormUsuario extends JDialog implements ActionListener {
 		}
 
 		JBNovUsu.setVisible(false);
-		//usuario = _usuarioControl.BuscarUsuario(id);
+		// usuario = _usuarioControl.BuscarUsuario(id);
 
 		JTFNome.setText(usuario.getNomeCompleto());
 		JTFUsuario.setText(usuario.getUsuario());

@@ -6,7 +6,6 @@ import javax.persistence.Query;
 
 import Dominio.TipoServico;
 import Interfaces.ITipoServicoRepository;
-import Util.Factory;
 
 public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		implements ITipoServicoRepository {
@@ -98,5 +97,19 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 			entityManager.close();
 		}
 
+	}
+
+	@Override
+	public List<String> DDL() {
+		try {
+			open();
+			String q = "select t.nome from TipoServico t where ativo = 1 order by nome";
+			Query query = entityManager.createQuery(q);
+			return query.getResultList();
+		} catch (Exception ex) {
+			return null;
+		} finally {
+			entityManager.close();
+		}
 	}
 }

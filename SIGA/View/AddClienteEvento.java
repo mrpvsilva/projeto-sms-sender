@@ -35,8 +35,6 @@ public class AddClienteEvento extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JFormattedTextField cpfcnpj;
-	private MaskFormatter maskcpf;
-	private MaskFormatter maskcnpj;
 	private DefaultTableModel<Cliente> _modelCliente;
 	private OrcamentoControl control;
 	private JLabel cliente;
@@ -87,14 +85,12 @@ public class AddClienteEvento extends JDialog {
 		{
 
 			try {
-				maskcpf = new MaskFormatter(Mascaras.maskCpf);
-				maskcnpj = new MaskFormatter(Mascaras.maskCnpj);
-			} catch (ParseException e) {
+				cpfcnpj = new JFormattedTextField(new DefaultFormatterFactory(
+						new MaskFormatter(Mascaras.maskCpf)));
+			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
 			}
-
-			cpfcnpj = new JFormattedTextField(maskcpf);
 			cpfcnpj.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			cpfcnpj.setBounds(71, 23, 178, 22);
 			contentPanel.add(cpfcnpj);

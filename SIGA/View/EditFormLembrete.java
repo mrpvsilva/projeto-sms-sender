@@ -38,8 +38,6 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import TableModels.DefaultTableModel;
-import Util.Validate;
-
 import java.awt.Color;
 
 public class EditFormLembrete extends JDialog implements ActionListener {
@@ -265,68 +263,62 @@ public class EditFormLembrete extends JDialog implements ActionListener {
 			int hora = (int) modelHora.getValue();
 			int min = (int) modelMinuto.getValue();
 
-			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
-					"Deseja cadastrar o lembrete?")) {
+			if (JTFAssunto.getText().isEmpty())
+				JOptionPane.showMessageDialog(null,
+						"O campo assunto é obrigatótio", "Erro ao cadastrar",
+						JOptionPane.ERROR_MESSAGE);
 
-				if (JTFAssunto.getText().isEmpty())
+			else if (datePicker.getJFormattedTextField().getText().isEmpty())
+				JOptionPane.showMessageDialog(null,
+						"O campo data é obrigatótio", "Erro ao cadastrar",
+						JOptionPane.ERROR_MESSAGE);
+			else if (hora == 0)
+				JOptionPane.showMessageDialog(null,
+						"O campo horário é obrigatótio", "Erro ao cadastrar",
+						JOptionPane.ERROR_MESSAGE);
+			else if (JCBUsuario.getSelectedItem().toString()
+					.equals("Selecione"))
+				JOptionPane.showMessageDialog(null,
+						"Selecione um destinatário.", "Erro ao cadastrar",
+						JOptionPane.ERROR_MESSAGE);
+			else if (JTALemb.getText().isEmpty())
+				JOptionPane.showMessageDialog(null,
+						"Mensagem do lembrete é obrigatároio.",
+						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+			else {
+
+				_lembrete.setAssunto(JTFAssunto.getText());
+				_lembrete.setTexto(JTALemb.getText());
+
+				Date data = (Date) datePicker.getModel().getValue();
+				data.setHours(hora);
+				data.setMinutes(min);
+
+				_lembrete.setDatahora(data);
+
+				_lembrete.setDestinatario(_lembreteControl
+						.BuscarDestinatario(JCBUsuario.getSelectedItem()
+								.toString()));
+
+				String out = "";
+				if (_lembrete.getId() == 0)
+					out = _lembreteControl.Cadastrar(_lembrete);
+				else
+					out = _lembreteControl.Atualizar(_lembrete);
+
+				if (out == null) {
+
+					if (_modelLembretes != null)
+						_modelLembretes.setLinhas(_lembreteControl
+								.BuscarTodos());
+
 					JOptionPane.showMessageDialog(null,
-							"O campo assunto é obrigatótio",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+							"Lembrete salvo com sucesso");
+				} else {
+					JOptionPane.showMessageDialog(null, out);
+				}
 
-				else if (datePicker.getJFormattedTextField().getText()
-						.isEmpty())
-					JOptionPane.showMessageDialog(null,
-							"O campo data é obrigatótio", "Erro ao cadastrar",
-							JOptionPane.ERROR_MESSAGE);
-				else if (hora == 0)
-					JOptionPane.showMessageDialog(null,
-							"O campo horário é obrigatótio",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else if (JCBUsuario.getSelectedItem().toString()
-						.equals("Selecione"))
-					JOptionPane.showMessageDialog(null,
-							"Selecione um destinatário.", "Erro ao cadastrar",
-							JOptionPane.ERROR_MESSAGE);
-				else if (JTALemb.getText().isEmpty())
-					JOptionPane.showMessageDialog(null,
-							"Mensagem do lembrete é obrigatároio.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else {
-
-					_lembrete.setAssunto(JTFAssunto.getText());
-					_lembrete.setTexto(JTALemb.getText());
-
-					Date data = (Date) datePicker.getModel().getValue();
-					data.setHours(hora);
-					data.setMinutes(min);
-
-					_lembrete.setDatahora(data);
-
-					_lembrete.setDestinatario(_lembreteControl
-							.BuscarDestinatario(JCBUsuario.getSelectedItem()
-									.toString()));
-
-					String out = "";
-					if (_lembrete.getId() == 0)
-						out = _lembreteControl.Cadastrar(_lembrete);
-					else
-						out = _lembreteControl.Atualizar(_lembrete);
-
-					if (out == null) {
-
-						if (_modelLembretes != null)
-							_modelLembretes.setLinhas(_lembreteControl
-									.BuscarTodos());
-
-						JOptionPane.showMessageDialog(null,
-								"Lembrete salvo com sucesso");
-					} else {
-						JOptionPane.showMessageDialog(null, out);
-					}
-
-				}// final da validação
-
-			}// final da confirmação
+			}// final da validação
 
 		}// final do botão salvar lembrete
 

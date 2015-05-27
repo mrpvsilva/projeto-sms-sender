@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.Document;
 
+import Dominio.Operadoras;
 import Dominio.Telefone;
 import TableModels.DefaultTableModel;
 
@@ -76,13 +77,13 @@ public class EditFormTelefone extends JDialog implements ActionListener {
 		JLabel lblDdd = new JLabel("DDD");
 		lblDdd.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblDdd.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDdd.setBounds(0, 13, 85, 14);
+		lblDdd.setBounds(0, 17, 85, 14);
 		contentPanel.add(lblDdd);
 
 		Document doc = new Util.MaxLenghtDocument(2);
 		tfddd = new JTextField(doc, "", 8);
 		tfddd.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		tfddd.setBounds(95, 7, 52, 20);
+		tfddd.setBounds(95, 11, 52, 20);
 		tfddd.addKeyListener(new KeyAdapter() {
 
 			@Override
@@ -102,12 +103,12 @@ public class EditFormTelefone extends JDialog implements ActionListener {
 		JLabel lblNmero = new JLabel("N\u00FAmero");
 		lblNmero.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNmero.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNmero.setBounds(0, 38, 85, 14);
+		lblNmero.setBounds(0, 40, 85, 14);
 		contentPanel.add(lblNmero);
 		Document maxnumero = new Util.MaxLenghtDocument(9);
 		tfnumero = new JTextField(maxnumero, "", 8);
 		tfnumero.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		tfnumero.setBounds(95, 31, 128, 20);
+		tfnumero.setBounds(95, 38, 128, 20);
 		contentPanel.add(tfnumero);
 		tfnumero.addKeyListener(new KeyAdapter() {
 			@Override
@@ -129,15 +130,14 @@ public class EditFormTelefone extends JDialog implements ActionListener {
 		lblOperadora.setBounds(0, 67, 85, 14);
 		contentPanel.add(lblOperadora);
 
-		cboperadoras = new JComboBox(new String[] { "CLARO", "OI", "TIM",
-				"VIVO" });
+		cboperadoras = new JComboBox(Operadoras.values());
 		cboperadoras.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		cboperadoras.setBounds(95, 61, 128, 20);
+		cboperadoras.setBounds(95, 65, 128, 20);
 		contentPanel.add(cboperadoras);
 
 		msg_erro = new JLabel("");
 		msg_erro.setForeground(Color.RED);
-		msg_erro.setBounds(10, 91, 213, 14);
+		msg_erro.setBounds(10, 91, 239, 14);
 		contentPanel.add(msg_erro);
 		{
 			JPanel buttonPane = new JPanel();
@@ -201,7 +201,8 @@ public class EditFormTelefone extends JDialog implements ActionListener {
 		if (_linha > -1) {
 			tfddd.setText(_telefone.getDdd());
 			tfnumero.setText(_telefone.getNumero());
-			cboperadoras.setSelectedItem(_telefone.getOperadora());
+			cboperadoras.setSelectedItem(Operadoras.valueOf(_telefone
+					.getOperadora()));
 		}
 
 	}
@@ -216,6 +217,10 @@ public class EditFormTelefone extends JDialog implements ActionListener {
 			} else if (tfnumero.getText().length() < 1) {
 				tfnumero.requestFocus();
 				showErro("Número é obrigatório");
+				return;
+			}else if(cboperadoras.getSelectedItem()==Operadoras.SELECIONE){
+				cboperadoras.requestFocus();
+				showErro("Selecione uma operadora");
 				return;
 			}
 

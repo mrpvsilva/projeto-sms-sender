@@ -5,12 +5,15 @@ import java.util.List;
 
 import Dominio.Cliente;
 import Dominio.Evento;
+import Dominio.Item;
 import Dominio.TipoItem;
 import Dominio.TiposEvento;
 import Interfaces.IClienteRepository;
+import Interfaces.IItemRepository;
 import Interfaces.IOrcamentoRepository;
 import Interfaces.ITipoItemRepository;
 import Repositories.ClienteRepository;
+import Repositories.ItemRepository;
 import Repositories.OrcamentoRepository;
 import Repositories.TipoItemRepository;
 
@@ -18,11 +21,13 @@ public class OrcamentoControl {
 
 	private IOrcamentoRepository _orcamentoRepository;
 	private IClienteRepository _clienterepository;
+	private IItemRepository _itemRepository;
 	private ITipoItemRepository _tipoItemRepository;
 
 	public OrcamentoControl() {
 		_orcamentoRepository = new OrcamentoRepository();
 		_clienterepository = new ClienteRepository();
+		_itemRepository = new ItemRepository();
 		_tipoItemRepository = new TipoItemRepository();
 	}
 
@@ -47,8 +52,11 @@ public class OrcamentoControl {
 		return _clienterepository.find(cpfcnpj);
 	}
 
-	public List<TipoItem> listarTipoItens() {
-		return _tipoItemRepository.findAll();
+	public List<Item> buscarItens(String tipoItem) {
+		return _itemRepository.findByTipo(tipoItem);
 	}
 
+	public Object[] DDLTipoItens() {
+		return _tipoItemRepository.DDLTipoItens().toArray();
+	}
 }

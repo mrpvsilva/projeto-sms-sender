@@ -42,8 +42,7 @@ public class EditFormTipoServico extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public EditFormTipoServico(DefaultTableModel<TipoServico> model,
-			int id) {
+	public EditFormTipoServico(DefaultTableModel<TipoServico> model, int id) {
 		setResizable(false);
 		setModal(true);
 		setTitle("SIGA - cadastro de tipo de servi\u00E7o");

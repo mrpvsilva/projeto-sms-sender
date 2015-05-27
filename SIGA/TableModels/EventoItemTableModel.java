@@ -8,8 +8,8 @@ import Dominio.EventoItem;
 
 public class EventoItemTableModel extends DefaultTableModel<EventoItem> {
 
-	private final static String[] colunas = new String[] { "Nome", "Valor",
-			"Qtd", "Incluir" };
+	private final static String[] colunas = new String[] { "Nome",
+			"Valor unit.", "Qtd", "Subtotal", "Tipo" };
 
 	public EventoItemTableModel() {
 		super(colunas);
@@ -32,7 +32,12 @@ public class EventoItemTableModel extends DefaultTableModel<EventoItem> {
 		case 2:
 			return ei.getQuantidade();
 		case 3:
-			return ei.isIncluso();
+
+			BigDecimal sub = ei.getItem().getValorComercial()
+					.multiply(new BigDecimal(ei.getQuantidade()));
+			return NumberFormat.getCurrencyInstance().format(sub);
+		case 4:
+			return ei.getItem().getTipoitem().getNome();
 		default:
 			return null;
 		}
@@ -54,8 +59,6 @@ public class EventoItemTableModel extends DefaultTableModel<EventoItem> {
 		switch (columnIndex) {
 		case 2:
 			return true;
-		case 3:
-			return true;
 		default:
 			return false;
 		}
@@ -67,10 +70,6 @@ public class EventoItemTableModel extends DefaultTableModel<EventoItem> {
 		case 2:
 			int v = Integer.parseInt(Value.toString());
 			linhas.get(rowIndex).setQuantidade(v);
-			break;
-		case 3:
-			boolean b = (boolean) Value;
-			linhas.get(rowIndex).setIncluso(b);
 			break;
 		default:
 			break;
@@ -87,7 +86,7 @@ public class EventoItemTableModel extends DefaultTableModel<EventoItem> {
 		} else if (columnIndex == 2) {
 			return Integer.class;
 		} else if (columnIndex == 3) {
-			return Boolean.class;
+			return String.class;
 		}
 
 		return BigDecimal.class;

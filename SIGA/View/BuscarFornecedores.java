@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -21,6 +22,7 @@ import javax.swing.JComboBox;
 import Control.FornecedoresControl;
 import Dominio.Fornecedor;
 import Dominio.Permissao;
+
 import javax.swing.ImageIcon;
 
 import TableModels.DefaultTableModel;
@@ -30,7 +32,13 @@ import Util.PermissoesManager;
 
 import java.awt.Toolkit;
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+import java.awt.Color;
+
+import javax.swing.JRadioButton;
 
 public class BuscarFornecedores extends JDialog implements ActionListener {
 
@@ -43,15 +51,17 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 	private JButton JBEditForn;
 	private JButton JBBuscar;
 	private JLabel JLFiltro;
-	private JTextField JTFBuscar;
-	private JComboBox<String> JCBFiltro;
+	private JTextField pesquisa;
 	private FornecedoresControl _fornecedorControl = new FornecedoresControl();
 	private JScrollPane scroll;
 	private JTable tabela;
 	private DefaultTableModel<Fornecedor> model;
 	protected String valor;
 	private JButton JBSair;
-	
+	private JRadioButton radionome;
+	private JRadioButton radiocpfcnpj;
+	private JComboBox tiposervicos;
+
 	private Permissao Fornecedores;
 
 	/**
@@ -59,7 +69,7 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			
+
 			BuscarFornecedores dialog = new BuscarFornecedores();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
@@ -72,56 +82,24 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public BuscarFornecedores() {
-		
+
 		Fornecedores = PermissoesManager.buscarPermissao(Modulos.Fornecedores);
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				BuscarFornecedores.class.getResource("/Img/CNPJ G200.png")));
 		setTitle("SIGA - buscar fornecedores");
-		setBounds(100, 100, 479, 300);
+		setBounds(100, 100, 750, 550);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		{
-			JBBuscar = new JButton("Buscar");
-			JBBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBBuscar.setIcon(new ImageIcon(BuscarFornecedores.class
-					.getResource("/Img/Procurar.png")));
-			JBBuscar.addActionListener(this);
-			JBBuscar.setMnemonic(KeyEvent.VK_F);
-			JBBuscar.setBounds(338, 11, 99, 23);
-			contentPanel.add(JBBuscar);
-		}
-		{
-			JLFiltro = new JLabel("Filtro");
-			JLFiltro.setHorizontalAlignment(SwingConstants.RIGHT);
-			JLFiltro.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JLFiltro.setBounds(0, 14, 46, 14);
-			contentPanel.add(JLFiltro);
-		}
-		{
-			JTFBuscar = new JTextField();
-			JTFBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JTFBuscar.setColumns(10);
-			JTFBuscar.setBounds(162, 12, 172, 20);
-			contentPanel.add(JTFBuscar);
-		}
-		{
-			JCBFiltro = new JComboBox<String>();
-			JCBFiltro.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			for (String item : _fornecedorControl.Filtros()) {
-				JCBFiltro.addItem(item);
-			}
-			JCBFiltro.setBounds(56, 12, 103, 20);
-			contentPanel.add(JCBFiltro);
-		}
+
 		{
 			// Criação da Jtable
 			scroll = new JScrollPane();
 			contentPanel.add(scroll);
-			scroll.setBounds(12, 59, 425, 158);
+			scroll.setBounds(12, 122, 722, 354);
 			{
 
 				model = new FornecedorTableModel(
@@ -130,8 +108,62 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 				tabela.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				scroll.setViewportView(tabela);
 
-				tabela.getColumnModel().getColumn(0).setMinWidth(0);
-				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
+				JPanel panel = new JPanel();
+				panel.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
+				panel.setBounds(12, 11, 722, 100);
+				contentPanel.add(panel);
+				panel.setLayout(null);
+				{
+					JLFiltro = new JLabel("Pesquisa");
+					JLFiltro.setBounds(10, 15, 61, 14);
+					panel.add(JLFiltro);
+					JLFiltro.setHorizontalAlignment(SwingConstants.RIGHT);
+					JLFiltro.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				}
+				{
+					pesquisa = new JTextField();
+					pesquisa.setBounds(81, 12, 305, 20);
+					panel.add(pesquisa);
+					pesquisa.setFont(new Font("Tahoma", Font.PLAIN, 13));
+					pesquisa.setColumns(10);
+				}
+				{
+					JBBuscar = new JButton("Pesquisar");
+					JBBuscar.setBounds(329, 66, 117, 23);
+					panel.add(JBBuscar);
+					JBBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+					JBBuscar.setIcon(new ImageIcon(BuscarFornecedores.class
+							.getResource("/Img/Procurar.png")));
+					JBBuscar.addActionListener(this);
+					JBBuscar.setMnemonic(KeyEvent.VK_F);
+				}
+
+				JLabel lblServioPrestado = new JLabel("Tipo servi\u00E7o");
+				lblServioPrestado.setHorizontalAlignment(SwingConstants.RIGHT);
+				lblServioPrestado.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				lblServioPrestado.setBounds(396, 15, 85, 14);
+				panel.add(lblServioPrestado);
+
+				tiposervicos = new JComboBox(
+						_fornecedorControl.DDLTipoServico());
+				tiposervicos.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				tiposervicos.setBounds(491, 13, 221, 20);
+				panel.add(tiposervicos);
+
+				radionome = new JRadioButton("Nome");
+				radionome.setSelected(true);
+				radionome.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				radionome.setBounds(81, 34, 71, 23);
+				panel.add(radionome);
+
+				radiocpfcnpj = new JRadioButton("CPF/CNPJ");
+				radiocpfcnpj.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				radiocpfcnpj.setBounds(154, 34, 85, 23);
+				panel.add(radiocpfcnpj);
+
+				ButtonGroup bg = new ButtonGroup();
+				bg.add(radionome);
+				bg.add(radiocpfcnpj);
 
 			}
 		}
@@ -179,7 +211,7 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 		if (acao.getSource() == JBCadForn) {
 
 			try {
-				EditFormFornecedor jdtcf = new EditFormFornecedor(null,model);
+				EditFormFornecedor jdtcf = new EditFormFornecedor(null, model);
 				jdtcf.setVisible(true);
 				jdtcf.setLocationRelativeTo(null);
 			} catch (ParseException e) {
@@ -193,8 +225,9 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 
 			try {
 				int linha = tabela.getSelectedRow();
-				if (linha > -1) {					
-					EditFormFornecedor jdtcf = new EditFormFornecedor(model.find(linha),model);
+				if (linha > -1) {
+					EditFormFornecedor jdtcf = new EditFormFornecedor(
+							model.find(linha), model);
 					jdtcf.setVisible(true);
 					jdtcf.setLocationRelativeTo(null);
 				} else {
@@ -209,16 +242,15 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 
 		if (acao.getSource() == JBBuscar) {
 
-			String coluna = JCBFiltro.getSelectedItem().toString();
-			coluna = coluna == "CNPJ" ? "cpfcnpj" : coluna == "NOME" ? "nome"
-					: "";
-			String _valor = JTFBuscar.getText();
+			String coluna = radionome.isSelected() ? "nome" : "cpfcnpj";
+			String _valor = pesquisa.getText();
+			String tiposervico = tiposervicos.getSelectedItem().toString();
 
-			if (!_valor.equals("")) {
-				model.setLinhas(_fornecedorControl.listarTodos(coluna, _valor));
-			} else {
-				model.setLinhas(_fornecedorControl.listarTodos());
-			}
+			model.setLinhas(_fornecedorControl.listarTodos(coluna, _valor,
+					tiposervico));
+			// } else {
+			// model.setLinhas(_fornecedorControl.listarTodos());
+			// }
 
 		}// final do botão buscar fornecedores
 
@@ -227,5 +259,4 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 		}
 
 	}// final da ação do botão
-
 }

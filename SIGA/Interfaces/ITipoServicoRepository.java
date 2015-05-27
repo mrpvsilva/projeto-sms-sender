@@ -11,5 +11,7 @@ public interface ITipoServicoRepository extends IRepositoryBase<TipoServico> {
 	public List<TipoServico> findAll(boolean ativo);
 	
 	public List<TipoServico> findAll(String nome, String ativo);
+	
+	public List<String> DDL();
 
 }

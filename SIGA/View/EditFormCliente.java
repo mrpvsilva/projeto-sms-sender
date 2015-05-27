@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
 import Control.ClientesControl;
@@ -42,7 +43,7 @@ import TableModels.TelefoneTableModel;
 import Util.Validate;
 
 import javax.swing.JTabbedPane;
-import javax.swing.border.LineBorder;
+import javax.swing.JCheckBox;
 
 public class EditFormCliente extends JDialog implements ActionListener {
 
@@ -56,9 +57,8 @@ public class EditFormCliente extends JDialog implements ActionListener {
 	private JTextField nomeCompleto;
 	private JTextField nomeResponsavel;
 	private JTextField rg;
-	private MaskFormatter maskCpf;
 	private JTextField endereco;
-	private JFormattedTextField cpf;
+	private JFormattedTextField cpfcnpj;
 	private JButton sair;
 	private JTextField cep;
 	private JTextField bairro;
@@ -81,6 +81,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 	private JButton remove_telefone;
 	private JButton edit_telefone;
 	private DefaultTableModel<Cliente> _modelCliente;
+	private JCheckBox chckbxCnpj;
 
 	/**
 	 * Launch the application.
@@ -136,15 +137,12 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		maskCpf = new MaskFormatter(Mascaras.maskCpf);
-		new MaskFormatter(Mascaras.mask9digi);
-
 		JPanel dadospessoais_pane = new JPanel();
 		dadospessoais_pane.setBorder(new TitledBorder(UIManager
 				.getBorder("TitledBorder.border"), "Dados pessoais",
 				TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
-		dadospessoais_pane.setBounds(10, 26, 575, 198);
+		dadospessoais_pane.setBounds(10, 11, 575, 228);
 		contentPanel.add(dadospessoais_pane);
 		dadospessoais_pane.setLayout(null);
 
@@ -160,7 +158,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		nomeCompleto.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		nomeCompleto.setColumns(10);
 
-		JLabel JLResponsavel = new JLabel("Resp. financeiro");
+		JLabel JLResponsavel = new JLabel("Respons\u00E1vel");
 		JLResponsavel.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLResponsavel.setBounds(10, 56, 96, 15);
 		dadospessoais_pane.add(JLResponsavel);
@@ -172,37 +170,38 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		nomeResponsavel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		nomeResponsavel.setColumns(10);
 		rg = new JFormattedTextField();
-		rg.setBounds(116, 116, 184, 20);
+		rg.setBounds(116, 150, 168, 20);
 		dadospessoais_pane.add(rg);
 		rg.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		rg.setColumns(10);
 
 		JLabel JLRg = new JLabel("RG");
 		JLRg.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLRg.setBounds(10, 116, 96, 15);
+		JLRg.setBounds(10, 150, 96, 15);
 		dadospessoais_pane.add(JLRg);
 		JLRg.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
-		JLabel JLCpf = new JLabel("CPF");
-		JLCpf.setBounds(299, 119, 46, 15);
+		JLabel JLCpf = new JLabel("CPF/CNPJ");
+		JLCpf.setBounds(47, 115, 56, 15);
 		dadospessoais_pane.add(JLCpf);
 		JLCpf.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLCpf.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		cpf = new JFormattedTextField(maskCpf);
-		cpf.setBounds(360, 117, 184, 20);
-		dadospessoais_pane.add(cpf);
-		cpf.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		cpfcnpj = new JFormattedTextField(new DefaultFormatterFactory(
+				new MaskFormatter(Mascaras.maskCpf)));
+		cpfcnpj.setBounds(113, 113, 171, 20);
+		dadospessoais_pane.add(cpfcnpj);
+		cpfcnpj.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		JLabel lblEmail = new JLabel("Email");
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblEmail.setBounds(254, 147, 96, 15);
+		lblEmail.setBounds(288, 181, 62, 15);
 		dadospessoais_pane.add(lblEmail);
 
 		email = new JTextField();
 		email.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		email.setColumns(10);
-		email.setBounds(360, 148, 184, 20);
+		email.setBounds(360, 182, 184, 20);
 		dadospessoais_pane.add(email);
 
 		JLabel lblNomeDeGuerra = new JLabel("Nome de guerra");
@@ -220,7 +219,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		JLabel data_nasc = new JLabel("Data de nasc.");
 		data_nasc.setHorizontalAlignment(SwingConstants.RIGHT);
 		data_nasc.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		data_nasc.setBounds(10, 147, 96, 15);
+		data_nasc.setBounds(10, 181, 96, 15);
 		dadospessoais_pane.add(data_nasc);
 
 		datanascimento = new JFormattedTextField(
@@ -228,13 +227,47 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		datanascimento.setValue(null);
 		datanascimento.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		datanascimento.setColumns(10);
-		datanascimento.setBounds(116, 147, 184, 20);
+		datanascimento.setBounds(116, 181, 168, 20);
 		dadospessoais_pane.add(datanascimento);
 
 		msg_erro_dado_pessoais = new JLabel("");
 		msg_erro_dado_pessoais.setForeground(Color.RED);
 		msg_erro_dado_pessoais.setBounds(116, 173, 428, 14);
 		dadospessoais_pane.add(msg_erro_dado_pessoais);
+
+		chckbxCnpj = new JCheckBox("CNPJ");
+		chckbxCnpj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean cnpj = chckbxCnpj.isSelected();
+				String t = cpfcnpj.getText().replace(".", "").replace("-", "")
+						.replace("/", "");
+				cpfcnpj.setValue(null);
+				if (cnpj) {
+					try {
+						cpfcnpj.setFormatterFactory(new DefaultFormatterFactory(
+								new MaskFormatter(Mascaras.maskCnpj)));
+						cpfcnpj.setText(t);
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+				} else {
+					try {
+						cpfcnpj.setFormatterFactory(new DefaultFormatterFactory(
+								new MaskFormatter(Mascaras.maskCpf)));
+						cpfcnpj.setText(t);
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+				}
+
+			}
+		});
+		chckbxCnpj.setBounds(313, 112, 97, 23);
+		dadospessoais_pane.add(chckbxCnpj);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
@@ -328,6 +361,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 				EditFormTelefone ef = new EditFormTelefone(-1,
 						new TelefoneCliente(), modeltelefone);
 				ef.setModal(true);
+				ef.setLocationRelativeTo(null);
 				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				ef.setVisible(true);
 			}
@@ -424,7 +458,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		nomeResponsavel.setEditable(enabled);
 		nomeguerra.setEditable(enabled);
 		rg.setEditable(enabled);
-		cpf.setEditable(enabled);
+		cpfcnpj.setEditable(enabled);
 		email.setEditable(enabled);
 		datanascimento.setEditable(enabled);
 		endereco.setEditable(enabled);
@@ -448,7 +482,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		nomeCompleto.setText(cliente.getNomeCompleto());
 		nomeResponsavel.setText(cliente.getResponsavel());
 		rg.setText(cliente.getRg());
-		cpf.setText(cliente.getCpfCnpj());
+		cpfcnpj.setText(cliente.getCpfCnpj());
 		email.setText(cliente.getEmail());
 		datanascimento.setValue(new SimpleDateFormat("dd/MM/yyyy")
 				.format(cliente.getDatanascimento()));
@@ -463,7 +497,6 @@ public class EditFormCliente extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent acao) {
-		System.out.println();
 
 		if (acao.getSource() == salvar) {
 
@@ -476,15 +509,15 @@ public class EditFormCliente extends JDialog implements ActionListener {
 				Validate.validarJTextField(rg, msg_erro_dado_pessoais,
 						"Campo RG é obrigatório.");
 				return;
-			} else if (cpf.getValue() == null) {
+			} else if (cpfcnpj.getValue() == null) {
 
-				Validate.validarJFormatTextField(cpf, msg_erro_dado_pessoais,
-						"Campo CPF é obrigatório.");
+				Validate.validarJFormatTextField(cpfcnpj,
+						msg_erro_dado_pessoais, "Campo CPF é obrigatório.");
 				return;
-			} else if (!Validacoes.ValidaCpfCnpj(cpf.getValue().toString())) {
+			} else if (!Validacoes.ValidaCpfCnpj(cpfcnpj.getValue().toString())) {
 
-				Validate.validarJFormatTextField(cpf, msg_erro_dado_pessoais,
-						"Campo CPF é inválido.");
+				Validate.validarJFormatTextField(cpfcnpj,
+						msg_erro_dado_pessoais, "Campo CPF é inválido.");
 				return;
 			} else if (datanascimento.getValue() == null) {
 
@@ -526,7 +559,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 				cliente.setResponsavel(nomeResponsavel.getText());
 				cliente.setRg(rg.getText());
 				cliente.setEmail(email.getText());
-				cliente.setCpfCnpj(Extras.FormatCnpjCpf(cpf.getValue()
+				cliente.setCpfCnpj(Extras.FormatCnpjCpf(cpfcnpj.getValue()
 						.toString()));
 				cliente.setNomeGuerraMilitar(nomeguerra.getText());
 				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
