@@ -5,8 +5,8 @@ import Dominio.Fornecedor;
 
 public class FornecedorTableModel extends DefaultTableModel<Fornecedor> {
 
-	private final static String[] colunas = new String[] { "ID", "Nome",
-			"CPFCNPJ", "Telefone" };
+	private final static String[] colunas = new String[] { "Nome", "CPFCNPJ",
+			"Telefone", "Tipo serviço" };
 	private static final long serialVersionUID = 1L;
 
 	public FornecedorTableModel() {
@@ -22,13 +22,13 @@ public class FornecedorTableModel extends DefaultTableModel<Fornecedor> {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			return getLinhas().get(rowIndex).getId();
+			return linhas.get(rowIndex).getNome();
 		case 1:
-			return getLinhas().get(rowIndex).getNome();
+			return linhas.get(rowIndex).getCpfcnpj();
 		case 2:
-			return getLinhas().get(rowIndex).getCpfcnpj();
+			return TelefoneFormater(linhas.get(rowIndex));
 		case 3:
-			return TelefoneFormater(getLinhas().get(rowIndex));
+			return linhas.get(rowIndex).getTipoServico().getNome();
 		default:
 			return null;
 		}
@@ -43,7 +43,7 @@ public class FornecedorTableModel extends DefaultTableModel<Fornecedor> {
 	@Override
 	public int getId(int linha) {
 		// TODO Auto-generated method stub
-		return (int) getLinhas().get(linha).getId();
+		return (int) linhas.get(linha).getId();
 	}
 
 	@Override

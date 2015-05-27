@@ -318,8 +318,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 			if (linha > -1) {
 				TelefoneFornecedor t = (TelefoneFornecedor) telmodel
 						.find(linha);
-				EditFormTelefone ef = new EditFormTelefone(linha, t,
-						telmodel);
+				EditFormTelefone ef = new EditFormTelefone(linha, t, telmodel);
 				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				ef.setVisible(true);
 			} else {
@@ -339,60 +338,54 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 
 		if (acao.getSource() == JBSalvForn) {
 
-			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
-					"Deseja salvar o fornecedor?")) {
+			if (JTFNome.getText().isEmpty()) // Valida Nome
+				JOptionPane.showMessageDialog(null, "Nome em branco.",
+						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+			else if (!Validacoes.ValidaCpfCnpj(JFFCnpj.getText())) // Valida
+																	// CpfCnpj
+				JOptionPane.showMessageDialog(null, "Cpf/Cnpj inválido.",
+						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+			else if (JFFRg.getText().trim().isEmpty()) // Valida Rg
+				JOptionPane.showMessageDialog(null, "Rg em branco.",
+						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+			else if (telmodel.getRowCount() < 1)
 
-				if (JTFNome.getText().isEmpty()) // Valida Nome
-					JOptionPane.showMessageDialog(null, "Nome em branco.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else if (!Validacoes.ValidaCpfCnpj(JFFCnpj.getText())) // Valida
-																		// CpfCnpj
-					JOptionPane.showMessageDialog(null, "Cpf/Cnpj inválido.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else if (JFFRg.getText().trim().isEmpty()) // Valida Rg
-					JOptionPane.showMessageDialog(null, "Rg em branco.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else if (telmodel.getRowCount() < 1)
+				JOptionPane.showMessageDialog(null,
+						"Adicione ao menos um telefone", "Erro ao cadastrar",
+						JOptionPane.ERROR_MESSAGE);
+			else if (JCBTpServ.getSelectedItem().toString().equals("Selecione"))
+				JOptionPane.showMessageDialog(null,
+						"Selecione um tipo de serviço.", "Erro ao cadastrar",
+						JOptionPane.ERROR_MESSAGE);
+			else if (JTFEmail.getText().trim().isEmpty()) // Valida Email
+				JOptionPane.showMessageDialog(null, "Email em branco.",
+						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+			else if (JTFEnd.getText().trim().isEmpty()) // Valida Endereço
+				JOptionPane.showMessageDialog(null, "Endereço em branco.",
+						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+			else if (JTFBairro.getText().trim().isEmpty()) // Valida Bairro
+				JOptionPane.showMessageDialog(null, "Bairro em branco.",
+						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+			else if (!Validacoes.ValidaCep(JFFCep.getText())) // Valida Cep
+				JOptionPane.showMessageDialog(null, "Cep inválido.",
+						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+			else if (JTFSite.getText().trim().isEmpty()) // Valida Site
+				JOptionPane.showMessageDialog(null, "Site em branco.",
+						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+			else {
 
-					JOptionPane.showMessageDialog(null,
-							"Adicione ao menos um telefone",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else if (JCBTpServ.getSelectedItem().toString()
-						.equals("Selecione"))
-					JOptionPane.showMessageDialog(null,
-							"Selecione um tipo de serviço.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else if (JTFEmail.getText().trim().isEmpty()) // Valida Email
-					JOptionPane.showMessageDialog(null, "Email em branco.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else if (JTFEnd.getText().trim().isEmpty()) // Valida Endereço
-					JOptionPane.showMessageDialog(null, "Endereço em branco.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else if (JTFBairro.getText().trim().isEmpty()) // Valida Bairro
-					JOptionPane.showMessageDialog(null, "Bairro em branco.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else if (!Validacoes.ValidaCep(JFFCep.getText())) // Valida Cep
-					JOptionPane.showMessageDialog(null, "Cep inválido.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else if (JTFSite.getText().trim().isEmpty()) // Valida Site
-					JOptionPane.showMessageDialog(null, "Site em branco.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else {
+				if (fornecedor == null) {
+					cadastrar();
+				} else {
+					atualizar();
+				}
 
-					if (fornecedor == null) {
-						cadastrar();
-					} else {
-						atualizar();
-					}
+				// this.id = (int) fornecedor.getId();
+				preencherCampos();
 
-					// this.id = (int) fornecedor.getId();
-					preencherCampos();
+				/* Acredito que esteja todas as validações possíveis */
 
-					/* Acredito que esteja todas as validações possíveis */
-
-				}// Final da validação
-
-			}// final da pergunta se o deseja cadastrar o fornecedor
+			}// Final da validação
 
 		}// final do botão salvar
 

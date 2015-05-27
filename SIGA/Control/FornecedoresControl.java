@@ -43,23 +43,19 @@ public class FornecedoresControl {
 		return _fornecedorRepository.findAll();
 	}
 
-	public List<Fornecedor> listarTodos(String coluna, String valor) {
-		return _fornecedorRepository.findAll(coluna, valor);
+	public List<Fornecedor> listarTodos(String campo, String valor,
+			String tipoServico) {
+		return _fornecedorRepository.findAll(campo, valor, tipoServico);
 	}
 
 	public Fornecedor buscarFornecedor(int id) {
 		return _fornecedorRepository.find(id);
 	}
 
-	public String[] DDLTipoServico() {
-		List<TipoServico> l = _tipoServicorepository.findAll(true);
-		String[] ddl = new String[l.size() + 1];
-		ddl[0] = "Selecione";
-		for (int i = 0; i < l.size(); i++) {
-			ddl[i + 1] = l.get(i).getNome();
-		}
-		return ddl;
-
+	public Object[] DDLTipoServico() {
+		List<String> l = _tipoServicorepository.DDL();
+		l.add(0, "SELECIONE");
+		return l.toArray();
 	}
 
 	public TipoServico buscarTipoServico(String nome) {

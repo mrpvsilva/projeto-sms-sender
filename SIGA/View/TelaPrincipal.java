@@ -175,6 +175,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent arg0) {
 				EditFormTipoServico tscad = new EditFormTipoServico(null, 0);
 				tscad.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				tscad.setLocationRelativeTo(null);
 				tscad.setVisible(true);
 			}
 		});
@@ -186,6 +187,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		mntmBuscar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BuscarTipoServicos tsb = new BuscarTipoServicos();
+				tsb.setLocationRelativeTo(null);
 				tsb.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				tsb.setVisible(true);
 			}
@@ -273,6 +275,20 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		menuBar.add(mnOramentos);
 
 		mntmNovo = new JMenuItem("Novo");
+		mntmNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				try {
+					EditFormCliente efc = new EditFormCliente();
+					efc.setLocationRelativeTo(null);
+					efc.setVisible(true);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
 		mntmNovo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mnOramentos.add(mntmNovo);
 
@@ -580,6 +596,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 
 			try {
 				jdtcf = new EditFormFornecedor(null, null);
+				jdtcf.setLocationRelativeTo(null);
 				jdtcf.setResizable(false);
 				jdtcf.setVisible(true);
 				jdtcf.setLocationRelativeTo(null);
@@ -594,6 +611,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 
 		if (acao.getSource() == JMIFornBuscar) {
 			BuscarFornecedores jdtbf = new BuscarFornecedores();
+			jdtbf.setLocationRelativeTo(null);
 			jdtbf.setResizable(false);
 			jdtbf.setVisible(true);
 		}// final do JMenuItemFornecedores Buscar
@@ -613,12 +631,14 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		/* JMenu Serviços */
 		if (acao.getSource() == JMIServCad) {
 			EditFormItem jdtcs = new EditFormItem(0, null);
+			jdtcs.setLocationRelativeTo(null);
 			jdtcs.setResizable(false);
 			jdtcs.setVisible(true);
 		}// final do JMenuItemServiços Cadastro
 
 		if (acao.getSource() == JMIServBuscar) {
 			BuscarItens jdtbs = new BuscarItens();
+			jdtbs.setLocationRelativeTo(null);
 			jdtbs.setResizable(false);
 			jdtbs.setVisible(true);
 		}// final do JMenuItemServiços Buscar
@@ -637,10 +657,10 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 
 		/* JMenu Clientes */
 		if (acao.getSource() == JMICliCad) {
-			EditFormCliente jdtcc;
 
 			try {
-				jdtcc = new EditFormCliente();
+				EditFormCliente jdtcc = new EditFormCliente();
+				jdtcc.setLocationRelativeTo(null);
 				jdtcc.setResizable(false);
 				jdtcc.setVisible(true);
 			} catch (ParseException e) {
@@ -654,6 +674,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 
 		if (acao.getSource() == JMICliBuscar) {
 			BuscarClientes jdtbc = new BuscarClientes();
+			jdtbc.setLocationRelativeTo(null);
 			jdtbc.setResizable(false);
 			jdtbc.setVisible(true);
 		}// final do JMenuItemClientes Buscar
@@ -673,6 +694,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		/* JMenu Lembretes */
 		if (acao.getSource() == JMILembCad) {
 			EditFormLembrete jdtcl = new EditFormLembrete();
+			jdtcl.setLocationRelativeTo(null);
 			jdtcl.setResizable(false);
 			jdtcl.setVisible(true);
 		}// final do JMenuItemLembretes Cadastrar
@@ -680,7 +702,9 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		if (acao.getSource() == JMILembBuscar) {
 			BuscarLembretes jdtbl = new BuscarLembretes();
 			jdtbl.setResizable(false);
+			jdtbl.setLocationRelativeTo(null);
 			jdtbl.setVisible(true);
+
 		}// final do JMenuItemLembretes Buscar
 
 		if (acao.getSource() == JMILembExcluir) {
@@ -766,6 +790,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		if (acao.getSource() == JMITSCad) {
 			EditFormTipoItem ef = new EditFormTipoItem(0, null);
 			ef.setResizable(false);
+			ef.setLocationRelativeTo(null);
 			ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			ef.setVisible(true);
 		}
@@ -774,11 +799,13 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 			BuscarTipoItens bts = new BuscarTipoItens();
 			bts.setResizable(false);
 			bts.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			bts.setLocationRelativeTo(null);
 			bts.setVisible(true);
 		}
 
 		if (acao.getSource() == JMIUsuBuscar) {
 			BuscarUsuarios jdtbu = new BuscarUsuarios();
+			jdtbu.setLocationRelativeTo(null);
 			jdtbu.setResizable(false);
 			jdtbu.setVisible(true);
 		}// final do JMenuItemUsuário Buscar
@@ -794,8 +821,8 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 			this.dispose();
 		}
 		if (acao.getSource() == mntmTrocarSenha) {
-			TrocarSenha ts = new TrocarSenha(
-					Extras.getUsuarioLogado());
+			TrocarSenha ts = new TrocarSenha(Extras.getUsuarioLogado());
+			ts.setLocationRelativeTo(null);
 			ts.setVisible(true);
 		}
 

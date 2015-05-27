@@ -49,7 +49,7 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 			q += " order by nome";
 
 			Query query = entityManager.createQuery(q);
-			List<TipoItem> l = query.getResultList();			
+			List<TipoItem> l = query.getResultList();
 			return l;
 		} catch (Exception ex) {
 			return null;
@@ -67,6 +67,21 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 			query.setParameter("nome", nome);
 			TipoItem t = (TipoItem) query.getSingleResult();
 			return t;
+		} catch (Exception ex) {
+			return null;
+		} finally {
+			entityManager.close();
+		}
+	}
+
+	@Override
+	public List<String> DDLTipoItens() {
+		try {
+			open();
+			String q = "select t.nome from TipoItem t order by nome";
+			Query query = entityManager.createQuery(q);
+			return query.getResultList();
+
 		} catch (Exception ex) {
 			return null;
 		} finally {

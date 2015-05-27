@@ -197,41 +197,35 @@ public class EditFormItem extends JDialog implements ActionListener {
 
 		if (acao.getSource() == JBSalvServ) {
 
-			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
-					"Deseja cadastrar o serviço?")) {
+			if (JTFItem.getText().trim().isEmpty())
+				JOptionPane.showMessageDialog(null, "Nome do item em branco.",
+						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+			else if (JTADescItem.getText().trim().isEmpty())
+				JOptionPane.showMessageDialog(null,
+						"Descrição do item em branco.", "Erro ao cadastrar",
+						JOptionPane.ERROR_MESSAGE);
+			else if (!Validacoes.ValidaVlrMoney(JMFVlrCusto.getText()))
+				JOptionPane.showMessageDialog(null,
+						"Valor de custo em branco.", "Erro ao cadastrar",
+						JOptionPane.ERROR_MESSAGE);
+			else if (!Validacoes.ValidaVlrMoney(JMFVlrCom.getText()))
+				JOptionPane.showMessageDialog(null,
+						"Valor comercial em branco.", "Erro ao cadastrar",
+						JOptionPane.ERROR_MESSAGE);
+			else if (ddlTipoItem.getSelectedItem().toString()
+					.equals("Selecione"))
+				JOptionPane.showMessageDialog(null,
+						"Selecione um tipo de serviço.", "Erro ao cadastrar",
+						JOptionPane.ERROR_MESSAGE);
+			else {
 
-				if (JTFItem.getText().trim().isEmpty())
-					JOptionPane.showMessageDialog(null,
-							"Nome do item em branco.", "Erro ao cadastrar",
-							JOptionPane.ERROR_MESSAGE);
-				else if (JTADescItem.getText().trim().isEmpty())
-					JOptionPane.showMessageDialog(null,
-							"Descrição do item em branco.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else if (!Validacoes.ValidaVlrMoney(JMFVlrCusto.getText()))
-					JOptionPane.showMessageDialog(null,
-							"Valor de custo em branco.", "Erro ao cadastrar",
-							JOptionPane.ERROR_MESSAGE);
-				else if (!Validacoes.ValidaVlrMoney(JMFVlrCom.getText()))
-					JOptionPane.showMessageDialog(null,
-							"Valor comercial em branco.", "Erro ao cadastrar",
-							JOptionPane.ERROR_MESSAGE);
-				else if (ddlTipoItem.getSelectedItem().toString()
-						.equals("Selecione"))
-					JOptionPane.showMessageDialog(null,
-							"Selecione um tipo de serviço.",
-							"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-				else {
+				if (item == null) {
+					cadastrar();
+				} else {
+					atualizar();
+				}
 
-					if (item == null) {
-						cadastrar();
-					} else {
-						atualizar();
-					}
-
-				}// final das validações
-
-			}// final da confirmação
+			}// final das validações
 
 		}// final do botão salvar
 

@@ -13,15 +13,12 @@ import Control.OrcamentoControl;
 import Dominio.Cliente;
 import Dominio.Evento;
 import Dominio.EventoItem;
-import Dominio.Item;
-import Dominio.TipoItem;
 import Dominio.TiposEvento;
 import TableModels.ClienteTableModel;
 import TableModels.DefaultTableModel;
 import TableModels.EventoItemTableModel;
 import Util.DateTimePicker;
 import Util.EditFormType;
-import Util.JOutlookBar;
 import Util.StatusEvento;
 
 import java.awt.Font;
@@ -43,7 +40,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ImageIcon;
-import javax.swing.ScrollPaneConstants;
 
 public class EditFormOrcamento extends JDialog implements ActionListener {
 
@@ -62,7 +58,8 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	private JTable table_clientes;
 	private DefaultTableModel<Cliente> _modelClientes;
 	private JButton addCliente;
-	private List<DefaultTableModel<EventoItem>> models;
+	private DefaultTableModel<EventoItem> modelItens;
+	private JTable table_itens;
 
 	/**
 	 * Launch the application.
@@ -110,7 +107,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	}
 
 	public void start() {
-		models = new ArrayList<DefaultTableModel<EventoItem>>();
+
 		setResizable(false);
 		_orcamentoControl = new OrcamentoControl();
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -195,7 +192,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			tab_clientes.setLayout(null);
 
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(10, 11, 578, 359);
+			scrollPane.setBounds(10, 11, 578, 385);
 			tab_clientes.add(scrollPane);
 
 			_modelClientes = new ClienteTableModel();
@@ -221,30 +218,39 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			addCliente.setIcon(new ImageIcon(EditFormOrcamento.class
 					.getResource("/Img/plus.png")));
 			addCliente.setToolTipText("Adicionar cliente ao evento");
-			addCliente.setBounds(10, 375, 23, 23);
+			addCliente.setBounds(10, 400, 23, 23);
 			tab_clientes.add(addCliente);
 		}
+
+		JPanel tab_itens = new JPanel();
+		tabbedPane.addTab("Itens", null, tab_itens, null);
+		tab_itens.setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 578, 385);
+		tab_itens.add(scrollPane);
+		modelItens = new EventoItemTableModel();
+		table_itens = new JTable(modelItens);
+		scrollPane.setViewportView(table_itens);
+
+		JButton addItem = new JButton("");
+		addItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AddItemEvento aie = new AddItemEvento(modelItens, _evento);
+				aie.setLocationRelativeTo(null);
+				aie.setVisible(true);
+			}
+		});
+		addItem.setIcon(new ImageIcon(EditFormOrcamento.class
+				.getResource("/Img/plus.png")));
+		addItem.setToolTipText("Adicionar cliente ao evento");
+		addItem.setBounds(10, 400, 23, 23);
+		tab_itens.add(addItem);
 
 		// }
 
 		JPanel tab_servicos = new JPanel();
 		tabbedPane.addTab("Servi\u00E7os", null, tab_servicos, null);
-		JOutlookBar outlookBar = new JOutlookBar();
-		JScrollPane tab_itens = new JScrollPane();
-		for (TipoItem i : _orcamentoControl.listarTipoItens()) {
-			outlookBar.addBar(i.getNome(), getPanelEventoItens(i.getItens()));
-		}
-
-		tab_itens
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		tab_itens
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		tabbedPane.addTab("Itens", null, tab_itens, null);
-
-		JPanel container = new JPanel();
-		container.setLayout(new BorderLayout(0, 0));
-		container.add(outlookBar);
-		tab_itens.setViewportView(container);
 
 		{
 			JPanel buttonPane = new JPanel();
@@ -301,16 +307,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		_evento.setTipo(tipoevento.getSelectedItem().toString());
 		_evento.setNumConvidados(Integer.parseInt(nconvidados.getText()));
 		_evento.setClientes(_modelClientes.getLinhas());
-
-		for (DefaultTableModel<EventoItem> defaultTableModel : models) {
-
-			for (EventoItem ei : defaultTableModel.getLinhas()) {
-
-				if (ei.isIncluso())
-					_evento.addItem(ei);
-
-			}
-		}
+		_evento.setItens(modelItens.getLinhas());
 
 		boolean success = false;
 
@@ -349,49 +346,9 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			tipoevento.setSelectedItem(TiposEvento.valueOf(_evento.getTipo()));
 			nconvidados.setText(_evento.getNumConvidados() + "");
 			_modelClientes.setLinhas(_evento.getClientes());
-
-			for (int i = 0; i < models.size(); i++) {
-				for (int j = 0; j < models.get(i).getLinhas().size(); j++) {
-
-					EventoItem ei = models.get(i).getLinhas().get(j);
-
-					for (EventoItem e : _evento.getItens()) {
-
-						if (ei.getItem().getId() == e.getItem().getId()) {
-							e.setIncluso(true);
-							models.get(i).getLinhas().set(j, e);
-						}
-
-					}
-
-				}
-
-			}
+			modelItens.setLinhas(_evento.getItens());
 
 		}
-	}
-
-	private JPanel getPanelEventoItens(List<Item> itens) {
-
-		List<EventoItem> eventoItens = new ArrayList<EventoItem>();
-
-		for (Item item : itens) {
-			EventoItem ei = new EventoItem(_evento, item, 1);
-			eventoItens.add(ei);
-		}
-
-		DefaultTableModel<EventoItem> model = new EventoItemTableModel(
-				eventoItens);
-
-		models.add(model);
-		JPanel p = new JPanel(null);
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 560, 320);
-		JTable table = new JTable(model);
-		scrollPane.setViewportView(table);
-		p.add(scrollPane);
-		return p;
-
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.util.Calendar;
 
+import javax.persistence.PersistenceException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -43,19 +44,16 @@ public class Splash extends JWindow {
 		setVisible(true);
 		try {
 			Factory.createEntityManager();
+			TelaLogin frame = new TelaLogin();
+			frame.setVisible(true);
 		} catch (HibernateException e) {
-			JOptionPane
-					.showMessageDialog(
-							null,
-							"Falha na inicialização do Stock Manager\n"
-									+ e.getMessage(), "Erro",
-							JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null,
+					"Falha na inicialização do Siga\n" + e.getMessage(),
+					"Erro", JOptionPane.ERROR_MESSAGE);
 		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(
-					null,
-					"Falha na inicialização do Stock Manager\n"
-							+ ex.getMessage(), "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null,
+					"Falha na inicialização do Siga\n" + ex.getMessage(),
+					"Erro", JOptionPane.ERROR_MESSAGE);
 		} finally {
 			setVisible(false);
 			dispose();
@@ -63,11 +61,7 @@ public class Splash extends JWindow {
 	}
 
 	public static void main(String[] args) {
-
-		Splash splash = new Splash();
-		splash.showSplash();
-		TelaLogin frame = new TelaLogin();
-		frame.setVisible(true);
+		new Splash().showSplash();
 	}
 
 }
