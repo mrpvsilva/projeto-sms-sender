@@ -17,6 +17,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "clientes")
@@ -38,6 +40,7 @@ public class Cliente implements Serializable {
 	@Column
 	private String nomeresponsavel;
 	@Column
+	@Temporal(TemporalType.DATE)
 	private Date datanascimento;
 	@Column
 	private int convidadosExtras;

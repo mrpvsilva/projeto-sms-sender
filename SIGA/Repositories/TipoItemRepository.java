@@ -16,14 +16,14 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 	public List<TipoItem> findAll() {
 		try {
 			open();
-			String q = "from TipoItem order by nome";
+			String q = "select t from TipoItem t order by t.nome";
 			Query query = entityManager.createQuery(q);
 			List<TipoItem> l = query.getResultList();
 			return l;
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			///entityManager.close();
 		}
 	}
 
@@ -32,21 +32,21 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 	public List<TipoItem> findAll(String nome, String ativo) {
 		try {
 			open();
-			String q = "from TipoItem where ";
+			String q = "select t from TipoItem t where ";
 
 			if (!nome.equals("")) {
-				q += " nome like '%" + nome + "%' and";
+				q += " t.nome like '%" + nome + "%' and";
 			}
 
 			if (ativo.equals("Todos")) {
-				q += " ativo in (0,1)";
+				q += " t.ativo in (0,1)";
 			} else if (ativo.equals("Ativo")) {
 				q += " ativo = 1";
 			} else {
 				q += " ativo = 0";
 			}
 
-			q += " order by nome";
+			q += " order by t.nome";
 
 			Query query = entityManager.createQuery(q);
 			List<TipoItem> l = query.getResultList();
@@ -54,7 +54,7 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 
@@ -70,7 +70,7 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 
@@ -85,7 +85,7 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+		//	entityManager.close();
 		}
 	}
 

@@ -16,7 +16,7 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		try {
 			open();
 			Query query = entityManager
-					.createQuery("from TipoServico order by nome");
+					.createQuery("select t from TipoServico t order by t.nome");
 			List<TipoServico> l = query.getResultList();
 
 			return l;
@@ -24,7 +24,7 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+		//	entityManager.close();
 		}
 
 	}
@@ -35,7 +35,7 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		try {
 			open();
 			Query q = entityManager
-					.createQuery("from TipoServico where ativo=:ativo order by nome");
+					.createQuery("select t from TipoServico t where t.ativo=:ativo order by t.nome");
 			q.setParameter("ativo", ativo);
 			List<TipoServico> l = q.getResultList();
 
@@ -44,7 +44,7 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 
@@ -53,7 +53,7 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		try {
 			open();
 			Query q = entityManager
-					.createQuery("from TipoServico where nome=:nome");
+					.createQuery("select t from TipoServico t where t.nome=:nome");
 			q.setParameter("nome", nome);
 			TipoServico ts = (TipoServico) q.getSingleResult();
 
@@ -61,7 +61,7 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 
@@ -70,21 +70,21 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 
 		try {
 			open();
-			String q = "from TipoServico where ";
+			String q = "select t from TipoServico t where ";
 
 			if (!nome.equals("")) {
-				q += " nome like '%" + nome + "%' and";
+				q += " t.nome like '%" + nome + "%' and";
 			}
 
 			if (ativo.equals("Todos")) {
-				q += " ativo in (0,1)";
+				q += " t.ativo in (0,1)";
 			} else if (ativo.equals("Ativo")) {
 				q += " ativo = 1";
 			} else {
 				q += " ativo = 0";
 			}
 
-			q += " order by nome";
+			q += " order by t.nome";
 
 			Query query = entityManager.createQuery(q);
 			List<TipoServico> l = query.getResultList();
@@ -94,7 +94,7 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 
 	}
@@ -103,13 +103,13 @@ public class TipoServicoRepository extends RepositoryBase<TipoServico>
 	public List<String> DDL() {
 		try {
 			open();
-			String q = "select t.nome from TipoServico t where ativo = 1 order by nome";
+			String q = "select t.nome from TipoServico t where t.ativo = 1 order by t.nome";
 			Query query = entityManager.createQuery(q);
 			return query.getResultList();
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 }

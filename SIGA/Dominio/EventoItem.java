@@ -22,7 +22,7 @@ public class EventoItem implements Serializable {
 	private long id;
 
 	@ManyToOne
-	@JoinColumn(name = "idevento", referencedColumnName = "id")
+	@JoinColumn( name = "idevento", referencedColumnName = "id")
 	private Evento evento;
 
 	@ManyToOne

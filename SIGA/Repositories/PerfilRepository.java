@@ -15,7 +15,7 @@ public class PerfilRepository extends RepositoryBase<Perfil> implements
 	public Perfil getPerfil(String nome) {
 		try {
 			open();
-			String q = "from Perfil where nome = :nome ";
+			String q = "select p from Perfil p where p.nome = :nome ";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("nome", nome);
 			Perfil p = (Perfil) query.getSingleResult();
@@ -24,7 +24,7 @@ public class PerfilRepository extends RepositoryBase<Perfil> implements
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 
@@ -32,21 +32,21 @@ public class PerfilRepository extends RepositoryBase<Perfil> implements
 	public List<Perfil> findAll() {
 		try {
 			open();
-			String q = "from Perfil where nome <> 'root' order by nome";
+			String q = "select p from Perfil p where p.nome <> 'root' order by p.nome";
 			Query query = entityManager.createQuery(q);
 			List<Perfil> l = query.getResultList();
 			return l;
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 
 	@Override
 	public List<Perfil> findAllWithRoot() {
 		try {
-			String q = "from Perfil";
+			String q = "select p from Perfil p";
 			Query query = entityManager.createQuery(q);
 			List<Perfil> l = query.getResultList();
 
@@ -55,7 +55,7 @@ public class PerfilRepository extends RepositoryBase<Perfil> implements
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 
 	}

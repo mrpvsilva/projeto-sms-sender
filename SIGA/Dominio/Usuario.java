@@ -28,7 +28,7 @@ public class Usuario implements Serializable {
 	@Column
 	private String cpf;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "idperfil", referencedColumnName = "id")
 	private Perfil perfil;
 

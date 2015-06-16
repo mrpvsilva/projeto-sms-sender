@@ -24,7 +24,7 @@ public class PermissaoRepository extends RepositoryBase<Permissao> implements
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 
@@ -33,7 +33,7 @@ public class PermissaoRepository extends RepositoryBase<Permissao> implements
 
 		try {
 			open();
-			String q = "from Permissao as p where p.perfil.id = :idperfil ";
+			String q = "select p from Permissao p where p.perfil.id = :idperfil ";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("idperfil", idPerfil);
 			return query.getResultList();
@@ -41,7 +41,7 @@ public class PermissaoRepository extends RepositoryBase<Permissao> implements
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 

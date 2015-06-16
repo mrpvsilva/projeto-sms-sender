@@ -3,9 +3,6 @@ package Repositories;
 import java.util.List;
 
 import javax.persistence.Query;
-
-import org.hibernate.HibernateException;
-
 import Dominio.Item;
 import Interfaces.IItemRepository;
 
@@ -17,14 +14,14 @@ public class ItemRepository extends RepositoryBase<Item> implements
 	public List<Item> findAll() {
 		try {
 			open();
-			String q = "from Item order by nome";
+			String q = "select i from Item i order by i.nome";
 			Query query = entityManager.createQuery(q);
 			List<Item> l = query.getResultList();
 			return l;
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 
@@ -33,11 +30,11 @@ public class ItemRepository extends RepositoryBase<Item> implements
 	public List<Item> findAll(String campo, String txt) {
 		try {
 			open();
-			String q = "from Item";
+			String q = "select i from Item i";
 			if (!txt.equals(""))
-				q += " where " + campo + " like '%" + txt + "%'";
+				q += " where i." + campo + " like '%" + txt + "%'";
 
-			q += " order by nome";
+			q += " order by i.nome";
 			Query query = entityManager.createQuery(q);
 			List<Item> l = query.getResultList();
 			// Factory.renewFactory();
@@ -45,7 +42,7 @@ public class ItemRepository extends RepositoryBase<Item> implements
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 
@@ -53,14 +50,14 @@ public class ItemRepository extends RepositoryBase<Item> implements
 	public List<Item> findByTipo(String tipoItem) {
 		try {
 			open();
-			String q = "from Item i where i.tipoItem.Nome =:tipoItem";
+			String q = "select i from Item i where i.tipoItem.Nome =:tipoItem";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("tipoItem", tipoItem);
 			return query.getResultList();
-		} catch (HibernateException ex) {
+		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 }

@@ -6,15 +6,11 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.util.Calendar;
 
-import javax.persistence.PersistenceException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
-
-import org.hibernate.HibernateException;
-
 import Util.Factory;
 
 public class Splash extends JWindow {
@@ -46,11 +42,7 @@ public class Splash extends JWindow {
 			Factory.createEntityManager();
 			TelaLogin frame = new TelaLogin();
 			frame.setVisible(true);
-		} catch (HibernateException e) {
-			JOptionPane.showMessageDialog(null,
-					"Falha na inicialização do Siga\n" + e.getMessage(),
-					"Erro", JOptionPane.ERROR_MESSAGE);
-		} catch (Exception ex) {
+		}  catch (Exception ex) {
 			JOptionPane.showMessageDialog(null,
 					"Falha na inicialização do Siga\n" + ex.getMessage(),
 					"Erro", JOptionPane.ERROR_MESSAGE);

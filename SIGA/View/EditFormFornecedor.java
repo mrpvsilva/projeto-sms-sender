@@ -194,6 +194,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		JTFSite.setColumns(10);
 
 		JCBTpServ = new JComboBox(_fornecedorControl.DDLTipoServico());
+		JCBTpServ.removeItem("TODOS");
 		JCBTpServ.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JCBTpServ.setBounds(111, 64, 400, 20);
 
@@ -353,7 +354,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 				JOptionPane.showMessageDialog(null,
 						"Adicione ao menos um telefone", "Erro ao cadastrar",
 						JOptionPane.ERROR_MESSAGE);
-			else if (JCBTpServ.getSelectedItem().toString().equals("Selecione"))
+			else if (JCBTpServ.getSelectedItem().toString().equals("SELECIONE"))
 				JOptionPane.showMessageDialog(null,
 						"Selecione um tipo de serviço.", "Erro ao cadastrar",
 						JOptionPane.ERROR_MESSAGE);

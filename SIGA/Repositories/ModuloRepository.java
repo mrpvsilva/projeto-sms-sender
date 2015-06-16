@@ -14,14 +14,14 @@ public class ModuloRepository extends RepositoryBase<Modulo> implements
 	public List<Modulo> findAll() {
 		try {
 			open();
-			String q = "from Modulo order by nome";
+			String q = "select m from Modulo m order by m.nome";
 			Query query = entityManager.createQuery(q);
 			List<Modulo> l = query.getResultList();
 			return l;
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 
@@ -29,7 +29,7 @@ public class ModuloRepository extends RepositoryBase<Modulo> implements
 	public List<Modulo> findAll(String nome) {
 		try {
 			open();
-			String q = "from Modulo where nome like :nome  order by nome";
+			String q = "select from Modulo m where m.nome like :nome  order by m.nome";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("nome", "%" + nome + "%");
 			List<Modulo> l = query.getResultList();
@@ -37,7 +37,7 @@ public class ModuloRepository extends RepositoryBase<Modulo> implements
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 }

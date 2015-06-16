@@ -55,6 +55,7 @@ public class FornecedoresControl {
 	public Object[] DDLTipoServico() {
 		List<String> l = _tipoServicorepository.DDL();
 		l.add(0, "SELECIONE");
+		l.add(1, "TODOS");
 		return l.toArray();
 	}
 

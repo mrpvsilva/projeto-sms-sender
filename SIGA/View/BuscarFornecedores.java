@@ -146,8 +146,9 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 
 				tiposervicos = new JComboBox(
 						_fornecedorControl.DDLTipoServico());
+				tiposervicos.removeItem("SELECIONE");
 				tiposervicos.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				tiposervicos.setBounds(491, 13, 221, 20);
+				tiposervicos.setBounds(491, 12, 221, 22);
 				panel.add(tiposervicos);
 
 				radionome = new JRadioButton("Nome");
