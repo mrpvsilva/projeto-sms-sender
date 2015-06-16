@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.Fornecedor;
-import Dominio.TipoServico;
+import Dominio.Servico;
 import Interfaces.IFornecedorRepository;
-import Interfaces.ITipoServicoRepository;
+import Interfaces.IServicoRepository;
 import Model.FornecedoresModel;
 import Repositories.FornecedorRepository;
-import Repositories.TipoServicoRepository;
+import Repositories.ServicoRepository;
 
 public class FornecedoresControl {
 
 	FornecedoresModel fornMod = new FornecedoresModel();
 	private IFornecedorRepository _fornecedorRepository = new FornecedorRepository();
-	private ITipoServicoRepository _tipoServicorepository = new TipoServicoRepository();
+	private IServicoRepository _tipoServicorepository = new ServicoRepository();
 
 	/* Envia filtros para a JDTelaBuscarForn */
 	public ArrayList<String> Filtros() {
@@ -59,7 +59,7 @@ public class FornecedoresControl {
 		return l.toArray();
 	}
 
-	public TipoServico buscarTipoServico(String nome) {
+	public Servico buscarTipoServico(String nome) {
 		return _tipoServicorepository.findByName(nome);
 	}
 

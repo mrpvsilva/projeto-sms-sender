@@ -1,23 +1,17 @@
 package Repositories;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import Dominio.Evento;
 import Dominio.Fornecedor;
-import Dominio.Telefone;
-import Dominio.TipoServico;
-import Dominio.TiposEvento;
+import Dominio.Servico;
 import Interfaces.IFornecedorRepository;
-import Util.Factory;
 
 public class FornecedorRepository extends RepositoryBase<Fornecedor> implements
 		IFornecedorRepository {
@@ -26,10 +20,7 @@ public class FornecedorRepository extends RepositoryBase<Fornecedor> implements
 	public List<Fornecedor> findAll(String campo, String valor,
 			String tipoServico) {
 
-		try {
-
-			open();
-
+		try {	
 			CriteriaBuilder criteriaBuilder = entityManager
 					.getCriteriaBuilder();
 			CriteriaQuery<Fornecedor> criteriaQuery = criteriaBuilder
@@ -46,7 +37,7 @@ public class FornecedorRepository extends RepositoryBase<Fornecedor> implements
 			}
 
 			if (!tipoServico.equals("TODOS")) {
-				Path<TipoServico> tipo = fornecedor.get("tipoServico");
+				Path<Servico> tipo = fornecedor.get("tipoServico");
 				Predicate where = criteriaBuilder.equal(tipo.get("nome"),
 						tipoServico);
 				condicoes.add(where);
@@ -63,9 +54,7 @@ public class FornecedorRepository extends RepositoryBase<Fornecedor> implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
-		}
+		} 
 
 	}
 }

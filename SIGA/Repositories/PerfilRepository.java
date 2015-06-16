@@ -14,32 +14,26 @@ public class PerfilRepository extends RepositoryBase<Perfil> implements
 	@Override
 	public Perfil getPerfil(String nome) {
 		try {
-			open();
+
 			String q = "select p from Perfil p where p.nome = :nome ";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("nome", nome);
-			Perfil p = (Perfil) query.getSingleResult();
-
-			return p;
+			return (Perfil) query.getSingleResult();
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
 		}
 	}
 
 	@Override
 	public List<Perfil> findAll() {
 		try {
-			open();
 			String q = "select p from Perfil p where p.nome <> 'root' order by p.nome";
 			Query query = entityManager.createQuery(q);
-			List<Perfil> l = query.getResultList();
-			return l;
+			return query.getResultList();
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
 		}
 	}
 
@@ -48,15 +42,12 @@ public class PerfilRepository extends RepositoryBase<Perfil> implements
 		try {
 			String q = "select p from Perfil p";
 			Query query = entityManager.createQuery(q);
-			List<Perfil> l = query.getResultList();
+			return query.getResultList();
 
-			// Factory.renewFactory();
-			return l;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
-		}
+		} 
 
 	}
 

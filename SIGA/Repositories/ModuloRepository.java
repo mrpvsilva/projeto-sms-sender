@@ -13,31 +13,28 @@ public class ModuloRepository extends RepositoryBase<Modulo> implements
 
 	public List<Modulo> findAll() {
 		try {
-			open();
+			
 			String q = "select m from Modulo m order by m.nome";
 			Query query = entityManager.createQuery(q);
 			List<Modulo> l = query.getResultList();
 			return l;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
-		}
+		} 
 	}
 
 	@Override
 	public List<Modulo> findAll(String nome) {
-		try {
-			open();
+		try {			
 			String q = "select from Modulo m where m.nome like :nome  order by m.nome";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("nome", "%" + nome + "%");
 			List<Modulo> l = query.getResultList();
 			return l;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
-		}
+		} 
 	}
 }

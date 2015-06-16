@@ -15,23 +15,21 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 	@Override
 	public List<TipoItem> findAll() {
 		try {
-			open();
+			
 			String q = "select t from TipoItem t order by t.nome";
 			Query query = entityManager.createQuery(q);
-			List<TipoItem> l = query.getResultList();
-			return l;
+			return query.getResultList();
+			
 		} catch (Exception ex) {
 			return null;
-		} finally {
-			///entityManager.close();
-		}
+		} 
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TipoItem> findAll(String nome, String ativo) {
 		try {
-			open();
+			
 			String q = "select t from TipoItem t where ";
 
 			if (!nome.equals("")) {
@@ -52,41 +50,35 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 			List<TipoItem> l = query.getResultList();
 			return l;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
-		}
+		} 
 	}
 
 	@Override
 	public TipoItem find(String nome) {
-		try {
-			open();
+		try {			
 			String q = "from TipoItem where nome = :nome";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("nome", nome);
 			TipoItem t = (TipoItem) query.getSingleResult();
 			return t;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
-		}
+		} 
 	}
 
 	@Override
 	public List<String> DDLTipoItens() {
-		try {
-			open();
+		try {			
 			String q = "select t.nome from TipoItem t order by nome";
 			Query query = entityManager.createQuery(q);
 			return query.getResultList();
-
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
-		} finally {
-		//	entityManager.close();
-		}
+		} 
 	}
 
 }

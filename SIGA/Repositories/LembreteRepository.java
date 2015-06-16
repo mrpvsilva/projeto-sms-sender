@@ -21,17 +21,15 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 	@Override
 	public List<Lembrete> findAll() {
 		try {
-			open();
+			
 			String q = "select l from Lembrete l order by l.datahora desc";
 			Query query = entityManager.createQuery(q);
-			List<Lembrete> l = query.getResultList();
-			// Factory.renewFactory();
+			List<Lembrete> l = query.getResultList();			
 			return l;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
-		}
+		} 
 
 	}
 
@@ -39,8 +37,7 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 	@Override
 	public List<Lembrete> findAll(Date dataInicial, Date dataFinal,
 			String assunto, Usuario destinatario) {
-		try {
-			open();
+		try {		
 
 			CriteriaBuilder criteiraBuilder = entityManager
 					.getCriteriaBuilder();
@@ -89,27 +86,21 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
-		}
+		} 
 	}
 
 	@Override
 	public List<Lembrete> findAll(Usuario destinatario) {
 		try {
-			String q = "select l from Lembrete l where l.destinatario = :destinatario order by l.datahora desc";
-			open();
+			String q = "select l from Lembrete l where l.destinatario = :destinatario order by l.datahora desc";			
 			Query query = entityManager.createQuery(q);
 			query.setParameter("destinatario", destinatario);
-
 			return query.getResultList();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
-		}
+		} 
 
 	}
 }

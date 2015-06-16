@@ -19,9 +19,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.Document;
 
-import Dominio.Operadoras;
 import Dominio.Telefone;
 import TableModels.DefaultTableModel;
+import Util.Operadoras;
 
 import java.awt.Color;
 

@@ -2,15 +2,15 @@ package Control;
 
 import java.util.List;
 
-import Dominio.TipoServico;
-import Interfaces.ITipoServicoRepository;
-import Repositories.TipoServicoRepository;
+import Dominio.Servico;
+import Interfaces.IServicoRepository;
+import Repositories.ServicoRepository;
 
 public class TipoServicoControl {
 
-	private ITipoServicoRepository tipoServicoRepository = new TipoServicoRepository();
+	private IServicoRepository tipoServicoRepository = new ServicoRepository();
 
-	public String cadastrar(TipoServico tipoServico) {
+	public String cadastrar(Servico tipoServico) {
 
 		if (!tipoServicoRepository.add(tipoServico))
 			return "Falha no cadastro do tipo de serviço.";
@@ -18,7 +18,7 @@ public class TipoServicoControl {
 		return null;
 	}
 
-	public String atualizar(TipoServico tipoServico) {
+	public String atualizar(Servico tipoServico) {
 
 		if (!tipoServicoRepository.update(tipoServico))
 			return "Falha na atualização do tipo de serviço.";
@@ -26,15 +26,15 @@ public class TipoServicoControl {
 		return null;
 	}
 
-	public TipoServico buscarTipoServico(int id) {
+	public Servico buscarTipoServico(int id) {
 		return tipoServicoRepository.find(id);
 	}
 
-	public List<TipoServico> listarTodos() {
+	public List<Servico> listarTodos() {
 		return tipoServicoRepository.findAll();
 	}
 
-	public List<TipoServico> listarTodos(String nome, String ativo) {
+	public List<Servico> listarTodos(String nome, String ativo) {
 		return tipoServicoRepository.findAll(nome, ativo);
 	}
 
