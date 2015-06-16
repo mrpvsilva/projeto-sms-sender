@@ -22,7 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 import Control.TipoServicoControl;
 import Dominio.Permissao;
-import Dominio.TipoServico;
+import Dominio.Servico;
 import TableModels.DefaultTableModel;
 import TableModels.TipoServicoTableModel;
 import Util.Modulos;
@@ -32,7 +32,7 @@ public class BuscarTipoServicos extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
-	private DefaultTableModel<TipoServico> model;
+	private DefaultTableModel<Servico> model;
 	private TipoServicoControl tipoServicoControl = new TipoServicoControl();
 	private JTextField tfNome;
 	private JComboBox cbAtivo;

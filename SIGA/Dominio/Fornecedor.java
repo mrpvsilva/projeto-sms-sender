@@ -42,7 +42,7 @@ public class Fornecedor implements Serializable {
 	private String site;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idtiposervico", referencedColumnName = "id")
-	private TipoServico tipoServico;
+	private Servico tipoServico;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Telefone.class)
 	@JoinTable(name = "telefonesfornecedores", joinColumns = { @JoinColumn(name = "idfornecedor", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idtelefone", referencedColumnName = "id") })
@@ -58,7 +58,7 @@ public class Fornecedor implements Serializable {
 
 	public Fornecedor(String nome, BigDecimal valorServico, String email,
 			Endereco endereco, String cpfcnpj, String rg, String site,
-			TipoServico tipoServico) {
+			Servico tipoServico) {
 		setNome(nome);
 		setValorServico(valorServico);
 		setEmail(email);
@@ -125,11 +125,11 @@ public class Fornecedor implements Serializable {
 		this.site = site;
 	}
 
-	public TipoServico getTipoServico() {
+	public Servico getTipoServico() {
 		return tipoServico;
 	}
 
-	public void setTipoServico(TipoServico tipoServico) {
+	public void setTipoServico(Servico tipoServico) {
 		this.tipoServico = tipoServico;
 	}
 

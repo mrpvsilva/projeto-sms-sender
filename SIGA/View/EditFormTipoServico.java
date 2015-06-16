@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Control.TipoServicoControl;
-import Dominio.TipoServico;
+import Dominio.Servico;
 import TableModels.DefaultTableModel;
 import java.awt.Font;
 
@@ -30,9 +30,9 @@ public class EditFormTipoServico extends JDialog implements ActionListener {
 	private JButton JBSalvar;
 	private JButton JBSair;
 	private int id;
-	private TipoServico tipoServico;
+	private Servico tipoServico;
 	private TipoServicoControl tipoServicoControl = new TipoServicoControl();
-	private DefaultTableModel<TipoServico> model;
+	private DefaultTableModel<Servico> model;
 	private JButton JBNovo;
 
 	/**
@@ -42,7 +42,7 @@ public class EditFormTipoServico extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public EditFormTipoServico(DefaultTableModel<TipoServico> model, int id) {
+	public EditFormTipoServico(DefaultTableModel<Servico> model, int id) {
 		setResizable(false);
 		setModal(true);
 		setTitle("SIGA - cadastro de tipo de servi\u00E7o");
@@ -120,7 +120,7 @@ public class EditFormTipoServico extends JDialog implements ActionListener {
 
 	private void cadastrar() {
 
-		tipoServico = new TipoServico();
+		tipoServico = new Servico();
 		tipoServico.setNome(tfNome.getText());
 		tipoServico.setAtivo(chkAtivo.isSelected());
 

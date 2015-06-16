@@ -12,24 +12,22 @@ public class ItemRepository extends RepositoryBase<Item> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Item> findAll() {
-		try {
-			open();
+		try {			
 			String q = "select i from Item i order by i.nome";
 			Query query = entityManager.createQuery(q);
 			List<Item> l = query.getResultList();
 			return l;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
-		}
+		} 
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Item> findAll(String campo, String txt) {
 		try {
-			open();
+			
 			String q = "select i from Item i";
 			if (!txt.equals(""))
 				q += " where i." + campo + " like '%" + txt + "%'";
@@ -40,24 +38,22 @@ public class ItemRepository extends RepositoryBase<Item> implements
 			// Factory.renewFactory();
 			return l;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
-		}
+		} 
 	}
 
 	@Override
 	public List<Item> findByTipo(String tipoItem) {
 		try {
-			open();
+			
 			String q = "select i from Item i where i.tipoItem.Nome =:tipoItem";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("tipoItem", tipoItem);
 			return query.getResultList();
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
-		}
+		} 
 	}
 }

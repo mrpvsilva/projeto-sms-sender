@@ -17,25 +17,19 @@ public class OrcamentoRepository extends RepositoryBase<Evento> implements
 		IOrcamentoRepository {
 
 	public List<Evento> findAll() {
-		try {
-			open();
+		try {			
 			String q = "from Evento where status='ORCAMENTO' order by nome";
 			return entityManager.createQuery(q).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
-		}
+		} 
 	}
 
 	@Override
 	public List<Evento> findAll(String nome, Date inicio, Date fim,
 			TiposEvento tipoEvento) {
 		try {
-
-			open();
-
 			CriteriaBuilder criteriaBuilder = entityManager
 					.getCriteriaBuilder();
 			CriteriaQuery<Evento> criteriaQuery = criteriaBuilder
@@ -82,9 +76,7 @@ public class OrcamentoRepository extends RepositoryBase<Evento> implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} finally {
-			//entityManager.close();
-		}
+		} 
 	}
 
 }

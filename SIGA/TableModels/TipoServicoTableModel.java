@@ -2,9 +2,9 @@ package TableModels;
 
 import java.util.List;
 
-import Dominio.TipoServico;
+import Dominio.Servico;
 
-public class TipoServicoTableModel extends DefaultTableModel<TipoServico> {
+public class TipoServicoTableModel extends DefaultTableModel<Servico> {
 
 	private final static String[] colunas = new String[] { "id", "Nome",
 			"Ativo" };
@@ -15,7 +15,7 @@ public class TipoServicoTableModel extends DefaultTableModel<TipoServico> {
 
 	}
 
-	public TipoServicoTableModel(List<TipoServico> linhas) {
+	public TipoServicoTableModel(List<Servico> linhas) {
 		super(colunas, linhas);
 	}
 
@@ -41,7 +41,7 @@ public class TipoServicoTableModel extends DefaultTableModel<TipoServico> {
 	}
 
 	@Override
-	public TipoServico get(long id) {
+	public Servico get(long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
