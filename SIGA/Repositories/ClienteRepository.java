@@ -15,7 +15,7 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 
 		try {
 			open();
-			String q = "from Cliente order by nomecompleto";
+			String q = "select c from Cliente c order by c.nomecompleto";
 			@SuppressWarnings("unchecked")
 			List<Cliente> l = entityManager.createQuery(q).getResultList();
 			return l;
@@ -23,7 +23,7 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 			ex.printStackTrace();
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 
 	}
@@ -32,8 +32,8 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 	public List<Cliente> findAll(String valor, String campo) {
 		try {
 			open();
-			String q = "from Cliente where " + campo + " like '%" + valor
-					+ "%' order by nomecompleto";
+			String q = "select c from Cliente c where c." + campo + " like '%" + valor
+					+ "%' order by c.nomecompleto";
 			@SuppressWarnings("unchecked")
 			List<Cliente> l = entityManager.createQuery(q).getResultList();
 			return l;
@@ -41,7 +41,7 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 			ex.printStackTrace();
 			return null;
 		} finally {
-			entityManager.close();
+			///entityManager.close();
 		}
 	}
 
@@ -49,7 +49,7 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 	public Cliente find(String cpfcnpj) {
 		try {
 			open();
-			String q = "from Cliente where cpfcnpj= :cpfcnpj";
+			String q = "select c from Cliente c where c.cpfcnpj= :cpfcnpj";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("cpfcnpj", cpfcnpj);
 			return (Cliente) query.getSingleResult();
@@ -57,7 +57,7 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 			ex.printStackTrace();
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 

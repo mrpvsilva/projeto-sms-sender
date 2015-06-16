@@ -2,9 +2,6 @@ package Control;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.hibernate.HibernateException;
-
 import Dominio.Cliente;
 import Interfaces.IClienteRepository;
 import Model.ClientesModel;
@@ -30,7 +27,7 @@ public class ClientesControl {
 
 		try {
 			return clientes.add(cliente);
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			return false;
 		}
 
@@ -39,7 +36,7 @@ public class ClientesControl {
 	public boolean atualizar(Cliente cliente) {
 		try {
 			return clientes.update(cliente);
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			return false;
 		}
 

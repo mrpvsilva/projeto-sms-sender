@@ -11,8 +11,6 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.hibernate.HibernateException;
-
 import Dominio.Evento;
 import Dominio.Fornecedor;
 import Dominio.Telefone;
@@ -47,7 +45,7 @@ public class FornecedorRepository extends RepositoryBase<Fornecedor> implements
 
 			}
 
-			if (!tipoServico.equals("SELECIONE")) {
+			if (!tipoServico.equals("TODOS")) {
 				Path<TipoServico> tipo = fornecedor.get("tipoServico");
 				Predicate where = criteriaBuilder.equal(tipo.get("nome"),
 						tipoServico);
@@ -62,11 +60,11 @@ public class FornecedorRepository extends RepositoryBase<Fornecedor> implements
 
 			return entityManager.createQuery(criteriaQuery).getResultList();
 
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 
 	}

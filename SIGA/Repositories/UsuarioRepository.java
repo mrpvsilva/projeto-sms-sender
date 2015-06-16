@@ -15,14 +15,14 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 	public List<Usuario> findAll() {
 		try {
 			open();
-			String q = "from Usuario where usuario <> 'root' order by usuario";
+			String q = "select u from Usuario u where u.usuario <> 'root' order by u.usuario";
 			Query query = entityManager.createQuery(q);
 			List<Usuario> l = query.getResultList();
 			return l;
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 
 	}
@@ -32,7 +32,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 	public List<Usuario> findAll(String campo, String value) {
 		try {
 			open();
-			String q = "from Usuario where  usuario <> 'root' and " + campo + " like :valor";
+			String q = "select u from Usuario where  u.usuario <> 'root' and u." + campo + " like :valor";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("valor", "%" + value + "%");
 			List<Usuario> l = query.getResultList();
@@ -40,7 +40,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 
 	}
@@ -50,7 +50,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 
 		try {
 			open();
-			String query = "from Usuario where usuario = :usuario and senha=:senha ";
+			String query = " select u from Usuario u where u.usuario = :usuario and u.senha=:senha ";
 			Query q = entityManager.createQuery(query);
 			q.setParameter("usuario", usuario);
 			q.setParameter("senha", senha);
@@ -60,7 +60,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 
 	}
@@ -69,7 +69,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 	public Usuario getUsuario(String usuario) {
 		try {
 			open();
-			String query = "from Usuario where usuario = :usuario";
+			String query = "select u from Usuario u where u.usuario = :usuario";
 			Query q = entityManager.createQuery(query);
 			q.setParameter("usuario", usuario);
 			Usuario u = (Usuario) q.getSingleResult();
@@ -79,7 +79,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 }

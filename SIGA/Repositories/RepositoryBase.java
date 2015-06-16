@@ -2,11 +2,7 @@ package Repositories;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-
 import javax.persistence.EntityManager;
-
-import org.hibernate.HibernateException;
-
 import Interfaces.IRepositoryBase;
 import Util.Factory;
 
@@ -18,7 +14,7 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 		entityManager = Factory.createEntityManager();
 	}
 
-	@Override      
+	@Override
 	public boolean add(E entity) {
 		try {
 			open();
@@ -26,12 +22,12 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 			entityManager.persist(entity);
 			entityManager.getTransaction().commit();
 			return true;
-		} catch (HibernateException ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			entityManager.getTransaction().rollback();
 			return false;
 		} finally {
-			entityManager.close();
+			// entityManager.close();
 		}
 
 	}
@@ -49,7 +45,7 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 		} catch (Exception ex) {
 			entityManager.getTransaction().rollback();
 		} finally {
-			entityManager.close();
+			// entityManager.close();
 		}
 
 	}
@@ -67,7 +63,7 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 			entityManager.getTransaction().rollback();
 			return false;
 		} finally {
-			entityManager.close();
+			// entityManager.close();
 		}
 
 	}
@@ -82,7 +78,7 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			// entityManager.close();
 		}
 	}
 
@@ -92,19 +88,19 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 		try {
 			open();
 			return entityManager
-					.createQuery("from " + GetTypeClass().getName())
+					.createQuery("select o from " + GetTypeClass().getName()+" o ")
 					.getResultList();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
 		} finally {
-			entityManager.close();
+			// entityManager.close();
 		}
 	}
 
 	public void open() {
-		if (!entityManager.isOpen())
+		if (entityManager == null)
 			entityManager = Factory.createEntityManager();
 	}
 

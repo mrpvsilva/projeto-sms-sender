@@ -9,9 +9,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.hibernate.HibernateException;
-
 import Dominio.Evento;
 import Dominio.TiposEvento;
 import Interfaces.IOrcamentoRepository;
@@ -24,11 +21,11 @@ public class OrcamentoRepository extends RepositoryBase<Evento> implements
 			open();
 			String q = "from Evento where status='ORCAMENTO' order by nome";
 			return entityManager.createQuery(q).getResultList();
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 
@@ -82,11 +79,11 @@ public class OrcamentoRepository extends RepositoryBase<Evento> implements
 
 			return entityManager.createQuery(criteriaQuery).getResultList();
 
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 

@@ -76,8 +76,7 @@ public class BuscarPerfis extends JDialog implements ActionListener {
 				public void mouseClicked(MouseEvent arg0) {
 
 					int linha = tablePerfis.getSelectedRow();
-					List<Permissao> linhas = perfilControl
-							.ListarTodos(tableModelPerfil.find(linha).getId());
+					List<Permissao> linhas = perfilControl.ListarTodos(tableModelPerfil.find(linha).getId());
 					tableModelPermissao.setLinhas(linhas);
 				}
 			});

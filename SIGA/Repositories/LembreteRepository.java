@@ -10,9 +10,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.hibernate.HibernateException;
-
 import Dominio.Lembrete;
 import Dominio.Usuario;
 import Interfaces.ILembreteRepository;
@@ -25,7 +22,7 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 	public List<Lembrete> findAll() {
 		try {
 			open();
-			String q = "from Lembrete order by datahora desc";
+			String q = "select l from Lembrete l order by l.datahora desc";
 			Query query = entityManager.createQuery(q);
 			List<Lembrete> l = query.getResultList();
 			// Factory.renewFactory();
@@ -33,7 +30,7 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 		} catch (Exception ex) {
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 
 	}
@@ -93,25 +90,25 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 			ex.printStackTrace();
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 	}
 
 	@Override
 	public List<Lembrete> findAll(Usuario destinatario) {
 		try {
-			String q = "from Lembrete l where l.destinatario = :destinatario order by datahora desc";
+			String q = "select l from Lembrete l where l.destinatario = :destinatario order by l.datahora desc";
 			open();
 			Query query = entityManager.createQuery(q);
 			query.setParameter("destinatario", destinatario);
 
 			return query.getResultList();
 
-		} catch (HibernateException ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
 		} finally {
-			entityManager.close();
+			//entityManager.close();
 		}
 
 	}

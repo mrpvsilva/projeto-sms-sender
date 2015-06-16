@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="http://java.sun.com/xml/ns/persistence"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
-	version="2.0">
-	<persistence-unit name="siga" transaction-type="RESOURCE_LOCAL">
-		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="siga" transaction-type="RESOURCE_LOCAL">
+		 <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
 		<class>Dominio.Usuario</class>
 		<class>Dominio.Perfil</class>
@@ -13,13 +10,16 @@
 		<class>Dominio.Endereco</class>
 		<class>Dominio.EnderecoFornecedor</class>
 		<class>Dominio.Fornecedor</class>
-		<class>Dominio.Item</class>
+		
 		<class>Dominio.Lembrete</class>
 		<class>Dominio.Telefone</class>
 		<class>Dominio.TelefoneFornecedor</class>
 		<class>Dominio.TipoItem</class>
 		<class>Dominio.TipoServico</class>
+		
 		<class>Dominio.Evento</class>
+		<class>Dominio.EventoItem</class>
+		<class>Dominio.Item</class>
 
 
 		<class>Dominio.EnderecoCliente</class>
@@ -27,28 +27,15 @@
 		<class>Dominio.TelefoneCliente</class>
 
 		<properties>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 
-			<!-- CONFIGURAÇÕES DE ACESSO GDA -->
-			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.1.8:3306/siga" 
-				/> -->
-			<!-- <property name="javax.persistence.jdbc.user" value="arua" /> -->
-			<!-- <property name="javax.persistence.jdbc.password" value="gda@eventos432" 
-				/> -->
-			<!-- FIM -->
+	<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/siga"/>
+      <property name="javax.persistence.jdbc.password" value="user123456"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="user"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+       <property name="eclipselink.logging.level.sql" value="FINE"/>
+ 	<property name="eclipselink.logging.parameters" value="true"/>
 
-			<!-- CONFIGURAÇÕES DE ACESSO LOCALHOST -->
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/siga" />
-			<property name="javax.persistence.jdbc.user" value="user" />
-			<property name="javax.persistence.jdbc.password" value="user123456" />
-			<!-- FIM -->
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="false" />
-			<property name="hibernate.use_sql_comments" value="false" />
-			<property name="hibernate.jdbc.wrap_result_sets" value="false" />
-			<property name="hibernate.hibernate.cache.use_query_cache"
-				value="true" />
 		</properties>
 	</persistence-unit>
 </persistence> 

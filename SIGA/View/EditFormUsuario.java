@@ -242,8 +242,7 @@ public class EditFormUsuario extends JDialog implements ActionListener {
 		usuario.setSenha(Extras.FormatCnpjCpf(JFFCpf.getText()));
 		usuario.setNomeCompleto(JTFNome.getText());
 		usuario.setCpf(Extras.FormatCnpjCpf(JFFCpf.getText()));
-		usuario.setPerfil(_usuarioControl.getPerfil(JCBPerfil.getSelectedItem()
-				.toString()));
+		usuario.setPerfil(_usuarioControl.getPerfil(JCBPerfil.getSelectedItem()	.toString()));
 
 		String out = _usuarioControl.Cadastrar(usuario);
 

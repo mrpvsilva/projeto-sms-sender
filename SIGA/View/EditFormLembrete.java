@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
 import java.util.Date;
 
 import javax.swing.JButton;
@@ -38,7 +39,10 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import TableModels.DefaultTableModel;
+
 import java.awt.Color;
+
+import Util.DateTimePicker;
 
 public class EditFormLembrete extends JDialog implements ActionListener {
 
@@ -53,7 +57,6 @@ public class EditFormLembrete extends JDialog implements ActionListener {
 
 	private DateModel<Date> model;
 	private JDatePanelImpl datePanel;
-	private JDatePickerImpl datePicker;
 
 	private JComboBox JCBUsuario;
 	private JTextArea JTALemb;
@@ -62,10 +65,9 @@ public class EditFormLembrete extends JDialog implements ActionListener {
 	private JTextField JTFAssunto;
 	private JButton JBSair;
 	private DefaultTableModel<Lembrete> _modelLembretes;
-	private Lembrete _lembrete;
-	private SpinnerNumberModel modelHora;
-	private SpinnerNumberModel modelMinuto;
+	private Lembrete _lembrete;	
 	private JLabel erro_message;
+	private DateTimePicker datahora;
 
 	/**
 	 * Launch the application.
@@ -127,7 +129,7 @@ public class EditFormLembrete extends JDialog implements ActionListener {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JLDataContato = new JLabel("Data");
+			JLDataContato = new JLabel("Data/Hora");
 			JLDataContato.setHorizontalAlignment(SwingConstants.RIGHT);
 			JLDataContato.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JLDataContato.setBounds(0, 53, 96, 14);
@@ -136,11 +138,6 @@ public class EditFormLembrete extends JDialog implements ActionListener {
 			model = new UtilDateModel();
 			datePanel = new JDatePanelImpl(model);
 			datePanel.setPreferredSize(new java.awt.Dimension(202, 182));
-			datePicker = new JDatePickerImpl(datePanel);
-			datePicker.getJFormattedTextField().setFont(
-					new Font("Tahoma", Font.PLAIN, 13));
-			datePicker.setBounds(106, 56, 154, 30);
-			contentPanel.add(datePicker);
 
 		}
 
@@ -176,39 +173,21 @@ public class EditFormLembrete extends JDialog implements ActionListener {
 		JTFAssunto.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JTFAssunto.setBounds(106, 22, 350, 20);
 		contentPanel.add(JTFAssunto);
-		JTFAssunto.setColumns(10);
-
-		JLabel JLHora = new JLabel("Hora");
-		JLHora.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLHora.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JLHora.setBounds(270, 53, 46, 14);
-		contentPanel.add(JLHora);
-
-		JSpinner hora = new JSpinner();
-		modelHora = new SpinnerNumberModel(0, 0, 59, 1);
-		hora.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		hora.setModel(modelHora);
-		hora.setBounds(326, 53, 35, 20);
-		contentPanel.add(hora);
-
-		JLabel lblMinuto = new JLabel("Minuto");
-		modelMinuto = new SpinnerNumberModel(0, 0, 59, 1);
-		lblMinuto.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblMinuto.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblMinuto.setBounds(371, 53, 46, 14);
-		contentPanel.add(lblMinuto);
-
-		JSpinner minuto = new JSpinner();
-		minuto.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		minuto.setModel(modelMinuto);
-		minuto.setBounds(421, 53, 35, 20);
-		contentPanel.add(minuto);
+		JTFAssunto.setColumns(10);	
 
 		erro_message = new JLabel("");
 		erro_message.setForeground(Color.RED);
 		erro_message.setFont(new Font("Tahoma", Font.BOLD, 13));
 		erro_message.setBounds(106, 275, 350, 15);
 		contentPanel.add(erro_message);
+
+		datahora = new DateTimePicker();
+		datahora.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		datahora.setBounds(106, 50, 173, 22);
+		datahora.setFormats(DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT));
+		datahora.setTimeFormat(DateFormat.getTimeInstance(DateFormat.SHORT));
+		datahora.setDate(new Date());
+		contentPanel.add(datahora);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -247,10 +226,7 @@ public class EditFormLembrete extends JDialog implements ActionListener {
 
 		JTFAssunto.setText(_lembrete.getAssunto());
 		JTALemb.setText(_lembrete.getTexto());
-		Date data = _lembrete.getDatahora();
-		model.setValue(data);
-		modelHora.setValue(data.getHours());
-		modelMinuto.setValue(data.getMinutes());
+		datahora.setDate(_lembrete.getDatahora());
 		JCBUsuario.setSelectedItem(_lembrete.getDestinatario().getUsuario());
 
 	}
@@ -259,23 +235,16 @@ public class EditFormLembrete extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent acao) {
 
 		if (acao.getSource() == JBSalvLemb) {
-
-			int hora = (int) modelHora.getValue();
-			int min = (int) modelMinuto.getValue();
+		
 
 			if (JTFAssunto.getText().isEmpty())
 				JOptionPane.showMessageDialog(null,
 						"O campo assunto é obrigatótio", "Erro ao cadastrar",
 						JOptionPane.ERROR_MESSAGE);
-
-			else if (datePicker.getJFormattedTextField().getText().isEmpty())
+			else if (datahora.getDate() == null)
 				JOptionPane.showMessageDialog(null,
-						"O campo data é obrigatótio", "Erro ao cadastrar",
-						JOptionPane.ERROR_MESSAGE);
-			else if (hora == 0)
-				JOptionPane.showMessageDialog(null,
-						"O campo horário é obrigatótio", "Erro ao cadastrar",
-						JOptionPane.ERROR_MESSAGE);
+						"O campo data/hora é obrigatótio", "Erro ao cadastrar",
+						JOptionPane.ERROR_MESSAGE);			
 			else if (JCBUsuario.getSelectedItem().toString()
 					.equals("Selecione"))
 				JOptionPane.showMessageDialog(null,
@@ -289,13 +258,7 @@ public class EditFormLembrete extends JDialog implements ActionListener {
 
 				_lembrete.setAssunto(JTFAssunto.getText());
 				_lembrete.setTexto(JTALemb.getText());
-
-				Date data = (Date) datePicker.getModel().getValue();
-				data.setHours(hora);
-				data.setMinutes(min);
-
-				_lembrete.setDatahora(data);
-
+				_lembrete.setDatahora(datahora.getDate());
 				_lembrete.setDestinatario(_lembreteControl
 						.BuscarDestinatario(JCBUsuario.getSelectedItem()
 								.toString()));
@@ -324,14 +287,14 @@ public class EditFormLembrete extends JDialog implements ActionListener {
 
 		if (acao.getSource() == JBNovLemb) {
 
-			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
-					"Deseja cadastrar um novo lembrete?")) {
-
-				datePicker.getJFormattedTextField().setText("");
-				JCBUsuario.setSelectedItem("Selecionar");
-				JTALemb.setText("");
-
-			}// final da confirmação
+			// if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
+			// "Deseja cadastrar um novo lembrete?")) {
+			//
+			// datePicker.getJFormattedTextField().setText("");
+			// JCBUsuario.setSelectedItem("Selecionar");
+			// JTALemb.setText("");
+			//
+			// }// final da confirmação
 
 		}// final do botão novo lembrete
 
