@@ -173,7 +173,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		mntmCadastrar_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmCadastrar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				EditFormTipoServico tscad = new EditFormTipoServico(null, 0);
+				EditFormServico tscad = new EditFormServico(null, 0);
 				tscad.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				tscad.setLocationRelativeTo(null);
 				tscad.setVisible(true);

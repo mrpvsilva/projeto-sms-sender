@@ -22,7 +22,7 @@
 
 		<class>Dominio.TipoItem</class>
 		<class>Dominio.Servico</class>
-			<class>Dominio.TiposEvento</class>
+		<class>Dominio.TiposEvento</class>
 
 		<class>Dominio.Evento</class>
 		<class>Dominio.EventoItem</class>

@@ -18,7 +18,7 @@ public class FornecedorRepository extends RepositoryBase<Fornecedor> implements
 
 	@SuppressWarnings("unchecked")
 	public List<Fornecedor> findAll(String campo, String valor,
-			String tipoServico) {
+			String servico) {
 
 		try {	
 			CriteriaBuilder criteriaBuilder = entityManager
@@ -36,10 +36,10 @@ public class FornecedorRepository extends RepositoryBase<Fornecedor> implements
 
 			}
 
-			if (!tipoServico.equals("TODOS")) {
-				Path<Servico> tipo = fornecedor.get("tipoServico");
+			if (!servico.equals("TODOS")) {
+				Path<Servico> tipo = fornecedor.get("servico");
 				Predicate where = criteriaBuilder.equal(tipo.get("nome"),
-						tipoServico);
+						servico);
 				condicoes.add(where);
 			}
 

@@ -3,8 +3,10 @@ package Dominio;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,7 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tiposservicos")
+@Table(name = "servicos")
 public class Servico implements Serializable {
 
 	/**
@@ -28,9 +30,9 @@ public class Servico implements Serializable {
 	@Column
 	private BigDecimal valorservico;
 	@Column
-	private boolean ativo;
-	@OneToOne
-	@JoinColumn(name = "idexecutor", referencedColumnName = "id")
+	private boolean ativo;	
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "fornecedoresselecionados", joinColumns = { @JoinColumn(name = "idservico", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idfornecedor", referencedColumnName = "id") })
 	private Fornecedor executor;
 
 	public Servico() {
