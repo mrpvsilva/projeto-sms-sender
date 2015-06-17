@@ -172,7 +172,7 @@ public class BuscarTipoServicos extends JDialog implements ActionListener {
 			int linha = table.getSelectedRow();
 			if (linha > -1) {
 				int id = model.getId(linha);
-				EditFormTipoServico tscad = new EditFormTipoServico(model, id);
+				EditFormServico tscad = new EditFormServico(model, id);
 				tscad.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				tscad.setVisible(true);
 
@@ -182,7 +182,7 @@ public class BuscarTipoServicos extends JDialog implements ActionListener {
 		}
 
 		if (e.getSource() == JBCadastrar) {
-			EditFormTipoServico tscad = new EditFormTipoServico(model, 0);
+			EditFormServico tscad = new EditFormServico(model, 0);
 			tscad.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			tscad.setVisible(true);
 		}

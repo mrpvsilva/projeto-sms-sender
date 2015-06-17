@@ -76,9 +76,9 @@ public class ServicoRepository extends RepositoryBase<Servico>
 			if (ativo.equals("Todos")) {
 				q += " t.ativo in (0,1)";
 			} else if (ativo.equals("Ativo")) {
-				q += " ativo = 1";
+				q += " t.ativo = 1";
 			} else {
-				q += " ativo = 0";
+				q += " t.ativo = 0";
 			}
 
 			q += " order by t.nome";

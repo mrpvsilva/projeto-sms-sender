@@ -64,7 +64,6 @@ public abstract class RepositoryBase<E> implements IRepositoryBase<E> {
 	public E find(long id) {
 		try {			
 			return (E) entityManager.find(GetTypeClass(), id);
-
 		} catch (Exception ex) {
 			return null;
 		} 

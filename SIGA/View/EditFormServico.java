@@ -16,13 +16,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.BadLocationException;
 
 import Control.TipoServicoControl;
+import Dominio.Fornecedor;
 import Dominio.Servico;
 import TableModels.DefaultTableModel;
+
 import java.awt.Font;
 
-public class EditFormTipoServico extends JDialog implements ActionListener {
+import jmoneyfield.JMoneyField;
+
+public class EditFormServico extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tfNome;
@@ -34,6 +39,7 @@ public class EditFormTipoServico extends JDialog implements ActionListener {
 	private TipoServicoControl tipoServicoControl = new TipoServicoControl();
 	private DefaultTableModel<Servico> model;
 	private JButton JBNovo;
+	private JMoneyField valor;
 
 	/**
 	 * Launch the application.
@@ -42,7 +48,7 @@ public class EditFormTipoServico extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public EditFormTipoServico(DefaultTableModel<Servico> model, int id) {
+	public EditFormServico(DefaultTableModel<Servico> model, int id) {
 		setResizable(false);
 		setModal(true);
 		setTitle("SIGA - cadastro de tipo de servi\u00E7o");
@@ -57,20 +63,32 @@ public class EditFormTipoServico extends JDialog implements ActionListener {
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNome.setBounds(0, 37, 42, 14);
+		lblNome.setBounds(0, 21, 42, 14);
 		contentPanel.add(lblNome);
 
 		tfNome = new JTextField();
 		tfNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		tfNome.setBounds(52, 34, 179, 20);
+		tfNome.setBounds(52, 18, 179, 20);
 		contentPanel.add(tfNome);
 		tfNome.setColumns(10);
 
 		chkAtivo = new JCheckBox("Ativo");
 		chkAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chkAtivo.setSelected(true);
-		chkAtivo.setBounds(237, 33, 97, 23);
+		chkAtivo.setBounds(237, 17, 97, 23);
 		contentPanel.add(chkAtivo);
+
+		JLabel lblValor = new JLabel("Valor");
+		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblValor.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblValor.setBounds(0, 46, 46, 14);
+		contentPanel.add(lblValor);
+
+		valor = new JMoneyField();
+		valor.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		valor.setBounds(50, 44, 181, 20);
+		contentPanel.add(valor);
+		valor.setColumns(10);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -78,7 +96,7 @@ public class EditFormTipoServico extends JDialog implements ActionListener {
 			{
 				JBSalvar = new JButton("Salvar");
 				JBSalvar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBSalvar.setIcon(new ImageIcon(EditFormTipoServico.class
+				JBSalvar.setIcon(new ImageIcon(EditFormServico.class
 						.getResource("/Img/Confirmar.png")));
 				JBSalvar.setMnemonic(KeyEvent.VK_S);
 				buttonPane.add(JBSalvar);
@@ -89,7 +107,7 @@ public class EditFormTipoServico extends JDialog implements ActionListener {
 
 				JBNovo = new JButton("Novo");
 				JBNovo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBNovo.setIcon(new ImageIcon(EditFormTipoServico.class
+				JBNovo.setIcon(new ImageIcon(EditFormServico.class
 						.getResource("/Img/window_new16.png")));
 				JBNovo.setMnemonic(KeyEvent.VK_N);
 				buttonPane.add(JBNovo);
@@ -97,7 +115,7 @@ public class EditFormTipoServico extends JDialog implements ActionListener {
 			}
 			JBSair = new JButton("Sair");
 			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBSair.setIcon(new ImageIcon(EditFormTipoServico.class
+			JBSair.setIcon(new ImageIcon(EditFormServico.class
 					.getResource("/Img/exit16.png")));
 			JBSair.setMnemonic(KeyEvent.VK_Q);
 			JBSair.addActionListener(this);
@@ -114,15 +132,17 @@ public class EditFormTipoServico extends JDialog implements ActionListener {
 		tipoServico = tipoServicoControl.buscarTipoServico(id);
 
 		tfNome.setText(tipoServico.getNome());
+		valor.setValor(tipoServico.getValorservico());
 		chkAtivo.setSelected(tipoServico.isAtivo());
 
 	}
 
-	private void cadastrar() {
+	private void cadastrar() throws BadLocationException {
 
 		tipoServico = new Servico();
 		tipoServico.setNome(tfNome.getText());
 		tipoServico.setAtivo(chkAtivo.isSelected());
+		tipoServico.setValorservico(valor.getValor());		
 
 		String out = tipoServicoControl.cadastrar(tipoServico);
 
@@ -161,7 +181,12 @@ public class EditFormTipoServico extends JDialog implements ActionListener {
 			}
 
 			if (id == 0) {
-				cadastrar();
+				try {
+					cadastrar();
+				} catch (BadLocationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			} else {
 				atualizar();
 			}
@@ -179,7 +204,7 @@ public class EditFormTipoServico extends JDialog implements ActionListener {
 
 	public static void main(String[] args) {
 		try {
-			EditFormTipoServico dialog = new EditFormTipoServico(null, 0);
+			EditFormServico dialog = new EditFormServico(null, 0);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
