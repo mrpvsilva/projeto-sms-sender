@@ -59,10 +59,28 @@ public class Evento implements Serializable {
 	@OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<EventoItem> itens;
 
+	@OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<EventoServico> eventosServicos;
+
 	public Evento() {
 		setStatus(StatusEvento.ORCAMENTO.toString());
 		this.datacriacao = Calendar.getInstance().getTime();
-		
+
+	}
+
+	public void addServico(EventoServico eventoServico) {
+		if (eventosServicos == null)
+			eventosServicos = new ArrayList<EventoServico>();
+
+		eventosServicos.add(eventoServico);
+	}
+
+	public List<EventoServico> getEventosServicos() {
+		return eventosServicos;
+	}
+
+	public void setEventosServicos(List<EventoServico> eventosServicos) {
+		this.eventosServicos = eventosServicos;
 	}
 
 	public void addCliente(Cliente cliente) {

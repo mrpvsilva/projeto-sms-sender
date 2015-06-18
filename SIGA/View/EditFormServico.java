@@ -19,7 +19,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.BadLocationException;
 
 import Control.TipoServicoControl;
-import Dominio.Fornecedor;
 import Dominio.Servico;
 import TableModels.DefaultTableModel;
 

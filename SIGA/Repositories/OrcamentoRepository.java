@@ -18,7 +18,7 @@ public class OrcamentoRepository extends RepositoryBase<Evento> implements
 
 	public List<Evento> findAll() {
 		try {			
-			String q = "from Evento where status='ORCAMENTO' order by nome";
+			String q = "select e from Evento e where e.status='ORCAMENTO' order by e.nome";
 			return entityManager.createQuery(q).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

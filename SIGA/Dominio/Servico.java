@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "servicos")
@@ -29,19 +30,23 @@ public class Servico implements Serializable {
 	private String nome;
 	@Column
 	private BigDecimal valorservico;
+	@Transient
+	private boolean selecionado;
 	@Column
-	private boolean ativo;	
+	private boolean ativo;
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "fornecedoresselecionados", joinColumns = { @JoinColumn(name = "idservico", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idfornecedor", referencedColumnName = "id") })
 	private Fornecedor executor;
 
 	public Servico() {
 		setAtivo(true);
+		setSelecionado(true);
 	}
 
-	public Servico(String nome, boolean ativo) {
+	public Servico(String nome, boolean ativo,boolean selecionado) {
 		setNome(nome);
 		setAtivo(ativo);
+		setSelecionado(selecionado);
 	}
 
 	public Long getId() {
@@ -82,6 +87,14 @@ public class Servico implements Serializable {
 
 	public void setExecutor(Fornecedor executor) {
 		this.executor = executor;
+	}
+
+	public boolean isSelecionado() {
+		return selecionado;
+	}
+
+	public void setSelecionado(boolean selecionado) {
+		this.selecionado = selecionado;
 	}
 
 }
