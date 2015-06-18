@@ -8,25 +8,33 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.TableCellEditor;
+import javax.swing.text.MaskFormatter;
 
 import Control.OrcamentoControl;
 import Dominio.Cliente;
 import Dominio.Evento;
 import Dominio.EventoItem;
+import Dominio.EventoServico;
+import Dominio.Servico;
 import Dominio.TiposEvento;
+import Extra.Extras;
+import Extra.Mascaras;
 import TableModels.ClienteTableModel;
 import TableModels.DefaultTableModel;
 import TableModels.EventoItemTableModel;
+import TableModels.ServicoTableModel;
 import Util.DateTimePicker;
 import Util.EditFormType;
 import Util.StatusEvento;
 
 import java.awt.Font;
 import java.text.DateFormat;
-import java.util.ArrayList;
+import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 
+import javax.swing.DefaultCellEditor;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -40,6 +48,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ImageIcon;
+
+import jmoneyfield.JMoneyField;
 
 public class EditFormOrcamento extends JDialog implements ActionListener {
 
@@ -59,7 +69,9 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	private DefaultTableModel<Cliente> _modelClientes;
 	private JButton addCliente;
 	private DefaultTableModel<EventoItem> modelItens;
+	private DefaultTableModel<Servico> modelServicos;	
 	private JTable table_itens;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -251,6 +263,30 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 
 		JPanel tab_servicos = new JPanel();
 		tabbedPane.addTab("Servi\u00E7os", null, tab_servicos, null);
+		tab_servicos.setLayout(null);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 11, 578, 379);
+		tab_servicos.add(scrollPane_1);
+		
+			
+		
+		
+		
+		modelServicos = new ServicoTableModel(_orcamentoControl.buscarServicos());		
+		table = new JTable(modelServicos);
+		table.getColumnModel().getColumn(2).setMinWidth(0);
+		table.getColumnModel().getColumn(2).setMaxWidth(0);
+		JFormattedTextField ftext = new JFormattedTextField();
+		MaskFormatter mask;
+		try {
+		    mask = new MaskFormatter("0.###");
+		    mask.install(ftext);
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
+		table.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(ftext));
+		scrollPane_1.setViewportView(table);
 
 		{
 			JPanel buttonPane = new JPanel();

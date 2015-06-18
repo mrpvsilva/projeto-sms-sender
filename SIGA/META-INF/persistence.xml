@@ -27,6 +27,7 @@
 		<class>Dominio.Evento</class>
 		<class>Dominio.EventoItem</class>
 		<class>Dominio.Item</class>
+		<class>Dominio.EventoServico</class>
 
 
 

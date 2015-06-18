@@ -24,11 +24,11 @@ import Control.TipoServicoControl;
 import Dominio.Permissao;
 import Dominio.Servico;
 import TableModels.DefaultTableModel;
-import TableModels.TipoServicoTableModel;
+import TableModels.ServicoTableModel;
 import Util.Modulos;
 import Util.PermissoesManager;
 
-public class BuscarTipoServicos extends JDialog implements ActionListener {
+public class BuscarServicos extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
@@ -48,7 +48,7 @@ public class BuscarTipoServicos extends JDialog implements ActionListener {
 	public static void main(String[] args) {
 		try {
 			
-			BuscarTipoServicos dialog = new BuscarTipoServicos();
+			BuscarServicos dialog = new BuscarServicos();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -59,8 +59,8 @@ public class BuscarTipoServicos extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public BuscarTipoServicos() {
-		permissao =PermissoesManager.buscarPermissao(Modulos.Tipo_servicos);
+	public BuscarServicos() {
+		permissao =PermissoesManager.buscarPermissao(Modulos.Servicos);
 		setResizable(false);
 		setModal(true);
 		setTitle("SIGA - buscar tipo de servi\u00E7o");
@@ -74,11 +74,11 @@ public class BuscarTipoServicos extends JDialog implements ActionListener {
 		scrollPane.setBounds(10, 99, 414, 280);
 		contentPanel.add(scrollPane);
 
-		model = new TipoServicoTableModel(tipoServicoControl.listarTodos());
+		model = new ServicoTableModel(tipoServicoControl.listarTodos());
 		table = new JTable(model);
-		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		table.getColumnModel().getColumn(0).setMinWidth(0);
-		table.getColumnModel().getColumn(0).setMaxWidth(0);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 13));	
+		table.getColumnModel().getColumn(3).setMinWidth(0);
+		table.getColumnModel().getColumn(3).setMaxWidth(0);
 
 		scrollPane.setViewportView(table);
 
@@ -101,6 +101,7 @@ public class BuscarTipoServicos extends JDialog implements ActionListener {
 		contentPanel.add(lblAtivo);
 
 		cbAtivo = new JComboBox(new String[] { "Todos", "Ativo", "Inativo" });
+		cbAtivo.setSelectedIndex(1);
 		cbAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		cbAtivo.setBounds(93, 31, 141, 20);
 		contentPanel.add(cbAtivo);
@@ -108,7 +109,7 @@ public class BuscarTipoServicos extends JDialog implements ActionListener {
 		JBPesquisar = new JButton("Pesquisar");
 		JBPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JBPesquisar.setMnemonic(KeyEvent.VK_F);
-		JBPesquisar.setIcon(new ImageIcon(BuscarTipoServicos.class
+		JBPesquisar.setIcon(new ImageIcon(BuscarServicos.class
 				.getResource("/Img/Procurar.png")));
 		JBPesquisar.addActionListener(this);
 		JBPesquisar.setBounds(178, 65, 120, 23);
@@ -121,7 +122,7 @@ public class BuscarTipoServicos extends JDialog implements ActionListener {
 				JBCadastrar = new JButton("Cadastrar");
 				JBCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBCadastrar.setMnemonic(KeyEvent.VK_C);
-				JBCadastrar.setIcon(new ImageIcon(BuscarTipoServicos.class
+				JBCadastrar.setIcon(new ImageIcon(BuscarServicos.class
 						.getResource("/Img/save16.png")));
 				JBCadastrar.setVisible(permissao.isCadastrar());
 				JBCadastrar.addActionListener(this);
@@ -132,7 +133,7 @@ public class BuscarTipoServicos extends JDialog implements ActionListener {
 				JBEditar = new JButton("Editar");
 				JBEditar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				JBEditar.setVisible(permissao.isAlterar());
-				JBEditar.setIcon(new ImageIcon(BuscarTipoServicos.class
+				JBEditar.setIcon(new ImageIcon(BuscarServicos.class
 						.getResource("/Img/edit_add16.png")));
 				JBEditar.addActionListener(this);
 				JBEditar.setMnemonic(KeyEvent.VK_A);
@@ -141,7 +142,7 @@ public class BuscarTipoServicos extends JDialog implements ActionListener {
 
 			JBSair = new JButton("Sair");
 			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBSair.setIcon(new ImageIcon(BuscarTipoServicos.class
+			JBSair.setIcon(new ImageIcon(BuscarServicos.class
 					.getResource("/Img/exit16.png")));
 			JBSair.addActionListener(this);
 			JBSair.setMnemonic(KeyEvent.VK_Q);

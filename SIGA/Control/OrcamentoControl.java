@@ -6,15 +6,17 @@ import java.util.List;
 import Dominio.Cliente;
 import Dominio.Evento;
 import Dominio.Item;
-import Dominio.TipoItem;
+import Dominio.Servico;
 import Dominio.TiposEvento;
 import Interfaces.IClienteRepository;
 import Interfaces.IItemRepository;
 import Interfaces.IOrcamentoRepository;
+import Interfaces.IServicoRepository;
 import Interfaces.ITipoItemRepository;
 import Repositories.ClienteRepository;
 import Repositories.ItemRepository;
 import Repositories.OrcamentoRepository;
+import Repositories.ServicoRepository;
 import Repositories.TipoItemRepository;
 
 public class OrcamentoControl {
@@ -23,12 +25,15 @@ public class OrcamentoControl {
 	private IClienteRepository _clienterepository;
 	private IItemRepository _itemRepository;
 	private ITipoItemRepository _tipoItemRepository;
+	private IServicoRepository _servicoRepository;
 
 	public OrcamentoControl() {
 		_orcamentoRepository = new OrcamentoRepository();
 		_clienterepository = new ClienteRepository();
 		_itemRepository = new ItemRepository();
 		_tipoItemRepository = new TipoItemRepository();
+		_servicoRepository = new ServicoRepository();
+		
 	}
 
 	public List<Evento> listarTodos() {
@@ -54,6 +59,12 @@ public class OrcamentoControl {
 
 	public List<Item> buscarItens(String tipoItem) {
 		return _itemRepository.findByTipo(tipoItem);
+	}
+	
+	
+	
+	public List<Servico> buscarServicos(){
+		return _servicoRepository.findAll(true);
 	}
 
 	public Object[] DDLTipoItens() {

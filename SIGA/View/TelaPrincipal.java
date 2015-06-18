@@ -111,7 +111,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 
 		usuarios = PermissoesManager.buscarPermissao(Modulos.Usuarios);
 		lembretes = PermissoesManager.buscarPermissao(Modulos.Lembretes);
-		tipoServicos = PermissoesManager.buscarPermissao(Modulos.Tipo_servicos);
+		tipoServicos = PermissoesManager.buscarPermissao(Modulos.Servicos);
 		fornecedores = PermissoesManager.buscarPermissao(Modulos.Fornecedores);
 		itens = PermissoesManager.buscarPermissao(Modulos.Itens);
 		tipoItens = PermissoesManager.buscarPermissao(Modulos.Tipo_itens);
@@ -164,7 +164,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		JMForn.add(JMIFornExcluir);
 
 		// MENU TIPO SERVICOS
-		mnTipoServio_1 = new JMenu("Tipo Servi\u00E7os");
+		mnTipoServio_1 = new JMenu("Servi\u00E7os");
 		mnTipoServio_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mnTipoServio_1.setVisible(tipoServicos.isVisualizar());
 		JMForn.add(mnTipoServio_1);
@@ -186,7 +186,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		mntmBuscar_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmBuscar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BuscarTipoServicos tsb = new BuscarTipoServicos();
+				BuscarServicos tsb = new BuscarServicos();
 				tsb.setLocationRelativeTo(null);
 				tsb.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				tsb.setVisible(true);
@@ -278,14 +278,9 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		mntmNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				try {
-					EditFormCliente efc = new EditFormCliente();
-					efc.setLocationRelativeTo(null);
-					efc.setVisible(true);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				EditFormOrcamento ef = new EditFormOrcamento();
+				ef.setLocationRelativeTo(null);
+				ef.setVisible(true);
 
 			}
 		});
