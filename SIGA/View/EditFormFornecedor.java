@@ -169,7 +169,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		JLSite.setBounds(0, 281, 101, 14);
 		contentPanel.add(JLSite);
 
-		JLabel JLTpServ = new JLabel("Tipo Servi\u00E7o");
+		JLabel JLTpServ = new JLabel("Servi\u00E7o");
 		JLTpServ.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLTpServ.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLTpServ.setBounds(0, 64, 101, 14);

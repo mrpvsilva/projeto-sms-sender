@@ -138,7 +138,7 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 					JBBuscar.setMnemonic(KeyEvent.VK_F);
 				}
 
-				JLabel lblServioPrestado = new JLabel("Tipo servi\u00E7o");
+				JLabel lblServioPrestado = new JLabel("Servi\u00E7os");
 				lblServioPrestado.setHorizontalAlignment(SwingConstants.RIGHT);
 				lblServioPrestado.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				lblServioPrestado.setBounds(396, 15, 85, 14);

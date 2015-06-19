@@ -63,7 +63,7 @@ public class BuscarServicos extends JDialog implements ActionListener {
 		permissao =PermissoesManager.buscarPermissao(Modulos.Servicos);
 		setResizable(false);
 		setModal(true);
-		setTitle("SIGA - buscar tipo de servi\u00E7o");
+		setTitle("SIGA - busca de servi\u00E7o");
 		setBounds(100, 100, 450, 461);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -76,9 +76,8 @@ public class BuscarServicos extends JDialog implements ActionListener {
 
 		model = new ServicoTableModel(tipoServicoControl.listarTodos());
 		table = new JTable(model);
-		table.setFont(new Font("Tahoma", Font.PLAIN, 13));	
-		table.getColumnModel().getColumn(3).setMinWidth(0);
-		table.getColumnModel().getColumn(3).setMaxWidth(0);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
 
 		scrollPane.setViewportView(table);
 
@@ -178,7 +177,7 @@ public class BuscarServicos extends JDialog implements ActionListener {
 				tscad.setVisible(true);
 
 			} else {
-				JOptionPane.showMessageDialog(null, "Selecione uma linha");
+				JOptionPane.showMessageDialog(null, "Selecione um serviço");
 			}
 		}
 

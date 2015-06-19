@@ -126,17 +126,19 @@ public class AddClienteEvento extends JDialog {
 				ok.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
+						ok.setVisible(false);
 						Cliente c = _modelCliente.get(_cliente.getId());
 						if (c == null) {
 							_modelCliente.add(_cliente);
 							AddClienteEvento.this.dispose();
-						}
+						} else {
 
-						cpfcnpj.setValue(null);
-						encontrado.setVisible(false);
-						JOptionPane.showMessageDialog(null,
-								"Cliente já adicionado ao evento", "Atenção",
-								JOptionPane.WARNING_MESSAGE);
+							cpfcnpj.setValue(null);
+							encontrado.setVisible(false);
+							JOptionPane.showMessageDialog(null,
+									"Cliente já adicionado ao evento",
+									"Atenção", JOptionPane.WARNING_MESSAGE);
+						}
 					}
 				});
 				ok.setIcon(new ImageIcon(AddClienteEvento.class

@@ -50,7 +50,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 	public EditFormServico(DefaultTableModel<Servico> model, int id) {
 		setResizable(false);
 		setModal(true);
-		setTitle("SIGA - cadastro de tipo de servi\u00E7o");
+		setTitle("SIGA - cadastro de servi\u00E7o");
 		this.model = model;
 		this.id = id;
 		setBounds(100, 100, 340, 147);
@@ -129,7 +129,6 @@ public class EditFormServico extends JDialog implements ActionListener {
 			return;
 
 		tipoServico = tipoServicoControl.buscarTipoServico(id);
-
 		tfNome.setText(tipoServico.getNome());
 		valor.setValor(tipoServico.getValorservico());
 		chkAtivo.setSelected(tipoServico.isAtivo());
@@ -148,7 +147,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 		if (out == null) {
 			carregarGrid();
 			JOptionPane.showMessageDialog(null,
-					"Tipo serviço cadastrado com sucesso");
+					"Serviço cadastrado com sucesso");
 		} else {
 			JOptionPane.showMessageDialog(null, out);
 		}
@@ -159,13 +158,19 @@ public class EditFormServico extends JDialog implements ActionListener {
 
 		tipoServico.setNome(tfNome.getText());
 		tipoServico.setAtivo(chkAtivo.isSelected());
+		try {
+			tipoServico.setValorservico(valor.getValor());
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		String out = tipoServicoControl.atualizar(tipoServico);
 
 		if (out == null) {
 			carregarGrid();
 			JOptionPane.showMessageDialog(null,
-					"Tipo serviço atualizado com sucesso");
+					"Serviço atualizado com sucesso");
 		} else {
 			JOptionPane.showMessageDialog(null, out);
 		}
