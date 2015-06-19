@@ -9,7 +9,7 @@ import Dominio.Servico;
 public class ServicoTableModel extends DefaultTableModel<Servico> {
 
 	private final static String[] colunas = new String[] { "Nome", "Valor",
-			"Ativo", "Incluir" };
+			"Ativo" };
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,8 +39,6 @@ public class ServicoTableModel extends DefaultTableModel<Servico> {
 					getLinhas().get(linha).getValorservico());
 		case 2:
 			return getLinhas().get(linha).isAtivo() ? "Ativo" : "Inativo";
-		case 3:
-			return linhas.get(linha).isSelecionado();
 		default:
 			return null;
 		}
@@ -51,8 +49,6 @@ public class ServicoTableModel extends DefaultTableModel<Servico> {
 
 		switch (columnIndex) {
 		case 1:
-			return true;
-		case 3:
 			return true;
 		default:
 			return false;
@@ -65,9 +61,6 @@ public class ServicoTableModel extends DefaultTableModel<Servico> {
 		case 1:
 			BigDecimal valor = new BigDecimal(Value.toString());
 			linhas.get(rowIndex).setValorservico(valor);
-		case 3:
-			boolean v = Boolean.parseBoolean(Value.toString());
-			linhas.get(rowIndex).setSelecionado(v);
 			break;
 		default:
 			break;
@@ -83,9 +76,7 @@ public class ServicoTableModel extends DefaultTableModel<Servico> {
 			return String.class;
 		} else if (columnIndex == 2) {
 			return Integer.class;
-		} else if (columnIndex == 3) {
-			return Boolean.class;
-		}
+		} 
 		return BigDecimal.class;
 	}
 
