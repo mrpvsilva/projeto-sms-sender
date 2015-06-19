@@ -31,6 +31,7 @@ import javax.swing.JTextField;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class AddItemEvento extends JDialog {
 
@@ -41,6 +42,7 @@ public class AddItemEvento extends JDialog {
 	private JTextField _qtd;
 	private Evento _evento;
 	private OrcamentoControl controller;
+	private JComboBox comboBox;
 
 	/**
 	 * Launch the application.
@@ -63,6 +65,7 @@ public class AddItemEvento extends JDialog {
 		controller = new OrcamentoControl();
 		_modelItens = new ItemEventoTableModel();
 		_modelEventoItens = modelEventoItens;
+		preencherListaItens(controller.pesquisarItens("Todos"));
 		_evento = evento;
 		setModal(true);
 		setBounds(100, 100, 662, 465);
@@ -82,12 +85,21 @@ public class AddItemEvento extends JDialog {
 		lblTipoItem.setBounds(106, 13, 67, 16);
 		panel.add(lblTipoItem);
 
-		JComboBox comboBox = new JComboBox(controller.DDLTipoItens());
+		comboBox = new JComboBox(controller.DDLTipoItens());
+		comboBox.addItem("Todos");
+		comboBox.setSelectedItem("Todos");
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		comboBox.setBounds(171, 12, 182, 22);
 		panel.add(comboBox);
 
 		JButton btnNewButton = new JButton("Pesquisar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String tipoItem = comboBox.getSelectedItem().toString();
+				preencherListaItens(controller.pesquisarItens(tipoItem));
+
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnNewButton.setBounds(363, 11, 89, 23);
 		panel.add(btnNewButton);
@@ -118,20 +130,28 @@ public class AddItemEvento extends JDialog {
 				add.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int l = table.getSelectedRow();
-						String qtd = _qtd.getText();
 						if (l > -1) {
+							Item i = _modelItens.find(l);
+							if (!isExist(i)) {
+								String qtd = _qtd.getText();
+								if (!qtd.isEmpty()) {
 
-							if (!qtd.isEmpty()) {
+									int q = Integer.parseInt(qtd);
 
-								int q = Integer.parseInt(qtd);
-								Item i = _modelItens.find(l);
-								EventoItem ei = new EventoItem(_evento, i, q);
-								_modelEventoItens.add(ei);
+									EventoItem ei = new EventoItem(_evento, i,
+											q);
+									_modelEventoItens.add(ei);
+									_modelItens.remove(l);
 
+								} else {
+									JOptionPane.showMessageDialog(null,
+											"Informe a quantidade", "Atenção",
+											JOptionPane.WARNING_MESSAGE);
+								}
 							} else {
 								JOptionPane.showMessageDialog(null,
-										"Informe a quantidade", "Atenção",
-										JOptionPane.WARNING_MESSAGE);
+										"Item já adicionado ao evento.",
+										"Atenção", JOptionPane.WARNING_MESSAGE);
 							}
 
 						} else {
@@ -153,5 +173,37 @@ public class AddItemEvento extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+
+	private void preencherListaItens(List<Item> itens) {
+
+		_modelItens.clear();
+
+		if (!itens.isEmpty()) {
+
+			for (Item item : itens) {
+				int cont = 0;
+				for (EventoItem e : _modelEventoItens.getLinhas()) {
+					if (e.getItem().getId() == item.getId())
+						cont++;
+				}
+
+				if (cont == 0)
+					_modelItens.add(item);
+			}
+
+		}
+	}
+
+	private boolean isExist(Item item) {
+
+		for (EventoItem e : _modelEventoItens.getLinhas()) {
+
+			if (e.getItem().getId() == item.getId())
+				return true;
+
+		}
+
+		return false;
 	}
 }

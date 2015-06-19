@@ -6,7 +6,6 @@ import javax.persistence.Query;
 
 import Dominio.TipoItem;
 import Interfaces.ITipoItemRepository;
-import Util.Factory;
 
 public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		ITipoItemRepository {
@@ -15,21 +14,21 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 	@Override
 	public List<TipoItem> findAll() {
 		try {
-			
+
 			String q = "select t from TipoItem t order by t.nome";
 			Query query = entityManager.createQuery(q);
 			return query.getResultList();
-			
+
 		} catch (Exception ex) {
 			return null;
-		} 
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TipoItem> findAll(String nome, String ativo) {
 		try {
-			
+
 			String q = "select t from TipoItem t where ";
 
 			if (!nome.equals("")) {
@@ -39,9 +38,9 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 			if (ativo.equals("Todos")) {
 				q += " t.ativo in (0,1)";
 			} else if (ativo.equals("Ativo")) {
-				q += " ativo = 1";
+				q += " t.ativo = 1";
 			} else {
-				q += " ativo = 0";
+				q += " t.ativo = 0";
 			}
 
 			q += " order by t.nome";
@@ -52,13 +51,13 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
-		} 
+		}
 	}
 
 	@Override
 	public TipoItem find(String nome) {
-		try {			
-			String q = "from TipoItem where nome = :nome";
+		try {
+			String q = "select t from TipoItem t where t.nome = :nome";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("nome", nome);
 			TipoItem t = (TipoItem) query.getSingleResult();
@@ -66,19 +65,19 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
-		} 
+		}
 	}
 
 	@Override
 	public List<String> DDLTipoItens() {
-		try {			
-			String q = "select t.nome from TipoItem t order by nome";
-			Query query = entityManager.createQuery(q);
-			return query.getResultList();
+		try {
+			String q = "select t.nome from TipoItem t where t.ativo = true order by t.nome";
+			return entityManager.createQuery(q).getResultList();
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
-		} 
+		}
 	}
 
 }

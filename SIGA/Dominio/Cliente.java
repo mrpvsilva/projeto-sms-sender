@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -36,7 +35,7 @@ public class Cliente implements Serializable {
 	@Column
 	private String rg;
 	@Column
-	private String cpfCnpj;
+	private String cpfcnpj;
 	@Column
 	private String nomeresponsavel;
 	@Column
@@ -117,11 +116,11 @@ public class Cliente implements Serializable {
 	}
 
 	public String getCpfCnpj() {
-		return cpfCnpj;
+		return cpfcnpj;
 	}
 
 	public void setCpfCnpj(String cpfCnpj) {
-		this.cpfCnpj = cpfCnpj;
+		this.cpfcnpj = cpfCnpj;
 	}
 
 	public String getResponsavel() {

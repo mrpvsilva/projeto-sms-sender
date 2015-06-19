@@ -1,10 +1,12 @@
 package Control;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import Dominio.Cliente;
 import Dominio.Evento;
+import Dominio.EventoItem;
 import Dominio.Item;
 import Dominio.Servico;
 import Dominio.TiposEvento;
@@ -33,7 +35,7 @@ public class OrcamentoControl {
 		_itemRepository = new ItemRepository();
 		_tipoItemRepository = new TipoItemRepository();
 		_servicoRepository = new ServicoRepository();
-		
+
 	}
 
 	public List<Evento> listarTodos() {
@@ -60,11 +62,27 @@ public class OrcamentoControl {
 	public List<Item> buscarItens(String tipoItem) {
 		return _itemRepository.findByTipo(tipoItem);
 	}
-	
-	
-	
-	public List<Servico> buscarServicos(){
+
+	public List<EventoItem> buscarEventoItens(Evento evento) {
+		List<Item> l = _itemRepository.findAll(true);
+		List<EventoItem> l1 = new ArrayList<EventoItem>();
+
+		for (Item i : l) {
+			l1.add(new EventoItem(evento, i, 1));
+		}
+
+		return l1;
+	}
+
+	public List<Servico> buscarServicos() {
 		return _servicoRepository.findAll(true);
+	}
+
+	public List<Item> pesquisarItens(String tipoItem) {
+		if (tipoItem.equals("Todos"))
+			return _itemRepository.findAll(true);
+		else
+			return _itemRepository.findByTipo(tipoItem);
 	}
 
 	public Object[] DDLTipoItens() {

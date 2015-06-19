@@ -30,8 +30,6 @@ public class Servico implements Serializable {
 	private String nome;
 	@Column
 	private BigDecimal valorservico;
-	@Transient
-	private boolean selecionado;
 	@Column
 	private boolean ativo;
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -40,13 +38,12 @@ public class Servico implements Serializable {
 
 	public Servico() {
 		setAtivo(true);
-		setSelecionado(true);
+
 	}
 
-	public Servico(String nome, boolean ativo,boolean selecionado) {
+	public Servico(String nome, boolean ativo, boolean selecionado) {
 		setNome(nome);
 		setAtivo(ativo);
-		setSelecionado(selecionado);
 	}
 
 	public Long getId() {
@@ -87,14 +84,6 @@ public class Servico implements Serializable {
 
 	public void setExecutor(Fornecedor executor) {
 		this.executor = executor;
-	}
-
-	public boolean isSelecionado() {
-		return selecionado;
-	}
-
-	public void setSelecionado(boolean selecionado) {
-		this.selecionado = selecionado;
 	}
 
 }
