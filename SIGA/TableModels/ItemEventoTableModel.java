@@ -1,5 +1,6 @@
 package TableModels;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.List;
 
@@ -17,7 +18,6 @@ public class ItemEventoTableModel extends DefaultTableModel<Item> {
 
 	public ItemEventoTableModel(List<Item> linhas) {
 		super(colunas, linhas);
-
 	}
 
 	@Override
@@ -34,14 +34,24 @@ public class ItemEventoTableModel extends DefaultTableModel<Item> {
 	}
 
 	@Override
-	public int getId(int linha) {
-		return (int) getLinhas().get(linha).getId();
+	public long getId(int linha) {
+		return getLinhas().get(linha).getId();
 	}
 
+	
+
 	@Override
-	public Item get(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Class getColumnClass(int column) {
+		switch (column) {
+		case 0:
+			return String.class;
+		case 1:
+			return BigDecimal.class;
+		default:
+			return null;
+
+		}
+
 	}
 
 }

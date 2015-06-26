@@ -6,7 +6,7 @@ import Dominio.Modulo;
 
 public class ModuloTableModel extends DefaultTableModel<Modulo> {
 
-	private final static String[] colunas = new String[] { "ID", "Nome" };
+	private final static String[] colunas = new String[] { "Nome" };
 	private static final long serialVersionUID = 1L;
 
 	public ModuloTableModel() {
@@ -19,28 +19,18 @@ public class ModuloTableModel extends DefaultTableModel<Modulo> {
 
 	@Override
 	public Object getValueAt(int row, int column) {
-		switch (column) {
-		case 0:
-			return getLinhas().get(row).getId();
-		case 1:
-			return getLinhas().get(row).getNome();
-
-		default:
-			return null;
-		}
+		return getLinhas().get(row).getNome();
 	}
 
 	@Override
-	public int getId(int linha) {
-		// TODO Auto-generated method stub
-		return (int) getLinhas().get(linha).getId();
-
+	public long getId(int linha) {
+		return getLinhas().get(linha).getId();
 	}
 
+	
 	@Override
-	public Modulo get(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Class getColumnClass(int column) {
+		return String.class;
 	}
 
 }

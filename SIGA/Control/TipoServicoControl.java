@@ -26,7 +26,7 @@ public class TipoServicoControl {
 		return null;
 	}
 
-	public Servico buscarTipoServico(int id) {
+	public Servico buscarTipoServico(long id) {
 		return tipoServicoRepository.find(id);
 	}
 

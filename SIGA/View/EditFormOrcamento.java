@@ -8,24 +8,30 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.text.MaskFormatter;
 
 import Control.OrcamentoControl;
-import Dominio.Cliente;
+import Dominio.ClienteEvento;
 import Dominio.Evento;
 import Dominio.EventoItem;
+import Dominio.EventoServico;
 import Dominio.Servico;
 import Dominio.TiposEvento;
-import TableModels.ClienteTableModel;
+import TableModels.ClienteEventoTableModel;
 import TableModels.DefaultTableModel;
 import TableModels.EventoItemTableModel;
+import TableModels.ServicoEventoTableModel;
 import TableModels.ServicoTableModel;
 import Util.DateTimePicker;
 import Util.EditFormType;
 import Util.StatusEvento;
 
 import java.awt.Font;
+import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -64,10 +70,13 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	private JTable table_itens;
 	private JTable table_servicos;
 
-	private DefaultTableModel<Cliente> modelClientes;
+	private DefaultTableModel<ClienteEvento> modelClientes;
 	private DefaultTableModel<EventoItem> modelItens;
-	private DefaultTableModel<Servico> modelServicos;
+	private DefaultTableModel<EventoServico> modelServicos;
 	private JButton addCliente;
+	private JTextField totalEvento;
+
+	private JButton removeCliente;
 
 	/**
 	 * Launch the application.
@@ -191,6 +200,18 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			nconvidados.setColumns(10);
 		}
 
+		JLabel lblTotal = new JLabel("Total");
+		lblTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblTotal.setBounds(332, 93, 46, 15);
+		panel.add(lblTotal);
+
+		totalEvento = new JTextField();
+		totalEvento.setEditable(false);
+		totalEvento.setBounds(388, 91, 205, 20);
+		panel.add(totalEvento);
+		totalEvento.setColumns(10);
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 164, 603, 452);
 		contentPanel.add(tabbedPane);
@@ -203,20 +224,21 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			scrollPane.setBounds(10, 11, 578, 385);
 			tab_clientes.add(scrollPane);
 
-			modelClientes = new ClienteTableModel();
+			modelClientes = new ClienteEventoTableModel();
 			table_clientes = new JTable(modelClientes);
 			table_clientes.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			table_clientes.getColumnModel().getColumn(2).setMinWidth(0);
-			table_clientes.getColumnModel().getColumn(2).setMaxWidth(0);
 
 			scrollPane.setViewportView(table_clientes);
 
 			addCliente = new JButton("");
 			addCliente.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					AddClienteEvento ace = new AddClienteEvento(modelClientes);
+
+					AddClienteEvento ace = new AddClienteEvento(_evento,
+							modelClientes);
 					ace.setLocationRelativeTo(null);
 					ace.setVisible(true);
+
 				}
 			});
 			addCliente.setIcon(new ImageIcon(EditFormOrcamento.class
@@ -225,8 +247,8 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			addCliente.setBounds(10, 400, 23, 23);
 			tab_clientes.add(addCliente);
 
-			JButton button = new JButton("");
-			button.addActionListener(new ActionListener() {
+			removeCliente = new JButton("");
+			removeCliente.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int linha = table_clientes.getSelectedRow();
 
@@ -239,11 +261,11 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 					}
 				}
 			});
-			button.setIcon(new ImageIcon(EditFormOrcamento.class
+			removeCliente.setIcon(new ImageIcon(EditFormOrcamento.class
 					.getResource("/Img/close16.png")));
-			button.setToolTipText("Remover cliente");
-			button.setBounds(35, 400, 23, 23);
-			tab_clientes.add(button);
+			removeCliente.setToolTipText("Remover cliente");
+			removeCliente.setBounds(35, 400, 23, 23);
+			tab_clientes.add(removeCliente);
 		}
 
 		JPanel tab_itens = new JPanel();
@@ -256,6 +278,13 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		modelItens = new EventoItemTableModel(
 				_orcamentoControl.buscarEventoItens(_evento));
 		table_itens = new JTable(modelItens);
+		table_itens.getModel().addTableModelListener(new TableModelListener() {
+
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				calcularTotal();
+			}
+		});
 		scrollPane.setViewportView(table_itens);
 
 		JButton addItem = new JButton("");
@@ -272,8 +301,8 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		addItem.setBounds(10, 400, 23, 23);
 		tab_itens.add(addItem);
 
-		JButton button = new JButton("");
-		button.addActionListener(new ActionListener() {
+		JButton removeItem = new JButton("");
+		removeItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int linha = table_itens.getSelectedRow();
 
@@ -287,11 +316,11 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 
 			}
 		});
-		button.setIcon(new ImageIcon(EditFormOrcamento.class
+		removeItem.setIcon(new ImageIcon(EditFormOrcamento.class
 				.getResource("/Img/close16.png")));
-		button.setToolTipText("Remover item");
-		button.setBounds(35, 400, 23, 23);
-		tab_itens.add(button);
+		removeItem.setToolTipText("Remover item");
+		removeItem.setBounds(35, 400, 23, 23);
+		tab_itens.add(removeItem);
 
 		// }
 
@@ -303,11 +332,18 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		scrollPane_1.setBounds(10, 11, 578, 385);
 		tab_servicos.add(scrollPane_1);
 
-		modelServicos = new ServicoTableModel(
-				_orcamentoControl.buscarServicos());
+		modelServicos = new ServicoEventoTableModel(
+				_orcamentoControl.buscarServicos(_evento));
 		table_servicos = new JTable(modelServicos);
-		table_servicos.getColumnModel().getColumn(2).setMinWidth(0);
-		table_servicos.getColumnModel().getColumn(2).setMaxWidth(0);
+		table_servicos.getModel().addTableModelListener(
+				new TableModelListener() {
+
+					@Override
+					public void tableChanged(TableModelEvent e) {
+						calcularTotal();
+					}
+				});
+
 		JFormattedTextField ftext = new JFormattedTextField();
 		MaskFormatter mask;
 		try {
@@ -320,8 +356,8 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 				.setCellEditor(new DefaultCellEditor(ftext));
 		scrollPane_1.setViewportView(table_servicos);
 
-		JButton button_1 = new JButton("");
-		button_1.addActionListener(new ActionListener() {
+		JButton removeServico = new JButton("");
+		removeServico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int linha = table_servicos.getSelectedRow();
 
@@ -334,18 +370,25 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 				}
 			}
 		});
-		button_1.setIcon(new ImageIcon(EditFormOrcamento.class
+		removeServico.setIcon(new ImageIcon(EditFormOrcamento.class
 				.getResource("/Img/close16.png")));
-		button_1.setToolTipText("Remover servi\u00E7o");
-		button_1.setBounds(35, 400, 23, 23);
-		tab_servicos.add(button_1);
+		removeServico.setToolTipText("Remover servi\u00E7o");
+		removeServico.setBounds(35, 400, 23, 23);
+		tab_servicos.add(removeServico);
 
-		JButton button_2 = new JButton("");
-		button_2.setIcon(new ImageIcon(EditFormOrcamento.class
+		JButton addServico = new JButton("");
+		addServico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				BuscarServicos bs = new BuscarServicos(_evento, modelServicos);
+				bs.setLocationRelativeTo(null);
+				bs.setVisible(true);
+			}
+		});
+		addServico.setIcon(new ImageIcon(EditFormOrcamento.class
 				.getResource("/Img/plus.png")));
-		button_2.setToolTipText("Adicionar servi\u00E7o");
-		button_2.setBounds(10, 400, 23, 23);
-		tab_servicos.add(button_2);
+		addServico.setToolTipText("Adicionar servi\u00E7o");
+		addServico.setBounds(10, 400, 23, 23);
+		tab_servicos.add(addServico);
 
 		{
 			JPanel buttonPane = new JPanel();
@@ -390,9 +433,15 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			nconvidados.setEditable(false);
 			salvar.setVisible(false);
 			addCliente.setVisible(false);
+			removeCliente.setVisible(false);
+			addItem.setVisible(false);
+			removeItem.setVisible(false);
+			addServico.setVisible(false);
+			removeServico.setVisible(false);
 		}
 
 		carregarCampos();
+		calcularTotal();
 	}
 
 	private void submit() {
@@ -403,6 +452,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		_evento.setNumConvidados(Integer.parseInt(nconvidados.getText()));
 		_evento.setClientes(modelClientes.getLinhas());
 		_evento.setItens(modelItens.getLinhas());
+		_evento.setServicos(modelServicos.getLinhas());
 
 		boolean success = false;
 
@@ -433,15 +483,30 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 
 	}
 
-	private void carregarCampos() {
-		if (_tipo != EditFormType.cadastrar) {
+	private void calcularTotal() {
+		BigDecimal total = new BigDecimal(0);
 
+		for (EventoItem ei : modelItens.getLinhas()) {
+			total = total.add(ei.getSubtotal());
+		}
+
+		for (EventoServico es : modelServicos.getLinhas()) {
+			total = total.add(es.getValorservico());
+		}
+
+		totalEvento.setText(NumberFormat.getCurrencyInstance().format(total));
+	}
+
+	private void carregarCampos() {
+
+		if (_tipo != EditFormType.cadastrar) {
 			nome.setText(_evento.getNome());
 			datahora.setDate(_evento.getDataEvento());
 			tipoevento.setSelectedItem(TiposEvento.valueOf(_evento.getTipo()));
 			nconvidados.setText(_evento.getNumConvidados() + "");
 			modelClientes.setLinhas(_evento.getClientes());
 			modelItens.setLinhas(_evento.getItens());
+			modelServicos.setLinhas(_evento.getServicos());
 
 		}
 	}

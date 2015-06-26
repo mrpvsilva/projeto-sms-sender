@@ -73,6 +73,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 	private Fornecedor fornecedor;
 	private JButton JBSair;
 	private JLabel JLCnpj;
+	private JTextField cidade;
 
 	/**
 	 * Launch the application.
@@ -102,7 +103,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		this.forModel = model;
 		this.fornecedor = fornecedor;
 		_fornecedorControl = new FornecedoresControl();
-		setBounds(0, -20, 530, 379);
+		setBounds(0, -20, 530, 436);
 		setTitle("SIGA  - Cadastrar fornecedor");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -166,7 +167,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		JLabel JLSite = new JLabel("Site");
 		JLSite.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLSite.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLSite.setBounds(0, 281, 101, 14);
+		JLSite.setBounds(0, 308, 101, 14);
 		contentPanel.add(JLSite);
 
 		JLabel JLTpServ = new JLabel("Servi\u00E7o");
@@ -189,7 +190,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 
 		JTFSite = new JTextField();
 		JTFSite.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JTFSite.setBounds(111, 281, 400, 20);
+		JTFSite.setBounds(111, 308, 400, 20);
 		contentPanel.add(JTFSite);
 		JTFSite.setColumns(10);
 
@@ -203,25 +204,25 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		JLBairro = new JLabel("Bairro");
 		JLBairro.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLBairro.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLBairro.setBounds(0, 253, 101, 15);
+		JLBairro.setBounds(0, 280, 101, 15);
 		contentPanel.add(JLBairro);
 
 		JTFBairro = new JTextField();
 		JTFBairro.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JTFBairro.setBounds(111, 253, 118, 20);
+		JTFBairro.setBounds(111, 280, 214, 20);
 		contentPanel.add(JTFBairro);
 		JTFBairro.setColumns(10);
 
 		lblCep = new JLabel("CEP");
 		lblCep.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblCep.setBounds(321, 259, 46, 15);
+		lblCep.setBounds(321, 263, 46, 15);
 		contentPanel.add(lblCep);
 
 		maskCep = new MaskFormatter(Mascaras.maskCep);
 		JFFCep = new JFormattedTextField(maskCep);
 		JFFCep.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JFFCep.setBounds(393, 256, 118, 20);
+		JFFCep.setBounds(393, 260, 118, 20);
 		contentPanel.add(JFFCep);
 		JFFCep.setColumns(10);
 
@@ -265,6 +266,19 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		btnremovetel.setBounds(490, 153, 23, 23);
 		btnremovetel.addActionListener(this);
 		contentPanel.add(btnremovetel);
+
+		JLabel lblCidade = new JLabel("Cidade");
+		lblCidade.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCidade.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblCidade.setBounds(0, 255, 101, 15);
+		contentPanel.add(lblCidade);
+
+		cidade = new JTextField();
+		cidade.setText((String) null);
+		cidade.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		cidade.setColumns(10);
+		cidade.setBounds(111, 255, 214, 20);
+		contentPanel.add(cidade);
 
 		{
 			JPanel buttonPane = new JPanel();
@@ -364,6 +378,9 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 			else if (JTFEnd.getText().trim().isEmpty()) // Valida Endereço
 				JOptionPane.showMessageDialog(null, "Endereço em branco.",
 						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+			else if (cidade.getText().trim().isEmpty()) // Valida Endereço
+				JOptionPane.showMessageDialog(null, "Cidade em branco.",
+						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 			else if (JTFBairro.getText().trim().isEmpty()) // Valida Bairro
 				JOptionPane.showMessageDialog(null, "Bairro em branco.",
 						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
@@ -432,6 +449,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		Endereco endereco = fornecedor.getEndereco();
 
 		endereco.setEndereco(JTFEnd.getText());
+		endereco.setCidade(cidade.getText());
 		endereco.setBairro(JTFBairro.getText());
 		endereco.setCep((Integer.parseInt(Extras.FormatCep(JFFCep.getText()))));
 
@@ -467,6 +485,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 
 		endereco.setEndereco(JTFEnd.getText());
 		endereco.setBairro(JTFBairro.getText());
+		endereco.setCidade(cidade.getText());
 		endereco.setCep((Integer.parseInt(Extras.FormatCep(JFFCep.getText()))));
 
 		fornecedor.setEndereco(endereco);
@@ -529,9 +548,11 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		JTFEmail.setText(fornecedor.getEmail());
 		JTFEnd.setText(fornecedor.getEndereco().getEndereco());
 		JTFBairro.setText(fornecedor.getEndereco().getBairro());
+		cidade.setText(fornecedor.getEndereco().getCidade());
 		JFFCep.setText(fornecedor.getEndereco().getCep() + "");
 		JTFSite.setText(fornecedor.getSite());
 		telmodel.setLinhas(fornecedor.getTelefones());
+		
 		JCBTpServ.setSelectedItem(fornecedor.getTipoServico().getNome());
 
 	}

@@ -38,8 +38,8 @@ public class ServicosControl {
 		return _itemRepository.findAll(campo, txt);
 	}
 
-	public Item buscarItem(int ID) {
-		return _itemRepository.find(ID);
+	public Item buscarItem(long l) {
+		return _itemRepository.find(l);
 	}
 
 	public String[] DDLTipoServico() {

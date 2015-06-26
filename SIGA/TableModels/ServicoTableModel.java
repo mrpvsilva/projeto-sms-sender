@@ -25,20 +25,25 @@ public class ServicoTableModel extends DefaultTableModel<Servico> {
 	// CRUD
 
 	@Override
-	public int getId(int linha) {
-		return getLinhas().get(linha).getId().intValue();
+	public long getId(int linha) {
+		return getLinhas().get(linha).getId();
 	}
 
 	@Override
 	public Object getValueAt(int linha, int coluna) {
+
+		Servico s = linhas.get(linha);
+		System.out.println(linha+": "+s.isAtivo());
+		
+		
 		switch (coluna) {
 		case 0:
-			return getLinhas().get(linha).getNome();
+			return s.getNome();
 		case 1:
 			return NumberFormat.getCurrencyInstance().format(
-					getLinhas().get(linha).getValorservico());
+					s.getValorservico());
 		case 2:
-			return getLinhas().get(linha).isAtivo() ? "Ativo" : "Inativo";
+			return s.isAtivo() ? "Ativo" : "Inativo";
 		default:
 			return null;
 		}
@@ -72,18 +77,15 @@ public class ServicoTableModel extends DefaultTableModel<Servico> {
 	@Override
 	public Class getColumnClass(int columnIndex) {
 
-		if (columnIndex == 0) {
+		switch (columnIndex) {
+		case 1:
+			return BigDecimal.class;
+		default:
 			return String.class;
-		} else if (columnIndex == 2) {
-			return Integer.class;
-		} 
-		return BigDecimal.class;
+		}
+
 	}
 
-	@Override
-	public Servico get(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }

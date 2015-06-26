@@ -7,6 +7,7 @@ import java.util.List;
 import Dominio.Cliente;
 import Dominio.Evento;
 import Dominio.EventoItem;
+import Dominio.EventoServico;
 import Dominio.Item;
 import Dominio.Servico;
 import Dominio.TiposEvento;
@@ -74,8 +75,14 @@ public class OrcamentoControl {
 		return l1;
 	}
 
-	public List<Servico> buscarServicos() {
-		return _servicoRepository.findAll(true);
+	public List<EventoServico> buscarServicos(Evento evento) {
+		List<Servico> s = _servicoRepository.findAll(true);
+		List<EventoServico> e = new ArrayList<EventoServico>();
+
+		for (Servico servico : s) {
+			e.add(new EventoServico(evento, servico));
+		}
+		return e;
 	}
 
 	public List<Item> pesquisarItens(String tipoItem) {

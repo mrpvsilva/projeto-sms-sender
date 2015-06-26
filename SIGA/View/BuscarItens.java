@@ -76,7 +76,7 @@ public class BuscarItens extends JDialog implements ActionListener {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				BuscarItens.class.getResource("/Img/CNPJ G200.png")));
 		setTitle("SIGA - buscar itens");
-		setBounds(100, 100, 470, 300);
+		setBounds(100, 100, 582, 399);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -95,14 +95,14 @@ public class BuscarItens extends JDialog implements ActionListener {
 					.getResource("/Img/Procurar.png")));
 			JBBuscar.setMnemonic(KeyEvent.VK_F);
 			JBBuscar.addActionListener(this);
-			JBBuscar.setBounds(340, 11, 99, 23);
+			JBBuscar.setBounds(467, 9, 99, 23);
 			contentPanel.add(JBBuscar);
 		}
 		{
 			JTFBuscar = new JTextField();
 			JTFBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			JTFBuscar.setColumns(10);
-			JTFBuscar.setBounds(164, 11, 172, 20);
+			JTFBuscar.setBounds(184, 11, 273, 20);
 			contentPanel.add(JTFBuscar);
 		}
 		{
@@ -111,24 +111,20 @@ public class BuscarItens extends JDialog implements ActionListener {
 			for (String item : servCont.Filtros()) {
 				JCBFiltro.addItem(item);
 			}
-			JCBFiltro.setBounds(56, 11, 103, 20);
+			JCBFiltro.setBounds(56, 11, 118, 20);
 			contentPanel.add(JCBFiltro);
 		}
 		{
 			// Criação da Jtable
 			scroll = new JScrollPane();
 			contentPanel.add(scroll);
-			scroll.setBounds(12, 59, 426, 158);
+			scroll.setBounds(12, 59, 554, 266);
 			{
 
 				model = new ItemTableModel(_servicoControl.listarTodos());
 				tabela = new JTable(model);
 				tabela.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				scroll.setViewportView(tabela);
-				;
-
-				tabela.getColumnModel().getColumn(0).setMinWidth(0);
-				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
+				scroll.setViewportView(tabela);							
 
 			}
 		}

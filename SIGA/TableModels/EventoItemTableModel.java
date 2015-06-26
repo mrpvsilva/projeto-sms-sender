@@ -32,10 +32,7 @@ public class EventoItemTableModel extends DefaultTableModel<EventoItem> {
 		case 2:
 			return ei.getQuantidade();
 		case 3:
-
-			BigDecimal sub = ei.getItem().getValorComercial()
-					.multiply(new BigDecimal(ei.getQuantidade()));
-			return NumberFormat.getCurrencyInstance().format(sub);
+			return NumberFormat.getCurrencyInstance().format(ei.getSubtotal());
 		case 4:
 			return ei.getItem().getTipoitem().getNome();
 		default:
@@ -44,13 +41,8 @@ public class EventoItemTableModel extends DefaultTableModel<EventoItem> {
 	}
 
 	@Override
-	public int getId(int linha) {
-		return (int) linhas.get(linha).getId();
-	}
-
-	@Override
-	public EventoItem get(long id) {
-		return null;
+	public long getId(int linha) {
+		return linhas.get(linha).getId();
 	}
 
 	@Override

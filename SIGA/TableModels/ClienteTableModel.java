@@ -39,22 +39,16 @@ public class ClienteTableModel extends DefaultTableModel<Cliente> {
 			return null;
 		}
 	}
+	
 
 	@Override
-	public int getId(int linha) {
-		return (int) getLinhas().get(linha).getId();
+	public long getId(int linha) {
+		return getLinhas().get(linha).getId();
 	}
 
 	@Override
-	public Cliente get(long id) {
-
-		
-		for (Cliente c : linhas) {
-			if (c.getId() == id)
-				return c;
-		}
-
-		return null;
+	public Class getColumnClass(int column) {
+		return String.class;
 	}
 
 }

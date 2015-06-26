@@ -67,11 +67,11 @@ public class EditFormItem extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public EditFormItem(int id, DefaultTableModel<Item> model) {
+	public EditFormItem(long l, DefaultTableModel<Item> model) {
 		setResizable(false);
 		setModal(true);
 		sc = new ServicosControl();
-		this.item = sc.buscarItem(id);
+		this.item = sc.buscarItem(l);
 		this.model = model;
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(

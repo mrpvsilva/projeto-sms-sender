@@ -20,6 +20,8 @@ import javax.swing.ImageIcon;
 
 import Control.OrcamentoControl;
 import Dominio.Cliente;
+import Dominio.ClienteEvento;
+import Dominio.Evento;
 import Extra.Mascaras;
 import TableModels.DefaultTableModel;
 
@@ -35,7 +37,8 @@ public class AddClienteEvento extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JFormattedTextField cpfcnpj;
-	private DefaultTableModel<Cliente> _modelCliente;
+	private DefaultTableModel<ClienteEvento> _modelCliente;
+	private Evento _evento;
 	private OrcamentoControl control;
 	private JLabel cliente;
 	private Cliente _cliente;
@@ -49,7 +52,7 @@ public class AddClienteEvento extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			AddClienteEvento dialog = new AddClienteEvento(null);
+			AddClienteEvento dialog = new AddClienteEvento(null, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -60,8 +63,10 @@ public class AddClienteEvento extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public AddClienteEvento(DefaultTableModel<Cliente> modelCliente) {
+	public AddClienteEvento(Evento evento,
+			DefaultTableModel<ClienteEvento> modelCliente) {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		_evento = evento;
 		_modelCliente = modelCliente;
 		start();
 	}
@@ -127,9 +132,10 @@ public class AddClienteEvento extends JDialog {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
 						ok.setVisible(false);
-						Cliente c = _modelCliente.get(_cliente.getId());
-						if (c == null) {
-							_modelCliente.add(_cliente);
+
+						if (!exist(_cliente.getId())) {
+							_modelCliente.add(new ClienteEvento(_evento,
+									_cliente));
 							AddClienteEvento.this.dispose();
 						} else {
 
@@ -192,7 +198,7 @@ public class AddClienteEvento extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						try {
 							AddClienteEvento.this.dispose();
-							EditFormCliente efc = new EditFormCliente(
+							EditFormCliente efc = new EditFormCliente(_evento,
 									_modelCliente);
 							efc.setLocationRelativeTo(null);
 							efc.setVisible(true);
@@ -234,5 +240,14 @@ public class AddClienteEvento extends JDialog {
 			cliente.setText("Cliente não encontrado");
 		}
 		encontrado.setVisible(true);
+	}
+
+	private boolean exist(long id) {
+		for (ClienteEvento c : _modelCliente.getLinhas()) {
+			if (c.getCliente().getId() == id)
+				return true;
+		}
+
+		return false;
 	}
 }

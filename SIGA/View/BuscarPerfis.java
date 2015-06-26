@@ -80,8 +80,7 @@ public class BuscarPerfis extends JDialog implements ActionListener {
 					tableModelPermissao.setLinhas(linhas);
 				}
 			});
-			tablePerfis.getColumnModel().getColumn(0).setMinWidth(0);
-			tablePerfis.getColumnModel().getColumn(0).setMaxWidth(0);
+			
 			scrollPane.setViewportView(tablePerfis);
 		}
 

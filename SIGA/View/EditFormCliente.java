@@ -32,7 +32,9 @@ import javax.swing.text.MaskFormatter;
 
 import Control.ClientesControl;
 import Dominio.Cliente;
+import Dominio.ClienteEvento;
 import Dominio.Endereco;
+import Dominio.Evento;
 import Dominio.Telefone;
 import Dominio.TelefoneCliente;
 import Extra.Extras;
@@ -81,6 +83,8 @@ public class EditFormCliente extends JDialog implements ActionListener {
 	private JButton remove_telefone;
 	private JButton edit_telefone;
 	private DefaultTableModel<Cliente> _modelCliente;
+	private DefaultTableModel<ClienteEvento> _modelClienteEvento;
+	private Evento _evento;
 	private JCheckBox chckbxCnpj;
 
 	/**
@@ -104,10 +108,12 @@ public class EditFormCliente extends JDialog implements ActionListener {
 	}
 
 	/** Contrutor usado pela tela de adicionar cliente ao evento */
-	public EditFormCliente(DefaultTableModel<Cliente> modelCliente)
+	public EditFormCliente(Evento evento,
+			DefaultTableModel<ClienteEvento> modelCliente)
 			throws ParseException {
 		cliente = new Cliente();
-		_modelCliente = modelCliente;
+		_modelClienteEvento = modelCliente;
+		_evento = evento;
 		modeltelefone = new TelefoneTableModel();
 		start();
 	}
@@ -586,6 +592,10 @@ public class EditFormCliente extends JDialog implements ActionListener {
 					sucesso = controller.cadastrar(cliente);
 					if (_modelCliente != null) {
 						_modelCliente.add(cliente);
+					}
+					if (_evento != null) {
+						_modelClienteEvento.add(new ClienteEvento(_evento,
+								cliente));
 					}
 
 				} else {

@@ -11,10 +11,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,7 +27,7 @@ public class Evento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@Column
@@ -52,15 +50,14 @@ public class Evento implements Serializable {
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date dataevento;
 
-	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	@JoinTable(name = "clienteseventos", joinColumns = { @JoinColumn(name = "idevento", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idcliente", referencedColumnName = "id") })
-	private List<Cliente> clientes;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "evento")
+	private List<ClienteEvento> clientes;
 
 	@OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<EventoItem> itens;
 
 	@OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<EventoServico> eventosServicos;
+	private List<EventoServico> servicos;
 
 	public Evento() {
 		setStatus(StatusEvento.ORCAMENTO.toString());
@@ -69,24 +66,25 @@ public class Evento implements Serializable {
 	}
 
 	public void addServico(EventoServico eventoServico) {
-		if (eventosServicos == null)
-			eventosServicos = new ArrayList<EventoServico>();
+		if (servicos == null)
+			servicos = new ArrayList<EventoServico>();
 
-		eventosServicos.add(eventoServico);
+		servicos.add(eventoServico);
 	}
 
-	public List<EventoServico> getEventosServicos() {
-		return eventosServicos;
+	public List<EventoServico> getServicos() {
+		return servicos;
 	}
 
-	public void setEventosServicos(List<EventoServico> eventosServicos) {
-		this.eventosServicos = eventosServicos;
+	public void setServicos(List<EventoServico> servicos) {
+		this.servicos = servicos;
 	}
 
 	public void addCliente(Cliente cliente) {
 		if (this.clientes == null)
-			clientes = new ArrayList<Cliente>();
-		this.clientes.add(cliente);
+			clientes = new ArrayList<ClienteEvento>();
+
+		this.clientes.add(new ClienteEvento(this, cliente));
 	}
 
 	public void addItem(EventoItem eventoItem) {
@@ -149,11 +147,11 @@ public class Evento implements Serializable {
 		this.dataevento = dataEvento;
 	}
 
-	public List<Cliente> getClientes() {
+	public List<ClienteEvento> getClientes() {
 		return clientes;
 	}
 
-	public void setClientes(List<Cliente> clientes) {
+	public void setClientes(List<ClienteEvento> clientes) {
 		this.clientes = clientes;
 	}
 

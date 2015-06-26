@@ -121,8 +121,6 @@ public class BuscarUsuarios extends JDialog implements ActionListener {
 				tabela = new JTable(model);
 				tabela.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				scroll.setViewportView(tabela);
-				tabela.getColumnModel().getColumn(0).setMinWidth(0);
-				tabela.getColumnModel().getColumn(0).setMaxWidth(0);
 
 			}
 		}
@@ -195,8 +193,8 @@ public class BuscarUsuarios extends JDialog implements ActionListener {
 
 				try {
 					// int id = model.getId(linha);
-					EditFormUsuario jdtcu = new EditFormUsuario(model.find(linha),
-							model);
+					EditFormUsuario jdtcu = new EditFormUsuario(
+							model.find(linha), model);
 					jdtcu.setVisible(true);
 					jdtcu.setLocationRelativeTo(null);
 				} catch (NumberFormatException e) {

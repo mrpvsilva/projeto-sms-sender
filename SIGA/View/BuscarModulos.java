@@ -55,9 +55,7 @@ public class BuscarModulos extends JDialog implements ActionListener {
 
 		model = new ModuloTableModel(moduloControl.listarTodos());
 		table = new JTable(model);
-		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		table.getColumnModel().getColumn(0).setMinWidth(0);
-		table.getColumnModel().getColumn(0).setMaxWidth(0);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 13));		
 		scrollPane.setViewportView(table);
 
 		JLabel lblNomeDoMdulo = new JLabel("Nome do m\u00F3dulo");

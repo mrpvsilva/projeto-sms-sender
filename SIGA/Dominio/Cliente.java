@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -26,10 +27,10 @@ public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column
-	private String nomeCompleto;
+	private String nomecompleto;
 	@Column
 	private String email;
 	@Column
@@ -41,8 +42,6 @@ public class Cliente implements Serializable {
 	@Column
 	@Temporal(TemporalType.DATE)
 	private Date datanascimento;
-	@Column
-	private int convidadosExtras;
 
 	@Column
 	private String nomeGuerraMilitar;
@@ -54,9 +53,9 @@ public class Cliente implements Serializable {
 	@JoinTable(name = "enderecosclientes", joinColumns = { @JoinColumn(name = "idcliente", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idendereco", referencedColumnName = "id") })
 	private Endereco endereco;
 
-	// @ManyToMany(mappedBy = "clientes")
-	// private List<Evento> eventos;
-	//
+	@OneToMany(mappedBy = "cliente")	
+	private List<ClienteEvento> eventos;
+
 	// @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch =
 	// FetchType.EAGER)
 	// private List<ClienteItemExtra> itensExtras;
@@ -68,16 +67,14 @@ public class Cliente implements Serializable {
 	}
 
 	public Cliente(String nomeCompleto, String email, String rg,
-			String cpfCnpj, String responsavel, int convidadosExtras,
-			Endereco endereco, String nomeGuerraMilitar) {
+			String cpfCnpj, String responsavel, Endereco endereco,
+			String nomeGuerraMilitar) {
 
 		setNomeCompleto(nomeCompleto);
 		setEmail(email);
 		setRg(rg);
 		setCpfCnpj(cpfCnpj);
 		setResponsavel(responsavel);
-
-		setConvidadosExtras(convidadosExtras);
 		setEndereco(endereco);
 		setNomeGuerraMilitar(nomeGuerraMilitar);
 
@@ -92,11 +89,11 @@ public class Cliente implements Serializable {
 	}
 
 	public String getNomeCompleto() {
-		return nomeCompleto;
+		return nomecompleto;
 	}
 
 	public void setNomeCompleto(String nomeCompleto) {
-		this.nomeCompleto = nomeCompleto;
+		this.nomecompleto = nomeCompleto;
 	}
 
 	public String getEmail() {
@@ -129,14 +126,6 @@ public class Cliente implements Serializable {
 
 	public void setResponsavel(String responsavel) {
 		this.nomeresponsavel = responsavel;
-	}
-
-	public int getConvidadosExtras() {
-		return convidadosExtras;
-	}
-
-	public void setConvidadosExtras(int convidadosExtras) {
-		this.convidadosExtras = convidadosExtras;
 	}
 
 	public Endereco getEndereco() {
@@ -177,6 +166,14 @@ public class Cliente implements Serializable {
 
 	public void setDatanascimento(Date datanascimento) {
 		this.datanascimento = datanascimento;
+	}
+
+	public List<ClienteEvento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(List<ClienteEvento> eventos) {
+		this.eventos = eventos;
 	}
 
 	// public void addEvento(Evento evento) {

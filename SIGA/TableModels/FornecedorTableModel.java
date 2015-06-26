@@ -1,12 +1,13 @@
 package TableModels;
 
 import java.util.List;
+
 import Dominio.Fornecedor;
 
 public class FornecedorTableModel extends DefaultTableModel<Fornecedor> {
 
 	private final static String[] colunas = new String[] { "Nome", "CPFCNPJ",
-			"Telefone", "Tipo serviço" };
+			"Telefone", "Serviço" };
 	private static final long serialVersionUID = 1L;
 
 	public FornecedorTableModel() {
@@ -41,15 +42,14 @@ public class FornecedorTableModel extends DefaultTableModel<Fornecedor> {
 	}
 
 	@Override
-	public int getId(int linha) {
-		// TODO Auto-generated method stub
-		return (int) linhas.get(linha).getId();
-	}
+	public long getId(int linha) {
+		return linhas.get(linha).getId();
+	}	
 
 	@Override
-	public Fornecedor get(long id) {
+	public Class getColumnClass(int column) {
 		// TODO Auto-generated method stub
-		return null;
+		return String.class;
 	}
 
 }

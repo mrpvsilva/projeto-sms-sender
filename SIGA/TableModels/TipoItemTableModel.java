@@ -7,8 +7,7 @@ import Dominio.TipoItem;
 public class TipoItemTableModel extends DefaultTableModel<TipoItem> {
 
 	private static final long serialVersionUID = 1L;
-	private final static String[] colunas = new String[] { "ID", "Nome",
-			"Ativo" };
+	private final static String[] colunas = new String[] { "Nome", "Ativo" };
 
 	public TipoItemTableModel() {
 		super(colunas);
@@ -35,14 +34,15 @@ public class TipoItemTableModel extends DefaultTableModel<TipoItem> {
 	}
 
 	@Override
-	public int getId(int linha) {
-		return (int) getLinhas().get(linha).getId();
+	public long getId(int linha) {
+		return getLinhas().get(linha).getId();
 	}
 
+	
+
 	@Override
-	public TipoItem get(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Class getColumnClass(int column) {
+		return String.class;
 	}
 
 }

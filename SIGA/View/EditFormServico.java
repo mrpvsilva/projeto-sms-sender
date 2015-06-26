@@ -33,26 +33,50 @@ public class EditFormServico extends JDialog implements ActionListener {
 	private JCheckBox chkAtivo;
 	private JButton JBSalvar;
 	private JButton JBSair;
-	private int id;
-	private Servico tipoServico;
+	private long id;
+	private Servico _servico;
 	private TipoServicoControl tipoServicoControl = new TipoServicoControl();
-	private DefaultTableModel<Servico> model;
+	private DefaultTableModel<Servico> _model;
 	private JButton JBNovo;
 	private JMoneyField valor;
 
 	/**
-	 * Launch the application.
+	 * Construtor utilizado pela tela principal para cadastro do serviço
+	 * 
 	 */
 
+	public EditFormServico() {
+		start();
+	}
+
 	/**
-	 * Create the dialog.
+	 * Construtor utilizado pela tela buscarservicos para cadastro do serviço
+	 * 
+	 * @param model
 	 */
-	public EditFormServico(DefaultTableModel<Servico> model, int id) {
+
+	public EditFormServico(DefaultTableModel<Servico> model) {
+		_model = model;
+		start();
+	}
+
+	/**
+	 * Construtor utilizado pela tela buscarservicos para edição do serviço
+	 * 
+	 * @param model
+	 * @param servico
+	 */
+
+	public EditFormServico(DefaultTableModel<Servico> model, Servico servico) {
+		_model = model;
+		_servico = servico;
+		start();
+	}
+
+	public void start() {
 		setResizable(false);
 		setModal(true);
 		setTitle("SIGA - cadastro de servi\u00E7o");
-		this.model = model;
-		this.id = id;
 		setBounds(100, 100, 340, 147);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -125,52 +149,49 @@ public class EditFormServico extends JDialog implements ActionListener {
 	}
 
 	private void preencherCampos() {
-		if (id == 0)
+		if (_servico == null)
 			return;
 
-		tipoServico = tipoServicoControl.buscarTipoServico(id);
-		tfNome.setText(tipoServico.getNome());
-		valor.setValor(tipoServico.getValorservico());
-		chkAtivo.setSelected(tipoServico.isAtivo());
+		// _servico = tipoServicoControl.buscarTipoServico(id);
+		tfNome.setText(_servico.getNome());
+		valor.setValor(_servico.getValorservico());
+		chkAtivo.setSelected(_servico.isAtivo());
 
 	}
 
 	private void cadastrar() throws BadLocationException {
 
-		tipoServico = new Servico();
-		tipoServico.setNome(tfNome.getText());
-		tipoServico.setAtivo(chkAtivo.isSelected());
-		tipoServico.setValorservico(valor.getValor());		
+		_servico = new Servico();
+		_servico.setNome(tfNome.getText());
+		_servico.setAtivo(chkAtivo.isSelected());
+		_servico.setValorservico(valor.getValor());
 
-		String out = tipoServicoControl.cadastrar(tipoServico);
+		String out = tipoServicoControl.cadastrar(_servico);
 
 		if (out == null) {
 			carregarGrid();
 			JOptionPane.showMessageDialog(null,
 					"Serviço cadastrado com sucesso");
+			this.dispose();
 		} else {
 			JOptionPane.showMessageDialog(null, out);
 		}
 
 	}
 
-	private void atualizar() {
+	private void atualizar() throws BadLocationException {
 
-		tipoServico.setNome(tfNome.getText());
-		tipoServico.setAtivo(chkAtivo.isSelected());
-		try {
-			tipoServico.setValorservico(valor.getValor());
-		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		_servico.setNome(tfNome.getText());
+		_servico.setAtivo(chkAtivo.isSelected());
+		_servico.setValorservico(valor.getValor());
 
-		String out = tipoServicoControl.atualizar(tipoServico);
+		String out = tipoServicoControl.atualizar(_servico);
 
 		if (out == null) {
 			carregarGrid();
 			JOptionPane.showMessageDialog(null,
 					"Serviço atualizado com sucesso");
+			this.dispose();
 		} else {
 			JOptionPane.showMessageDialog(null, out);
 		}
@@ -184,7 +205,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 				return;
 			}
 
-			if (id == 0) {
+			if (_servico == null) {
 				try {
 					cadastrar();
 				} catch (BadLocationException e1) {
@@ -192,7 +213,12 @@ public class EditFormServico extends JDialog implements ActionListener {
 					e1.printStackTrace();
 				}
 			} else {
-				atualizar();
+				try {
+					atualizar();
+				} catch (BadLocationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 
@@ -202,13 +228,14 @@ public class EditFormServico extends JDialog implements ActionListener {
 	}
 
 	private void carregarGrid() {
-		if (model != null)
-			model.setLinhas(tipoServicoControl.listarTodos());
+		if (_model != null)
+			_model.setLinhas(tipoServicoControl.listarTodos());
+
 	}
 
 	public static void main(String[] args) {
 		try {
-			EditFormServico dialog = new EditFormServico(null, 0);
+			EditFormServico dialog = new EditFormServico();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
