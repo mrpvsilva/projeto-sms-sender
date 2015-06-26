@@ -32,7 +32,7 @@ public class EditFormTipoItem extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
 	private JButton JBSalvar;
 	private JButton JBNovo;
-	private int id;
+	private long id;
 	private JTextField tfnome;
 	private JCheckBox chckbxAtivo;
 	private TipoItem tipoItem;
@@ -56,7 +56,7 @@ public class EditFormTipoItem extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public EditFormTipoItem(int id,
+	public EditFormTipoItem(long id2,
 			DefaultTableModel<TipoItem> model) {
 		setResizable(false);
 		setModal(true);
@@ -64,7 +64,7 @@ public class EditFormTipoItem extends JDialog implements ActionListener {
 		setTitle("SIGA - edi\u00E7\u00E3o tipo servi\u00E7o");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				EditFormTipoItem.class.getResource("/Img/CNPJ G200.png")));
-		this.id = id;
+		this.id = id2;
 		this.model = model;
 
 		setBounds(100, 100, 281, 147);

@@ -167,7 +167,7 @@ public class BuscarTipoItens extends JDialog implements ActionListener {
 			int linha = table.getSelectedRow();
 
 			if (linha > -1) {
-				int id = model.getId(linha);
+				long id = model.getId(linha);
 				EditFormTipoItem ef = new EditFormTipoItem(id,
 						model);
 				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);

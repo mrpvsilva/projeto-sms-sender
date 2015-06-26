@@ -31,7 +31,7 @@ public class TipoItemControl {
 		return _tipoItemRepository.findAll(nome, ativo);
 	}
 
-	public TipoItem buscarTipoItem(int id) {
+	public TipoItem buscarTipoItem(long id) {
 		return _tipoItemRepository.find(id);
 	}
 

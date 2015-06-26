@@ -7,8 +7,8 @@ import Dominio.Usuario;
 public class UsuarioTableModel extends DefaultTableModel<Usuario> {
 
 	private static final long serialVersionUID = 1L;
-	private final static String[] colunas = new String[] { "ID", "Usuário",
-			"CPF", "Perfil" };
+	private final static String[] colunas = new String[] { "Usuário", "CPF",
+			"Perfil" };
 
 	public UsuarioTableModel() {
 		super(colunas);
@@ -24,13 +24,12 @@ public class UsuarioTableModel extends DefaultTableModel<Usuario> {
 
 		switch (columnIndex) {
 		case 0:
-			return getLinhas().get(rowIndex).getId();
-		case 1:
 			return getLinhas().get(rowIndex).getUsuario();
-		case 2:
+		case 1:
 			return getLinhas().get(rowIndex).getCpf();
-		case 3:
+		case 2:
 			return getLinhas().get(rowIndex).getPerfil().getNome();
+
 		default:
 			return null;
 		}
@@ -38,14 +37,14 @@ public class UsuarioTableModel extends DefaultTableModel<Usuario> {
 	}
 
 	@Override
-	public int getId(int linha) {
-		return (int) getLinhas().get(linha).getId();
+	public long getId(int linha) {
+		return getLinhas().get(linha).getId();
 	}
 
 	@Override
-	public Usuario get(long id) {
+	public Class getColumnClass(int column) {
 		// TODO Auto-generated method stub
-		return null;
+		return String.class;
 	}
 
 }

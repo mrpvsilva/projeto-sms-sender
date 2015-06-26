@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,6 +22,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Control.TipoServicoControl;
+import Dominio.Evento;
+import Dominio.EventoServico;
 import Dominio.Permissao;
 import Dominio.Servico;
 import TableModels.DefaultTableModel;
@@ -41,13 +44,18 @@ public class BuscarServicos extends JDialog implements ActionListener {
 	private JButton JBEditar;
 	private JButton JBSair;
 	private Permissao permissao;
+	private JLabel lblAtivo;
+	private JButton btnAdicionar;
+
+	private DefaultTableModel<EventoServico> servicos;
+	private Evento evento;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			
+
 			BuscarServicos dialog = new BuscarServicos();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
@@ -59,8 +67,20 @@ public class BuscarServicos extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
+
+	public BuscarServicos(Evento evento,
+			DefaultTableModel<EventoServico> servicos) {
+		this.servicos = servicos;
+		this.evento = evento;
+		start();
+	}
+
 	public BuscarServicos() {
-		permissao =PermissoesManager.buscarPermissao(Modulos.Servicos);
+		start();
+	}
+
+	public void start() {
+		permissao = PermissoesManager.buscarPermissao(Modulos.Servicos);
 		setResizable(false);
 		setModal(true);
 		setTitle("SIGA - busca de servi\u00E7o");
@@ -74,10 +94,9 @@ public class BuscarServicos extends JDialog implements ActionListener {
 		scrollPane.setBounds(10, 99, 414, 280);
 		contentPanel.add(scrollPane);
 
-		model = new ServicoTableModel(tipoServicoControl.listarTodos());
+		model = new ServicoTableModel();
 		table = new JTable(model);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		
 
 		scrollPane.setViewportView(table);
 
@@ -93,14 +112,14 @@ public class BuscarServicos extends JDialog implements ActionListener {
 		contentPanel.add(tfNome);
 		tfNome.setColumns(10);
 
-		JLabel lblAtivo = new JLabel("Ativo");
+		lblAtivo = new JLabel("Ativo");
 		lblAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblAtivo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAtivo.setBounds(32, 34, 46, 14);
 		contentPanel.add(lblAtivo);
 
 		cbAtivo = new JComboBox(new String[] { "Todos", "Ativo", "Inativo" });
-		cbAtivo.setSelectedIndex(1);
+		cbAtivo.setSelectedIndex(0);
 		cbAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		cbAtivo.setBounds(93, 31, 141, 20);
 		contentPanel.add(cbAtivo);
@@ -144,17 +163,73 @@ public class BuscarServicos extends JDialog implements ActionListener {
 			JBSair.setIcon(new ImageIcon(BuscarServicos.class
 					.getResource("/Img/exit16.png")));
 			JBSair.addActionListener(this);
+
+			btnAdicionar = new JButton("Adicionar");
+			btnAdicionar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int l = table.getSelectedRow();
+
+					if (l > -1) {
+						servicos.add(new EventoServico(evento, model.find(l)));
+						pesquisar();
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Selecione um serviço", "Atenção",
+								JOptionPane.WARNING_MESSAGE);
+					}
+				}
+			});
+			btnAdicionar.setVisible(false);
+			buttonPane.add(btnAdicionar);
 			JBSair.setMnemonic(KeyEvent.VK_Q);
 			buttonPane.add(JBSair);
 		}
+		isAddServico();
+	}
+
+	private void isAddServico() {
+
+		if (servicos != null) {
+			cbAtivo.setSelectedItem("Ativo");
+			cbAtivo.setVisible(false);
+			lblAtivo.setVisible(false);
+			btnAdicionar.setVisible(true);
+			JBCadastrar.setVisible(false);
+			JBEditar.setVisible(false);
+			table.getColumnModel().getColumn(2).setMinWidth(0);
+			table.getColumnModel().getColumn(2).setMaxWidth(0);
+
+		}
+
+		pesquisar();
+	}
+
+	private void filtro(List<Servico> l) {
+
+		if (servicos != null) {
+			model.clear();
+			for (Servico servico : l) {
+				int c = 0;
+				for (EventoServico e : servicos.getLinhas()) {
+					if (servico.getId() == e.getServico().getId())
+						c++;
+				}
+
+				if (c == 0)
+					model.add(servico);
+
+			}
+		} else {
+			model.setLinhas(l);
+		}
+
 	}
 
 	private void pesquisar() {
 
 		String nome = tfNome.getText();
 		String ativo = cbAtivo.getSelectedItem().toString();
-
-		model.setLinhas(tipoServicoControl.listarTodos(nome, ativo));
+		filtro(tipoServicoControl.listarTodos(nome, ativo));
 
 	}
 
@@ -171,8 +246,8 @@ public class BuscarServicos extends JDialog implements ActionListener {
 		if (e.getSource() == JBEditar) {
 			int linha = table.getSelectedRow();
 			if (linha > -1) {
-				int id = model.getId(linha);
-				EditFormServico tscad = new EditFormServico(model, id);
+				Servico s = model.get(linha);
+				EditFormServico tscad = new EditFormServico(model, s);
 				tscad.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				tscad.setVisible(true);
 
@@ -182,7 +257,7 @@ public class BuscarServicos extends JDialog implements ActionListener {
 		}
 
 		if (e.getSource() == JBCadastrar) {
-			EditFormServico tscad = new EditFormServico(model, 0);
+			EditFormServico tscad = new EditFormServico(model);
 			tscad.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			tscad.setVisible(true);
 		}

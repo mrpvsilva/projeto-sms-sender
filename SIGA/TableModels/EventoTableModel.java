@@ -38,18 +38,15 @@ public class EventoTableModel extends DefaultTableModel<Evento> {
 	}
 
 	@Override
-	public int getId(int linha) {
-		return (int) getLinhas().get(linha).getId();
+	public long getId(int linha) {
+		return getLinhas().get(linha).getId();
 	}
 
-	@Override
-	public Evento get(long id) {
-		for (Evento evento : linhas) {
-			if (evento.getId() == id)
-				return evento;
-		}
+	
 
-		return null;
+	@Override
+	public Class getColumnClass(int column) {
+		return String.class;
 	}
 
 }

@@ -6,8 +6,8 @@ import Dominio.Telefone;
 
 public class TelefoneTableModel extends DefaultTableModel<Telefone> {
 	private static final long serialVersionUID = 1L;
-	private final static String[] colunas = new String[] { "ID", "DDD",
-			"Número", "Operadora" };
+	private final static String[] colunas = new String[] { "DDD", "Número",
+			"Operadora" };
 
 	public TelefoneTableModel() {
 		super(colunas);
@@ -35,14 +35,15 @@ public class TelefoneTableModel extends DefaultTableModel<Telefone> {
 	}
 
 	@Override
-	public int getId(int linha) {
-		return (int) getLinhas().get(linha).getId();
+	public long getId(int linha) {
+		return getLinhas().get(linha).getId();
 	}
 
+	
+
 	@Override
-	public Telefone get(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Class getColumnClass(int column) {
+		return String.class;
 	}
 
 }

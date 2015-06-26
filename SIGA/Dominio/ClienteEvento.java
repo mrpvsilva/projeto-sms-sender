@@ -1,7 +1,6 @@
 package Dominio;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,8 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "eventosservicos")
-public class EventoServico implements Serializable {
+@Table(name = "clienteseventos")
+public class ClienteEvento implements Serializable {
 
 	/**
 	 * 
@@ -27,25 +26,20 @@ public class EventoServico implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "idevento", referencedColumnName = "id")
 	private Evento evento;
-
 	@ManyToOne
-	@JoinColumn(name = "idservico", referencedColumnName = "id")
-	private Servico servico;
+	@JoinColumn(name = "idcliente", referencedColumnName = "id")
+	private Cliente cliente;
 	@Column
-	private BigDecimal valorservico;
+	private int convidadosextras;
 
-	public EventoServico() {
-		// TODO Auto-generated constructor stub
+	public ClienteEvento() {
+
 	}
 
-	public EventoServico(Evento evento, Servico servico) {
-		setEvento(evento);
-		setServico(servico);
-		setValorservico(servico.getValorservico());
+	public ClienteEvento(Evento evento, Cliente cliente) {
+		this.evento = evento;
+		this.cliente = cliente;
 	}
-	
-	
-	
 
 	public long getId() {
 		return id;
@@ -63,20 +57,20 @@ public class EventoServico implements Serializable {
 		this.evento = evento;
 	}
 
-	public Servico getServico() {
-		return servico;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setServico(Servico servico) {
-		this.servico = servico;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
-	public BigDecimal getValorservico() {
-		return valorservico;
+	public int getConvidadosextras() {
+		return convidadosextras;
 	}
 
-	public void setValorservico(BigDecimal valorservico) {
-		this.valorservico = valorservico;
+	public void setConvidadosextras(int convidadosextras) {
+		this.convidadosextras = convidadosextras;
 	}
 
 }

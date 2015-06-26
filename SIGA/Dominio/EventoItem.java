@@ -1,10 +1,12 @@
 package Dominio;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,11 +20,11 @@ public class EventoItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@ManyToOne
-	@JoinColumn( name = "idevento", referencedColumnName = "id")
+	@JoinColumn(name = "idevento", referencedColumnName = "id")
 	private Evento evento;
 
 	@ManyToOne
@@ -32,6 +34,8 @@ public class EventoItem implements Serializable {
 	private int quantidade;
 	@Transient
 	private boolean incluso;
+	@Transient
+	private BigDecimal subtotal;
 
 	public EventoItem() {
 
@@ -85,6 +89,17 @@ public class EventoItem implements Serializable {
 
 	public void setIncluso(boolean incluso) {
 		this.incluso = incluso;
+	}
+
+	public BigDecimal getSubtotal() {
+		subtotal = this.item.getValorComercial().multiply(
+				new BigDecimal(getQuantidade()));
+
+		return subtotal;
+	}
+
+	public void setSubtotal(BigDecimal subtotal) {
+		this.subtotal = subtotal;
 	}
 
 }

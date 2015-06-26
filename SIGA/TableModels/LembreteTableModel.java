@@ -26,7 +26,7 @@ public class LembreteTableModel extends DefaultTableModel<Lembrete> {
 
 		switch (col) {
 		case 0:
-			return Extras.FormatDate(l.getDatahora(),"dd/MM/yyyy HH:mm");
+			return Extras.FormatDate(l.getDatahora(), "dd/MM/yyyy HH:mm");
 		case 1:
 			return l.getAssunto();
 		case 2:
@@ -37,14 +37,15 @@ public class LembreteTableModel extends DefaultTableModel<Lembrete> {
 	}
 
 	@Override
-	public int getId(int linha) {
-		return (int) getLinhas().get(linha).getId();
+	public long getId(int linha) {
+		return getLinhas().get(linha).getId();
 	}
 
+	
+
 	@Override
-	public Lembrete get(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Class getColumnClass(int column) {
+		return String.class;
 	}
 
 }
