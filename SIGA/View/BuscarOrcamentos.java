@@ -192,6 +192,7 @@ public class BuscarOrcamentos extends JDialog {
 
 			JButton btnGerarDocumento = new JButton("Gerar documento");
 			btnGerarDocumento.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			btnGerarDocumento.setVisible(false);
 			buttonPane.add(btnGerarDocumento);
 		}
 		{
