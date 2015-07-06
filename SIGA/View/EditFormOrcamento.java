@@ -11,6 +11,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 
 import Control.OrcamentoControl;
 import Dominio.ClienteEvento;
@@ -22,7 +23,7 @@ import Dominio.TiposEvento;
 import TableModels.ClienteEventoTableModel;
 import TableModels.DefaultTableModel;
 import TableModels.EventoItemTableModel;
-import TableModels.ServicoEventoTableModel;
+import TableModels.EventoServicoTableModel;
 import TableModels.ServicoTableModel;
 import Util.DateTimePicker;
 import Util.EditFormType;
@@ -31,6 +32,7 @@ import Util.StatusEvento;
 import java.awt.Font;
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Date;
@@ -332,7 +334,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		scrollPane_1.setBounds(10, 11, 578, 385);
 		tab_servicos.add(scrollPane_1);
 
-		modelServicos = new ServicoEventoTableModel(
+		modelServicos = new EventoServicoTableModel(
 				_orcamentoControl.buscarServicos(_evento));
 		table_servicos = new JTable(modelServicos);
 		table_servicos.getModel().addTableModelListener(
@@ -344,16 +346,6 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 					}
 				});
 
-		JFormattedTextField ftext = new JFormattedTextField();
-		MaskFormatter mask;
-		try {
-			mask = new MaskFormatter("0.###");
-			mask.install(ftext);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		table_servicos.getColumnModel().getColumn(0)
-				.setCellEditor(new DefaultCellEditor(ftext));
 		scrollPane_1.setViewportView(table_servicos);
 
 		JButton removeServico = new JButton("");
@@ -445,41 +437,42 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	}
 
 	private void submit() {
+		if (valid()) {
+			_evento.setNome(nome.getText());
+			_evento.setDataEvento(datahora.getDate());
+			_evento.setTipo(tipoevento.getSelectedItem().toString());
+			_evento.setNumConvidados(Integer.parseInt(nconvidados.getText()));
+			_evento.setClientes(modelClientes.getLinhas());
+			_evento.setItens(modelItens.getLinhas());
+			_evento.setServicos(modelServicos.getLinhas());
 
-		_evento.setNome(nome.getText());
-		_evento.setDataEvento(datahora.getDate());
-		_evento.setTipo(tipoevento.getSelectedItem().toString());
-		_evento.setNumConvidados(Integer.parseInt(nconvidados.getText()));
-		_evento.setClientes(modelClientes.getLinhas());
-		_evento.setItens(modelItens.getLinhas());
-		_evento.setServicos(modelServicos.getLinhas());
+			boolean success = false;
 
-		boolean success = false;
+			if (_tipo == EditFormType.cadastrar)
+				success = _orcamentoControl.cadastrar(_evento);
+			else
+				success = _orcamentoControl.alterar(_evento);
 
-		if (_tipo == EditFormType.cadastrar)
-			success = _orcamentoControl.cadastrar(_evento);
-		else
-			success = _orcamentoControl.alterar(_evento);
+			if (success) {
 
-		if (success) {
+				if (_modelOrcamento != null) {
+					_modelOrcamento.setLinhas(_orcamentoControl.listarTodos());
+				}
 
-			if (_modelOrcamento != null) {
-				_modelOrcamento.setLinhas(_orcamentoControl.listarTodos());
+				if (StatusEvento.valueOf(_evento.getStatus()) == StatusEvento.ORCAMENTO)
+					JOptionPane.showMessageDialog(null,
+							"Orçamento salvo com sucesso");
+				else
+					JOptionPane.showMessageDialog(null,
+							"Orçamento aprovado com sucesso");
+
+				this.dispose();
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Falha ao salvar o orçamento");
 			}
 
-			if (StatusEvento.valueOf(_evento.getStatus()) == StatusEvento.ORCAMENTO)
-				JOptionPane.showMessageDialog(null,
-						"Orçamento salvo com sucesso");
-			else
-				JOptionPane.showMessageDialog(null,
-						"Orçamento aprovado com sucesso");
-
-			this.dispose();
-		} else {
-			JOptionPane.showMessageDialog(null, "Falha ao salvar o orçamento");
 		}
-
-		System.out.println(success);
 
 	}
 
@@ -495,6 +488,35 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		}
 
 		totalEvento.setText(NumberFormat.getCurrencyInstance().format(total));
+	}
+
+	private boolean valid() {
+
+		if (nome.getText().isEmpty()) {
+			return false;
+		}
+
+		if (datahora.getDate() == null) {
+			return false;
+		}
+		if (tipoevento.getSelectedItem() == TiposEvento.SELECIONE) {
+			return false;
+		}
+		if (nconvidados.getText().isEmpty()) {
+			return false;
+		}
+		if (modelClientes.getLinhas().size() == 0) {
+			return false;
+		}
+		if (modelItens.getLinhas().size() == 0) {
+			return false;
+		}
+		if (modelServicos.getLinhas().size() == 0) {
+			return false;
+		}
+
+		return true;
+
 	}
 
 	private void carregarCampos() {
@@ -518,4 +540,5 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		}
 
 	}
+
 }

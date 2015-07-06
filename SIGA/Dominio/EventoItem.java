@@ -32,9 +32,9 @@ public class EventoItem implements Serializable {
 	private Item item;
 	@Column
 	private int quantidade;
-	@Transient
-	private boolean incluso;
-	@Transient
+//	@Transient
+//	private boolean incluso;
+	@Column
 	private BigDecimal subtotal;
 
 	public EventoItem() {
@@ -78,6 +78,8 @@ public class EventoItem implements Serializable {
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+		subtotal = this.item.getValorComercial().multiply(new BigDecimal(getQuantidade()));
+
 	}
 
 	public boolean isIncluso() {
@@ -87,14 +89,11 @@ public class EventoItem implements Serializable {
 		return false;
 	}
 
-	public void setIncluso(boolean incluso) {
-		this.incluso = incluso;
-	}
+//	public void setIncluso(boolean incluso) {
+//		this.incluso = incluso;
+//	}
 
 	public BigDecimal getSubtotal() {
-		subtotal = this.item.getValorComercial().multiply(
-				new BigDecimal(getQuantidade()));
-
 		return subtotal;
 	}
 

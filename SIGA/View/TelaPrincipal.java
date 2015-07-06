@@ -80,6 +80,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 	private Permissao clientes;
 	private Permissao eventos;
 	private Permissao financeiro;
+	private Permissao orcamento;
 	private JMenu user;
 	private JMenuItem mntmSair;
 	private JMenuItem mntmTrocarSenha;
@@ -120,6 +121,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		clientes = PermissoesManager.buscarPermissao(Modulos.Clientes);
 		eventos = PermissoesManager.buscarPermissao(Modulos.Eventos);
 		financeiro = PermissoesManager.buscarPermissao(Modulos.Financeiro);
+		orcamento = PermissoesManager.buscarPermissao(Modulos.Orcamentos);
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				TelaPrincipal.class.getResource("/Img/CNPJ G200.png")));
@@ -272,6 +274,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 
 		mnOramentos = new JMenu("Or\u00E7amentos");
 		mnOramentos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		mnOramentos.setVisible(orcamento.isVisualizar());
 		menuBar.add(mnOramentos);
 
 		mntmNovo = new JMenuItem("Novo");
@@ -285,6 +288,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 			}
 		});
 		mntmNovo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		mntmNovo.setVisible(orcamento.isCadastrar());
 		mnOramentos.add(mntmNovo);
 
 		mntmBuscar_2 = new JMenuItem("Buscar");
@@ -294,7 +298,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 				bo.setVisible(true);
 			}
 		});
-		mntmBuscar_2.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		mntmBuscar_2.setFont(new Font("Segoe UI", Font.PLAIN, 13));		
 		mnOramentos.add(mntmBuscar_2);
 		menuBar.add(JMEventos);
 

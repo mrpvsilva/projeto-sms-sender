@@ -37,7 +37,6 @@ public class EventoServico implements Serializable {
 	public EventoServico() {
 		// TODO Auto-generated constructor stub
 	}
-
 	public EventoServico(Evento evento, Servico servico) {
 		setEvento(evento);
 		setServico(servico);

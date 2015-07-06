@@ -28,8 +28,8 @@ public class Usuario implements Serializable {
 	private String nomecompleto;
 	@Column
 	private String cpf;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idperfil", referencedColumnName = "id")
 	private Perfil perfil;
 
@@ -82,12 +82,11 @@ public class Usuario implements Serializable {
 	}
 
 	public boolean trocarSenha() {
+		return (senha.equals(cpf.substring(0, 6)));
+	}
 
-		if (getSenha().equals(getCpf()))
-			return true;
-
-		return false;
-
+	public void resetarSenha() {
+		this.senha = this.cpf.substring(0, 6);
 	}
 
 }
