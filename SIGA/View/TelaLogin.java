@@ -34,35 +34,6 @@ public class TelaLogin extends JFrame implements ActionListener {
 	private JPasswordField JPFSenha;
 	private JButton JBAcessar;
 
-	/**
-	 * ; Launch the application.
-	 */
-	public static void main(String[] args) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				// INICIA UMA SESSIONFACTORY DO HIBERNATE PARA SER UTILIZADO EM
-				// TODA A
-				// APLICAÇÃO.
-				// PersistenceManagerFactory.getEntityManager();
-				Factory.createEntityManager();
-				//
-			}
-		}).start();
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaLogin frame = new TelaLogin();
-					frame.setVisible(true);
-					frame.setResizable(false);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-
-	}
 
 	/**
 	 * Create the frame.

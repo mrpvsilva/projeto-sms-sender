@@ -47,13 +47,7 @@ public class EventoItemTableModel extends DefaultTableModel<EventoItem> {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-
-		switch (columnIndex) {
-		case 2:
-			return true;
-		default:
-			return false;
-		}
+		return (columnIndex == 2 || columnIndex == 3);
 	}
 
 	@Override
@@ -63,6 +57,9 @@ public class EventoItemTableModel extends DefaultTableModel<EventoItem> {
 			int v = Integer.parseInt(Value.toString());
 			linhas.get(rowIndex).setQuantidade(v);
 			break;
+		case 3:
+			String sub = Value.toString();
+			linhas.get(rowIndex).setSubtotal(new BigDecimal(sub));
 		default:
 			break;
 		}
@@ -73,12 +70,10 @@ public class EventoItemTableModel extends DefaultTableModel<EventoItem> {
 	@Override
 	public Class getColumnClass(int columnIndex) {
 
-		if (columnIndex == 0) {
+		if (columnIndex == 0 || columnIndex == 4) {
 			return String.class;
 		} else if (columnIndex == 2) {
 			return Integer.class;
-		} else if (columnIndex == 3) {
-			return String.class;
 		}
 
 		return BigDecimal.class;

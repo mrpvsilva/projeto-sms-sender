@@ -31,7 +31,7 @@ public class UsuarioRepository extends RepositoryBase<Usuario> implements
 	public List<Usuario> findAll(String campo, String value) {
 		try {
 
-			String q = "select u from Usuario where  u.usuario <> 'root' and u."
+			String q = "select u from Usuario u where  u.usuario <> 'root' and u."
 					+ campo + " like :valor";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("valor", "%" + value + "%");

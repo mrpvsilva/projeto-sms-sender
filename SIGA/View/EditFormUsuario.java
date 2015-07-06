@@ -203,7 +203,7 @@ public class EditFormUsuario extends JDialog implements ActionListener {
 			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
 					"Deseja resetar a senha do usuário?")) {
 
-				usuario.setSenha(usuario.getCpf());
+				usuario.resetarSenha();
 				String out = _usuarioControl.Atualizar(usuario);
 
 				if (out == null) {
@@ -239,10 +239,11 @@ public class EditFormUsuario extends JDialog implements ActionListener {
 	private void cadastrar() {
 		usuario = new Usuario();
 		usuario.setUsuario(JTFUsuario.getText());
-		usuario.setSenha(Extras.FormatCnpjCpf(JFFCpf.getText()));
 		usuario.setNomeCompleto(JTFNome.getText());
 		usuario.setCpf(Extras.FormatCnpjCpf(JFFCpf.getText()));
-		usuario.setPerfil(_usuarioControl.getPerfil(JCBPerfil.getSelectedItem()	.toString()));
+		usuario.resetarSenha();
+		usuario.setPerfil(_usuarioControl.getPerfil(JCBPerfil.getSelectedItem()
+				.toString()));
 
 		String out = _usuarioControl.Cadastrar(usuario);
 

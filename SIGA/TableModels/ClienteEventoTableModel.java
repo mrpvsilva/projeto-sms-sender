@@ -17,7 +17,11 @@ public class ClienteEventoTableModel extends DefaultTableModel<ClienteEvento> {
 
 	public ClienteEventoTableModel(List<ClienteEvento> linhas) {
 		super(colunas, linhas);
+	}
 
+	@Override
+	public boolean isCellEditable(int row, int col) {
+		return (col == 3);
 	}
 
 	@Override
@@ -39,6 +43,18 @@ public class ClienteEventoTableModel extends DefaultTableModel<ClienteEvento> {
 		default:
 			return null;
 		}
+
+	}
+
+	@Override
+	public void setValueAt(Object value, int row, int col) {
+
+		if (col == 3) {
+			int qtd = (int) value;
+			linhas.get(row).setConvidadosextras(qtd);
+		}
+
+		fireTableDataChanged();
 
 	}
 
