@@ -1,6 +1,5 @@
 package View;
 
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,8 +16,6 @@ import javax.swing.border.EmptyBorder;
 
 import Control.UsuarioControl;
 import Dominio.Usuario;
-import Util.Factory;
-
 import java.awt.Font;
 
 import javax.swing.SwingConstants;
@@ -41,7 +38,7 @@ public class TelaLogin extends JFrame implements ActionListener {
 	public TelaLogin() {
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				TelaLogin.class.getResource("/Img/CNPJ G200.png")));
+				TelaLogin.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 
 		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,19 +52,19 @@ public class TelaLogin extends JFrame implements ActionListener {
 		JLabel JLLogin = new JLabel("Login");
 		JLLogin.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLLogin.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JLLogin.setBounds(64, 130, 46, 15);
+		JLLogin.setBounds(64, 181, 46, 15);
 		contentPane.add(JLLogin);
 
 		JLabel JLSenha = new JLabel("Senha");
 		JLSenha.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLSenha.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JLSenha.setBounds(64, 166, 46, 14);
+		JLSenha.setBounds(64, 209, 46, 14);
 		contentPane.add(JLSenha);
 
 		JTFLogin = new JTextField();
 		JLLogin.setLabelFor(JTFLogin);
 		JTFLogin.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JTFLogin.setBounds(118, 128, 224, 20);
+		JTFLogin.setBounds(118, 179, 224, 20);
 		contentPane.add(JTFLogin);
 		JTFLogin.setColumns(10);
 
@@ -75,20 +72,19 @@ public class TelaLogin extends JFrame implements ActionListener {
 		
 		JPFSenha.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JPFSenha.setEchoChar('*');
-		JPFSenha.setBounds(118, 164, 224, 20);
+		JPFSenha.setBounds(118, 207, 224, 20);
 		contentPane.add(JPFSenha);
 
 		JBAcessar = new JButton("Acessar");		
 
 		JBAcessar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JBAcessar.addActionListener(this);
-		JBAcessar.setBounds(154, 212, 101, 23);
+		JBAcessar.setBounds(159, 238, 101, 23);
 		contentPane.add(JBAcessar);
 
 		JLabel JLIcone = new JLabel("");
-		JLIcone.setIcon(new ImageIcon(TelaLogin.class
-				.getResource("/Img/CNPJ G200.png")));
-		JLIcone.setBounds(137, 11, 224, 98);
+		JLIcone.setIcon(new ImageIcon(TelaLogin.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
+		JLIcone.setBounds(142, 11, 159, 143);
 		contentPane.add(JLIcone);
 		getRootPane().setDefaultButton(JBAcessar);
 	}

@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import Util.StatusEvento;
 
@@ -37,7 +38,13 @@ public class Evento implements Serializable {
 	private String tipo;
 
 	@Column
-	private int numeroconvidados;
+	private int numeroconvidadoscliente;
+
+	@Column
+	private int numeroparcelas;
+
+	@Column
+	private int numeroclientes;
 
 	@Column
 	private String nome;
@@ -61,6 +68,9 @@ public class Evento implements Serializable {
 
 	public Evento() {
 		setStatus(StatusEvento.ORCAMENTO.toString());
+		setNumeroClientes(1);
+		setNumeroConvidadosCliente(1);
+		setNumeroParcelas(1);
 		this.datacriacao = Calendar.getInstance().getTime();
 
 	}
@@ -119,14 +129,6 @@ public class Evento implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public int getNumConvidados() {
-		return numeroconvidados;
-	}
-
-	public void setNumConvidados(int numConvidados) {
-		this.numeroconvidados = numConvidados;
-	}
-
 	public String getNome() {
 		return nome;
 	}
@@ -161,6 +163,34 @@ public class Evento implements Serializable {
 
 	public void setItens(List<EventoItem> itens) {
 		this.itens = itens;
+	}
+
+	public int getNumeroConvidadosCliente() {
+		return numeroconvidadoscliente;
+	}
+
+	public void setNumeroConvidadosCliente(int numeroconvidadoscliente) {
+		this.numeroconvidadoscliente = numeroconvidadoscliente;
+	}
+
+	public int getNumeroParcelas() {
+		return numeroparcelas;
+	}
+
+	public void setNumeroParcelas(int numeroparcelas) {
+		this.numeroparcelas = numeroparcelas;
+	}
+
+	public int getNumeroClientes() {
+		return numeroclientes;
+	}
+
+	public void setNumeroClientes(int numeroclientes) {
+		this.numeroclientes = numeroclientes;
+	}
+
+	public int getTotalConvidados() {
+		return numeroclientes * numeroconvidadoscliente;
 	}
 
 }
