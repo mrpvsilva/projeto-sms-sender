@@ -123,8 +123,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		financeiro = PermissoesManager.buscarPermissao(Modulos.Financeiro);
 		orcamento = PermissoesManager.buscarPermissao(Modulos.Orcamentos);
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				TelaPrincipal.class.getResource("/Img/CNPJ G200.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaPrincipal.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 
 		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -579,8 +578,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 
 		label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon(TelaPrincipal.class
-				.getResource("/Img/CNPJ G800.png")));
+		label.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Img/DESKTOP_GDA.png")));
 		label.setOpaque(true);
 		contentPane.add(label);
 

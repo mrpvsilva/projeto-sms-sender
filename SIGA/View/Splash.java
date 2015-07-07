@@ -29,7 +29,7 @@ public class Splash extends JWindow {
 
 		// Constrói o splash screen
 		ImageIcon logo = new ImageIcon(
-				Splash.class.getResource("/Img/splash_logo.png"));
+				Splash.class.getResource("/Img/SPLASH_GDA.png"));
 		JLabel label = new JLabel(logo);
 
 		JLabel copyrt = new JLabel("Copyright " + data.get(Calendar.YEAR),
