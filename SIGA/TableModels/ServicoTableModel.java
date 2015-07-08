@@ -9,7 +9,7 @@ import Dominio.Servico;
 public class ServicoTableModel extends DefaultTableModel<Servico> {
 
 	private final static String[] colunas = new String[] { "Nome", "Valor",
-			"Ativo" };
+			"Tipo de cobrança","Ativo" };
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,6 +43,8 @@ public class ServicoTableModel extends DefaultTableModel<Servico> {
 			return NumberFormat.getCurrencyInstance().format(
 					s.getValorservico());
 		case 2:
+			return s.getTipocobranca();
+		case 3:
 			return s.isAtivo() ? "Ativo" : "Inativo";
 		default:
 			return null;

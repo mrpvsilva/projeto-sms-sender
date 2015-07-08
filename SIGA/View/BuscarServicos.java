@@ -26,6 +26,7 @@ import Dominio.Evento;
 import Dominio.EventoServico;
 import Dominio.Permissao;
 import Dominio.Servico;
+import Dominio.TipoCobranca;
 import TableModels.DefaultTableModel;
 import TableModels.ServicoTableModel;
 import Util.Modulos;
@@ -49,6 +50,8 @@ public class BuscarServicos extends JDialog implements ActionListener {
 
 	private DefaultTableModel<EventoServico> servicos;
 	private Evento evento;
+	private JLabel lblTipoDeCobrana;
+	private JComboBox tipocobranca;
 
 	/**
 	 * Launch the application.
@@ -84,14 +87,14 @@ public class BuscarServicos extends JDialog implements ActionListener {
 		setResizable(false);
 		setModal(true);
 		setTitle("SIGA - busca de servi\u00E7o");
-		setBounds(100, 100, 450, 461);
+		setBounds(100, 100, 626, 623);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 99, 414, 280);
+		scrollPane.setBounds(10, 115, 600, 434);
 		contentPanel.add(scrollPane);
 
 		model = new ServicoTableModel();
@@ -99,39 +102,57 @@ public class BuscarServicos extends JDialog implements ActionListener {
 		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		scrollPane.setViewportView(table);
-
-		JLabel lblNome = new JLabel("Nome");
-		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNome.setBounds(32, 11, 46, 14);
-		contentPanel.add(lblNome);
-
-		tfNome = new JTextField();
-		tfNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		tfNome.setBounds(93, 8, 285, 20);
-		contentPanel.add(tfNome);
-		tfNome.setColumns(10);
-
-		lblAtivo = new JLabel("Ativo");
-		lblAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblAtivo.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblAtivo.setBounds(32, 34, 46, 14);
-		contentPanel.add(lblAtivo);
-
-		cbAtivo = new JComboBox(new String[] { "Todos", "Ativo", "Inativo" });
-		cbAtivo.setSelectedIndex(0);
-		cbAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		cbAtivo.setBounds(93, 31, 141, 20);
-		contentPanel.add(cbAtivo);
-
-		JBPesquisar = new JButton("Pesquisar");
-		JBPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JBPesquisar.setMnemonic(KeyEvent.VK_F);
-		JBPesquisar.setIcon(new ImageIcon(BuscarServicos.class
-				.getResource("/Img/Procurar.png")));
-		JBPesquisar.addActionListener(this);
-		JBPesquisar.setBounds(178, 65, 120, 23);
-		contentPanel.add(JBPesquisar);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(31, 11, 568, 93);
+		contentPanel.add(panel);
+		panel.setLayout(null);
+		
+				JLabel lblNome = new JLabel("Nome");
+				lblNome.setBounds(10, 3, 105, 14);
+				panel.add(lblNome);
+				lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
+				
+				lblTipoDeCobrana = new JLabel("Tipo de cobran\u00E7a");
+				lblTipoDeCobrana.setBounds(10, 31, 105, 14);
+				panel.add(lblTipoDeCobrana);
+				lblTipoDeCobrana.setHorizontalAlignment(SwingConstants.RIGHT);
+				lblTipoDeCobrana.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				
+				tipocobranca = new JComboBox(TipoCobranca.values());
+				tipocobranca.setBounds(128, 28, 192, 20);
+				panel.add(tipocobranca);
+				tipocobranca.removeItem(TipoCobranca.SELECIONE);
+				tipocobranca.setSelectedIndex(0);
+				tipocobranca.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				
+						tfNome = new JTextField();
+						tfNome.setBounds(128, 0, 396, 20);
+						panel.add(tfNome);
+						tfNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
+						tfNome.setColumns(10);
+						
+								lblAtivo = new JLabel("Ativo");
+								lblAtivo.setBounds(322, 31, 46, 14);
+								panel.add(lblAtivo);
+								lblAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+								lblAtivo.setHorizontalAlignment(SwingConstants.RIGHT);
+								
+										cbAtivo = new JComboBox(new String[] { "Todos", "Ativo", "Inativo" });
+										cbAtivo.setBounds(383, 28, 141, 20);
+										panel.add(cbAtivo);
+										cbAtivo.setSelectedIndex(0);
+										cbAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+										
+												JBPesquisar = new JButton("Pesquisar");
+												JBPesquisar.setBounds(229, 59, 120, 23);
+												panel.add(JBPesquisar);
+												JBPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+												JBPesquisar.setMnemonic(KeyEvent.VK_F);
+												JBPesquisar.setIcon(new ImageIcon(BuscarServicos.class
+														.getResource("/Img/Procurar.png")));
+												JBPesquisar.addActionListener(this);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -229,7 +250,8 @@ public class BuscarServicos extends JDialog implements ActionListener {
 
 		String nome = tfNome.getText();
 		String ativo = cbAtivo.getSelectedItem().toString();
-		filtro(tipoServicoControl.listarTodos(nome, ativo));
+		TipoCobranca tipo = (TipoCobranca) tipocobranca.getSelectedItem();
+		filtro(tipoServicoControl.listarTodos(nome, ativo,tipo));
 
 	}
 

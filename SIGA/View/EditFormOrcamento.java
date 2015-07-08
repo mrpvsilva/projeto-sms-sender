@@ -421,8 +421,8 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		modelItens = new EventoItemTableModel(
 				_orcamentoControl.buscarEventoItens(_evento));
 		table_itens = new JTable(modelItens);
-		table_itens.getColumnModel().getColumn(4).setMinWidth(0);
-		table_itens.getColumnModel().getColumn(4).setMaxWidth(0);
+		table_itens.getColumnModel().getColumn(3).setMinWidth(0);
+		table_itens.getColumnModel().getColumn(3).setMaxWidth(0);
 		table_itens.getModel().addTableModelListener(new TableModelListener() {
 			@Override
 			public void tableChanged(TableModelEvent e) {
@@ -495,7 +495,6 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		table_servicos.getColumnModel().getColumn(1).setMaxWidth(0);
 		table_servicos.getModel().addTableModelListener(
 				new TableModelListener() {
-
 					@Override
 					public void tableChanged(TableModelEvent e) {
 						calcularTotal();
@@ -611,6 +610,8 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			_evento.setNome(nome.getText());
 			_evento.setDataEvento(datahora.getDate());
 			_evento.setTipo(tipoevento.getSelectedItem().toString());
+			_evento.setNumeroClientes(Integer.parseInt(nclientes.getText()));
+			_evento.setNumeroParcelas(Integer.parseInt(nparcelas.getText()));
 			_evento.setNumeroConvidadosCliente(Integer.parseInt(nconvidados
 					.getText()));
 			_evento.setClientes(modelClientes.getLinhas());
@@ -775,7 +776,9 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			nome.setText(_evento.getNome());
 			datahora.setDate(_evento.getDataEvento());
 			tipoevento.setSelectedItem(TiposEvento.valueOf(_evento.getTipo()));
+			nclientes.setText(_evento.getNumeroClientes() + "");
 			nconvidados.setText(_evento.getNumeroConvidadosCliente() + "");
+			nparcelas.setText(_evento.getNumeroParcelas() + "");
 			totalconvidados.setText(_evento.getTotalConvidados() + "");
 			modelClientes.setLinhas(_evento.getClientes());
 			modelItens.setLinhas(_evento.getItens());

@@ -3,6 +3,7 @@ package Control;
 import java.util.List;
 
 import Dominio.Servico;
+import Dominio.TipoCobranca;
 import Interfaces.IServicoRepository;
 import Repositories.ServicoRepository;
 
@@ -34,8 +35,8 @@ public class TipoServicoControl {
 		return tipoServicoRepository.findAll();
 	}
 
-	public List<Servico> listarTodos(String nome, String ativo) {
-		return tipoServicoRepository.findAll(nome, ativo);
+	public List<Servico> listarTodos(String nome, String ativo,TipoCobranca tipo) {
+		return tipoServicoRepository.findAll(nome, ativo,tipo);
 	}
 
 	
