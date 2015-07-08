@@ -13,6 +13,7 @@ import javax.persistence.criteria.Root;
 
 import Dominio.Evento;
 import Dominio.Servico;
+import Dominio.TipoCobranca;
 import Dominio.TiposEvento;
 import Interfaces.IServicoRepository;
 
@@ -72,30 +73,9 @@ public class ServicoRepository extends RepositoryBase<Servico> implements
 	}
 
 	@Override
-	public List<Servico> findAll(String nome, String ativo) {
+	public List<Servico> findAll(String nome, String ativo,TipoCobranca tipo) {
 
-		try {
-
-			// String q = "select t from Servico t where ";
-			//
-			// if (!nome.equals("")) {
-			// q += " t.nome like '%" + nome + "%' and";
-			// }
-			//
-			// if (ativo.equals("Todos")) {
-			// q += " t.ativo in (true,false)";
-			// } else if (ativo.equals("Ativo")) {
-			// q += " t.ativo = true";
-			// } else {
-			// q += " t.ativo = false";
-			// }
-			//
-			// q += " order by t.nome";
-			//
-			// Query query = entityManager.createQuery(q);
-			// List<Servico> l = query.getResultList();
-			//
-			// return l;
+		try {		
 
 			CriteriaBuilder criteriaBuilder = entityManager	.getCriteriaBuilder();			
 			CriteriaQuery<Servico> criteriaQuery = criteriaBuilder.createQuery(Servico.class);
@@ -119,6 +99,12 @@ public class ServicoRepository extends RepositoryBase<Servico> implements
 
 				condicoes.add(where);
 
+			}
+			if(tipo!=TipoCobranca.TODOS){
+				Path<TipoCobranca>_tipo = servico.<TipoCobranca>get("tipocobranca");
+				Predicate where = criteriaBuilder.equal(_tipo, tipo);
+				
+				condicoes.add(where);
 			}
 
 			Predicate[] condicoesComoArray = condicoes

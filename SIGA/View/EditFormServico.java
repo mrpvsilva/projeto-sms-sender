@@ -20,11 +20,14 @@ import javax.swing.text.BadLocationException;
 
 import Control.TipoServicoControl;
 import Dominio.Servico;
+import Dominio.TipoCobranca;
 import TableModels.DefaultTableModel;
 
 import java.awt.Font;
 
 import jmoneyfield.JMoneyField;
+
+import javax.swing.JComboBox;
 
 public class EditFormServico extends JDialog implements ActionListener {
 
@@ -39,6 +42,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 	private DefaultTableModel<Servico> _model;
 	private JButton JBNovo;
 	private JMoneyField valor;
+	private JComboBox tipocobranca;
 
 	/**
 	 * Construtor utilizado pela tela principal para cadastro do serviço
@@ -77,7 +81,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 		setResizable(false);
 		setModal(true);
 		setTitle("SIGA - cadastro de servi\u00E7o");
-		setBounds(100, 100, 340, 147);
+		setBounds(100, 100, 451, 191);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -86,32 +90,44 @@ public class EditFormServico extends JDialog implements ActionListener {
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNome.setBounds(0, 21, 42, 14);
+		lblNome.setBounds(0, 21, 105, 14);
 		contentPanel.add(lblNome);
 
 		tfNome = new JTextField();
 		tfNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		tfNome.setBounds(52, 18, 179, 20);
+		tfNome.setBounds(115, 18, 221, 20);
 		contentPanel.add(tfNome);
 		tfNome.setColumns(10);
 
 		chkAtivo = new JCheckBox("Ativo");
 		chkAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chkAtivo.setSelected(true);
-		chkAtivo.setBounds(237, 17, 97, 23);
+		chkAtivo.setBounds(342, 17, 97, 23);
 		contentPanel.add(chkAtivo);
 
 		JLabel lblValor = new JLabel("Valor");
 		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblValor.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblValor.setBounds(0, 46, 46, 14);
+		lblValor.setBounds(0, 78, 105, 14);
 		contentPanel.add(lblValor);
 
 		valor = new JMoneyField();
 		valor.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		valor.setBounds(50, 44, 181, 20);
+		valor.setBounds(115, 75, 221, 20);
 		contentPanel.add(valor);
 		valor.setColumns(10);
+
+		JLabel lblNewLabel = new JLabel("Tipo de cobran\u00E7a");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel.setBounds(0, 52, 105, 15);
+		contentPanel.add(lblNewLabel);
+
+		tipocobranca = new JComboBox(TipoCobranca.values());
+		tipocobranca.removeItem(TipoCobranca.TODOS);
+		tipocobranca.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		tipocobranca.setBounds(115, 46, 221, 20);
+		contentPanel.add(tipocobranca);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -156,6 +172,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 		tfNome.setText(_servico.getNome());
 		valor.setValor(_servico.getValorservico());
 		chkAtivo.setSelected(_servico.isAtivo());
+		tipocobranca.setSelectedItem(_servico.getTipocobranca());
 
 	}
 
@@ -165,6 +182,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 		_servico.setNome(tfNome.getText());
 		_servico.setAtivo(chkAtivo.isSelected());
 		_servico.setValorservico(valor.getValor());
+		_servico.setTipocobranca((TipoCobranca) tipocobranca.getSelectedItem());
 
 		String out = tipoServicoControl.cadastrar(_servico);
 
@@ -184,6 +202,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 		_servico.setNome(tfNome.getText());
 		_servico.setAtivo(chkAtivo.isSelected());
 		_servico.setValorservico(valor.getValor());
+		_servico.setTipocobranca((TipoCobranca) tipocobranca.getSelectedItem());
 
 		String out = tipoServicoControl.atualizar(_servico);
 
@@ -202,6 +221,10 @@ public class EditFormServico extends JDialog implements ActionListener {
 		if (e.getSource() == JBSalvar) {
 			if (tfNome.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "Campo nome obrigatório.");
+				return;
+			}
+			if(tipocobranca.getSelectedItem()==TipoCobranca.SELECIONE){
+				JOptionPane.showMessageDialog(null, "Selecione um tipo de cobrança");
 				return;
 			}
 
