@@ -41,10 +41,7 @@ public class EventoServico implements Serializable {
 		setEvento(evento);
 		setServico(servico);
 		setValorservico(servico.getValorservico());
-	}
-	
-	
-	
+	}	
 
 	public long getId() {
 		return id;

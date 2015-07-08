@@ -18,22 +18,17 @@ import javax.persistence.Transient;
 public class EventoItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
 	@ManyToOne
 	@JoinColumn(name = "idevento", referencedColumnName = "id")
 	private Evento evento;
-
 	@ManyToOne
 	@JoinColumn(name = "iditem", referencedColumnName = "id")
 	private Item item;
 	@Column
 	private int quantidade;
-//	@Transient
-//	private boolean incluso;
 	@Column
 	private BigDecimal subtotal;
 
@@ -88,10 +83,6 @@ public class EventoItem implements Serializable {
 
 		return false;
 	}
-
-//	public void setIncluso(boolean incluso) {
-//		this.incluso = incluso;
-//	}
 
 	public BigDecimal getSubtotal() {
 		return subtotal;
