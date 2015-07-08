@@ -71,15 +71,14 @@ public class OrcamentoControl {
 		for (Item i : l) {
 			l1.add(new EventoItem(evento, i, 1));
 		}
-
 		return l1;
 	}
 
 	public List<EventoServico> buscarServicos(Evento evento) {
-		List<Servico> s = _servicoRepository.findAll(true);
+		List<Servico> servicos = _servicoRepository.findAll(true);
 		List<EventoServico> e = new ArrayList<EventoServico>();
 
-		for (Servico servico : s) {
+		for (Servico servico : servicos) {			
 			e.add(new EventoServico(evento, servico));
 		}
 		return e;

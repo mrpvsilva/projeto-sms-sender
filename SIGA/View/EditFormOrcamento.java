@@ -418,8 +418,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 578, 350);
 		tab_itens.add(scrollPane);
-		modelItens = new EventoItemTableModel(
-				_orcamentoControl.buscarEventoItens(_evento));
+		modelItens = new EventoItemTableModel(_orcamentoControl.buscarEventoItens(_evento));
 		table_itens = new JTable(modelItens);
 		table_itens.getColumnModel().getColumn(3).setMinWidth(0);
 		table_itens.getColumnModel().getColumn(3).setMaxWidth(0);
