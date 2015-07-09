@@ -86,5 +86,9 @@ public abstract class DefaultTableModel<E> extends AbstractTableModel {
 
 	@Override
 	public abstract Class getColumnClass(int column);
+	
+	public void AtualizarModel(){
+		this.fireTableDataChanged();
+	}
 
 }

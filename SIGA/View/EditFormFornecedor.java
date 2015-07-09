@@ -24,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
@@ -38,6 +39,7 @@ import Extra.Mascaras;
 import Extra.Validacoes;
 import TableModels.DefaultTableModel;
 import TableModels.TelefoneTableModel;
+import jmoneyfield.JMoneyField;
 
 public class EditFormFornecedor extends JDialog implements ActionListener {
 
@@ -74,6 +76,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 	private JButton JBSair;
 	private JLabel JLCnpj;
 	private JTextField cidade;
+	private JMoneyField valor;
 
 	/**
 	 * Launch the application.
@@ -97,13 +100,14 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 			DefaultTableModel<Fornecedor> model) throws ParseException {
 		setResizable(false);
 		setModal(true);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				EditFormFornecedor.class.getResource("/Img/CNPJ G200.png")));
-		// this.id = id;
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(
+						EditFormFornecedor.class
+								.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		this.forModel = model;
 		this.fornecedor = fornecedor;
 		_fornecedorControl = new FornecedoresControl();
-		setBounds(0, -20, 530, 436);
+		setBounds(0, -20, 530, 421);
 		setTitle("SIGA  - Cadastrar fornecedor");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -131,19 +135,19 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		JLabel JLTelefone1 = new JLabel("Telefones");
 		JLTelefone1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLTelefone1.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLTelefone1.setBounds(0, 104, 101, 15);
+		JLTelefone1.setBounds(0, 127, 101, 15);
 		contentPanel.add(JLTelefone1);
 
 		JLabel JLEmail = new JLabel("Email");
 		JLEmail.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLEmail.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLEmail.setBounds(0, 201, 101, 15);
+		JLEmail.setBounds(0, 224, 101, 15);
 		contentPanel.add(JLEmail);
 
 		JLabel JLEnd = new JLabel("Ender.");
 		JLEnd.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLEnd.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLEnd.setBounds(0, 229, 101, 15);
+		JLEnd.setBounds(0, 252, 101, 15);
 		contentPanel.add(JLEnd);
 
 		JTFNome = new JTextField();
@@ -167,7 +171,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		JLabel JLSite = new JLabel("Site");
 		JLSite.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLSite.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLSite.setBounds(0, 308, 101, 14);
+		JLSite.setBounds(0, 331, 101, 14);
 		contentPanel.add(JLSite);
 
 		JLabel JLTpServ = new JLabel("Servi\u00E7o");
@@ -178,51 +182,51 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 
 		JTFEmail = new JTextField();
 		JTFEmail.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JTFEmail.setBounds(111, 201, 400, 20);
+		JTFEmail.setBounds(111, 224, 400, 20);
 		contentPanel.add(JTFEmail);
 		JTFEmail.setColumns(10);
 
 		JTFEnd = new JTextField();
 		JTFEnd.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JTFEnd.setBounds(111, 229, 400, 20);
+		JTFEnd.setBounds(111, 252, 400, 20);
 		contentPanel.add(JTFEnd);
 		JTFEnd.setColumns(10);
 
 		JTFSite = new JTextField();
 		JTFSite.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JTFSite.setBounds(111, 308, 400, 20);
+		JTFSite.setBounds(111, 331, 400, 20);
 		contentPanel.add(JTFSite);
 		JTFSite.setColumns(10);
 
 		JCBTpServ = new JComboBox(_fornecedorControl.DDLTipoServico());
 		JCBTpServ.removeItem("TODOS");
 		JCBTpServ.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JCBTpServ.setBounds(111, 64, 400, 20);
+		JCBTpServ.setBounds(111, 64, 370, 20);
 
 		contentPanel.add(JCBTpServ);
 
 		JLBairro = new JLabel("Bairro");
 		JLBairro.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JLBairro.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLBairro.setBounds(0, 280, 101, 15);
+		JLBairro.setBounds(0, 303, 101, 15);
 		contentPanel.add(JLBairro);
 
 		JTFBairro = new JTextField();
 		JTFBairro.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JTFBairro.setBounds(111, 280, 214, 20);
+		JTFBairro.setBounds(111, 303, 214, 20);
 		contentPanel.add(JTFBairro);
 		JTFBairro.setColumns(10);
 
 		lblCep = new JLabel("CEP");
 		lblCep.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblCep.setBounds(321, 263, 46, 15);
+		lblCep.setBounds(321, 286, 46, 15);
 		contentPanel.add(lblCep);
 
 		maskCep = new MaskFormatter(Mascaras.maskCep);
 		JFFCep = new JFormattedTextField(maskCep);
 		JFFCep.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JFFCep.setBounds(393, 260, 118, 20);
+		JFFCep.setBounds(393, 283, 118, 20);
 		contentPanel.add(JFFCep);
 		JFFCep.setColumns(10);
 
@@ -233,7 +237,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		contentPanel.add(JCBCpfMask);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(111, 103, 370, 87);
+		scrollPane.setBounds(111, 126, 370, 87);
 		contentPanel.add(scrollPane);
 
 		telmodel = new TelefoneTableModel();
@@ -247,7 +251,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		btnaddtel.setIcon(new ImageIcon(EditFormFornecedor.class
 				.getResource("/Img/plus.png")));
 		btnaddtel.setToolTipText("Adicionar telefone");
-		btnaddtel.setBounds(491, 104, 23, 23);
+		btnaddtel.setBounds(491, 127, 23, 23);
 		btnaddtel.addActionListener(this);
 		contentPanel.add(btnaddtel);
 
@@ -255,7 +259,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		btnedittel.setToolTipText("Alterar telefone");
 		btnedittel.setIcon(new ImageIcon(EditFormFornecedor.class
 				.getResource("/Img/edit.png")));
-		btnedittel.setBounds(491, 129, 23, 23);
+		btnedittel.setBounds(491, 152, 23, 23);
 		btnedittel.addActionListener(this);
 		contentPanel.add(btnedittel);
 
@@ -263,22 +267,48 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		btnremovetel.setToolTipText("Remover telefone");
 		btnremovetel.setIcon(new ImageIcon(EditFormFornecedor.class
 				.getResource("/Img/trash.png")));
-		btnremovetel.setBounds(490, 153, 23, 23);
+		btnremovetel.setBounds(490, 176, 23, 23);
 		btnremovetel.addActionListener(this);
 		contentPanel.add(btnremovetel);
 
 		JLabel lblCidade = new JLabel("Cidade");
 		lblCidade.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCidade.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblCidade.setBounds(0, 255, 101, 15);
+		lblCidade.setBounds(0, 278, 101, 15);
 		contentPanel.add(lblCidade);
 
 		cidade = new JTextField();
 		cidade.setText((String) null);
 		cidade.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		cidade.setColumns(10);
-		cidade.setBounds(111, 255, 214, 20);
+		cidade.setBounds(111, 278, 214, 20);
 		contentPanel.add(cidade);
+
+		valor = new JMoneyField();
+		valor.setHorizontalAlignment(SwingConstants.RIGHT);
+		valor.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		valor.setColumns(10);
+		valor.setBounds(117, 95, 221, 20);
+		contentPanel.add(valor);
+
+		JLabel lblValorDoServio = new JLabel("Valor do servi\u00E7o");
+		lblValorDoServio.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblValorDoServio.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblValorDoServio.setBounds(2, 98, 105, 14);
+		contentPanel.add(lblValorDoServio);
+		
+		JButton button = new JButton("");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				EditFormServico efs = new EditFormServico(JCBTpServ); 
+				efs.setLocationRelativeTo(null);
+				efs.setVisible(true);
+			}
+		});
+		button.setIcon(new ImageIcon(EditFormFornecedor.class.getResource("/Img/plus.png")));
+		button.setToolTipText("Adicionar servi\u00E7o");
+		button.setBounds(488, 61, 23, 23);
+		contentPanel.add(button);
 
 		{
 			JPanel buttonPane = new JPanel();
@@ -364,14 +394,13 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Rg em branco.",
 						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 			else if (telmodel.getRowCount() < 1)
-
 				JOptionPane.showMessageDialog(null,
 						"Adicione ao menos um telefone", "Erro ao cadastrar",
 						JOptionPane.ERROR_MESSAGE);
 			else if (JCBTpServ.getSelectedItem().toString().equals("SELECIONE"))
 				JOptionPane.showMessageDialog(null,
 						"Selecione um tipo de serviço.", "Erro ao cadastrar",
-						JOptionPane.ERROR_MESSAGE);
+						JOptionPane.ERROR_MESSAGE);			
 			else if (JTFEmail.getText().trim().isEmpty()) // Valida Email
 				JOptionPane.showMessageDialog(null, "Email em branco.",
 						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
@@ -398,14 +427,14 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 					atualizar();
 				}
 
-				// this.id = (int) fornecedor.getId();
+				
 				preencherCampos();
 
-				/* Acredito que esteja todas as validações possíveis */
+				
 
-			}// Final da validação
+			}
 
-		}// final do botão salvar
+		}
 
 		if (acao.getSource() == JBNovForn) {
 
@@ -453,6 +482,13 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		endereco.setBairro(JTFBairro.getText());
 		endereco.setCep((Integer.parseInt(Extras.FormatCep(JFFCep.getText()))));
 
+		try {
+			fornecedor.setValorServico(valor.getValor());
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		fornecedor.setEndereco(endereco);
 
 		fornecedor.setTipoServico(_fornecedorControl
@@ -487,6 +523,13 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		endereco.setBairro(JTFBairro.getText());
 		endereco.setCidade(cidade.getText());
 		endereco.setCep((Integer.parseInt(Extras.FormatCep(JFFCep.getText()))));
+
+		try {
+			fornecedor.setValorServico(valor.getValor());
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		fornecedor.setEndereco(endereco);
 
@@ -552,7 +595,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		JFFCep.setText(fornecedor.getEndereco().getCep() + "");
 		JTFSite.setText(fornecedor.getSite());
 		telmodel.setLinhas(fornecedor.getTelefones());
-		
+		valor.setValor(fornecedor.getValorServico());
 		JCBTpServ.setSelectedItem(fornecedor.getTipoServico().getNome());
 
 	}

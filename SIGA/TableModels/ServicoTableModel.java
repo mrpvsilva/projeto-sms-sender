@@ -39,9 +39,9 @@ public class ServicoTableModel extends DefaultTableModel<Servico> {
 			return s.getNome();
 		case 1:
 			return NumberFormat.getCurrencyInstance().format(
-					s.getValorservico());
+					s.getValorServico());
 		case 2:
-			return s.getTipocobranca();
+			return s.getTipoCobranca();
 		case 3:
 			return s.isAtivo() ? "Ativo" : "Inativo";
 		default:
@@ -65,7 +65,7 @@ public class ServicoTableModel extends DefaultTableModel<Servico> {
 		switch (columnIndex) {
 		case 1:
 			BigDecimal valor = new BigDecimal(Value.toString());
-			linhas.get(rowIndex).setValorservico(valor);
+			linhas.get(rowIndex).setValorServico(valor);
 			break;
 		default:
 			break;

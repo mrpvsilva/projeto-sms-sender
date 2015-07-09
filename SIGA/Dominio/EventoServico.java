@@ -32,7 +32,7 @@ public class EventoServico implements Serializable {
 	@JoinColumn(name = "idservico", referencedColumnName = "id")
 	private Servico servico;
 	@Column
-	private BigDecimal valorservico;
+	private BigDecimal subtotal;
 
 	public EventoServico() {
 
@@ -41,17 +41,7 @@ public class EventoServico implements Serializable {
 	public EventoServico(Evento evento, Servico servico) {
 		setEvento(evento);
 		setServico(servico);
-		valorservico = new BigDecimal(0);
-
-		if (servico.getTipocobranca() == TipoCobranca.PORCLIENTE) {
-			valorservico = servico.getValorservico().multiply(
-					new BigDecimal(evento.getNumeroClientes()));
-		} else if (servico.getTipocobranca() == TipoCobranca.PORCONVIDADO) {
-			valorservico = servico.getValorservico().multiply(
-					new BigDecimal(evento.getTotalConvidados()));
-		} else {
-			valorservico = servico.getValorservico();
-		}
+		calcularSubTotal();
 	}
 
 	public long getId() {
@@ -78,12 +68,35 @@ public class EventoServico implements Serializable {
 		this.servico = servico;
 	}
 
-	public BigDecimal getValorservico() {
-		return valorservico;
+	public BigDecimal getSubTotal() {
+		return subtotal;
 	}
 
-	public void setValorservico(BigDecimal valorservico) {
-		this.valorservico = valorservico;
+	public void setSubTotal(BigDecimal subtotal) {
+		this.subtotal = subtotal;
+	}
+
+	public void atualizarSubTotal(int numeroClientes, int convidadosDoCliente) {
+
+		evento.setNumeroClientes(numeroClientes);
+		evento.setNumeroConvidadosCliente(convidadosDoCliente);
+		calcularSubTotal();
+
+	}
+
+	private void calcularSubTotal() {
+		subtotal = new BigDecimal(0);
+
+		if (servico.getTipoCobranca() == TipoCobranca.CLIENTE) {
+			subtotal = servico.getValorServico().multiply(
+					new BigDecimal(evento.getNumeroClientes()));
+		} else if (servico.getTipoCobranca() == TipoCobranca.CONVIDADO) {
+			subtotal = servico.getValorServico().multiply(
+					new BigDecimal(evento.getTotalConvidados()));
+		} else {
+			subtotal = servico.getValorServico();
+		}
+
 	}
 
 }

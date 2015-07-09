@@ -86,8 +86,7 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 		Fornecedores = PermissoesManager.buscarPermissao(Modulos.Fornecedores);
 		setResizable(false);
 		setModal(true);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				BuscarFornecedores.class.getResource("/Img/CNPJ G200.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BuscarFornecedores.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		setTitle("SIGA - buscar fornecedores");
 		setBounds(100, 100, 750, 550);
 		getContentPane().setLayout(new BorderLayout());

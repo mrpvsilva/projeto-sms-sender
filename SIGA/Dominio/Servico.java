@@ -75,11 +75,11 @@ public class Servico implements Serializable {
 		this.ativo = ativo;
 	}
 
-	public BigDecimal getValorservico() {
+	public BigDecimal getValorServico() {
 		return valorservico;
 	}
 
-	public void setValorservico(BigDecimal valorservico) {
+	public void setValorServico(BigDecimal valorservico) {
 		this.valorservico = valorservico;
 	}
 
@@ -91,11 +91,11 @@ public class Servico implements Serializable {
 		this.executor = executor;
 	}
 
-	public TipoCobranca getTipocobranca() {
+	public TipoCobranca getTipoCobranca() {
 		return tipocobranca;
 	}
 
-	public void setTipocobranca(TipoCobranca tipocobranca) {
+	public void setTipoCobranca(TipoCobranca tipocobranca) {
 		this.tipocobranca = tipocobranca;
 	}
 	

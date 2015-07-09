@@ -80,4 +80,6 @@ public class TipoItemRepository extends RepositoryBase<TipoItem> implements
 		}
 	}
 
+	
+
 }

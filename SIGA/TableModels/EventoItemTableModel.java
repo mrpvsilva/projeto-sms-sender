@@ -8,7 +8,7 @@ import Dominio.EventoItem;
 
 public class EventoItemTableModel extends DefaultTableModel<EventoItem> {
 
-	private final static String[] colunas = new String[] { "Nome","Valor unit.", "Subtotal", "Tipo" };
+	private final static String[] colunas = new String[] { "Nome","Valor", "Subtotal", "Tipo" };
 
 	public EventoItemTableModel() {
 		super(colunas);
@@ -69,5 +69,7 @@ public class EventoItemTableModel extends DefaultTableModel<EventoItem> {
 
 		return BigDecimal.class;
 	}
+	
+	
 
 }

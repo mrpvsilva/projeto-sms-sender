@@ -68,7 +68,7 @@ public class Evento implements Serializable {
 		setStatus(StatusEvento.ORCAMENTO.toString());
 		setTipo(TiposEvento.SELECIONE.toString());
 		setNumeroClientes(1);
-		setNumeroConvidadosCliente(1);
+		setNumeroConvidadosCliente(0);
 		setNumeroParcelas(1);
 		setClientes(new ArrayList<ClienteEvento>());
 		this.datacriacao = Calendar.getInstance().getTime();
@@ -190,7 +190,7 @@ public class Evento implements Serializable {
 	}
 
 	public int getTotalConvidados() {
-		return numeroclientes * numeroconvidadoscliente;
+		return numeroclientes * numeroconvidadoscliente + numeroclientes;
 	}
 
 }

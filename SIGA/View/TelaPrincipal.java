@@ -785,7 +785,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		}// final do JMenuItemUsuário Cadastrar
 
 		if (acao.getSource() == JMITSCad) {
-			EditFormTipoItem ef = new EditFormTipoItem(0, null);
+			EditFormTipoItem ef = new EditFormTipoItem();
 			ef.setResizable(false);
 			ef.setLocationRelativeTo(null);
 			ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
