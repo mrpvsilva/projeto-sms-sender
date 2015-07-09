@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import Control.TipoItemControl;
 import Dominio.TipoItem;
 import TableModels.DefaultTableModel;
+
 import java.awt.Font;
 
 public class EditFormTipoItem extends JDialog implements ActionListener {
@@ -32,20 +34,20 @@ public class EditFormTipoItem extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
 	private JButton JBSalvar;
 	private JButton JBNovo;
-	private long id;
+	private TipoItem tipoItem ;
 	private JTextField tfnome;
 	private JCheckBox chckbxAtivo;
-	private TipoItem tipoItem;
 	private TipoItemControl tipoItemControl = new TipoItemControl();
 	private DefaultTableModel<TipoItem> model;
 	private JButton JBSair;
+	private JComboBox tipoItens;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			EditFormTipoItem dialog = new EditFormTipoItem(0, null);
+			EditFormTipoItem dialog = new EditFormTipoItem();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -56,16 +58,46 @@ public class EditFormTipoItem extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
-	public EditFormTipoItem(long id2,
-			DefaultTableModel<TipoItem> model) {
+	public EditFormTipoItem() {
+		tipoItem = new TipoItem();
+		start();
+	}
+	
+	/**
+	 * Construtor para cadastro utilizado pela tela de cadastro de item
+	 */
+	public EditFormTipoItem(JComboBox tipoItens) {
+		this.tipoItens = tipoItens;
+		tipoItem = new TipoItem();
+		start();
+	}
+
+	/**
+	 * Construtor para cadastro, utilizado pela tela de busca de tipo item
+	 * 	
+	 */
+	public EditFormTipoItem(DefaultTableModel<TipoItem> model) {
+		this.model = model;
+		tipoItem = new TipoItem();
+		start();
+	}
+
+	/**
+	 * Construtor para edição, utilizado pela tela de busca de tipo item
+	 * 	
+	 */
+	public EditFormTipoItem(TipoItem tipoItem ,DefaultTableModel<TipoItem> model) {
+		this.tipoItem = tipoItem;
+		this.model = model;
+		start();
+	}
+
+	public void start() {
 		setResizable(false);
 		setModal(true);
 
-		setTitle("SIGA - edi\u00E7\u00E3o tipo servi\u00E7o");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				EditFormTipoItem.class.getResource("/Img/CNPJ G200.png")));
-		this.id = id2;
-		this.model = model;
+		setTitle("SIGA-Salvar tipo item");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EditFormTipoItem.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 
 		setBounds(100, 100, 281, 147);
 		getContentPane().setLayout(new BorderLayout());
@@ -127,23 +159,19 @@ public class EditFormTipoItem extends JDialog implements ActionListener {
 		preencherCampos();
 	}
 
-	private void preencherCampos() {
-		if (id == 0)
-			return;
-
-		tipoItem = tipoItemControl.buscarTipoItem(id);
+	private void preencherCampos() {	
 		tfnome.setText(tipoItem.getNome());
 		chckbxAtivo.setSelected(tipoItem.isAtivo());
 
 	}
 
-	private void cadastrar() {
-		tipoItem = new TipoItem();
-		tipoItem.setNome(tfnome.getText());
-		tipoItem.setAtivo(chckbxAtivo.isSelected());
+	private void cadastrar() {	
+		
 		String out = tipoItemControl.cadastra(tipoItem);
-
 		if (out == null) {
+			if(tipoItens!=null)
+				tipoItens.addItem(tipoItem.getNome());
+			
 			carregarGrid();
 			JOptionPane.showMessageDialog(null,
 					"Tipo serviço cadastrado com sucesso.");
@@ -154,8 +182,7 @@ public class EditFormTipoItem extends JDialog implements ActionListener {
 	}
 
 	private void atualizar() {
-		tipoItem.setNome(tfnome.getText());
-		tipoItem.setAtivo(chckbxAtivo.isSelected());
+	
 		String out = tipoItemControl.atualizar(tipoItem);
 
 		if (out == null) {
@@ -175,11 +202,17 @@ public class EditFormTipoItem extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == JBSalvar) {
-			if (id == 0) {
+			
+			tipoItem.setNome(tfnome.getText());
+			tipoItem.setAtivo(chckbxAtivo.isSelected());
+			
+			if (tipoItem.getId()==0) {
 				cadastrar();
 			} else {
 				atualizar();
 			}
+			
+			this.dispose();
 		}
 
 		if (e.getSource() == JBNovo) {

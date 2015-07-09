@@ -35,4 +35,11 @@ public class TipoItemControl {
 		return _tipoItemRepository.find(id);
 	}
 
+	public Object[] DDLTipoItem() {
+		
+		return  _tipoItemRepository.DDLTipoItens().toArray();
+			
+		 
+	}
+	
 }

@@ -43,6 +43,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 	private JButton JBNovo;
 	private JMoneyField valor;
 	private JComboBox tipocobranca;
+	private JComboBox servicos;
 
 	/**
 	 * Construtor utilizado pela tela principal para cadastro do serviço
@@ -50,6 +51,15 @@ public class EditFormServico extends JDialog implements ActionListener {
 	 */
 
 	public EditFormServico() {
+		start();
+	}
+	
+	/**
+	 * Construtor utilizado pela tela de cadastro do fornecedor
+	 * 
+	 */
+	public EditFormServico(JComboBox servicos) {
+		this.servicos = servicos;
 		start();
 	}
 
@@ -112,6 +122,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 		contentPanel.add(lblValor);
 
 		valor = new JMoneyField();
+		valor.setHorizontalAlignment(SwingConstants.RIGHT);
 		valor.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		valor.setBounds(115, 75, 221, 20);
 		contentPanel.add(valor);
@@ -170,9 +181,9 @@ public class EditFormServico extends JDialog implements ActionListener {
 
 		// _servico = tipoServicoControl.buscarTipoServico(id);
 		tfNome.setText(_servico.getNome());
-		valor.setValor(_servico.getValorservico());
+		valor.setValor(_servico.getValorServico());
 		chkAtivo.setSelected(_servico.isAtivo());
-		tipocobranca.setSelectedItem(_servico.getTipocobranca());
+		tipocobranca.setSelectedItem(_servico.getTipoCobranca());
 
 	}
 
@@ -181,12 +192,16 @@ public class EditFormServico extends JDialog implements ActionListener {
 		_servico = new Servico();
 		_servico.setNome(tfNome.getText());
 		_servico.setAtivo(chkAtivo.isSelected());
-		_servico.setValorservico(valor.getValor());
-		_servico.setTipocobranca((TipoCobranca) tipocobranca.getSelectedItem());
+		_servico.setValorServico(valor.getValor());
+		_servico.setTipoCobranca((TipoCobranca) tipocobranca.getSelectedItem());
 
 		String out = tipoServicoControl.cadastrar(_servico);
 
 		if (out == null) {
+			
+			if(servicos != null)
+				servicos.addItem(_servico.getNome());
+			
 			carregarGrid();
 			JOptionPane.showMessageDialog(null,
 					"Serviço cadastrado com sucesso");
@@ -201,8 +216,8 @@ public class EditFormServico extends JDialog implements ActionListener {
 
 		_servico.setNome(tfNome.getText());
 		_servico.setAtivo(chkAtivo.isSelected());
-		_servico.setValorservico(valor.getValor());
-		_servico.setTipocobranca((TipoCobranca) tipocobranca.getSelectedItem());
+		_servico.setValorServico(valor.getValor());
+		_servico.setTipoCobranca((TipoCobranca) tipocobranca.getSelectedItem());
 
 		String out = tipoServicoControl.atualizar(_servico);
 

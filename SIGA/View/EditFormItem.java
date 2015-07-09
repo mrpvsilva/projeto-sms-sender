@@ -25,9 +25,11 @@ import javax.swing.text.BadLocationException;
 import jmoneyfield.JMoneyField;
 import Control.ServicosControl;
 import Dominio.Item;
+import Dominio.TipoCobranca;
 import Extra.Extras;
 import Extra.Validacoes;
 import TableModels.DefaultTableModel;
+import javax.swing.JScrollPane;
 
 public class EditFormItem extends JDialog implements ActionListener {
 
@@ -40,7 +42,6 @@ public class EditFormItem extends JDialog implements ActionListener {
 	private JTextArea JTADescItem;
 	private JMoneyField JMFVlrCusto;
 	private JMoneyField JMFVlrCom;
-	private Extras ext = new Extras();
 	private JButton JBSalvServ;
 	private JButton JBNovoServ;
 	private ServicosControl sc;
@@ -50,6 +51,8 @@ public class EditFormItem extends JDialog implements ActionListener {
 	private Item item;
 	private DefaultTableModel<Item> model;
 	private JCheckBox chckbxAtivo;
+	private JComboBox tipocobranca;
+	private JLabel lblItemAtivo;
 
 	/**
 	 * Launch the application.
@@ -75,7 +78,7 @@ public class EditFormItem extends JDialog implements ActionListener {
 		this.model = model;
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				EditFormItem.class.getResource("/Img/CNPJ G200.png")));
+				EditFormItem.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 
 		setBounds(100, 100, 510, 373);
 		setTitle("SIGA - cadastrar item");
@@ -105,13 +108,6 @@ public class EditFormItem extends JDialog implements ActionListener {
 			JTFItem.setColumns(10);
 		}
 
-		JTADescItem = new JTextArea();
-		JTADescItem.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		JTADescItem.setLineWrap(true);
-		JTADescItem.setWrapStyleWord(true);
-		JTADescItem.setBounds(120, 46, 349, 108);
-		contentPanel.add(JTADescItem);
-
 		JLabel JLValorCusto = new JLabel("Valor custo");
 		JLValorCusto.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLValorCusto.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -119,8 +115,9 @@ public class EditFormItem extends JDialog implements ActionListener {
 		contentPanel.add(JLValorCusto);
 
 		JMFVlrCusto = new JMoneyField();
+		JMFVlrCusto.setHorizontalAlignment(SwingConstants.RIGHT);
 		JMFVlrCusto.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JMFVlrCusto.setBounds(120, 163, 170, 20);
+		JMFVlrCusto.setBounds(120, 163, 261, 20);
 		contentPanel.add(JMFVlrCusto);
 		{
 			JLabel lblValorComercial = new JLabel("Valor comercial");
@@ -131,11 +128,12 @@ public class EditFormItem extends JDialog implements ActionListener {
 		}
 
 		JMFVlrCom = new JMoneyField();
+		JMFVlrCom.setHorizontalAlignment(SwingConstants.RIGHT);
 		JMFVlrCom.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JMFVlrCom.setBounds(120, 191, 170, 20);
+		JMFVlrCom.setBounds(120, 191, 261, 20);
 		contentPanel.add(JMFVlrCom);
 		{
-			lblTipoDeServio = new JLabel("Tipo de servi\u00E7o");
+			lblTipoDeServio = new JLabel("Tipo de item");
 			lblTipoDeServio.setHorizontalAlignment(SwingConstants.RIGHT);
 			lblTipoDeServio.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			lblTipoDeServio.setBounds(0, 222, 110, 14);
@@ -144,16 +142,57 @@ public class EditFormItem extends JDialog implements ActionListener {
 		{
 			ddlTipoItem = new JComboBox(sc.DDLTipoServico());
 			ddlTipoItem.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			ddlTipoItem.setBounds(120, 222, 170, 20);
+			ddlTipoItem.setBounds(120, 222, 261, 20);
 			contentPanel.add(ddlTipoItem);
 		}
 
-		chckbxAtivo = new JCheckBox("Ativo");
+		chckbxAtivo = new JCheckBox("");
 		chckbxAtivo.setSelected(true);
 		chckbxAtivo.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckbxAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		chckbxAtivo.setBounds(339, 163, 130, 23);
+		chckbxAtivo.setBounds(120, 281, 17, 23);
 		contentPanel.add(chckbxAtivo);
+
+		JLabel lblNewLabel = new JLabel("Tipo de cobran\u00E7a");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel.setBounds(10, 255, 100, 14);
+		contentPanel.add(lblNewLabel);
+
+		tipocobranca = new JComboBox(TipoCobranca.values());
+		tipocobranca.removeItem(TipoCobranca.TODOS);
+		tipocobranca.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		tipocobranca.setBounds(120, 253, 261, 20);
+		contentPanel.add(tipocobranca);
+		{
+			lblItemAtivo = new JLabel("Item ativo");
+			lblItemAtivo.setHorizontalAlignment(SwingConstants.RIGHT);
+			lblItemAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			lblItemAtivo.setBounds(33, 285, 77, 14);
+			contentPanel.add(lblItemAtivo);
+		}
+		
+		JButton button = new JButton("");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				EditFormTipoItem efti = new EditFormTipoItem(ddlTipoItem);
+				efti.setLocationRelativeTo(null);
+				efti.setVisible(true);
+			}
+		});
+		button.setToolTipText("Adicionar tipo de item");
+		button.setIcon(new ImageIcon(EditFormItem.class.getResource("/Img/plus.png")));
+		button.setBounds(384, 222, 20, 20);
+		contentPanel.add(button);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(120, 43, 349, 105);
+		contentPanel.add(scrollPane);
+		
+				JTADescItem = new JTextArea();
+				scrollPane.setViewportView(JTADescItem);
+				JTADescItem.setLineWrap(true);
+				JTADescItem.setFont(new Font("Monospaced", Font.PLAIN, 13));
+				JTADescItem.setWrapStyleWord(true);
 
 		{
 			JPanel buttonPane = new JPanel();
@@ -215,7 +254,11 @@ public class EditFormItem extends JDialog implements ActionListener {
 			else if (ddlTipoItem.getSelectedItem().toString()
 					.equals("Selecione"))
 				JOptionPane.showMessageDialog(null,
-						"Selecione um tipo de serviço.", "Erro ao cadastrar",
+						"Selecione um tipo de item.", "Erro ao cadastrar",
+						JOptionPane.ERROR_MESSAGE);
+			else if(tipocobranca.getSelectedItem()==TipoCobranca.SELECIONE)
+				JOptionPane.showMessageDialog(null,
+						"Selecione um tipo de cobrança.", "Erro ao cadastrar",
 						JOptionPane.ERROR_MESSAGE);
 			else {
 
@@ -256,6 +299,7 @@ public class EditFormItem extends JDialog implements ActionListener {
 		item.setAtivo(chckbxAtivo.isSelected());
 		item.setTipoitem(sc.buscarTipoItem(ddlTipoItem.getSelectedItem()
 				.toString()));
+		item.setTipocobranca((TipoCobranca) tipocobranca.getSelectedItem());
 
 		try {
 			item.setValorComercial(JMFVlrCom.getValor());
@@ -282,6 +326,7 @@ public class EditFormItem extends JDialog implements ActionListener {
 		item.setNome(JTFItem.getText());
 		item.setDescricao(JTADescItem.getText());
 		item.setAtivo(chckbxAtivo.isSelected());
+		item.setTipocobranca((TipoCobranca) tipocobranca.getSelectedItem());
 		item.setTipoitem(sc.buscarTipoItem(ddlTipoItem.getSelectedItem()
 				.toString()));
 
@@ -319,6 +364,7 @@ public class EditFormItem extends JDialog implements ActionListener {
 		JMFVlrCusto.setValor(item.getValorCusto());
 		JMFVlrCom.setValor(item.getValorComercial());
 		ddlTipoItem.setSelectedItem(item.getTipoitem().getNome());
+		tipocobranca.setSelectedItem(item.getTipocobranca());
 		chckbxAtivo.setSelected(item.isAtivo());
 
 	}

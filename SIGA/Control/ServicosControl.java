@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.Item;
+import Dominio.TipoCobranca;
 import Dominio.TipoItem;
 import Interfaces.IItemRepository;
 import Interfaces.ITipoItemRepository;
 import Model.ServicosModel;
 import Repositories.ItemRepository;
 import Repositories.TipoItemRepository;
+import Util.TipoAtivo;
 
 public class ServicosControl {
 
@@ -34,8 +36,8 @@ public class ServicosControl {
 		return _itemRepository.findAll();
 	}
 
-	public List<Item> listarTodos(String campo, String txt) {
-		return _itemRepository.findAll(campo, txt);
+	public List<Item> listarTodos(String item,TipoCobranca tipo,TipoAtivo ativo) {
+		return _itemRepository.findAll(item, tipo,ativo);
 	}
 
 	public Item buscarItem(long l) {

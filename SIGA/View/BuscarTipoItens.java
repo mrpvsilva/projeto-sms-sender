@@ -157,7 +157,7 @@ public class BuscarTipoItens extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == okButton) {
-			EditFormTipoItem ef = new EditFormTipoItem(0, model);
+			EditFormTipoItem ef = new EditFormTipoItem(model);
 			ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			ef.setVisible(true);
 		}
@@ -166,10 +166,8 @@ public class BuscarTipoItens extends JDialog implements ActionListener {
 
 			int linha = table.getSelectedRow();
 
-			if (linha > -1) {
-				long id = model.getId(linha);
-				EditFormTipoItem ef = new EditFormTipoItem(id,
-						model);
+			if (linha > -1) {				
+				EditFormTipoItem ef = new EditFormTipoItem(model.find(linha) ,model);
 				ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				ef.setVisible(true);
 			} else {

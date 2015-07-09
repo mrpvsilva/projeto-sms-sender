@@ -9,8 +9,7 @@ import Dominio.Fornecedor;
 
 public class EventoServicoTableModel extends DefaultTableModel<EventoServico> {
 
-	private final static String[] colunas = new String[] { "Nome",
-			"Fornecedor", "Valor", };
+	private final static String[] colunas = new String[] { "Nome", "Valor","Subtotal" };
 
 	public EventoServicoTableModel() {
 		super(colunas);
@@ -28,11 +27,11 @@ public class EventoServicoTableModel extends DefaultTableModel<EventoServico> {
 		case 0:
 			return e.getServico().getNome();
 		case 1:
-			Fornecedor f = e.getServico().getExecutor();
-			return f != null ? f.getNome() : "";
+		return	NumberFormat.getCurrencyInstance().format(
+					e.getServico().getValorServico());
 		case 2:
 			return NumberFormat.getCurrencyInstance().format(
-					e.getValorservico());
+					e.getSubTotal());
 		default:
 			return null;
 		}
@@ -43,7 +42,7 @@ public class EventoServicoTableModel extends DefaultTableModel<EventoServico> {
 
 		if (columnIndex == 2) {
 			String sub = Value.toString();
-			linhas.get(rowIndex).setValorservico(new BigDecimal(sub));
+			linhas.get(rowIndex).setSubTotal(new BigDecimal(sub));
 		}
 		// avisa que os dados mudaram
 		fireTableDataChanged();
@@ -61,7 +60,7 @@ public class EventoServicoTableModel extends DefaultTableModel<EventoServico> {
 
 	@Override
 	public Class getColumnClass(int column) {
-		if (column == 2)
+		if (column == 1 || column==2)
 			return BigDecimal.class;
 
 		return String.class;

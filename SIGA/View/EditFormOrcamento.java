@@ -17,6 +17,7 @@ import Dominio.ClienteEvento;
 import Dominio.Evento;
 import Dominio.EventoItem;
 import Dominio.EventoServico;
+import Dominio.TipoCobranca;
 import Dominio.TiposEvento;
 import TableModels.ClienteEventoTableModel;
 import TableModels.DefaultTableModel;
@@ -57,7 +58,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField nome;
-	private JTextField nconvidados;
+	private JTextField nConvidadosCliente;
 	private Evento _evento;
 	private EditFormType _tipo;
 	private DefaultTableModel<Evento> _modelOrcamento;
@@ -86,8 +87,8 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	private JTabbedPane tabbedPane;
 
 	private JButton removeCliente;
-	private JTextField nclientes;
-	private JTextField totalconvidados;
+	private JTextField nClientes;
+	private JTextField totalConvidados;
 	private JTextField totalporcliente;
 	private JTextField nparcelas;
 	private JTextField valorparcelaporcliente;
@@ -155,7 +156,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Novo or\u00E7amento");
 		setModal(true);
-		setBounds(100, 100, 628, 744);
+		setBounds(100, 100, 877, 744);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -164,7 +165,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Dados do evento",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 11, 603, 222);
+		panel.setBounds(86, 11, 678, 222);
 		contentPanel.add(panel);
 		panel.setLayout(null);
 		{
@@ -188,7 +189,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 
 		nome = new JTextField();
 		nome.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		nome.setBounds(119, 23, 474, 22);
+		nome.setBounds(119, 23, 513, 22);
 		panel.add(nome);
 		nome.setColumns(10);
 		{
@@ -202,14 +203,14 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			JLabel lblTipoDoEvento = new JLabel("Tipo do evento");
 			lblTipoDoEvento.setHorizontalAlignment(SwingConstants.RIGHT);
 			lblTipoDoEvento.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			lblTipoDoEvento.setBounds(279, 60, 99, 22);
+			lblTipoDoEvento.setBounds(318, 60, 99, 22);
 			panel.add(lblTipoDoEvento);
 		}
 
 		tipoevento = new JComboBox(TiposEvento.values());
 		tipoevento.removeItem(TiposEvento.TODOS);
 		tipoevento.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		tipoevento.setBounds(388, 60, 205, 22);
+		tipoevento.setBounds(427, 60, 205, 22);
 		panel.add(tipoevento);
 		{
 			JLabel lblNConvidados = new JLabel("N\u00BA convidados/cliente");
@@ -219,17 +220,20 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			panel.add(lblNConvidados);
 		}
 		{
-			nconvidados = new JTextField();
-			nconvidados.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			nconvidados.setBounds(347, 93, 57, 22);
-			panel.add(nconvidados);
-			nconvidados.setColumns(10);
-			nconvidados.addKeyListener(new KeyAdapter() {
+			nConvidadosCliente = new JTextField();
+			nConvidadosCliente.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			nConvidadosCliente.setBounds(347, 93, 57, 22);
+			panel.add(nConvidadosCliente);
+			nConvidadosCliente.setColumns(10);
+			nConvidadosCliente.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent k) {
-					if (!nconvidados.getText().isEmpty()) {
+					if (!nConvidadosCliente.getText().isEmpty()) {
 						calcularConvidados();
+						calcularSubTotalItens();
+						calcularSubTotalServicos();
 						calcularTotalCliente();
+
 					}
 
 				}
@@ -252,7 +256,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		erro_dados = new JLabel("");
 		erro_dados.setFont(new Font("Tahoma", Font.BOLD, 13));
 		erro_dados.setForeground(Color.RED);
-		erro_dados.setBounds(119, 190, 474, 24);
+		erro_dados.setBounds(119, 190, 513, 24);
 		panel.add(erro_dados);
 
 		JLabel lblNClientes = new JLabel("N\u00BA clientes");
@@ -261,39 +265,42 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		lblNClientes.setBounds(10, 93, 99, 22);
 		panel.add(lblNClientes);
 
-		nclientes = new JTextField();
-		nclientes.addKeyListener(new KeyAdapter() {
+		nClientes = new JTextField();
+		nClientes.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent k) {
-				if (!nclientes.getText().isEmpty()) {
+				if (!nClientes.getText().isEmpty()) {
 					calcularConvidados();
+					calcularSubTotalItens();
+					calcularSubTotalServicos();
 					calcularTotalCliente();
+
 				}
 
 			}
 		});
-		nclientes.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		nclientes.setColumns(10);
-		nclientes.setBounds(119, 94, 57, 22);
-		panel.add(nclientes);
+		nClientes.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		nClientes.setColumns(10);
+		nClientes.setBounds(119, 94, 57, 22);
+		panel.add(nClientes);
 
 		JLabel lblTotalConvidados = new JLabel("Total convidados");
 		lblTotalConvidados.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTotalConvidados.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTotalConvidados.setBounds(427, 93, 99, 22);
+		lblTotalConvidados.setBounds(466, 93, 99, 22);
 		panel.add(lblTotalConvidados);
 
-		totalconvidados = new JTextField();
-		totalconvidados.setEditable(false);
-		totalconvidados.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		totalconvidados.setColumns(10);
-		totalconvidados.setBounds(536, 94, 57, 22);
-		panel.add(totalconvidados);
+		totalConvidados = new JTextField();
+		totalConvidados.setEditable(false);
+		totalConvidados.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		totalConvidados.setColumns(10);
+		totalConvidados.setBounds(575, 94, 57, 22);
+		panel.add(totalConvidados);
 
 		JLabel lblTotalcliente = new JLabel("Total/cliente");
 		lblTotalcliente.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTotalcliente.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTotalcliente.setBounds(337, 130, 76, 15);
+		lblTotalcliente.setBounds(376, 127, 76, 15);
 		panel.add(lblTotalcliente);
 
 		totalporcliente = new JTextField();
@@ -301,11 +308,11 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		totalporcliente.setText("R$ 0,00");
 		totalporcliente.setEditable(false);
 		totalporcliente.setColumns(10);
-		totalporcliente.setBounds(423, 128, 170, 20);
+		totalporcliente.setBounds(462, 125, 170, 20);
 		panel.add(totalporcliente);
 
 		JPanel dados_formatura = new JPanel();
-		dados_formatura.setBounds(10, 155, 583, 30);
+		dados_formatura.setBounds(10, 153, 622, 30);
 		panel.add(dados_formatura);
 		dados_formatura.setLayout(null);
 
@@ -342,7 +349,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		dados_formatura.add(valorparcelaporcliente);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 244, 603, 426);
+		tabbedPane.setBounds(10, 244, 851, 426);
 		contentPanel.add(tabbedPane);
 		{
 			JPanel tab_clientes = new JPanel();
@@ -350,7 +357,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			tab_clientes.setLayout(null);
 
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(10, 11, 578, 350);
+			scrollPane.setBounds(10, 11, 826, 350);
 			tab_clientes.add(scrollPane);
 
 			modelClientes = new ClienteEventoTableModel();
@@ -426,7 +433,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		tab_itens.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 578, 350);
+		scrollPane.setBounds(10, 11, 826, 350);
 		tab_itens.add(scrollPane);
 		modelItens = new EventoItemTableModel();
 		table_itens = new JTable(modelItens);
@@ -494,13 +501,11 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		tab_servicos.setLayout(null);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 11, 578, 350);
+		scrollPane_1.setBounds(10, 11, 826, 350);
 		tab_servicos.add(scrollPane_1);
 
 		modelServicos = new EventoServicoTableModel();
 		table_servicos = new JTable(modelServicos);
-		table_servicos.getColumnModel().getColumn(1).setMinWidth(0);
-		table_servicos.getColumnModel().getColumn(1).setMaxWidth(0);
 		table_servicos.getModel().addTableModelListener(
 				new TableModelListener() {
 					@Override
@@ -598,7 +603,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			nome.setEditable(false);
 			datahora.setEditable(false);
 			tipoevento.setEnabled(false);
-			nconvidados.setEditable(false);
+			nConvidadosCliente.setEditable(false);
 			salvar.setVisible(false);
 			addCliente.setVisible(false);
 			removeCliente.setVisible(false);
@@ -618,10 +623,10 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			_evento.setNome(nome.getText());
 			_evento.setDataEvento(datahora.getDate());
 			_evento.setTipo(tipoevento.getSelectedItem().toString());
-			_evento.setNumeroClientes(Integer.parseInt(nclientes.getText()));
+			_evento.setNumeroClientes(Integer.parseInt(nClientes.getText()));
 			_evento.setNumeroParcelas(Integer.parseInt(nparcelas.getText()));
-			_evento.setNumeroConvidadosCliente(Integer.parseInt(nconvidados
-					.getText()));
+			_evento.setNumeroConvidadosCliente(Integer
+					.parseInt(nConvidadosCliente.getText()));
 			_evento.setClientes(modelClientes.getLinhas());
 			_evento.setItens(modelItens.getLinhas());
 			_evento.setServicos(modelServicos.getLinhas());
@@ -664,7 +669,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		}
 
 		for (EventoServico es : modelServicos.getLinhas()) {
-			total = total.add(es.getValorservico());
+			total = total.add(es.getSubTotal());
 		}
 
 		totalEvento.setText(NumberFormat.getCurrencyInstance().format(total));
@@ -672,7 +677,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	}
 
 	private void calcularTotalCliente() {
-		String c = nclientes.getText();
+		String c = nClientes.getText();
 		String t = totalEvento.getText();
 
 		if (!c.isEmpty() && !t.isEmpty()) {
@@ -703,14 +708,58 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	}
 
 	private void calcularConvidados() {
-		String c = nclientes.getText();
-		String cvd = nconvidados.getText();
+		String c = nClientes.getText();
+		String cvd = nConvidadosCliente.getText();
 
 		if ((!c.isEmpty() && !cvd.isEmpty())) {
 			int cc = Integer.parseInt(c);
 			int ccvd = Integer.parseInt(cvd);
-			totalconvidados.setText((cc * ccvd) + "");
+			totalConvidados.setText(cc * ccvd + cc+ "");
 
+		}
+
+	}
+
+	/**
+	 * Calcula o subtotal dos itens baseado no nmero de clientes e no total de
+	 * convidados.
+	 */
+	private void calcularSubTotalItens() {
+		String clientes = nClientes.getText();
+		String convidadosDoCliente = nConvidadosCliente.getText();
+
+		if (!clientes.isEmpty() || !convidadosDoCliente.isEmpty()) {
+
+			int nclientes = Integer.parseInt(clientes);
+			int nconvidados = Integer.parseInt(convidadosDoCliente);
+
+			for (EventoItem e : modelItens.getLinhas()) {
+				e.atualizarSubTotal(nclientes, nconvidados);
+			}
+
+			modelItens.AtualizarModel();
+
+		}
+
+	}
+
+	/**
+	 * Calcula o subtotal dos servicos baseado no número de clientes e no total
+	 * de convidados.
+	 */
+	private void calcularSubTotalServicos() {
+		String clientes = nClientes.getText();
+		String convidadosDoCliente = nConvidadosCliente.getText();
+
+		if (!clientes.isEmpty() || !convidadosDoCliente.isEmpty()) {
+
+			int nclientes = Integer.parseInt(clientes);
+			int nconvidados = Integer.parseInt(convidadosDoCliente);
+
+			for (EventoServico e : modelServicos.getLinhas()) {
+				e.atualizarSubTotal(nclientes, nconvidados);
+			}
+			modelServicos.AtualizarModel();
 		}
 
 	}
@@ -721,8 +770,8 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		nome.setText(_evento.getNome());
 		datahora.setDate(_evento.getDataEvento());
 		tipoevento.setSelectedItem(TiposEvento.valueOf(_evento.getTipo()));
-		nclientes.setText(_evento.getNumeroClientes() + "");
-		nconvidados.setText(_evento.getNumeroConvidadosCliente() + "");
+		nClientes.setText(_evento.getNumeroClientes() + "");
+		nConvidadosCliente.setText(_evento.getNumeroConvidadosCliente() + "");
 		nparcelas.setText(_evento.getNumeroParcelas() + "");
 
 		// totalconvidados.setText(_evento.getTotalConvidados() + "");
@@ -773,8 +822,8 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 
 			return false;
 		}
-		if (nconvidados.getText().isEmpty()) {
-			Validate.validarJTextField(nconvidados, erro_dados,
+		if (nConvidadosCliente.getText().isEmpty()) {
+			Validate.validarJTextField(nConvidadosCliente, erro_dados,
 					"Nº de convidados é obrigatório");
 			return false;
 		}

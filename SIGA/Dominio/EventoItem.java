@@ -27,8 +27,6 @@ public class EventoItem implements Serializable {
 	@JoinColumn(name = "iditem", referencedColumnName = "id")
 	private Item item;
 	@Column
-	private int quantidade;
-	@Column
 	private BigDecimal subtotal;
 
 	public EventoItem() {
@@ -38,16 +36,8 @@ public class EventoItem implements Serializable {
 	public EventoItem(Evento evento, Item item) {
 		setEvento(evento);
 		setItem(item);
-		subtotal = new BigDecimal(0);
-		if (item.getTipocobranca() == TipoCobranca.PORCLIENTE) {
-			subtotal = item.getValorComercial().multiply(new BigDecimal(evento
-					.getNumeroClientes()));
-		} else if (item.getTipocobranca() == TipoCobranca.PORCONVIDADO) {
-			subtotal = item.getValorComercial().multiply(new BigDecimal(evento
-					.getTotalConvidados()));
-		} else {
-			subtotal = item.getValorComercial();
-		}
+		calcularSubTotal();
+
 	}
 
 	public long getId() {
@@ -74,17 +64,6 @@ public class EventoItem implements Serializable {
 		this.item = item;
 	}
 
-	public int getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
-		subtotal = this.item.getValorComercial().multiply(
-				new BigDecimal(getQuantidade()));
-
-	}
-
 	public boolean isIncluso() {
 		if (getId() > 0)
 			return true;
@@ -98,6 +77,28 @@ public class EventoItem implements Serializable {
 
 	public void setSubtotal(BigDecimal subtotal) {
 		this.subtotal = subtotal;
+	}
+
+	public void atualizarSubTotal(int numeroClientes, int convidadosDoCliente) {
+
+		evento.setNumeroClientes(numeroClientes);
+		evento.setNumeroConvidadosCliente(convidadosDoCliente);
+		calcularSubTotal();
+
+	}
+
+	private void calcularSubTotal() {
+		subtotal = new BigDecimal(0);
+		if (item.getTipocobranca() == TipoCobranca.CLIENTE) {
+			subtotal = item.getValorComercial().multiply(
+					new BigDecimal(evento.getNumeroClientes()));
+		} else if (item.getTipocobranca() == TipoCobranca.CONVIDADO) {
+			
+			subtotal = item.getValorComercial().multiply(
+					new BigDecimal(evento.getTotalConvidados()));
+		} else {
+			subtotal = item.getValorComercial();
+		}
 	}
 
 }
