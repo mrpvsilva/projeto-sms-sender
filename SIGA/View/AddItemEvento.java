@@ -138,8 +138,7 @@ public class AddItemEvento extends JDialog {
 
 									int q = Integer.parseInt(qtd);
 
-									EventoItem ei = new EventoItem(_evento, i,
-											q);
+									EventoItem ei = new EventoItem(_evento, i);
 									_modelEventoItens.add(ei);
 									_modelItens.remove(l);
 

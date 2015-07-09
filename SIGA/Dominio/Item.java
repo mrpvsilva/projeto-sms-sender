@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,9 +34,12 @@ public class Item implements Serializable {
 	private BigDecimal valorcomercial;
 	@Column
 	private boolean ativo;
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idtipoitem", referencedColumnName = "id")
 	private TipoItem tipoItem;
+	@Column
+	@Enumerated(EnumType.STRING)
+	private TipoCobranca tipocobranca;
 
 	public Item() {
 		this.ativo = true;
@@ -106,5 +111,15 @@ public class Item implements Serializable {
 	public void setTipoitem(TipoItem tipoitem) {
 		this.tipoItem = tipoitem;
 	}
+
+	public TipoCobranca getTipocobranca() {
+		return tipocobranca;
+	}
+
+	public void setTipocobranca(TipoCobranca tipocobranca) {
+		this.tipocobranca = tipocobranca;
+	}
+	
+	
 
 }

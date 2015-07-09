@@ -32,9 +32,7 @@ public class ServicoTableModel extends DefaultTableModel<Servico> {
 	@Override
 	public Object getValueAt(int linha, int coluna) {
 
-		Servico s = linhas.get(linha);
-		System.out.println(linha+": "+s.isAtivo());
-		
+		Servico s = linhas.get(linha);		
 		
 		switch (coluna) {
 		case 0:

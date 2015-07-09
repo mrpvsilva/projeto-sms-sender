@@ -64,24 +64,26 @@ public class OrcamentoControl {
 		return _itemRepository.findByTipo(tipoItem);
 	}
 
-	public List<EventoItem> buscarEventoItens(Evento evento) {
-		List<Item> l = _itemRepository.findAll(true);
-		List<EventoItem> l1 = new ArrayList<EventoItem>();
+	public void buscarEventoItens(Evento evento) {
+		List<Item> itens = _itemRepository.findAll(true);
+		// List<EventoItem> l1 = new ArrayList<EventoItem>();
 
-		for (Item i : l) {
-			l1.add(new EventoItem(evento, i, 1));
+		for (Item item : itens) {
+			// l1.add(new EventoItem(evento, i, 1));
+			evento.addItem(new EventoItem(evento, item));
 		}
-		return l1;
+		// return l1;
 	}
 
-	public List<EventoServico> buscarServicos(Evento evento) {
+	public void buscarServicos(Evento evento) {
 		List<Servico> servicos = _servicoRepository.findAll(true);
-		List<EventoServico> e = new ArrayList<EventoServico>();
+		// List<EventoServico> e = new ArrayList<EventoServico>();
 
-		for (Servico servico : servicos) {			
-			e.add(new EventoServico(evento, servico));
+		for (Servico servico : servicos) {
+			// e.add(new EventoServico(evento, servico));
+			evento.addServico(new EventoServico(evento, servico));
 		}
-		return e;
+		// return e;
 	}
 
 	public List<Item> pesquisarItens(String tipoItem) {

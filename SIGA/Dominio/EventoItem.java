@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "eventositens")
@@ -36,11 +35,19 @@ public class EventoItem implements Serializable {
 
 	}
 
-	public EventoItem(Evento evento, Item item, int quantidade) {
+	public EventoItem(Evento evento, Item item) {
 		setEvento(evento);
 		setItem(item);
-		setQuantidade(quantidade);
-
+		subtotal = new BigDecimal(0);
+		if (item.getTipocobranca() == TipoCobranca.PORCLIENTE) {
+			subtotal = item.getValorComercial().multiply(new BigDecimal(evento
+					.getNumeroClientes()));
+		} else if (item.getTipocobranca() == TipoCobranca.PORCONVIDADO) {
+			subtotal = item.getValorComercial().multiply(new BigDecimal(evento
+					.getTotalConvidados()));
+		} else {
+			subtotal = item.getValorComercial();
+		}
 	}
 
 	public long getId() {
@@ -73,7 +80,8 @@ public class EventoItem implements Serializable {
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
-		subtotal = this.item.getValorComercial().multiply(new BigDecimal(getQuantidade()));
+		subtotal = this.item.getValorComercial().multiply(
+				new BigDecimal(getQuantidade()));
 
 	}
 
