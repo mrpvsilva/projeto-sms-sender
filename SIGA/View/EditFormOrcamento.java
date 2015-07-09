@@ -11,6 +11,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+
 import Control.OrcamentoControl;
 import Dominio.ClienteEvento;
 import Dominio.Evento;
@@ -42,6 +43,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -109,6 +111,11 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	 */
 	public EditFormOrcamento() {
 		_evento = new Evento();
+
+		_orcamentoControl = new OrcamentoControl();
+		_orcamentoControl.buscarServicos(_evento);
+		_orcamentoControl.buscarEventoItens(_evento);
+
 		_tipo = EditFormType.cadastrar;
 		start();
 	}
@@ -119,6 +126,11 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	public EditFormOrcamento(DefaultTableModel<Evento> modelOrcamento) {
 		_modelOrcamento = modelOrcamento;
 		_evento = new Evento();
+
+		_orcamentoControl = new OrcamentoControl();
+		_orcamentoControl.buscarServicos(_evento);
+		_orcamentoControl.buscarEventoItens(_evento);
+
 		_tipo = EditFormType.cadastrar;
 		start();
 	}
@@ -130,6 +142,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	public EditFormOrcamento(EditFormType tipo, Evento evento,
 			DefaultTableModel<Evento> modelOrcamento) {
 		_evento = evento;
+		_orcamentoControl = new OrcamentoControl();
 		_tipo = tipo;
 		_modelOrcamento = modelOrcamento;
 		start();
@@ -138,7 +151,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	public void start() {
 
 		setResizable(false);
-		_orcamentoControl = new OrcamentoControl();
+
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Novo or\u00E7amento");
 		setModal(true);
@@ -207,7 +220,6 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		}
 		{
 			nconvidados = new JTextField();
-			nconvidados.setText("1");
 			nconvidados.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			nconvidados.setBounds(347, 93, 57, 22);
 			panel.add(nconvidados);
@@ -260,7 +272,6 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 
 			}
 		});
-		nclientes.setText("1");
 		nclientes.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		nclientes.setColumns(10);
 		nclientes.setBounds(119, 94, 57, 22);
@@ -305,7 +316,6 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 				calcularParcelaPorCliente();
 			}
 		});
-		nparcelas.setText("1");
 		nparcelas.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		nparcelas.setColumns(10);
 		nparcelas.setBounds(109, 0, 57, 22);
@@ -418,7 +428,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 578, 350);
 		tab_itens.add(scrollPane);
-		modelItens = new EventoItemTableModel(_orcamentoControl.buscarEventoItens(_evento));
+		modelItens = new EventoItemTableModel();
 		table_itens = new JTable(modelItens);
 		table_itens.getColumnModel().getColumn(3).setMinWidth(0);
 		table_itens.getColumnModel().getColumn(3).setMaxWidth(0);
@@ -487,8 +497,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		scrollPane_1.setBounds(10, 11, 578, 350);
 		tab_servicos.add(scrollPane_1);
 
-		modelServicos = new EventoServicoTableModel(
-				_orcamentoControl.buscarServicos(_evento));
+		modelServicos = new EventoServicoTableModel();
 		table_servicos = new JTable(modelServicos);
 		table_servicos.getColumnModel().getColumn(1).setMinWidth(0);
 		table_servicos.getColumnModel().getColumn(1).setMaxWidth(0);
@@ -706,6 +715,27 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 
 	}
 
+	private void carregarCampos() {
+
+		// if (_tipo != EditFormType.cadastrar) {
+		nome.setText(_evento.getNome());
+		datahora.setDate(_evento.getDataEvento());
+		tipoevento.setSelectedItem(TiposEvento.valueOf(_evento.getTipo()));
+		nclientes.setText(_evento.getNumeroClientes() + "");
+		nconvidados.setText(_evento.getNumeroConvidadosCliente() + "");
+		nparcelas.setText(_evento.getNumeroParcelas() + "");
+
+		// totalconvidados.setText(_evento.getTotalConvidados() + "");
+		modelClientes.setLinhas(_evento.getClientes());
+		modelItens.setLinhas(_evento.getItens());
+		modelServicos.setLinhas(_evento.getServicos());
+
+		// } else {
+		// modelItens.setLinhas(_orcamentoControl.buscarEventoItens(_evento));
+
+		// }
+	}
+
 	private boolean valid() {
 
 		if (nome.getText().isEmpty()) {
@@ -767,23 +797,6 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 
 		return true;
 
-	}
-
-	private void carregarCampos() {
-
-		if (_tipo != EditFormType.cadastrar) {
-			nome.setText(_evento.getNome());
-			datahora.setDate(_evento.getDataEvento());
-			tipoevento.setSelectedItem(TiposEvento.valueOf(_evento.getTipo()));
-			nclientes.setText(_evento.getNumeroClientes() + "");
-			nconvidados.setText(_evento.getNumeroConvidadosCliente() + "");
-			nparcelas.setText(_evento.getNumeroParcelas() + "");
-			totalconvidados.setText(_evento.getTotalConvidados() + "");
-			modelClientes.setLinhas(_evento.getClientes());
-			modelItens.setLinhas(_evento.getItens());
-			modelServicos.setLinhas(_evento.getServicos());
-
-		}
 	}
 
 	@Override

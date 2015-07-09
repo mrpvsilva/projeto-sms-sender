@@ -17,8 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
 import Util.StatusEvento;
 
 @Entity
@@ -68,11 +66,13 @@ public class Evento implements Serializable {
 
 	public Evento() {
 		setStatus(StatusEvento.ORCAMENTO.toString());
+		setTipo(TiposEvento.SELECIONE.toString());
 		setNumeroClientes(1);
 		setNumeroConvidadosCliente(1);
 		setNumeroParcelas(1);
+		setClientes(new ArrayList<ClienteEvento>());
 		this.datacriacao = Calendar.getInstance().getTime();
-
+		this.dataevento = Calendar.getInstance().getTime();
 	}
 
 	public void addServico(EventoServico eventoServico) {

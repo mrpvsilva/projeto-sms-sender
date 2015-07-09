@@ -35,13 +35,24 @@ public class EventoServico implements Serializable {
 	private BigDecimal valorservico;
 
 	public EventoServico() {
-		// TODO Auto-generated constructor stub
+
 	}
+
 	public EventoServico(Evento evento, Servico servico) {
 		setEvento(evento);
 		setServico(servico);
-		setValorservico(servico.getValorservico());
-	}	
+		valorservico = new BigDecimal(0);
+
+		if (servico.getTipocobranca() == TipoCobranca.PORCLIENTE) {
+			valorservico = servico.getValorservico().multiply(
+					new BigDecimal(evento.getNumeroClientes()));
+		} else if (servico.getTipocobranca() == TipoCobranca.PORCONVIDADO) {
+			valorservico = servico.getValorservico().multiply(
+					new BigDecimal(evento.getTotalConvidados()));
+		} else {
+			valorservico = servico.getValorservico();
+		}
+	}
 
 	public long getId() {
 		return id;
