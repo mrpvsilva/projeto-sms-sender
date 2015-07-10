@@ -43,9 +43,12 @@ public class OrcamentoControl {
 		return _orcamentoRepository.findAll();
 	}
 
-	public List<Evento> listarTodos(String nome, Date inicio, Date fim,
+	public List<Evento> listarTodos(String nome, Date inicioCad, Date fimCad,
+			Date inicioReal, Date fimReal,
+
 			TiposEvento tipoEvento) {
-		return _orcamentoRepository.findAll(nome, inicio, fim, tipoEvento);
+		return _orcamentoRepository.findAll(nome, inicioCad, fimCad,
+				inicioReal, fimReal, tipoEvento);
 	}
 
 	public boolean cadastrar(Evento evento) {

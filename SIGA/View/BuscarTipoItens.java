@@ -31,6 +31,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import java.awt.Toolkit;
 
 public class BuscarTipoItens extends JDialog implements ActionListener {
 
@@ -52,6 +53,8 @@ public class BuscarTipoItens extends JDialog implements ActionListener {
 	private Permissao permissao;
 
 	public BuscarTipoItens() {
+		setTitle("Buscar tipo item");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BuscarTipoItens.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		permissao = PermissoesManager.buscarPermissao(Modulos.Tipo_itens);
 		setModal(true);
 		setResizable(false);

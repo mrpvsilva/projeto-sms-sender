@@ -40,7 +40,6 @@ import TableModels.OrcamentoTableModel;
 import Util.EditFormType;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
-import net.sourceforge.jdatepicker.util.JDatePickerUtil;
 
 public class BuscarOrcamentos extends JDialog {
 
@@ -50,15 +49,17 @@ public class BuscarOrcamentos extends JDialog {
 	private OrcamentoControl _orcamentoControl;
 	private JTextField nome;
 
-	private JDatePickerImpl datePickerInicial;
-	private DateModel<Date> dataCadastroInicial;
-	private JDatePickerImpl datePickerFinal;
-	private DateModel<Date> dataCadastrofinal;
+	private JDatePickerImpl datePickerCadInicial;
+	private DateModel<Date> dateModelCadInicial;
 
-	private JDatePickerImpl datePickerRealizacaoInicial;
-	private DateModel<Date> dataRealizacaoInicial;
-	private JDatePickerImpl datePickerRealizacaoFinal;
-	private DateModel<Date> dataRealizacaofinal;
+	private JDatePickerImpl datePickerCadFinal;
+	private DateModel<Date> dateModelCadfinal;
+
+	private JDatePickerImpl datePickerRealInicial;
+	private DateModel<Date> dateModelRealInicial;
+
+	private JDatePickerImpl datePickerRealFinal;
+	private DateModel<Date> dateModelRealfinal;
 
 	private JLabel erro_datas;
 	private JComboBox tiposeventos;
@@ -93,7 +94,7 @@ public class BuscarOrcamentos extends JDialog {
 		contentPanel.setLayout(null);
 		{
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(8, 430, 828, 144);
+			scrollPane.setBounds(8, 257, 828, 317);
 			contentPanel.add(scrollPane);
 			{
 				_modelOrcamento = new OrcamentoTableModel(
@@ -123,7 +124,7 @@ public class BuscarOrcamentos extends JDialog {
 
 		JPanel filtros = new JPanel();
 		filtros.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
-		filtros.setBounds(10, 11, 652, 366);
+		filtros.setBounds(87, 11, 652, 235);
 		contentPanel.add(filtros);
 		filtros.setLayout(null);
 
@@ -142,13 +143,13 @@ public class BuscarOrcamentos extends JDialog {
 		JLabel lblNewLabel = new JLabel("Tipo");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel.setBounds(68, 144, 71, 14);
+		lblNewLabel.setBounds(68, 42, 71, 14);
 		filtros.add(lblNewLabel);
 
 		tiposeventos = new JComboBox(TiposEvento.values());
 		tiposeventos.removeItem(TiposEvento.SELECIONE);
 		tiposeventos.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		tiposeventos.setBounds(149, 141, 150, 20);
+		tiposeventos.setBounds(149, 39, 150, 20);
 		filtros.add(tiposeventos);
 		{
 			JPanel buttonPane = new JPanel();
@@ -198,24 +199,31 @@ public class BuscarOrcamentos extends JDialog {
 			btnGerarDocumento.setVisible(false);
 			buttonPane.add(btnGerarDocumento);
 		}
+
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(null, "Per\u00EDodo de cadastro",
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBounds(91, 73, 248, 91);
+		panel.setLayout(null);
+
 		{
-			dataCadastroInicial = new UtilDateModel();
-			dataCadastroInicial.addChangeListener(new ChangeListener() {
+			dateModelCadInicial = new UtilDateModel();
+			dateModelCadInicial.addChangeListener(new ChangeListener() {
 				@Override
 				public void stateChanged(ChangeEvent e) {
 
-					if (dataCadastroInicial.isSelected()) {
+					if (dateModelCadInicial.isSelected()) {
 
 						try {
 							SimpleDateFormat sdf = new SimpleDateFormat(
 									"dd/MM/yyyy");
-							String o = sdf.format(dataCadastroInicial
+							String o = sdf.format(dateModelCadInicial
 									.getValue());
 							Date ini = sdf.parse(o);
-							Date fim = dataCadastrofinal.getValue();
+							Date fim = dateModelCadfinal.getValue();
 
 							if (fim == null) {
-								dataCadastrofinal.setValue(ini);
+								dateModelCadfinal.setValue(ini);
 								erro_datas.setText("");
 							} else {
 								o = sdf.format(fim);
@@ -223,8 +231,8 @@ public class BuscarOrcamentos extends JDialog {
 
 								if (fim.compareTo(ini) < 0) {
 									erro_datas
-											.setText("Data final deve ser igual ou maior a data inicial.");
-									datePickerFinal.getJFormattedTextField()
+											.setText("Data final de cadastro deve ser igual ou maior a data inicial.");
+									datePickerCadFinal.getJFormattedTextField()
 											.setText("");
 
 								} else {
@@ -234,7 +242,6 @@ public class BuscarOrcamentos extends JDialog {
 							}
 
 						} catch (ParseException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 					} else {
@@ -243,33 +250,40 @@ public class BuscarOrcamentos extends JDialog {
 				}
 
 			});
+
 			JDatePanelImpl datePanelInicial = new JDatePanelImpl(
-					dataCadastroInicial);
+					dateModelCadInicial);
+			datePickerCadInicial = new JDatePickerImpl(datePanelInicial);
+			datePickerCadInicial.setBounds(91, 21, 150, 30);
+			datePickerCadInicial.getJFormattedTextField().setFont(
+					new Font("Tahoma", Font.PLAIN, 13));
+			panel.add(datePickerCadInicial);
+
 		}
 		{
-			dataCadastrofinal = new UtilDateModel();
-			dataCadastrofinal.addChangeListener(new ChangeListener() {
+			dateModelCadfinal = new UtilDateModel();
+			dateModelCadfinal.addChangeListener(new ChangeListener() {
 				@Override
 				public void stateChanged(ChangeEvent e) {
-					if (dataCadastrofinal.isSelected()) {
+					if (dateModelCadfinal.isSelected()) {
 
 						try {
 							SimpleDateFormat sdf = new SimpleDateFormat(
 									"dd/MM/yyyy");
-							String o = sdf.format(dataCadastrofinal.getValue());
+							String o = sdf.format(dateModelCadfinal.getValue());
 							Date fim = sdf.parse(o);
-							Date ini = dataCadastroInicial.getValue();
+							Date ini = dateModelCadInicial.getValue();
 
 							if (ini == null) {
-								dataCadastroInicial.setValue(fim);
+								dateModelCadInicial.setValue(fim);
 							} else {
 								o = sdf.format(ini);
 								ini = sdf.parse(o);
 
 								if (fim.compareTo(ini) < 0) {
 									erro_datas
-											.setText("Data final deve ser igual ou maior a data inicial.");
-									dataCadastrofinal.setValue(null);
+											.setText("Data final de cadastro deve ser igual ou maior a data inicial.");
+									dateModelCadfinal.setValue(null);
 								} else {
 									erro_datas.setText("");
 								}
@@ -280,14 +294,20 @@ public class BuscarOrcamentos extends JDialog {
 
 						}
 
-					} else if (dataCadastrofinal.getValue() != null) {
+					} else if (dateModelCadfinal.getValue() != null) {
 						erro_datas.setText("");
 					}
 				}
 			});
 
-			JDatePanelImpl datePaneilFinal = new JDatePanelImpl(
-					dataCadastrofinal);
+			JDatePanelImpl datePanelFinal = new JDatePanelImpl(
+					dateModelCadfinal);
+			datePickerCadFinal = new JDatePickerImpl(datePanelFinal);
+			datePickerCadFinal.setBounds(91, 52, 150, 30);
+			panel.add(datePickerCadFinal);
+			datePickerCadFinal.getJFormattedTextField().setFont(
+					new Font("Tahoma", Font.PLAIN, 13));
+
 		}
 
 		JButton btnNewButton = new JButton("Pesquisar");
@@ -300,71 +320,48 @@ public class BuscarOrcamentos extends JDialog {
 		btnNewButton.setIcon(new ImageIcon(BuscarOrcamentos.class
 				.getResource("/Img/Procurar.png")));
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnNewButton.setBounds(293, 175, 118, 23);
+		btnNewButton.setBounds(281, 198, 118, 23);
 		filtros.add(btnNewButton);
 
 		erro_datas = new JLabel("");
 		erro_datas.setForeground(Color.RED);
 		erro_datas.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		erro_datas.setBounds(338, 141, 304, 23);
+		erro_datas.setBounds(112, 164, 506, 23);
 		filtros.add(erro_datas);
 
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Per\u00EDodo de cadastro",
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(95, 39, 248, 91);
 		filtros.add(panel);
-		panel.setLayout(null);
 
 		JLabel lblDataInicial = new JLabel("Data inicial");
 		lblDataInicial.setBounds(10, 21, 71, 14);
 		panel.add(lblDataInicial);
 		lblDataInicial.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblDataInicial.setHorizontalAlignment(SwingConstants.RIGHT);
-		JDatePanelImpl datePanelInicial = new JDatePanelImpl(
-				dataCadastroInicial);
-		datePickerInicial = new JDatePickerImpl(datePanelInicial);
-		datePickerInicial.setBounds(91, 21, 150, 30);
-		panel.add(datePickerInicial);
-		datePickerInicial.getJFormattedTextField().setFont(
-				new Font("Tahoma", Font.PLAIN, 13));
 
 		JLabel lblDataFinal = new JLabel("Data final");
 		lblDataFinal.setBounds(10, 54, 71, 14);
 		panel.add(lblDataFinal);
 		lblDataFinal.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDataFinal.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		JDatePanelImpl datePaneilFinal = new JDatePanelImpl(dataCadastrofinal);
-		datePickerFinal = new JDatePickerImpl(datePaneilFinal);
-		datePickerFinal.setBounds(91, 52, 150, 30);
-		panel.add(datePickerFinal);
-		datePickerFinal.getJFormattedTextField().setFont(
-				new Font("Tahoma", Font.PLAIN, 13));
 
 		JPanel realizacao = new JPanel();
 		{
-			dataRealizacaoInicial = new UtilDateModel();
-			JDatePanelImpl datePanelRealizacaoInicial = new JDatePanelImpl(
-					dataRealizacaoInicial);
-			datePickerRealizacaoInicial = new JDatePickerImpl(datePanelInicial);
-			datePickerRealizacaoInicial.setBounds(91, 21, 150, 30);
-			datePickerRealizacaoInicial.getJFormattedTextField().setFont(
-					new Font("Tahoma", Font.PLAIN, 13));
-			realizacao.add(datePickerRealizacaoInicial);
-			dataRealizacaoInicial.addChangeListener(new ChangeListener() {
+			dateModelRealInicial = new UtilDateModel();
+			dateModelRealInicial.addChangeListener(new ChangeListener() {
 				@Override
 				public void stateChanged(ChangeEvent e) {
 
-					if (dataRealizacaoInicial.isSelected()) {
+					if (dateModelRealInicial.isSelected()) {
 
 						try {
-							SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-							String o = sdf.format(dataRealizacaoInicial.getValue());
+							SimpleDateFormat sdf = new SimpleDateFormat(
+									"dd/MM/yyyy");
+							String o = sdf.format(dateModelRealInicial
+									.getValue());
 							Date ini = sdf.parse(o);
-							Date fim = dataRealizacaofinal.getValue();
+							Date fim = dateModelRealfinal.getValue();
 
 							if (fim == null) {
-								dataRealizacaofinal.setValue(ini);
+								dateModelRealfinal.setValue(ini);
 								erro_datas.setText("");
 							} else {
 								o = sdf.format(fim);
@@ -372,9 +369,10 @@ public class BuscarOrcamentos extends JDialog {
 
 								if (fim.compareTo(ini) < 0) {
 									erro_datas
-											.setText("Data final deve ser igual ou maior a data inicial.");
-									datePickerRealizacaoFinal.getJFormattedTextField()
-											.setText("");
+											.setText("Data final de realização deve ser igual ou maior a data inicial.");
+									datePickerRealFinal
+											.getJFormattedTextField().setText(
+													"");
 
 								} else {
 									erro_datas.setText("");
@@ -383,7 +381,6 @@ public class BuscarOrcamentos extends JDialog {
 							}
 
 						} catch (ParseException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 					} else {
@@ -392,36 +389,38 @@ public class BuscarOrcamentos extends JDialog {
 				}
 
 			});
+			JDatePanelImpl datePanelRealizacaoInicial = new JDatePanelImpl(
+					dateModelRealInicial);
+			datePickerRealInicial = new JDatePickerImpl(
+					datePanelRealizacaoInicial);
+			datePickerRealInicial.setBounds(91, 21, 150, 30);
+			datePickerRealInicial.getJFormattedTextField().setFont(
+					new Font("Tahoma", Font.PLAIN, 13));
+			realizacao.add(datePickerRealInicial);
 
-			dataRealizacaofinal = new UtilDateModel();
-			JDatePanelImpl datePanelRealizacaoFinal = new JDatePanelImpl(dataRealizacaofinal);
-			datePickerRealizacaoFinal = new JDatePickerImpl(datePanelRealizacaoFinal);
-			datePickerRealizacaoFinal.setBounds(91, 52, 150, 30);
-			datePickerRealizacaoFinal.getJFormattedTextField().setFont(
-					new Font("Tahoma", Font.PLAIN, 13));			
-			dataRealizacaofinal.addChangeListener(new ChangeListener() {
+			dateModelRealfinal = new UtilDateModel();
+			dateModelRealfinal.addChangeListener(new ChangeListener() {
 				@Override
 				public void stateChanged(ChangeEvent e) {
-					if (dataRealizacaofinal.isSelected()) {
+					if (dateModelRealfinal.isSelected()) {
 
 						try {
 							SimpleDateFormat sdf = new SimpleDateFormat(
 									"dd/MM/yyyy");
-							String o = sdf.format(dataRealizacaofinal
-									.getValue());
+							String o = sdf.format(dateModelRealfinal.getValue());
 							Date fim = sdf.parse(o);
-							Date ini = dataRealizacaoInicial.getValue();
+							Date ini = dateModelRealInicial.getValue();
 
 							if (ini == null) {
-								dataRealizacaoInicial.setValue(fim);
+								dateModelRealInicial.setValue(fim);
 							} else {
 								o = sdf.format(ini);
 								ini = sdf.parse(o);
 
 								if (fim.compareTo(ini) < 0) {
 									erro_datas
-											.setText("Data final deve ser igual ou maior a data inicial.");
-									dataRealizacaofinal.setValue(null);
+											.setText("Data final de realização deve ser igual ou maior a data inicial.");
+									dateModelRealfinal.setValue(null);
 								} else {
 									erro_datas.setText("");
 								}
@@ -432,21 +431,27 @@ public class BuscarOrcamentos extends JDialog {
 
 						}
 
-					} else if (dataRealizacaofinal.getValue() != null) {
+					} else if (dateModelCadfinal.getValue() != null) {
 						erro_datas.setText("");
 					}
 				}
 			});
+			JDatePanelImpl datePanelRealizacaoFinal = new JDatePanelImpl(
+					dateModelRealfinal);
+			datePickerRealFinal = new JDatePickerImpl(datePanelRealizacaoFinal);
+			datePickerRealFinal.setBounds(91, 52, 150, 30);
+			datePickerRealFinal.getJFormattedTextField().setFont(
+					new Font("Tahoma", Font.PLAIN, 13));
 
 		}
-		
-		realizacao.add(datePickerRealizacaoFinal);
+
+		realizacao.add(datePickerRealFinal);
 		realizacao.setLayout(null);
 		realizacao.setBorder(new TitledBorder(UIManager
 				.getBorder("TitledBorder.border"),
 				"Per\u00EDodo de realiza\u00E7ao evento", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
-		realizacao.setBounds(353, 39, 248, 91);
+		realizacao.setBounds(353, 73, 248, 91);
 		filtros.add(realizacao);
 
 		JLabel label = new JLabel("Data final");
@@ -464,12 +469,14 @@ public class BuscarOrcamentos extends JDialog {
 
 	private void pesquisar() {
 		String n = nome.getText();
-		Date inicio = dataCadastroInicial.getValue();
-		Date fim = dataCadastrofinal.getValue();
+		Date inicioCad = dateModelCadInicial.getValue();
+		Date fimCad = dateModelCadfinal.getValue();
+		Date inicioReal = dateModelRealInicial.getValue();
+		Date fimReal = dateModelRealfinal.getValue();
 		TiposEvento tipoEvento = (TiposEvento) tiposeventos.getSelectedItem();
 
-		_modelOrcamento.setLinhas(_orcamentoControl.listarTodos(n, inicio, fim,
-				tipoEvento));
+		_modelOrcamento.setLinhas(_orcamentoControl.listarTodos(n, inicioCad,
+				fimCad, inicioReal, fimReal, tipoEvento));
 
 	}
 }

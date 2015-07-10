@@ -28,6 +28,7 @@ import TableModels.PermissaoTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 public class EditFormPerfil extends JDialog implements ActionListener {
 
@@ -47,6 +48,8 @@ public class EditFormPerfil extends JDialog implements ActionListener {
 	 */
 	public EditFormPerfil(Perfil perfil,
 			DefaultTableModel<Perfil> modelPerfil) {
+		setTitle("Salvar perfil");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EditFormPerfil.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		setResizable(false);
 		setModal(true);
 		setLocationRelativeTo(null);

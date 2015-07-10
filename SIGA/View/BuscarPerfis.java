@@ -32,6 +32,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 public class BuscarPerfis extends JDialog implements ActionListener {
 
@@ -47,6 +48,7 @@ public class BuscarPerfis extends JDialog implements ActionListener {
 	private Permissao Perfis;
 
 	public BuscarPerfis() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BuscarPerfis.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		Perfis = PermissoesManager.buscarPermissao(Modulos.Perfis);
 		setTitle("Buscar perfis");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

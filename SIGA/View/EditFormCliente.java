@@ -135,7 +135,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				EditFormCliente.class.getResource("/Img/CNPJ G200.png")));
+				EditFormCliente.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		setTitle("SIGA - cadastro de cliente");
 		setBounds(100, 100, 616, 574);
 		getContentPane().setLayout(new BorderLayout());
@@ -357,8 +357,6 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		aba_telefones.add(scrollPane);
 
 		table = new JTable(modeltelefone);
-		table.getColumnModel().getColumn(0).setMinWidth(0);
-		table.getColumnModel().getColumn(0).setMaxWidth(0);
 		scrollPane.setViewportView(table);
 
 		add_telefone = new JButton("");
@@ -465,6 +463,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		nomeguerra.setEditable(enabled);
 		rg.setEditable(enabled);
 		cpfcnpj.setEditable(enabled);
+		chckbxCnpj.setEnabled(false);
 		email.setEditable(enabled);
 		datanascimento.setEditable(enabled);
 		endereco.setEditable(enabled);
@@ -492,6 +491,8 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		email.setText(cliente.getEmail());
 		datanascimento.setValue(new SimpleDateFormat("dd/MM/yyyy")
 				.format(cliente.getDatanascimento()));
+		
+		chckbxCnpj.setSelected(cliente.getCpfCnpj().length()==11);
 		Endereco e = cliente.getEndereco();
 		endereco.setText(e.getEndereco());
 		cep.setText(e.getCep() + "");

@@ -1,6 +1,7 @@
 package Repositories;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
 import Dominio.Lembrete;
 import Dominio.Usuario;
 import Interfaces.ILembreteRepository;
@@ -21,15 +23,15 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 	@Override
 	public List<Lembrete> findAll() {
 		try {
-			
+
 			String q = "select l from Lembrete l order by l.datahora desc";
 			Query query = entityManager.createQuery(q);
-			List<Lembrete> l = query.getResultList();			
+			List<Lembrete> l = query.getResultList();
 			return l;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
-		} 
+		}
 
 	}
 
@@ -37,7 +39,7 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 	@Override
 	public List<Lembrete> findAll(Date dataInicial, Date dataFinal,
 			String assunto, Usuario destinatario) {
-		try {		
+		try {
 
 			CriteriaBuilder criteiraBuilder = entityManager
 					.getCriteriaBuilder();
@@ -86,13 +88,13 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
-		} 
+		}
 	}
 
 	@Override
 	public List<Lembrete> findAll(Usuario destinatario) {
 		try {
-			String q = "select l from Lembrete l where l.destinatario = :destinatario order by l.datahora desc";			
+			String q = "select l from Lembrete l where l.destinatario = :destinatario order by l.datahora desc";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("destinatario", destinatario);
 			return query.getResultList();
@@ -100,7 +102,31 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
-		} 
+		}
 
+	}
+
+	@Override
+	public int ContarLembretes(Usuario destinatario) {
+		try {
+
+			Calendar inicio = Calendar.getInstance();
+			inicio.add(Calendar.MINUTE, -10);
+
+			Calendar fim = Calendar.getInstance();
+			fim.add(Calendar.MINUTE, 30);
+
+			System.out.println(fim.getTime().toString());
+
+			String q = "select l from Lembrete l where l.destinatario = :destinatario and l.datahora between :inicio and :fim ";
+			Query query = entityManager.createQuery(q);
+			query.setParameter("destinatario", destinatario);
+			query.setParameter("inicio", inicio.getTime());
+			query.setParameter("fim", fim.getTime());
+			return query.getResultList().size();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return 0;
+		}
 	}
 }

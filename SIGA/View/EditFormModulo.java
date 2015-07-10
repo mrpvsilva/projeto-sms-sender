@@ -18,6 +18,7 @@ import Control.ModuloControl;
 import Dominio.Modulo;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 public class EditFormModulo extends JDialog implements ActionListener {
 
@@ -31,6 +32,8 @@ public class EditFormModulo extends JDialog implements ActionListener {
 
 	public EditFormModulo(Modulo modulo,
 			DefaultTableModel<Modulo> model) {
+		setTitle("Salvar m\u00F3dulo");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EditFormModulo.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		setResizable(false);
 		setModal(true);
 		moduloControl = new ModuloControl();

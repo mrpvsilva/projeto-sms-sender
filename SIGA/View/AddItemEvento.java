@@ -32,6 +32,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.awt.Toolkit;
 
 public class AddItemEvento extends JDialog {
 
@@ -62,6 +63,8 @@ public class AddItemEvento extends JDialog {
 	 */
 	public AddItemEvento(DefaultTableModel<EventoItem> modelEventoItens,
 			Evento evento) {
+		setTitle("Adicionar item");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AddItemEvento.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		controller = new OrcamentoControl();
 		_modelItens = new ItemEventoTableModel();
 		_modelEventoItens = modelEventoItens;

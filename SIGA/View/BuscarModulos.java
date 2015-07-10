@@ -25,6 +25,7 @@ import Dominio.Permissao;
 import TableModels.DefaultTableModel;
 import TableModels.ModuloTableModel;
 import Util.PermissoesManager;
+import java.awt.Toolkit;
 
 public class BuscarModulos extends JDialog implements ActionListener {
 
@@ -38,6 +39,7 @@ public class BuscarModulos extends JDialog implements ActionListener {
 	private Permissao Modulos;
 
 	public BuscarModulos() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BuscarModulos.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		Modulos = PermissoesManager.buscarPermissao(Util.Modulos.Modulos);
 		setResizable(false);
 		setModal(true);

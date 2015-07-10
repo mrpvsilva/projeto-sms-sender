@@ -9,6 +9,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import Util.StatusEvento;
 
 @Entity
 @Table(name = "eventos")
@@ -30,10 +31,12 @@ public class Evento implements Serializable {
 	private long id;
 
 	@Column
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private StatusEvento status;
 
 	@Column
-	private String tipo;
+	@Enumerated(EnumType.STRING)
+	private TiposEvento tipo;
 
 	@Column
 	private int numeroconvidadoscliente;
@@ -65,8 +68,19 @@ public class Evento implements Serializable {
 	private List<EventoServico> servicos;
 
 	public Evento() {
-		setStatus(StatusEvento.ORCAMENTO.toString());
-		setTipo(TiposEvento.SELECIONE.toString());
+		setStatus(status.ORCAMENTO);
+		setTipo(TiposEvento.SELECIONE);
+		setNumeroClientes(1);
+		setNumeroConvidadosCliente(0);
+		setNumeroParcelas(1);
+		setClientes(new ArrayList<ClienteEvento>());
+		this.datacriacao = Calendar.getInstance().getTime();
+		this.dataevento = Calendar.getInstance().getTime();
+	}
+
+	public Evento(StatusEvento status) {
+		setStatus(status);
+		setTipo(TiposEvento.SELECIONE);
 		setNumeroClientes(1);
 		setNumeroConvidadosCliente(0);
 		setNumeroParcelas(1);
@@ -113,19 +127,19 @@ public class Evento implements Serializable {
 		this.id = id;
 	}
 
-	public String getStatus() {
+	public StatusEvento getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(StatusEvento status) {
 		this.status = status;
 	}
 
-	public String getTipo() {
+	public TiposEvento getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(TiposEvento tipo) {
 		this.tipo = tipo;
 	}
 

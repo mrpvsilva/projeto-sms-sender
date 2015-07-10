@@ -97,8 +97,7 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 		modelLembretes = new LembreteTableModel(_lembreteControl.BuscarTodos());
 		Lembretes = PermissoesManager.buscarPermissao(Modulos.Lembretes);
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				BuscarLembretes.class.getResource("/Img/CNPJ G200.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BuscarLembretes.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		setModal(true);
 		setResizable(false);
 		setTitle("SIGA - buscar lembretes");

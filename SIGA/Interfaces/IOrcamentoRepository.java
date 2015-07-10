@@ -8,7 +8,7 @@ import Dominio.TiposEvento;
 
 public interface IOrcamentoRepository extends IRepositoryBase<Evento> {
 
-	public List<Evento> findAll(String nome, Date inicio, Date fim,
-			TiposEvento tipoEvento);
+	public List<Evento> findAll(String nome, Date inicioCad, Date fimCad,
+			Date inicioReal, Date fimReal, TiposEvento tipoEvento);
 
 }

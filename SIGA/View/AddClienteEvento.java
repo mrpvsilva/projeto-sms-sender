@@ -32,6 +32,7 @@ import java.awt.event.MouseEvent;
 import java.text.ParseException;
 
 import javax.swing.JCheckBox;
+import java.awt.Toolkit;
 
 public class AddClienteEvento extends JDialog {
 
@@ -65,6 +66,8 @@ public class AddClienteEvento extends JDialog {
 	 */
 	public AddClienteEvento(Evento evento,
 			DefaultTableModel<ClienteEvento> modelCliente) {
+		setTitle("Busca de cliente");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AddClienteEvento.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		_evento = evento;
 		_modelCliente = modelCliente;

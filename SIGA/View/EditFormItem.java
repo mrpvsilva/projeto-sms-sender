@@ -26,7 +26,6 @@ import jmoneyfield.JMoneyField;
 import Control.ServicosControl;
 import Dominio.Item;
 import Dominio.TipoCobranca;
-import Extra.Extras;
 import Extra.Validacoes;
 import TableModels.DefaultTableModel;
 import javax.swing.JScrollPane;

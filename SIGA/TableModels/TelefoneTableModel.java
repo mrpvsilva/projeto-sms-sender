@@ -21,13 +21,11 @@ public class TelefoneTableModel extends DefaultTableModel<Telefone> {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			return getLinhas().get(rowIndex).getId();
-		case 1:
 			return getLinhas().get(rowIndex).getDdd();
-		case 2:
+		case 1:
 			return getLinhas().get(rowIndex).getNumero();
-		case 3:
-			return getLinhas().get(rowIndex).getOperadora();
+		case 2:
+			return getLinhas().get(rowIndex).getOperadora();			
 		default:
 			return null;
 		}

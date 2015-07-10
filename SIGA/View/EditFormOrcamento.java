@@ -17,7 +17,7 @@ import Dominio.ClienteEvento;
 import Dominio.Evento;
 import Dominio.EventoItem;
 import Dominio.EventoServico;
-import Dominio.TipoCobranca;
+import Dominio.StatusEvento;
 import Dominio.TiposEvento;
 import TableModels.ClienteEventoTableModel;
 import TableModels.DefaultTableModel;
@@ -25,7 +25,6 @@ import TableModels.EventoItemTableModel;
 import TableModels.EventoServicoTableModel;
 import Util.DateTimePicker;
 import Util.EditFormType;
-import Util.StatusEvento;
 import Util.Validate;
 
 import java.awt.Font;
@@ -53,6 +52,7 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Toolkit;
 
 public class EditFormOrcamento extends JDialog implements ActionListener {
 
@@ -111,7 +111,8 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	 * Construtor para cadastro de orçamento apartir da tela principal
 	 */
 	public EditFormOrcamento() {
-		_evento = new Evento();
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EditFormOrcamento.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
+		_evento = new Evento(StatusEvento.ORCAMENTO);
 
 		_orcamentoControl = new OrcamentoControl();
 		_orcamentoControl.buscarServicos(_evento);
@@ -126,8 +127,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	 */
 	public EditFormOrcamento(DefaultTableModel<Evento> modelOrcamento) {
 		_modelOrcamento = modelOrcamento;
-		_evento = new Evento();
-
+		_evento = new Evento(StatusEvento.ORCAMENTO);
 		_orcamentoControl = new OrcamentoControl();
 		_orcamentoControl.buscarServicos(_evento);
 		_orcamentoControl.buscarEventoItens(_evento);
@@ -154,7 +154,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		setResizable(false);
 
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setTitle("Novo or\u00E7amento");
+		setTitle("Salvar or\u00E7amento");
 		setModal(true);
 		setBounds(100, 100, 877, 744);
 		getContentPane().setLayout(new BorderLayout());
@@ -583,7 +583,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 				aprovar.setVisible(false);
 				aprovar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						_evento.setStatus(StatusEvento.CONTRATO.toString());
+						_evento.setStatus(StatusEvento.CONTRATO);
 						submit();
 					}
 				});
@@ -622,7 +622,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		if (valid()) {
 			_evento.setNome(nome.getText());
 			_evento.setDataEvento(datahora.getDate());
-			_evento.setTipo(tipoevento.getSelectedItem().toString());
+			_evento.setTipo((TiposEvento) tipoevento.getSelectedItem());
 			_evento.setNumeroClientes(Integer.parseInt(nClientes.getText()));
 			_evento.setNumeroParcelas(Integer.parseInt(nparcelas.getText()));
 			_evento.setNumeroConvidadosCliente(Integer
@@ -644,7 +644,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 					_modelOrcamento.setLinhas(_orcamentoControl.listarTodos());
 				}
 
-				if (StatusEvento.valueOf(_evento.getStatus()) == StatusEvento.ORCAMENTO)
+				if (_evento.getStatus() == StatusEvento.ORCAMENTO)
 					JOptionPane.showMessageDialog(null,
 							"Orçamento salvo com sucesso");
 				else
@@ -714,7 +714,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		if ((!c.isEmpty() && !cvd.isEmpty())) {
 			int cc = Integer.parseInt(c);
 			int ccvd = Integer.parseInt(cvd);
-			totalConvidados.setText(cc * ccvd + cc+ "");
+			totalConvidados.setText(cc * ccvd + cc + "");
 
 		}
 
@@ -769,7 +769,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		// if (_tipo != EditFormType.cadastrar) {
 		nome.setText(_evento.getNome());
 		datahora.setDate(_evento.getDataEvento());
-		tipoevento.setSelectedItem(TiposEvento.valueOf(_evento.getTipo()));
+		tipoevento.setSelectedItem(_evento.getTipo());
 		nClientes.setText(_evento.getNumeroClientes() + "");
 		nConvidadosCliente.setText(_evento.getNumeroConvidadosCliente() + "");
 		nparcelas.setText(_evento.getNumeroParcelas() + "");
