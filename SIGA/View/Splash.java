@@ -15,9 +15,10 @@ import Util.Factory;
 
 public class Splash extends JWindow {
 	public Splash() {
+		showSplash();
 	}
 
-	public void showSplash() {
+	private void showSplash() {
 		JPanel content = (JPanel) getContentPane();
 		Calendar data = Calendar.getInstance();
 		int width = 400;
@@ -42,7 +43,7 @@ public class Splash extends JWindow {
 			Factory.createEntityManager();
 			TelaLogin frame = new TelaLogin();
 			frame.setVisible(true);
-		}  catch (Exception ex) {
+		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null,
 					"Falha na inicialização do Siga\n" + ex.getMessage(),
 					"Erro", JOptionPane.ERROR_MESSAGE);
@@ -53,7 +54,7 @@ public class Splash extends JWindow {
 	}
 
 	public static void main(String[] args) {
-		new Splash().showSplash();
+		new Splash();
 	}
 
 }
