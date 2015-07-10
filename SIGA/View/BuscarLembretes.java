@@ -35,6 +35,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 import java.awt.Color;
 import java.text.ParseException;
@@ -67,16 +69,17 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 	private JLabel lblDataFinal;
 	private JLabel lblDestinatrios;
 	private DefaultTableModel<Lembrete> modelLembretes;
-	
+
 	private JDatePickerImpl datePickerInicial;
-	private DateModel<Date> datemodelinicial;	
-	private JDatePickerImpl datePickerFinal;	
+	private DateModel<Date> datemodelinicial;
+	private JDatePickerImpl datePickerFinal;
 	private DateModel<Date> datemodelfinal;
-	
+
 	private JTextArea texto;
 	private JLabel lblMensagem;
 	private JTextField assunto;
 	private JLabel msg_range_data;
+	private JButton btnMarcarComoNo;
 
 	public static void main(String[] args) {
 		try {
@@ -97,7 +100,8 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 		modelLembretes = new LembreteTableModel(_lembreteControl.BuscarTodos());
 		Lembretes = PermissoesManager.buscarPermissao(Modulos.Lembretes);
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(BuscarLembretes.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				BuscarLembretes.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		setModal(true);
 		setResizable(false);
 		setTitle("SIGA - buscar lembretes");
@@ -114,7 +118,33 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 
 			tabela = new JTable(modelLembretes);
 			tabela.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			
+			tabela.getColumnModel().getColumn(0).setWidth(30);
+			tabela.getColumnModel().getColumn(0).setMaxWidth(30);
+			tabela.getColumnModel().getColumn(0).setMinWidth(30);
+			
+			
+			
+			tabela.getColumnModel().getColumn(1).setWidth(200);
+			tabela.getColumnModel().getColumn(1).setMaxWidth(350);
+			tabela.getColumnModel().getColumn(1).setMinWidth(150);
+			
+			
+				
+			tabela.getColumnModel().getColumn(2).setMinWidth(300);		
+			
+		
+			tabela.getColumnModel().getColumn(3).setMaxWidth(150);
+			tabela.getColumnModel().getColumn(3).setMinWidth(150);
+			
+			tabela.getModel().addTableModelListener(new TableModelListener() {
+				@Override
+				public void tableChanged(TableModelEvent e) {
+					texto.setText("");
+					btnMarcarComoNo.setEnabled(false);
 
+				}
+			});
 			tabela.getSelectionModel().addListSelectionListener(
 					new ListSelectionListener() {
 
@@ -122,9 +152,15 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 						public void valueChanged(ListSelectionEvent e) {
 							int linha = tabela.getSelectedRow();
 							if (linha > -1) {
-								String t = modelLembretes.find(linha)
-										.getTexto();
+								Lembrete l = modelLembretes.find(linha);
+								String t = l.getTexto();
 								texto.setText(t);
+								l.marcarComoLido();
+								_lembreteControl.Atualizar(l);
+
+								if (l.isLido()) {
+									btnMarcarComoNo.setEnabled(true);
+								}
 							}
 						}
 					});
@@ -224,7 +260,7 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 									if (fim.compareTo(ini) < 0) {
 										msg_range_data
 												.setText("Data final deve ser igual ou maior a data inicial.");
-										//datePickerFinal.getJFormattedTextField().setText("");
+										// datePickerFinal.getJFormattedTextField().setText("");
 										datemodelfinal.setValue(null);
 									} else {
 										msg_range_data.setText("");
@@ -236,7 +272,7 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 
 							}
 
-						} else if(datemodelfinal.getValue() !=null) {
+						} else if (datemodelfinal.getValue() != null) {
 							msg_range_data.setText("");
 						}
 					}
@@ -310,7 +346,7 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 			JBCadLemb.addActionListener(this);
 			JBCadLemb.setMnemonic(KeyEvent.VK_C);
 			JBCadLemb.setVisible(Lembretes.isCadastrar());
-			buttonPane.add(JBCadLemb);			
+			buttonPane.add(JBCadLemb);
 		}
 		{
 			JBEditLemb = new JButton("Editar");
@@ -328,10 +364,26 @@ public class BuscarLembretes extends JDialog implements ActionListener {
 			JBSair.setIcon(new ImageIcon(BuscarLembretes.class
 					.getResource("/Img/exit16.png")));
 			JBSair.addActionListener(this);
+
+			btnMarcarComoNo = new JButton("Marcar como n\u00E3o lido");
+			btnMarcarComoNo.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int linha = tabela.getSelectedRow();
+					if (linha > -1) {
+						Lembrete l = modelLembretes.find(linha);
+						String t = l.getTexto();
+						texto.setText(t);
+						l.marcarComoNaoLido();
+						if (_lembreteControl.Atualizar(l) == null)
+							modelLembretes.update(linha, l);
+					}
+				}
+			});
+			buttonPane.add(btnMarcarComoNo);
 			JBSair.setMnemonic(KeyEvent.VK_Q);
 			buttonPane.add(JBSair);
 		}
-		
+
 		getRootPane().setDefaultButton(JBBuscar);
 
 	}

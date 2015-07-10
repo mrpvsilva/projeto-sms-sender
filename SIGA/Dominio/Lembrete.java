@@ -1,5 +1,6 @@
 package Dominio;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -33,9 +34,14 @@ public class Lembrete {
 	@ManyToOne
 	@JoinColumn(name = "iddestinatario", referencedColumnName = "id")
 	private Usuario destinatario;
+	@Column
+	private boolean lido;
+	@Column
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date datahoraleitura;
 
 	public Lembrete() {
-
+		lido = false;
 	}
 
 	public Lembrete(int id, String texto, Date datahora, String assunto,
@@ -47,7 +53,7 @@ public class Lembrete {
 		setAssunto(assunto);
 		setRemetente(remetente);
 		setDestinatario(destinatario);
-
+		setLido(false);
 	}
 
 	public long getId() {
@@ -96,6 +102,36 @@ public class Lembrete {
 
 	public void setDestinatario(Usuario destinatario) {
 		this.destinatario = destinatario;
+	}
+
+	public boolean isLido() {
+		return lido;
+	}
+
+	public void setLido(boolean lido) {
+		this.lido = lido;
+	}
+
+	public Date getDatahoraleitura() {
+		return datahoraleitura;
+	}
+
+	public void setDatahoraleitura(Date datahoraleitura) {
+		this.datahoraleitura = datahoraleitura;
+	}
+
+	public void marcarComoLido() {
+		if (!lido) {
+			lido = true;
+			datahoraleitura = Calendar.getInstance().getTime();
+		}
+	}
+
+	public void marcarComoNaoLido() {
+		if (lido) {
+			lido = false;
+			datahoraleitura = null;
+		}
 	}
 
 }

@@ -118,9 +118,10 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 
 			System.out.println(fim.getTime().toString());
 
-			String q = "select l from Lembrete l where l.destinatario = :destinatario and l.datahora between :inicio and :fim ";
+			String q = "select l from Lembrete l where l.destinatario = :destinatario and l.lido = :lido and l.datahora between :inicio and :fim ";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("destinatario", destinatario);
+			query.setParameter("lido", false);
 			query.setParameter("inicio", inicio.getTime());
 			query.setParameter("fim", fim.getTime());
 			return query.getResultList().size();
