@@ -81,8 +81,7 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		Clientes = PermissoesManager.buscarPermissao(Modulos.Clientes);
 		setResizable(false);
 		setModal(true);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				BuscarClientes.class.getResource("/Img/CNPJ G200.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BuscarClientes.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		setTitle("SIGA - buscar clientes");
 		setBounds(100, 100, 797, 700);
 		getContentPane().setLayout(new BorderLayout());
@@ -178,6 +177,7 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		panel.add(btnPesquisar);
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setToolTipText("Clique duas vezes para visualizar o cliente");
 		scrollPane.setBounds(10, 129, 765, 483);
 		contentPanel.add(scrollPane);
 

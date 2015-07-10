@@ -267,7 +267,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		btnremovetel.setToolTipText("Remover telefone");
 		btnremovetel.setIcon(new ImageIcon(EditFormFornecedor.class
 				.getResource("/Img/trash.png")));
-		btnremovetel.setBounds(490, 176, 23, 23);
+		btnremovetel.setBounds(491, 177, 23, 23);
 		btnremovetel.addActionListener(this);
 		contentPanel.add(btnremovetel);
 

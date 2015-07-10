@@ -12,7 +12,7 @@ public class OrcamentoTableModel extends DefaultTableModel<Evento> {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final static String[] colunas = new String[] { "Nome do evento",
-			"Data do orçamento", "Tipo de evento" };
+			"Data de cadastro", "Data do evento", "Tipo de evento" };
 
 	public OrcamentoTableModel() {
 		super(colunas);
@@ -31,6 +31,8 @@ public class OrcamentoTableModel extends DefaultTableModel<Evento> {
 		case 1:
 			return Extras.FormatDate(e.getDataCriacao(), "dd/MM/yyyy");
 		case 2:
+			return Extras.FormatDate(e.getDataEvento(), "dd/MM/yyyy");
+		case 3:
 			return e.getTipo();
 		default:
 			return null;
@@ -42,7 +44,6 @@ public class OrcamentoTableModel extends DefaultTableModel<Evento> {
 		return getLinhas().get(linha).getId();
 	}
 
-	
 	@Override
 	public Class getColumnClass(int column) {
 		return String.class;

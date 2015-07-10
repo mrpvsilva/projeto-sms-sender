@@ -23,7 +23,7 @@ public class Lembrete {
 	@Column
 	private String texto;
 	@Column
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date datahora;
 	@Column
 	private String assunto;

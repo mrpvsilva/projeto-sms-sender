@@ -28,6 +28,7 @@ import java.awt.Font;
 import jmoneyfield.JMoneyField;
 
 import javax.swing.JComboBox;
+import java.awt.Toolkit;
 
 public class EditFormServico extends JDialog implements ActionListener {
 
@@ -51,6 +52,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 	 */
 
 	public EditFormServico() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EditFormServico.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		start();
 	}
 	
@@ -91,7 +93,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 		setResizable(false);
 		setModal(true);
 		setTitle("SIGA - cadastro de servi\u00E7o");
-		setBounds(100, 100, 451, 191);
+		setBounds(100, 100, 355, 191);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -109,10 +111,10 @@ public class EditFormServico extends JDialog implements ActionListener {
 		contentPanel.add(tfNome);
 		tfNome.setColumns(10);
 
-		chkAtivo = new JCheckBox("Ativo");
+		chkAtivo = new JCheckBox("");
 		chkAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chkAtivo.setSelected(true);
-		chkAtivo.setBounds(342, 17, 97, 23);
+		chkAtivo.setBounds(115, 100, 97, 23);
 		contentPanel.add(chkAtivo);
 
 		JLabel lblValor = new JLabel("Valor");
@@ -139,6 +141,12 @@ public class EditFormServico extends JDialog implements ActionListener {
 		tipocobranca.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		tipocobranca.setBounds(115, 46, 221, 20);
 		contentPanel.add(tipocobranca);
+		
+		JLabel lblNewLabel_1 = new JLabel("Ativo");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_1.setBounds(56, 103, 46, 14);
+		contentPanel.add(lblNewLabel_1);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));

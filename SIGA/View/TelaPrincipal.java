@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -21,6 +22,8 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import Control.LembretesControl;
+import Dominio.Lembrete;
 import Dominio.Permissao;
 import Extra.Extras;
 import Util.Modulos;
@@ -37,16 +40,12 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JMenuItem JMIFornCad;
 	private JMenuItem JMIFornBuscar;
-	private JMenuItem JMIFornExcluir;
 	private JMenuItem JMIServCad;
 	private JMenuItem JMIServBuscar;
-	private JMenuItem JMIServExcluir;
 	private JMenuItem JMICliCad;
 	private JMenuItem JMICliBuscar;
-	private JMenuItem JMICliExcluir;
 	private JMenuItem JMILembCad;
 	private JMenuItem JMILembBuscar;
-	private JMenuItem JMILembExcluir;
 	private JMenuItem JMIFinSincInf;
 	private JMenuItem JMIFinFormPag;
 	private JMenuItem JMIRelContFormComp;
@@ -57,12 +56,10 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 	private JMenuItem JMIRelImpCont;
 	private JMenuItem JMIUsuCad;
 	private JMenuItem JMIUsuBuscar;
-	private JMenuItem JMIUsuExcluir;
 	private JMenu JMIRelCont;
 	private JMenu JMEventos;
 	private JMenuItem mntmCadastrar;
 	private JMenuItem mntmBuscar;
-	private JMenuItem mntmExcluir;
 
 	private JMenu JMTipoServio;
 	private JMenuItem JMITSCad;
@@ -123,7 +120,8 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		financeiro = PermissoesManager.buscarPermissao(Modulos.Financeiro);
 		orcamento = PermissoesManager.buscarPermissao(Modulos.Orcamentos);
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaPrincipal.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				TelaPrincipal.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 
 		setTitle("SIGA - Sistema de informa\u00E7\u00E3o G&A");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -155,14 +153,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		JMIFornBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		JMIFornBuscar.addActionListener(this);
 		JMForn.add(JMIFornBuscar);
-
-		JMIFornExcluir = new JMenuItem("Excluir");
-		JMIFornExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMIFornExcluir
-				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
-		JMIFornExcluir.addActionListener(this);
-		JMIFornExcluir.setVisible(fornecedores.isExcluir());
-		JMForn.add(JMIFornExcluir);
 
 		// MENU TIPO SERVICOS
 		mnTipoServio_1 = new JMenu("Servi\u00E7os");
@@ -214,14 +204,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		JMIServBuscar.addActionListener(this);
 		JMServ.add(JMIServBuscar);
 
-		JMIServExcluir = new JMenuItem("Excluir");
-		JMIServExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMIServExcluir
-				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0));
-		JMIServExcluir.addActionListener(this);
-		JMIServExcluir.setVisible(itens.isExcluir());
-		JMServ.add(JMIServExcluir);
-
 		// MENUT TIPO ITENS
 		JMTipoServio = new JMenu("Tipo itens");
 		JMTipoServio.setFont(new Font("Segoe UI", Font.PLAIN, 13));
@@ -258,13 +240,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		JMICliBuscar.addActionListener(this);
 		JMCli.add(JMICliBuscar);
 
-		JMICliExcluir = new JMenuItem("Excluir");
-		JMICliExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMICliExcluir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0));
-		JMICliExcluir.addActionListener(this);
-		JMICliExcluir.setVisible(clientes.isExcluir());
-		JMCli.add(JMICliExcluir);
-
 		// MENU EVENTOS
 		JMEventos = new JMenu("Eventos");
 		JMEventos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
@@ -297,7 +272,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 				bo.setVisible(true);
 			}
 		});
-		mntmBuscar_2.setFont(new Font("Segoe UI", Font.PLAIN, 13));		
+		mntmBuscar_2.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mnOramentos.add(mntmBuscar_2);
 		menuBar.add(JMEventos);
 
@@ -312,12 +287,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		mntmBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mntmBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
 		JMEventos.add(mntmBuscar);
-
-		mntmExcluir = new JMenuItem("Excluir");
-		mntmExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		mntmExcluir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
-		mntmExcluir.setVisible(eventos.isExcluir());
-		JMEventos.add(mntmExcluir);
 
 		// MENU LEMBRETES
 		JMenu JMLemb = new JMenu("Lembretes");
@@ -341,14 +310,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 				KeyEvent.VK_PAGE_DOWN, 0));
 		JMILembBuscar.addActionListener(this);
 		JMLemb.add(JMILembBuscar);
-
-		JMILembExcluir = new JMenuItem("Excluir");
-		JMILembExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMILembExcluir.setAccelerator(KeyStroke
-				.getKeyStroke(KeyEvent.VK_END, 0));
-		JMILembExcluir.addActionListener(this);
-		JMILembExcluir.setVisible(lembretes.isExcluir());
-		JMLemb.add(JMILembExcluir);
 
 		// MENU FINANCEIRO
 		JMenu JMFin = new JMenu("Financeiro");
@@ -386,11 +347,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		JMITpPagBuscar.addActionListener(this);
 		JMTipoDePagamento.add(JMITpPagBuscar);
 
-		JMenuItem JMITpPagExcluir = new JMenuItem("Excluir");
-		JMITpPagExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMITpPagExcluir.addActionListener(this);
-		JMTipoDePagamento.add(JMITpPagExcluir);
-
 		// MENU FORMAS DE PAGAMENTO
 		JMenu JMFormasDePagamento = new JMenu("Formas de pagamento");
 		JMFormasDePagamento.setFont(new Font("Segoe UI", Font.PLAIN, 13));
@@ -405,11 +361,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		JMIFormPagBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMIFormPagBuscar.addActionListener(this);
 		JMFormasDePagamento.add(JMIFormPagBuscar);
-
-		JMenuItem JMIFormPagExcluir = new JMenuItem("Excluir");
-		JMIFormPagExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMIFormPagExcluir.addActionListener(this);
-		JMFormasDePagamento.add(JMIFormPagExcluir);
 
 		// MENU RELATORIOS
 		JMenu JMRel = new JMenu("Relat\u00F3rios");
@@ -493,14 +444,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		JMIUsuBuscar.addActionListener(this);
 		JMUsu.add(JMIUsuBuscar);
 
-		JMIUsuExcluir = new JMenuItem("Excluir");
-		JMIUsuExcluir.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMIUsuExcluir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,
-				0));
-		JMIUsuExcluir.addActionListener(this);
-		JMIUsuExcluir.setVisible(usuarios.isExcluir());
-		JMUsu.add(JMIUsuExcluir);
-
 		// MENU PERFIL
 		JMenu mnPerfil = new JMenu("Perfil");
 		mnPerfil.setFont(new Font("Segoe UI", Font.PLAIN, 13));
@@ -532,7 +475,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		// MENU MODULOS
 		JMenu mnPermisso = new JMenu("M\u00F3dulos");
 		mnPermisso.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMIUsuExcluir.setVisible(modulos.isVisualizar());
 		JMUsu.add(mnPermisso);
 
 		JMenuItem mntmCadastrar_4 = new JMenuItem("Novo");
@@ -578,9 +520,12 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 
 		label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Img/DESKTOP_GDA.png")));
+		label.setIcon(new ImageIcon(TelaPrincipal.class
+				.getResource("/Img/DESKTOP_GDA.png")));
 		label.setOpaque(true);
 		contentPane.add(label);
+
+		buscarLembretes();
 
 	}
 
@@ -596,7 +541,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 				jdtcf.setLocationRelativeTo(null);
 				jdtcf.setResizable(false);
 				jdtcf.setVisible(true);
-				
+
 			} catch (ParseException e) {
 
 				JOptionPane.showMessageDialog(null, e.getMessage(),
@@ -611,12 +556,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 			jdtbf.setLocationRelativeTo(null);
 			jdtbf.setResizable(false);
 			jdtbf.setVisible(true);
-		}// final do JMenuItemFornecedores Buscar
-
-		if (acao.getSource() == JMIFornExcluir) {
-			JOptionPane
-					.showInputDialog("Digite o código do fornecedor para exclusão");
-		}// final do JMenuItemFornecedores Excluir
+		}
 
 		/*
 		 * ======================================================================
@@ -638,12 +578,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 			jdtbs.setLocationRelativeTo(null);
 			jdtbs.setResizable(false);
 			jdtbs.setVisible(true);
-		}// final do JMenuItemServiços Buscar
-
-		if (acao.getSource() == JMIServExcluir) {
-			JOptionPane
-					.showInputDialog("Digite o código do serviço para exclusão");
-		}// final do JMenuItemServiços Excluir
+		}
 
 		/*
 		 * ======================================================================
@@ -674,12 +609,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 			jdtbc.setLocationRelativeTo(null);
 			jdtbc.setResizable(false);
 			jdtbc.setVisible(true);
-		}// final do JMenuItemClientes Buscar
-
-		if (acao.getSource() == JMICliExcluir) {
-			JOptionPane
-					.showInputDialog("Digite o código do cliente para exclusão");
-		}// final do JMenuItemClientes Excluir
+		}
 
 		/*
 		 * ======================================================================
@@ -702,12 +632,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 			jdtbl.setLocationRelativeTo(null);
 			jdtbl.setVisible(true);
 
-		}// final do JMenuItemLembretes Buscar
-
-		if (acao.getSource() == JMILembExcluir) {
-			JOptionPane
-					.showInputDialog("Digite o código do lembrete para exclusão");
-		}// final do JMenuItemLembretes Excluir
+		}
 
 		/*
 		 * ======================================================================
@@ -805,11 +730,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 			jdtbu.setLocationRelativeTo(null);
 			jdtbu.setResizable(false);
 			jdtbu.setVisible(true);
-		}// final do JMenuItemUsuário Buscar
-
-		if (acao.getSource() == JMIUsuExcluir) {
-			JOptionPane
-					.showInputDialog("Digite o login do usuário para exclusão");
 		}
 
 		if (acao.getSource() == mntmSair) {
@@ -824,4 +744,25 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		}
 
 	}// final da ação do menu
+
+	private void buscarLembretes() {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+					int c = new LembretesControl().buscarLembretesUsuario();
+					System.out.println(c);
+
+					try {
+						Thread.sleep(10000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+			}
+		}).start();
+	}
 }

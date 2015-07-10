@@ -96,7 +96,7 @@ public class EditFormTipoItem extends JDialog implements ActionListener {
 		setResizable(false);
 		setModal(true);
 
-		setTitle("SIGA-Salvar tipo item");
+		setTitle("Salvar tipo item");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(EditFormTipoItem.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 
 		setBounds(100, 100, 281, 147);

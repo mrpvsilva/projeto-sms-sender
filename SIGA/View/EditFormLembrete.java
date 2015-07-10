@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 
 import net.sourceforge.jdatepicker.DateModel;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
-import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.JComboBox;
@@ -30,9 +29,6 @@ import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
 import java.awt.Toolkit;
-
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 
 import java.awt.Font;
 
@@ -118,8 +114,7 @@ public class EditFormLembrete extends JDialog implements ActionListener {
 	private void start() {
 		_lembreteControl = new LembretesControl();
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				EditFormLembrete.class.getResource("/Img/CNPJ G200.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EditFormLembrete.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		setModal(true);
 		setResizable(false);
 		setBounds(100, 100, 505, 372);

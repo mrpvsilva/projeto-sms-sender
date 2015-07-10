@@ -31,6 +31,7 @@ import TableModels.DefaultTableModel;
 import TableModels.ServicoTableModel;
 import Util.Modulos;
 import Util.PermissoesManager;
+import java.awt.Toolkit;
 
 public class BuscarServicos extends JDialog implements ActionListener {
 
@@ -79,6 +80,7 @@ public class BuscarServicos extends JDialog implements ActionListener {
 	}
 
 	public BuscarServicos() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BuscarServicos.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		start();
 	}
 

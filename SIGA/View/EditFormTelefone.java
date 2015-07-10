@@ -24,6 +24,7 @@ import TableModels.DefaultTableModel;
 import Util.Operadoras;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class EditFormTelefone extends JDialog implements ActionListener {
 
@@ -62,7 +63,8 @@ public class EditFormTelefone extends JDialog implements ActionListener {
 	 */
 	public EditFormTelefone(int linha, Telefone telefone,
 			DefaultTableModel<Telefone> telmodel) {
-		setTitle("SIGA - cad. telefone");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EditFormTelefone.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
+		setTitle("Salvar telefone");
 		_telefone = telefone;
 		_model = telmodel;
 		_linha = linha;

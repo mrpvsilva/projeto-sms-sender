@@ -1,5 +1,6 @@
 package Control;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -83,4 +84,9 @@ public class LembretesControl {
 		return _lembreteRepository.find(id);
 	}
 
+	public int buscarLembretesUsuario() {	
+
+		return _lembreteRepository.ContarLembretes(Extras.getUsuarioLogado());
+
+	}
 }

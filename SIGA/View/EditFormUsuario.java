@@ -75,13 +75,12 @@ public class EditFormUsuario extends JDialog implements ActionListener {
 			throws ParseException {
 		setModal(true);
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				EditFormUsuario.class.getResource("/Img/CNPJ G200.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EditFormUsuario.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		// this.id = id;
 		this.usuario = usuario;
 		this.model = model;
 		setBounds(100, 100, 458, 174);
-		setTitle("SIGA - cadastro de usu\u00E1rio");
+		setTitle("salvar de usu\u00E1rio");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
