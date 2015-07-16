@@ -134,4 +134,13 @@ public class Lembrete {
 		}
 	}
 
+	public void adiarLembrete(int minutos) {
+		if (minutos <= 45) {
+			Calendar d = Calendar.getInstance();
+			d.setTime(datahora);
+			d.add(Calendar.MINUTE, minutos);			
+			datahora = d.getTime();
+		}
+	}
+
 }
