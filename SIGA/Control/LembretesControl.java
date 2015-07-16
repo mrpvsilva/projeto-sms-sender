@@ -84,9 +84,13 @@ public class LembretesControl {
 		return _lembreteRepository.find(id);
 	}
 
-	public int buscarLembretesUsuario() {	
-
-		return _lembreteRepository.ContarLembretes(Extras.getUsuarioLogado());
-
+	public List<Lembrete>  buscarLembretesUsuario() {
+		return _lembreteRepository.notificarLembretes(Extras.getUsuarioLogado());
+	}
+	
+	public void adiarLembretes(int tempo,List<Lembrete> lembretes){
+		
+		
+		
 	}
 }

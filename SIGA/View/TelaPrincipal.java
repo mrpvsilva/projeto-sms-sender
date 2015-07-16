@@ -760,14 +760,14 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 			@Override
 			public void run() {
 				while (true) {
-					int c = new LembretesControl().buscarLembretesUsuario();
-					System.out.println(c);
+					List<Lembrete> lista = new LembretesControl().buscarLembretesUsuario();
+			
 
-					if (c > 0) {
+					if (lista.size()> 0) {
 						if (notificacao == null) {
-							notificacao = new NotificacaoLembretes(c);
+							notificacao = new NotificacaoLembretes(lista);
 						} else {
-							notificacao.setLembretes(c);
+							notificacao.setLembretes(lista);
 							if (!notificacao.isVisible())
 								notificacao.setVisible(true);
 						}
