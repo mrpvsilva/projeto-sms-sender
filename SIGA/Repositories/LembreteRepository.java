@@ -14,6 +14,7 @@ import javax.persistence.criteria.Root;
 
 import Dominio.Lembrete;
 import Dominio.Usuario;
+import Extra.Extras;
 import Interfaces.ILembreteRepository;
 
 public class LembreteRepository extends RepositoryBase<Lembrete> implements
@@ -107,7 +108,7 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 	}
 
 	@Override
-	public int ContarLembretes(Usuario destinatario) {
+	public List<Lembrete> notificarLembretes(Usuario destinatario) {
 		try {
 
 			Calendar inicio = Calendar.getInstance();
@@ -124,10 +125,44 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 			query.setParameter("lido", false);
 			query.setParameter("inicio", inicio.getTime());
 			query.setParameter("fim", fim.getTime());
-			return query.getResultList().size();
+			return query.getResultList();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			return 0;
+			return null;
 		}
 	}
+
+	@Override
+	public void adiarLembretes(int tempo, Usuario destinatario) {
+
+		try {
+			entityManager.getTransaction().begin();
+
+			Calendar inicio = Calendar.getInstance();
+			inicio.add(Calendar.MINUTE, -10);
+
+			Calendar fim = Calendar.getInstance();
+			fim.add(Calendar.MINUTE, 30);
+
+			Calendar datahora = Calendar.getInstance();					
+			datahora.add(Calendar.MINUTE, 30+tempo);
+
+			String q = "update Lembrete  set datahora = :datahora where destinatario = :destinatario and lido = :lido and datahora between :inicio and :fim ";
+
+			entityManager.createQuery(q)
+					.setParameter("datahora", datahora.getTime())
+					.setParameter("destinatario", destinatario)
+					.setParameter("lido", false)
+					.setParameter("inicio", inicio.getTime())
+					.setParameter("fim", fim.getTime()).executeUpdate();
+			
+			entityManager.getTransaction().commit();
+
+		} catch (Exception ex) {
+			entityManager.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+
+	}
+
 }

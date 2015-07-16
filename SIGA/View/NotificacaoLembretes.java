@@ -8,25 +8,34 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
+
+import Dominio.Lembrete;
+import Extra.Extras;
+import Repositories.LembreteRepository;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class NotificacaoLembretes extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JLabel texto;
-
+	private JComboBox comboBox;
+	private List<Lembrete> lembretes;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			NotificacaoLembretes dialog = new NotificacaoLembretes(10);
+			NotificacaoLembretes dialog = new NotificacaoLembretes(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -37,7 +46,8 @@ public class NotificacaoLembretes extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public NotificacaoLembretes(int qtd) {
+	public NotificacaoLembretes(List<Lembrete> lembretes) {
+		this.lembretes = lembretes;
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Notifica\u00E7\u00E3o de lembretes");
 
@@ -62,7 +72,7 @@ public class NotificacaoLembretes extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						fechar();
-						
+
 						BuscarLembretes bl = new BuscarLembretes();
 						bl.setLocationRelativeTo(null);
 						bl.setVisible(true);
@@ -81,11 +91,19 @@ public class NotificacaoLembretes extends JDialog {
 			}
 			{
 				JButton btnAdiar = new JButton("Adiar");
+				btnAdiar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						int min = Integer.parseInt(comboBox.getSelectedItem()
+								.toString());
+						new LembreteRepository().adiarLembretes(min,Extras.getUsuarioLogado());
+						fechar();
+					}
+				});
 				btnAdiar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				buttonPane.add(btnAdiar);
 			}
 			{
-				JComboBox comboBox = new JComboBox();
+				comboBox = new JComboBox();
 				comboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				comboBox.setModel(new DefaultComboBoxModel(new String[] { "1",
 						"5", "10", "15", "20", "30", "50", "60" }));
@@ -97,19 +115,26 @@ public class NotificacaoLembretes extends JDialog {
 				buttonPane.add(lblNewLabel_1);
 			}
 
-			setLembretes(qtd);
+			mensagem();
 			setVisible(true);
 		}
-	}	
-	
-	private void fechar(){
+	}
+
+	private void fechar() {
 		dispose();
 	}
 
-	public void setLembretes(int qtd) {
+	private void mensagem() {
+		int qtd = lembretes.size();
 		String text = String.format("Você possui %s %s", qtd,
 				qtd > 1 ? "lembretes" : "lembrete");
 		texto.setText(text);
+
+	}
+
+	public void setLembretes(List<Lembrete> lembretes) {
+		this.lembretes = lembretes;
+		mensagem();
 	}
 
 }
