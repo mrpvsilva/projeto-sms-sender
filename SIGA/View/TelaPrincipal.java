@@ -90,8 +90,8 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 	private JMenuItem mntmTrocarSenha;
 	private JMenu mnOramentos;
 	private JMenuItem mntmNovo;
-	private JMenuItem mntmBuscar_2;
-	private boolean notificado;
+	private JMenuItem mntmBuscar_2;	
+	private NotificacaoLembretes notificacao;
 
 	/**
 	 * Launch the application.
@@ -129,7 +129,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		financeiro = PermissoesManager.buscarPermissao(Modulos.Financeiro);
 		orcamento = PermissoesManager.buscarPermissao(Modulos.Orcamentos);
 
-		notificado = false;
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				TelaPrincipal.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 
@@ -761,12 +761,17 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 			public void run() {
 				while (true) {
 					int c = new LembretesControl().buscarLembretesUsuario();
-					System.out.println(c);					
-					
+					System.out.println(c);
+
 					if (c > 0) {
-						String m = c > 1 ? "lembretes" : "lembrete";
-						String texto = String.format("Você possui %s %s", c, m);
-						
+						if (notificacao == null) {
+							notificacao = new NotificacaoLembretes(c);
+						} else {
+							notificacao.setLembretes(c);
+							if (!notificacao.isVisible())
+								notificacao.setVisible(true);
+						}
+
 						int state = TelaPrincipal.this.getExtendedState();
 						if (state == 7)
 							TelaPrincipal.this.toFront();
