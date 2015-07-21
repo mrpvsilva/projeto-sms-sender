@@ -15,27 +15,25 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
 
-import Dominio.Lembrete;
-import Extra.Extras;
-import Repositories.LembreteRepository;
-
+import Control.LembretesControl;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.List;
 
 public class NotificacaoLembretes extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JLabel texto;
 	private JComboBox comboBox;
-	private List<Lembrete> lembretes;
+	private BuscarLembretes bl;
+	private final int esperaPadrao = 300000;
+	private int espera;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			NotificacaoLembretes dialog = new NotificacaoLembretes(null);
+			NotificacaoLembretes dialog = new NotificacaoLembretes();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -46,8 +44,10 @@ public class NotificacaoLembretes extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public NotificacaoLembretes(List<Lembrete> lembretes) {
-		this.lembretes = lembretes;
+	public NotificacaoLembretes() {
+		espera = esperaPadrao;
+		setModal(true);
+		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Notifica\u00E7\u00E3o de lembretes");
 
@@ -72,8 +72,8 @@ public class NotificacaoLembretes extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						fechar();
-
-						BuscarLembretes bl = new BuscarLembretes();
+						espera = esperaPadrao;
+						bl = new BuscarLembretes();
 						bl.setLocationRelativeTo(null);
 						bl.setVisible(true);
 					}
@@ -85,6 +85,14 @@ public class NotificacaoLembretes extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Fechar");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						fechar();
+						new LembretesControl().limparLembretesNotificacao();
+						espera = esperaPadrao;
+						
+					}
+				});
 				cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
@@ -95,7 +103,7 @@ public class NotificacaoLembretes extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 						int min = Integer.parseInt(comboBox.getSelectedItem()
 								.toString());
-						new LembreteRepository().adiarLembretes(min,Extras.getUsuarioLogado());
+						espera = min * 60000;
 						fechar();
 					}
 				});
@@ -115,26 +123,33 @@ public class NotificacaoLembretes extends JDialog {
 				buttonPane.add(lblNewLabel_1);
 			}
 
-			mensagem();
-			setVisible(true);
 		}
 	}
 
 	private void fechar() {
-		dispose();
+		setVisible(false);
 	}
 
-	private void mensagem() {
-		int qtd = lembretes.size();
+	private void setMensagem(int qtd) {
+
 		String text = String.format("Você possui %s %s", qtd,
 				qtd > 1 ? "lembretes" : "lembrete");
 		texto.setText(text);
-
 	}
 
-	public void setLembretes(List<Lembrete> lembretes) {
-		this.lembretes = lembretes;
-		mensagem();
+	public void buscarLembretesUsuario() {
+
+		int qtd = new LembretesControl().notificarLembretesUsuario().size();
+		if (qtd > 0) {
+			setMensagem(qtd);
+			setVisible(bl == null || !bl.isVisible());
+		}
+		try {
+			Thread.sleep(espera);
+		} catch (InterruptedException e) {
+
+		}
+
 	}
 
 }

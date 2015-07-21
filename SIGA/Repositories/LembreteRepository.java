@@ -14,7 +14,6 @@ import javax.persistence.criteria.Root;
 
 import Dominio.Lembrete;
 import Dominio.Usuario;
-import Extra.Extras;
 import Interfaces.ILembreteRepository;
 
 public class LembreteRepository extends RepositoryBase<Lembrete> implements
@@ -111,21 +110,15 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 	public List<Lembrete> notificarLembretes(Usuario destinatario) {
 		try {
 
-			Calendar inicio = Calendar.getInstance();
-			inicio.add(Calendar.MINUTE, -10);
-
 			Calendar fim = Calendar.getInstance();
 			fim.add(Calendar.MINUTE, 30);
 
 			System.out.println(fim.getTime().toString());
 
-			String q = "select l from Lembrete l where l.destinatario = :destinatario and l.lido = :lido and l.datahora between :inicio and :fim ";
-			Query query = entityManager.createQuery(q);
-			query.setParameter("destinatario", destinatario);
-			query.setParameter("lido", false);
-			query.setParameter("inicio", inicio.getTime());
-			query.setParameter("fim", fim.getTime());
-			return query.getResultList();
+			String q = "select l from Lembrete l where l.destinatario = :destinatario and l.lido = false and l.datahora <= :fim ";
+			return entityManager.createQuery(q)
+					.setParameter("destinatario", destinatario)					
+					.setParameter("fim", fim.getTime()).getResultList();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
@@ -133,29 +126,22 @@ public class LembreteRepository extends RepositoryBase<Lembrete> implements
 	}
 
 	@Override
-	public void adiarLembretes(int tempo, Usuario destinatario) {
-
+	public void limparLembretesNotificacao(Usuario destinatario) {
 		try {
-			entityManager.getTransaction().begin();
-
-			Calendar inicio = Calendar.getInstance();
-			inicio.add(Calendar.MINUTE, -10);
+			entityManager.getTransaction().begin();			
 
 			Calendar fim = Calendar.getInstance();
 			fim.add(Calendar.MINUTE, 30);
 
-			Calendar datahora = Calendar.getInstance();					
-			datahora.add(Calendar.MINUTE, 30+tempo);
+			Calendar datahora = Calendar.getInstance();		
 
-			String q = "update Lembrete  set datahora = :datahora where destinatario = :destinatario and lido = :lido and datahora between :inicio and :fim ";
+			String q = "update Lembrete l set l.lido = true, l.datahoraleitura = :datahora where l.destinatario = :destinatario and l.lido = false and l.datahora  <= :fim ";
 
 			entityManager.createQuery(q)
 					.setParameter("datahora", datahora.getTime())
-					.setParameter("destinatario", destinatario)
-					.setParameter("lido", false)
-					.setParameter("inicio", inicio.getTime())
+					.setParameter("destinatario", destinatario)					
 					.setParameter("fim", fim.getTime()).executeUpdate();
-			
+
 			entityManager.getTransaction().commit();
 
 		} catch (Exception ex) {
