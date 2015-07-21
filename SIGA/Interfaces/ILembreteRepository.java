@@ -13,8 +13,8 @@ public interface ILembreteRepository extends IRepositoryBase<Lembrete> {
 	public List<Lembrete> findAll(Date dataInicial, Date dataFinal,
 			String assunto, Usuario destinatario);
 	
-	public List<Lembrete> notificarLembretes(Usuario destinatario);
+	public List<Lembrete> notificarLembretes(Usuario destinatario);	
 	
-	public void adiarLembretes(int tempo,Usuario destinatario);
+	public void limparLembretesNotificacao(Usuario destinatario);
 
 }

@@ -7,8 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
 import java.text.ParseException;
 import java.util.List;
 
@@ -32,11 +30,6 @@ import Util.Modulos;
 import Util.PermissoesManager;
 
 import java.awt.Font;
-import javax.swing.JInternalFrame;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.JDesktopPane;
-import java.awt.Rectangle;
 
 public class TelaPrincipal extends JFrame implements ActionListener {
 
@@ -90,8 +83,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 	private JMenuItem mntmTrocarSenha;
 	private JMenu mnOramentos;
 	private JMenuItem mntmNovo;
-	private JMenuItem mntmBuscar_2;	
-	private NotificacaoLembretes notificacao;
+	private JMenuItem mntmBuscar_2;
 
 	/**
 	 * Launch the application.
@@ -100,8 +92,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaPrincipal frame = new TelaPrincipal();
-					frame.setVisible(true);
+					new TelaPrincipal().setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -129,7 +120,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		financeiro = PermissoesManager.buscarPermissao(Modulos.Financeiro);
 		orcamento = PermissoesManager.buscarPermissao(Modulos.Orcamentos);
 
-		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				TelaPrincipal.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 
@@ -759,31 +749,9 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+				NotificacaoLembretes notificacao = new NotificacaoLembretes();
 				while (true) {
-					List<Lembrete> lista = new LembretesControl().buscarLembretesUsuario();
-			
-
-					if (lista.size()> 0) {
-						if (notificacao == null) {
-							notificacao = new NotificacaoLembretes(lista);
-						} else {
-							notificacao.setLembretes(lista);
-							if (!notificacao.isVisible())
-								notificacao.setVisible(true);
-						}
-
-						int state = TelaPrincipal.this.getExtendedState();
-						if (state == 7)
-							TelaPrincipal.this.toFront();
-					}
-
-					try {
-						Thread.sleep(10000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
+					notificacao.buscarLembretesUsuario();
 				}
 			}
 		}).start();

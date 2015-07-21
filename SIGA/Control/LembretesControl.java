@@ -84,13 +84,13 @@ public class LembretesControl {
 		return _lembreteRepository.find(id);
 	}
 
-	public List<Lembrete>  buscarLembretesUsuario() {
+	public List<Lembrete> notificarLembretesUsuario() {
 		return _lembreteRepository.notificarLembretes(Extras.getUsuarioLogado());
 	}
 	
-	public void adiarLembretes(int tempo,List<Lembrete> lembretes){
+	public void limparLembretesNotificacao(){
 		
-		
+		_lembreteRepository.limparLembretesNotificacao(Extras.getUsuarioLogado());
 		
 	}
 }
