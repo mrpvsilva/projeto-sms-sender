@@ -48,17 +48,7 @@ public class Splash extends JWindow {
 		setVisible(true);
 		try {
 			Factory.createEntityManager();
-			Map<String,Object> map = new HashMap<String, Object>();		
-			map.put("ID", 1);		
-			try {
-				GerarRelatorio.gerarRelatorio(TipoRelatorio.ORCAMENTO_FORMATURA, map );
-			} catch (JRException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			TelaLogin frame = new TelaLogin();
-			frame.setVisible(true);
+			new TelaLogin().setVisible(true);
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null,
 					"Falha na inicialização do Siga\n" + ex.getMessage(),

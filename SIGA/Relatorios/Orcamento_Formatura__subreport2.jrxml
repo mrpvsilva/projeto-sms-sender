@@ -71,20 +71,30 @@
 		<band height="22" splitType="Stretch">
 			<textField>
 				<reportElement x="11" y="0" width="148" height="20" uuid="d7b632c0-145a-46e9-90bd-9ca942aa9103"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="159" y="0" width="185" height="20" uuid="5bfd9431-985d-4595-b277-6f4fbbd371fc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
 				<reportElement x="444" y="0" width="100" height="20" uuid="26cd9ec2-73e0-4c49-9899-99926373aa0e"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
 				<reportElement x="344" y="0" width="100" height="20" uuid="f537ec12-1999-4708-97e4-64836186259b"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{valorcomercial}]]></textFieldExpression>
 			</textField>
 		</band>

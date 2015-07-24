@@ -59,16 +59,23 @@
 		<band height="23" splitType="Stretch">
 			<textField>
 				<reportElement x="18" y="0" width="318" height="20" uuid="53878486-7c2a-492e-af5a-7eda9839d3a2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
 				<reportElement x="436" y="0" width="100" height="20" uuid="30c38495-4eba-4129-8e42-37f775c0873e"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
 				<reportElement x="336" y="0" width="100" height="20" uuid="64fbe546-05fb-4600-a820-e2e4f61fee6b"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
 			</textField>
 		</band>
