@@ -5,13 +5,19 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
+
+import net.sf.jasperreports.engine.JRException;
 import Util.Factory;
+import Util.GerarRelatorio;
+import Util.TipoRelatorio;
 
 public class Splash extends JWindow {
 	public Splash() {
@@ -19,6 +25,7 @@ public class Splash extends JWindow {
 	}
 
 	private void showSplash() {
+		
 		JPanel content = (JPanel) getContentPane();
 		Calendar data = Calendar.getInstance();
 		int width = 400;
@@ -41,6 +48,15 @@ public class Splash extends JWindow {
 		setVisible(true);
 		try {
 			Factory.createEntityManager();
+			Map<String,Object> map = new HashMap<String, Object>();		
+			map.put("ID", 1);		
+			try {
+				GerarRelatorio.gerarRelatorio(TipoRelatorio.ORCAMENTO_FORMATURA, map );
+			} catch (JRException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			TelaLogin frame = new TelaLogin();
 			frame.setVisible(true);
 		} catch (Exception ex) {
