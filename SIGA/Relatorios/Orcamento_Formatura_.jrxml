@@ -4,13 +4,13 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\Acer\\workspace\\SIGA\\Relatorios\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\paulosilva\\workspace\\SIGA\\Relatorios\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ID" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select nome,numeroclientes formandos,numeroconvidadoscliente convcliente,(numeroconvidadoscliente * numeroclientes) + numeroclientes convidados from eventos where id = 102;]]>
+		<![CDATA[select nome,numeroclientes formandos,numeroconvidadoscliente convcliente,(numeroconvidadoscliente * numeroclientes) + numeroclientes convidados from eventos where id = $P{ID};]]>
 	</queryString>
 	<field name="nome" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -23,10 +23,6 @@
 	</background>
 	<title>
 		<band height="170" splitType="Stretch">
-			<image>
-				<reportElement x="223" y="0" width="122" height="110" uuid="ef21d7ff-2149-4bb8-ac4d-b0a60bfc459b"/>
-				<imageExpression><![CDATA["C:\\Users\\Acer\\workspace\\SIGA\\Relatorios\\SPLASH_GDA.jpg"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="0" y="110" width="555" height="20" uuid="0b8d30e9-275d-4df7-9e86-a9a9eeb34cc4"/>
 				<textElement textAlignment="Center">

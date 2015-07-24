@@ -9,6 +9,14 @@
 	<classpathentry kind="lib" path="lib/swingx-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/eclipselink.jar"/>
 	<classpathentry kind="lib" path="lib/javax.persistence_2.1.0.v201304241213.jar"/>
+	<classpathentry kind="lib" path="lib/jasper/commons-beanutils-1.9.0.jar"/>
+	<classpathentry kind="lib" path="lib/jasper/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/jasper/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/jasper/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/jasper/groovy-all-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/jasper/iText-2.1.7.js2.jar"/>
+	<classpathentry kind="lib" path="lib/jasper/jasperreports-6.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/jasper/poi-3.10.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
