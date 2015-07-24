@@ -2,8 +2,14 @@ package Control;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+
+import net.sf.jasperreports.engine.JRException;
 import Dominio.Cliente;
 import Dominio.Evento;
 import Dominio.EventoItem;
@@ -21,6 +27,8 @@ import Repositories.ItemRepository;
 import Repositories.OrcamentoRepository;
 import Repositories.ServicoRepository;
 import Repositories.TipoItemRepository;
+import Util.GerarRelatorio;
+import Util.TipoRelatorio;
 
 public class OrcamentoControl {
 
@@ -68,25 +76,22 @@ public class OrcamentoControl {
 	}
 
 	public void buscarEventoItens(Evento evento) {
-		List<Item> itens = _itemRepository.findAll(true);
-		// List<EventoItem> l1 = new ArrayList<EventoItem>();
+		List<Item> itens = _itemRepository.findAll(true);	
 
-		for (Item item : itens) {
-			// l1.add(new EventoItem(evento, i, 1));
+		for (Item item : itens) {			
 			evento.addItem(new EventoItem(evento, item));
 		}
-		// return l1;
+		
 	}
 
 	public void buscarServicos(Evento evento) {
 		List<Servico> servicos = _servicoRepository.findAll(true);
-		// List<EventoServico> e = new ArrayList<EventoServico>();
-
+		
 		for (Servico servico : servicos) {
-			// e.add(new EventoServico(evento, servico));
+			
 			evento.addServico(new EventoServico(evento, servico));
 		}
-		// return e;
+		
 	}
 
 	public List<Item> pesquisarItens(String tipoItem) {
@@ -98,5 +103,15 @@ public class OrcamentoControl {
 
 	public Object[] DDLTipoItens() {
 		return _tipoItemRepository.DDLTipoItens().toArray();
+	}
+	
+	public void gerarOrcamento(long id,TiposEvento tipoEvento){
+		Map<String,Object> map = new HashMap<String, Object>();		
+		map.put("ID", (int )id);			
+		try {
+			GerarRelatorio.gerarRelatorio(TipoRelatorio.ORCAMENTO_FORMATURA, map );
+		} catch (JRException e) {
+			JOptionPane.showMessageDialog(null, "Falha ao gerar orçamento");
+		}
 	}
 }

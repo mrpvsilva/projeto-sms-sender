@@ -31,9 +31,9 @@ public class GerarRelatorio {
 		switch (tipoRelatorio) {
 		case ORCAMENTO_FORMATURA:
 			path = GerarRelatorio.class
-					.getResourceAsStream("/Relatorios/Orcamento_Formatura_.jrxml");
-			report =   JasperCompileManager.compileReport(path);
-			//(JasperReport) JRLoader.loadObject(path); 
+					.getResourceAsStream("/Relatorios/Orcamento_Formatura_.jasper");
+			//report =   JasperCompileManager.compileReport(path);
+			report =(JasperReport) JRLoader.loadObject(path); 
 			print = JasperFillManager
 					.fillReport(report, parametros, connection);
 

@@ -594,6 +594,14 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			{
 				cancelar = new JButton("Cancelar");
 				cancelar.addActionListener(this);
+				
+				JButton btnGerarOramento = new JButton("Gerar or\u00E7amento");
+				btnGerarOramento.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						_orcamentoControl.gerarOrcamento(_evento.getId(), TiposEvento.FORMATURA);
+					}
+				});
+				buttonPane.add(btnGerarOramento);
 				cancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				buttonPane.add(cancelar);
 			}
