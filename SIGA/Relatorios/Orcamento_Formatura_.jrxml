@@ -6,11 +6,11 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\paulosilva\\workspace\\SIGA\\Relatorios\\"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="ID" class="java.lang.Integer">
+	<parameter name="IDEVENTO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select nome,numeroclientes formandos,numeroconvidadoscliente convcliente,(numeroconvidadoscliente * numeroclientes) + numeroclientes convidados from eventos where id = $P{ID};]]>
+		<![CDATA[select nome,numeroclientes formandos,numeroconvidadoscliente convcliente,(numeroconvidadoscliente * numeroclientes) + numeroclientes convidados from eventos where id =$P{IDEVENTO} ;]]>
 	</queryString>
 	<field name="nome" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -22,7 +22,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="185" splitType="Stretch">
+		<band height="158" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="32" width="555" height="20" uuid="0b8d30e9-275d-4df7-9e86-a9a9eeb34cc4"/>
 				<textElement textAlignment="Center">
@@ -38,28 +38,33 @@
 				<textFieldExpression><![CDATA["Orçamento da "+$F{nome}.toLowerCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="14" y="110" width="100" height="20" uuid="3fc20e40-29be-4da8-a608-0c21682a46ee"/>
+				<reportElement x="11" y="138" width="100" height="20" uuid="3fc20e40-29be-4da8-a608-0c21682a46ee"/>
 				<textFieldExpression><![CDATA["Formandos: "+$F{formandos}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="198" y="110" width="151" height="20" uuid="3508a71f-3f49-4a45-9ee9-996a544de98e"/>
+				<reportElement x="217" y="138" width="151" height="20" uuid="3508a71f-3f49-4a45-9ee9-996a544de98e"/>
 				<textFieldExpression><![CDATA["Convidados/cliente: "+$F{convcliente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="455" y="110" width="100" height="20" uuid="a0615c20-e833-49ff-afbc-c887a7fe1f27"/>
+				<reportElement x="441" y="138" width="100" height="20" uuid="a0615c20-e833-49ff-afbc-c887a7fe1f27"/>
 				<textFieldExpression><![CDATA["Convidados: "+$F{convidados}]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement x="0" y="95" width="541" height="31" uuid="6c31593a-d070-4698-bcb1-6b2382753116"/>
+				<subreportParameter name="IDEVENTO">
+					<subreportParameterExpression><![CDATA[$P{IDEVENTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Orcamento_Formatura__Comissao.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</title>
-	<pageHeader>
-		<band height="6" splitType="Stretch"/>
-	</pageHeader>
 	<detail>
 		<band height="62" splitType="Stretch">
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="48" uuid="662b0ed9-e35a-4b51-976b-c58499b99a60"/>
 				<subreportParameter name="IDEVENTO">
-					<subreportParameterExpression><![CDATA[$P{ID}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$P{IDEVENTO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Orcamento_Formatura__subreport2.jasper"]]></subreportExpression>
@@ -69,7 +74,7 @@
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="48" uuid="d97bc678-663a-4643-8cb7-72eaf0e798ad"/>
 				<subreportParameter name="IDEVENTO">
-					<subreportParameterExpression><![CDATA[$P{ID}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$P{IDEVENTO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "servicos.jasper"]]></subreportExpression>
@@ -92,7 +97,4 @@
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="33" splitType="Stretch"/>
-	</summary>
 </jasperReport>
