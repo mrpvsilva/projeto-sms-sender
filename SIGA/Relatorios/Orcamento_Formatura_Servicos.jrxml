@@ -3,8 +3,8 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="IDEVENTO" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	<parameter name="IDEVENTO" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select s.nome,s.valorservico valor,es.subtotal from servicos s inner join eventosservicos es on es.idservico = s.id where es.idevento = $P{IDEVENTO};]]>
@@ -16,6 +16,9 @@
 	<field name="subtotal" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<variable name="SUBTOTALSERVICOS" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{subtotal}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -32,22 +35,28 @@
 	</title>
 	<columnHeader>
 		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="555" height="20" uuid="6b7133c0-7df3-411c-a907-284891407d50"/>
+				<graphicElement>
+					<pen lineStyle="Solid" lineColor="#CCCCCC"/>
+				</graphicElement>
+			</rectangle>
 			<staticText>
-				<reportElement x="18" y="0" width="318" height="20" uuid="0219f7c4-1f82-431f-b9f4-67f3bde4f4cf"/>
+				<reportElement mode="Opaque" x="0" y="0" width="345" height="20" backcolor="#CCCCCC" uuid="0219f7c4-1f82-431f-b9f4-67f3bde4f4cf"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nome]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="436" y="0" width="100" height="20" uuid="2ad20f89-c4fb-471e-a998-1e8bb9a301bd"/>
+				<reportElement mode="Opaque" x="450" y="0" width="105" height="20" backcolor="#CCCCCC" uuid="2ad20f89-c4fb-471e-a998-1e8bb9a301bd"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Subtotal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="336" y="0" width="100" height="20" uuid="a7a1f282-f06e-4fcb-9a80-c2e1124021ce"/>
+				<reportElement mode="Opaque" x="345" y="0" width="105" height="20" backcolor="#CCCCCC" uuid="a7a1f282-f06e-4fcb-9a80-c2e1124021ce"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -56,23 +65,47 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="23" splitType="Stretch">
+		<band height="12" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="-2" width="1" height="13" uuid="7d97cd67-8328-40be-8f8e-2439729b84b0"/>
+				<graphicElement>
+					<pen lineColor="#CCCCCC"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="345" y="-2" width="1" height="13" uuid="e4012dcb-94f5-4b32-a679-4549f501df18"/>
+				<graphicElement>
+					<pen lineColor="#CCCCCC"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="450" y="-2" width="1" height="13" uuid="5a3df438-4470-4796-9449-b0b7b71a54ab"/>
+				<graphicElement>
+					<pen lineColor="#CCCCCC"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="555" y="-2" width="1" height="13" uuid="3a826a0a-97f4-4830-a8e1-63d9daa1daa0"/>
+				<graphicElement>
+					<pen lineColor="#CCCCCC"/>
+				</graphicElement>
+			</line>
 			<textField>
-				<reportElement x="18" y="0" width="318" height="20" uuid="53878486-7c2a-492e-af5a-7eda9839d3a2"/>
+				<reportElement x="5" y="0" width="335" height="12" uuid="53878486-7c2a-492e-af5a-7eda9839d3a2"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="436" y="0" width="100" height="20" uuid="30c38495-4eba-4129-8e42-37f775c0873e"/>
+				<reportElement x="450" y="0" width="100" height="12" uuid="30c38495-4eba-4129-8e42-37f775c0873e"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="336" y="0" width="100" height="20" uuid="64fbe546-05fb-4600-a820-e2e4f61fee6b"/>
+				<reportElement x="345" y="0" width="100" height="12" uuid="64fbe546-05fb-4600-a820-e2e4f61fee6b"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
@@ -80,4 +113,14 @@
 			</textField>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="2">
+			<line>
+				<reportElement x="0" y="-2" width="555" height="1" uuid="2252b4e0-a7f3-4995-9522-240a020a096c"/>
+				<graphicElement>
+					<pen lineColor="#CCCCCC"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
 </jasperReport>

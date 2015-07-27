@@ -2,55 +2,50 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Orcamento_Formatura_" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b9b7310d-b849-46c2-9c32-139e3a7c4909">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="55"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\paulosilva\\workspace\\SIGA\\Relatorios\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\Acer\\workspace\\SIGA\\Relatorios\\"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="IDEVENTO" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	<parameter name="IDEVENTO" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select nome,numeroclientes formandos,numeroconvidadoscliente convcliente,(numeroconvidadoscliente * numeroclientes) + numeroclientes convidados from eventos where id =$P{IDEVENTO} ;]]>
+		<![CDATA[SELECT ID,numeroparcelas parcelas,numeroclientes clientes FROM EVENTOS WHERE ID = $P{IDEVENTO}]]>
 	</queryString>
-	<field name="nome" class="java.lang.String">
+	<field name="ID" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="formandos" class="java.lang.Integer"/>
-	<field name="convcliente" class="java.lang.Integer"/>
-	<field name="convidados" class="java.lang.Long"/>
+	<field name="parcelas" class="java.lang.Integer"/>
+	<field name="clientes" class="java.lang.Integer"/>
+	<variable name="TOTALORCAMENTO" class="java.math.BigDecimal" calculation="Sum"/>
+	<variable name="FORMANDOS" class="java.lang.Integer">
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="PARCELAS" class="java.lang.Integer">
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="variable1" class="java.lang.Double" calculation="System">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[$V{TOTALORCAMENTO}.doubleValue()]]></initialValueExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="158" splitType="Stretch">
+		<band height="154" splitType="Stretch">
+			<image>
+				<reportElement x="227" y="-3" width="102" height="90" uuid="82509089-30f5-4337-9757-941ea5ebe599"/>
+				<imageExpression><![CDATA["C:\\Users\\Acer\\workspace\\SIGA\\Relatorios\\SPLASH_GDA.jpg"]]></imageExpression>
+			</image>
 			<staticText>
-				<reportElement x="0" y="32" width="555" height="20" uuid="0b8d30e9-275d-4df7-9e86-a9a9eeb34cc4"/>
+				<reportElement x="0" y="86" width="555" height="20" uuid="0b8d30e9-275d-4df7-9e86-a9a9eeb34cc4"/>
 				<textElement textAlignment="Center">
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[www.gdaeventos.com.br]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="11" y="66" width="530" height="20" uuid="074ee17b-0269-4320-84af-956873b28aa0"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Orçamento da "+$F{nome}.toLowerCase()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="11" y="138" width="100" height="20" uuid="3fc20e40-29be-4da8-a608-0c21682a46ee"/>
-				<textFieldExpression><![CDATA["Formandos: "+$F{formandos}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="217" y="138" width="151" height="20" uuid="3508a71f-3f49-4a45-9ee9-996a544de98e"/>
-				<textFieldExpression><![CDATA["Convidados/cliente: "+$F{convcliente}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="441" y="138" width="100" height="20" uuid="a0615c20-e833-49ff-afbc-c887a7fe1f27"/>
-				<textFieldExpression><![CDATA["Convidados: "+$F{convidados}]]></textFieldExpression>
-			</textField>
 			<subreport>
-				<reportElement x="0" y="95" width="541" height="31" uuid="6c31593a-d070-4698-bcb1-6b2382753116"/>
+				<reportElement x="0" y="106" width="555" height="43" uuid="6c31593a-d070-4698-bcb1-6b2382753116"/>
 				<subreportParameter name="IDEVENTO">
 					<subreportParameterExpression><![CDATA[$P{IDEVENTO}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -60,41 +55,107 @@
 		</band>
 	</title>
 	<detail>
-		<band height="62" splitType="Stretch">
+		<band height="52" splitType="Stretch">
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="48" uuid="662b0ed9-e35a-4b51-976b-c58499b99a60"/>
 				<subreportParameter name="IDEVENTO">
 					<subreportParameterExpression><![CDATA[$P{IDEVENTO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Orcamento_Formatura__subreport2.jasper"]]></subreportExpression>
+				<returnValue subreportVariable="SUBTOTALITENS" toVariable="TOTALORCAMENTO" calculation="Sum"/>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Orcamento_Formatura__Itens.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="60">
+		<band height="51">
 			<subreport>
-				<reportElement x="0" y="0" width="555" height="48" uuid="d97bc678-663a-4643-8cb7-72eaf0e798ad"/>
+				<reportElement x="0" y="1" width="555" height="48" uuid="d97bc678-663a-4643-8cb7-72eaf0e798ad"/>
 				<subreportParameter name="IDEVENTO">
 					<subreportParameterExpression><![CDATA[$P{IDEVENTO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "servicos.jasper"]]></subreportExpression>
+				<returnValue subreportVariable="SUBTOTALSERVICOS" toVariable="TOTALORCAMENTO" calculation="Sum"/>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Orcamento_Formatura_Servicos.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="17" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="80" splitType="Stretch">
+		<band height="47" splitType="Stretch">
 			<textField>
-				<reportElement x="11" y="60" width="100" height="20" uuid="b9ad34c1-bd0d-4043-912b-116362810630"/>
+				<reportElement x="0" y="27" width="100" height="20" uuid="b9ad34c1-bd0d-4043-912b-116362810630"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="313" y="60" width="228" height="20" uuid="21e01c7e-9647-4645-a50f-566069152325"/>
+				<reportElement x="327" y="27" width="228" height="20" uuid="21e01c7e-9647-4645-a50f-566069152325"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de "+$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="27" uuid="6ba370a7-99b7-4184-834a-1e6013945d25"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[AV. GENTIL BITTENCOURT, Nº 2390 – CNPJ: 20274522/0001-99
+FONES: (91) 3229-2476 / 3349-9919]]></text>
+			</staticText>
 		</band>
 	</pageFooter>
+	<summary>
+		<band height="225">
+			<staticText>
+				<reportElement x="0" y="28" width="129" height="15" uuid="30ded54c-e437-4fdf-8df5-b6af5443b8a1"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total do orçamento]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="408" y="28" width="151" height="15" uuid="56b17381-0d6b-41d8-bd53-11421bc074c2"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{TOTALORCAMENTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="43" width="129" height="15" uuid="2d535c22-60bf-4d51-b183-0f61799f613f"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor/formando]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="58" width="129" height="15" uuid="70a250c5-fd4a-4ed9-9b97-5608b6bc8a0c"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor da parcela]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="408" y="43" width="151" height="15" uuid="eb4a1f21-e550-4175-9057-6c6033a06334"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{TOTALORCAMENTO}/$F{clientes}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="408" y="58" width="151" height="15" uuid="260a82ac-13d5-4ef0-8e7e-d5b4847322d9"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{TOTALORCAMENTO}/($F{parcelas} * $F{clientes})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="88" width="555" height="30" uuid="7cc49a05-0f94-43fa-b128-4de8c6530766"/>
+				<textFieldExpression><![CDATA["PARCELADOS EM "+$F{parcelas}+" VEZES NO BOLETO BANCÁRIO, OU CARTÃO DE CRÉDITO E 12 VEZES.\n"+
+"DE JULHO DE 2015 Á DEZEMBRO 2017 COM VENCIMENTOS TODO DIA 10 DE CADA MÊS."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="73" width="145" height="15" uuid="3e9795d5-dfb4-40de-b876-e091b15b9664"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Forma de pagamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="184" width="555" height="40" uuid="da356554-a6c2-42f8-9b61-a85f64526859"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Guido Azulay  / Daniel Araújo
+CONSULTORES DE VENDAS
+ 98305-6453 (TIM) /99921-1691 (OI)]]></text>
+			</staticText>
+		</band>
+	</summary>
 </jasperReport>

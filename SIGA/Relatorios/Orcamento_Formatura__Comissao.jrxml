@@ -3,38 +3,98 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="IDEVENTO" class="java.lang.Integer"/>
+	<parameter name="IDEVENTO" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[SELECT nomecompleto
-FROM clientes
-WHERE id IN (SELECT idcliente FROM clienteseventos where  idevento = $P{IDEVENTO})]]>
+		<![CDATA[SELECT e.nome,e.numeroclientes formandos,e.numeroconvidadoscliente convcliente,(e.numeroconvidadoscliente * e.numeroclientes) + e.numeroclientes convidados,e.numeroparcelas parcelas, c.nomecompleto
+FROM eventos e INNER JOIN clienteseventos ci
+ON ci.idevento = e.id
+INNER JOIN clientes c ON c.id = ci.idcliente
+WHERE e.id = $P{IDEVENTO}]]>
 	</queryString>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="formandos" class="java.lang.Integer"/>
+	<field name="convcliente" class="java.lang.Integer"/>
+	<field name="convidados" class="java.lang.Long"/>
+	<field name="parcelas" class="java.lang.Integer"/>
 	<field name="nomecompleto" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
+	<variable name="FORMANDOS" class="java.lang.Integer">
+		<variableExpression><![CDATA[$F{formandos}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="PARCELAS" class="java.lang.Integer">
+		<variableExpression><![CDATA[$F{parcelas}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="21">
+			<textField>
+				<reportElement x="1" y="0" width="555" height="20" uuid="074ee17b-0269-4320-84af-956873b28aa0"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Orçamento da "+$F{nome}.toLowerCase()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
 	<columnHeader>
-		<band height="16" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<staticText>
-				<reportElement x="11" y="0" width="100" height="15" uuid="d13e8fd5-0b96-4273-84a2-1e9932446b50"/>
-				<text><![CDATA[Comisao]]></text>
+				<reportElement x="11" y="0" width="100" height="14" uuid="d13e8fd5-0b96-4273-84a2-1e9932446b50"/>
+				<text><![CDATA[Comissao]]></text>
 			</staticText>
+			<line>
+				<reportElement x="555" y="0" width="1" height="15" uuid="36a36dd9-9202-4a4d-8520-005cf618148c"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="15" uuid="71bef2f4-70c6-4394-b348-7804b2c73cd7"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="fae8f2e6-377c-40c1-bd5b-50087f587340"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="16" splitType="Stretch">
+		<band height="14" splitType="Stretch">
 			<textField>
-				<reportElement x="11" y="0" width="100" height="15" uuid="7797fa4c-70b9-48d8-a279-ad4d4587bdef"/>
+				<reportElement x="25" y="0" width="100" height="14" uuid="7797fa4c-70b9-48d8-a279-ad4d4587bdef"/>
 				<textFieldExpression><![CDATA[$F{nomecompleto}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="555" y="0" width="1" height="14" uuid="f881308d-e942-4733-b661-243af2846868"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="14" uuid="47252caa-2957-4f1a-a8b1-44a8f6028736"/>
+			</line>
 		</band>
 	</detail>
-	<pageFooter>
-		<band splitType="Stretch"/>
-	</pageFooter>
 	<summary>
-		<band splitType="Stretch"/>
+		<band height="14">
+			<textField>
+				<reportElement x="419" y="0" width="100" height="14" uuid="a0615c20-e833-49ff-afbc-c887a7fe1f27"/>
+				<textFieldExpression><![CDATA["Convidados: "+$F{convidados}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="0" width="151" height="14" uuid="3508a71f-3f49-4a45-9ee9-996a544de98e"/>
+				<textFieldExpression><![CDATA["Convidados/cliente: "+$F{convcliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="0" width="100" height="14" uuid="3fc20e40-29be-4da8-a608-0c21682a46ee"/>
+				<textFieldExpression><![CDATA["Formandos: "+$F{formandos}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="555" y="0" width="1" height="13" uuid="7d62a1e1-78fd-4bdb-ac47-32269c7dd0e4"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="13" uuid="274ba95b-5b52-43fc-9a02-a46b282c0993"/>
+			</line>
+			<line>
+				<reportElement x="0" y="13" width="555" height="1" uuid="6a114183-375a-495b-b980-25910d0032e5"/>
+			</line>
+		</band>
 	</summary>
 </jasperReport>
