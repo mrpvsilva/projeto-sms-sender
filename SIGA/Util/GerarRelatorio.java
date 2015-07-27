@@ -6,10 +6,7 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 
-import org.eclipse.persistence.sessions.Session;
-
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;

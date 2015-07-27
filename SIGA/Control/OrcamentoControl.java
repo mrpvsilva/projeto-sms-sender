@@ -1,14 +1,11 @@
 package Control;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-
 import net.sf.jasperreports.engine.JRException;
 import Dominio.Cliente;
 import Dominio.Evento;
@@ -107,7 +104,7 @@ public class OrcamentoControl {
 	
 	public void gerarOrcamento(long id,TiposEvento tipoEvento){
 		Map<String,Object> map = new HashMap<String, Object>();		
-		map.put("ID", (int )id);			
+		map.put("IDEVENTO", id);			
 		try {
 			GerarRelatorio.gerarRelatorio(TipoRelatorio.ORCAMENTO_FORMATURA, map );
 		} catch (JRException e) {
