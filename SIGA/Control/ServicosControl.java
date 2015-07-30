@@ -47,7 +47,7 @@ public class ServicosControl {
 	public String[] DDLTipoServico() {
 		List<TipoItem> l = tipoItemRepository.findAll("", "Ativo");
 		String[] a = new String[l.size() + 1];
-		a[0] = "Selecione";
+		a[0] = "SELECIONE";
 		for (int i = 0; i < l.size(); i++) {
 			a[i + 1] = l.get(i).getNome();
 		}

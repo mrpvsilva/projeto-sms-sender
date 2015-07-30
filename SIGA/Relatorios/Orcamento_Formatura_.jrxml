@@ -2,7 +2,22 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Orcamento_Formatura_" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b9b7310d-b849-46c2-9c32-139e3a7c4909">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="55"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="Servicosd" uuid="0bd8997f-c65c-464f-94b9-adbdb2f1e45a">
+		<queryString language="SQL">
+			<![CDATA[select s.nome,s.descricao,s.valorservico valor,es.subtotal from servicos s inner join eventosservicos es on es.idservico = s.id where es.idevento = 102]]>
+		</queryString>
+		<field name="nome" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="descricao" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="valor" class="java.math.BigDecimal"/>
+		<field name="subtotal" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Acer\\workspace\\SIGA\\Relatorios\\"]]></defaultValueExpression>
 	</parameter>
@@ -55,25 +70,14 @@
 		</band>
 	</title>
 	<detail>
-		<band height="52" splitType="Stretch">
+		<band height="26" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="0" width="555" height="48" uuid="662b0ed9-e35a-4b51-976b-c58499b99a60"/>
+				<reportElement x="0" y="0" width="555" height="22" uuid="88490ee4-9097-4363-b1b0-1900710c7adc"/>
 				<subreportParameter name="IDEVENTO">
 					<subreportParameterExpression><![CDATA[$P{IDEVENTO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<returnValue subreportVariable="SUBTOTALITENS" toVariable="TOTALORCAMENTO" calculation="Sum"/>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Orcamento_Formatura__Itens.jasper"]]></subreportExpression>
-			</subreport>
-		</band>
-		<band height="51">
-			<subreport>
-				<reportElement x="0" y="1" width="555" height="48" uuid="d97bc678-663a-4643-8cb7-72eaf0e798ad"/>
-				<subreportParameter name="IDEVENTO">
-					<subreportParameterExpression><![CDATA[$P{IDEVENTO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<returnValue subreportVariable="SUBTOTALSERVICOS" toVariable="TOTALORCAMENTO" calculation="Sum"/>
+				<returnValue subreportVariable="SUBTOTALSERVICOS" toVariable="TOTALORCAMENTO"/>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Orcamento_Formatura_Servicos.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
@@ -102,48 +106,48 @@ FONES: (91) 3229-2476 / 3349-9919]]></text>
 	<summary>
 		<band height="225">
 			<staticText>
-				<reportElement x="0" y="28" width="129" height="15" uuid="30ded54c-e437-4fdf-8df5-b6af5443b8a1"/>
+				<reportElement x="0" y="2" width="129" height="15" uuid="30ded54c-e437-4fdf-8df5-b6af5443b8a1"/>
 				<textElement>
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total do orçamento]]></text>
 			</staticText>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="408" y="28" width="151" height="15" uuid="56b17381-0d6b-41d8-bd53-11421bc074c2"/>
+				<reportElement x="400" y="2" width="151" height="15" uuid="56b17381-0d6b-41d8-bd53-11421bc074c2"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{TOTALORCAMENTO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="43" width="129" height="15" uuid="2d535c22-60bf-4d51-b183-0f61799f613f"/>
+				<reportElement x="0" y="17" width="129" height="15" uuid="2d535c22-60bf-4d51-b183-0f61799f613f"/>
 				<textElement>
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Valor/formando]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="58" width="129" height="15" uuid="70a250c5-fd4a-4ed9-9b97-5608b6bc8a0c"/>
+				<reportElement x="0" y="32" width="129" height="15" uuid="70a250c5-fd4a-4ed9-9b97-5608b6bc8a0c"/>
 				<textElement>
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Valor da parcela]]></text>
 			</staticText>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="408" y="43" width="151" height="15" uuid="eb4a1f21-e550-4175-9057-6c6033a06334"/>
+				<reportElement x="400" y="17" width="151" height="15" uuid="eb4a1f21-e550-4175-9057-6c6033a06334"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{TOTALORCAMENTO}/$F{clientes}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="408" y="58" width="151" height="15" uuid="260a82ac-13d5-4ef0-8e7e-d5b4847322d9"/>
+				<reportElement x="400" y="32" width="151" height="15" uuid="260a82ac-13d5-4ef0-8e7e-d5b4847322d9"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{TOTALORCAMENTO}/($F{parcelas} * $F{clientes})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="88" width="555" height="30" uuid="7cc49a05-0f94-43fa-b128-4de8c6530766"/>
+				<reportElement x="0" y="62" width="555" height="30" uuid="7cc49a05-0f94-43fa-b128-4de8c6530766"/>
 				<textFieldExpression><![CDATA["PARCELADOS EM "+$F{parcelas}+" VEZES NO BOLETO BANCÁRIO, OU CARTÃO DE CRÉDITO E 12 VEZES.\n"+
 "DE JULHO DE 2015 Á DEZEMBRO 2017 COM VENCIMENTOS TODO DIA 10 DE CADA MÊS."]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="73" width="145" height="15" uuid="3e9795d5-dfb4-40de-b876-e091b15b9664"/>
+				<reportElement x="0" y="47" width="145" height="15" uuid="3e9795d5-dfb4-40de-b876-e091b15b9664"/>
 				<textElement>
 					<font size="10" isBold="true"/>
 				</textElement>

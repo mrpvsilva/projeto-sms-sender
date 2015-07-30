@@ -61,8 +61,8 @@ public class Evento implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "evento")
 	private List<ClienteEvento> clientes;
 
-	@OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<EventoItem> itens;
+//	@OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	private List<EventoItem> itens;
 
 	@OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<EventoServico> servicos;
@@ -111,13 +111,13 @@ public class Evento implements Serializable {
 		this.clientes.add(new ClienteEvento(this, cliente));
 	}
 
-	public void addItem(EventoItem eventoItem) {
-		if (this.itens == null) {
-			itens = new ArrayList<EventoItem>();
-		}
-
-		this.itens.add(eventoItem);
-	}
+//	public void addItem(EventoItem eventoItem) {
+//		if (this.itens == null) {
+//			itens = new ArrayList<EventoItem>();
+//		}
+//
+//		this.itens.add(eventoItem);
+//	}
 
 	public long getId() {
 		return id;
@@ -171,13 +171,13 @@ public class Evento implements Serializable {
 		this.clientes = clientes;
 	}
 
-	public List<EventoItem> getItens() {
-		return itens;
-	}
-
-	public void setItens(List<EventoItem> itens) {
-		this.itens = itens;
-	}
+//	public List<EventoItem> getItens() {
+//		return itens;
+//	}
+//
+//	public void setItens(List<EventoItem> itens) {
+//		this.itens = itens;
+//	}
 
 	public int getNumeroConvidadosCliente() {
 		return numeroconvidadoscliente;

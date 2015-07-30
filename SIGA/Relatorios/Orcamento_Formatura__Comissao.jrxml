@@ -59,16 +59,16 @@ WHERE e.id = $P{IDEVENTO}]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="14" splitType="Stretch">
+		<band height="18" splitType="Stretch">
 			<textField>
 				<reportElement x="25" y="0" width="100" height="14" uuid="7797fa4c-70b9-48d8-a279-ad4d4587bdef"/>
 				<textFieldExpression><![CDATA[$F{nomecompleto}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="555" y="0" width="1" height="14" uuid="f881308d-e942-4733-b661-243af2846868"/>
+				<reportElement x="555" y="0" width="1" height="18" uuid="f881308d-e942-4733-b661-243af2846868"/>
 			</line>
 			<line>
-				<reportElement x="0" y="0" width="1" height="14" uuid="47252caa-2957-4f1a-a8b1-44a8f6028736"/>
+				<reportElement x="0" y="0" width="1" height="18" uuid="47252caa-2957-4f1a-a8b1-44a8f6028736"/>
 			</line>
 		</band>
 	</detail>

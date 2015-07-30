@@ -29,6 +29,8 @@ import jmoneyfield.JMoneyField;
 
 import javax.swing.JComboBox;
 import java.awt.Toolkit;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class EditFormServico extends JDialog implements ActionListener {
 
@@ -45,6 +47,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 	private JMoneyField valor;
 	private JComboBox tipocobranca;
 	private JComboBox servicos;
+	private JTextArea descricao;
 
 	/**
 	 * Construtor utilizado pela tela principal para cadastro do serviço
@@ -52,10 +55,11 @@ public class EditFormServico extends JDialog implements ActionListener {
 	 */
 
 	public EditFormServico() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(EditFormServico.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				EditFormServico.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		start();
 	}
-	
+
 	/**
 	 * Construtor utilizado pela tela de cadastro do fornecedor
 	 * 
@@ -93,7 +97,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 		setResizable(false);
 		setModal(true);
 		setTitle("SIGA - cadastro de servi\u00E7o");
-		setBounds(100, 100, 355, 191);
+		setBounds(100, 100, 553, 372);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -107,46 +111,60 @@ public class EditFormServico extends JDialog implements ActionListener {
 
 		tfNome = new JTextField();
 		tfNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		tfNome.setBounds(115, 18, 221, 20);
+		tfNome.setBounds(115, 18, 393, 20);
 		contentPanel.add(tfNome);
 		tfNome.setColumns(10);
 
 		chkAtivo = new JCheckBox("");
 		chkAtivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chkAtivo.setSelected(true);
-		chkAtivo.setBounds(115, 100, 97, 23);
+		chkAtivo.setBounds(115, 278, 97, 23);
 		contentPanel.add(chkAtivo);
 
 		JLabel lblValor = new JLabel("Valor");
 		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblValor.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblValor.setBounds(0, 78, 105, 14);
+		lblValor.setBounds(0, 256, 105, 14);
 		contentPanel.add(lblValor);
 
 		valor = new JMoneyField();
 		valor.setHorizontalAlignment(SwingConstants.RIGHT);
 		valor.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		valor.setBounds(115, 75, 221, 20);
+		valor.setBounds(115, 253, 221, 20);
 		contentPanel.add(valor);
 		valor.setColumns(10);
 
 		JLabel lblNewLabel = new JLabel("Tipo de cobran\u00E7a");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel.setBounds(0, 52, 105, 15);
+		lblNewLabel.setBounds(0, 230, 105, 15);
 		contentPanel.add(lblNewLabel);
 
 		tipocobranca = new JComboBox(TipoCobranca.values());
 		tipocobranca.removeItem(TipoCobranca.TODOS);
 		tipocobranca.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		tipocobranca.setBounds(115, 46, 221, 20);
+		tipocobranca.setBounds(115, 224, 221, 20);
 		contentPanel.add(tipocobranca);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Ativo");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1.setBounds(56, 103, 46, 14);
+		lblNewLabel_1.setBounds(56, 281, 46, 14);
 		contentPanel.add(lblNewLabel_1);
+
+		JLabel lblDescrio = new JLabel("Descri\u00E7\u00E3o");
+		lblDescrio.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDescrio.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblDescrio.setBounds(0, 46, 105, 14);
+		contentPanel.add(lblDescrio);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(115, 49, 393, 166);
+		contentPanel.add(scrollPane);
+
+		descricao = new JTextArea();
+		descricao.setLineWrap(true);
+		scrollPane.setViewportView(descricao);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -189,6 +207,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 
 		// _servico = tipoServicoControl.buscarTipoServico(id);
 		tfNome.setText(_servico.getNome());
+		descricao.setText(_servico.getDescricao());
 		valor.setValor(_servico.getValorServico());
 		chkAtivo.setSelected(_servico.isAtivo());
 		tipocobranca.setSelectedItem(_servico.getTipoCobranca());
@@ -199,6 +218,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 
 		_servico = new Servico();
 		_servico.setNome(tfNome.getText());
+		_servico.setDescricao(descricao.getText());
 		_servico.setAtivo(chkAtivo.isSelected());
 		_servico.setValorServico(valor.getValor());
 		_servico.setTipoCobranca((TipoCobranca) tipocobranca.getSelectedItem());
@@ -206,10 +226,10 @@ public class EditFormServico extends JDialog implements ActionListener {
 		String out = tipoServicoControl.cadastrar(_servico);
 
 		if (out == null) {
-			
-			if(servicos != null)
+
+			if (servicos != null)
 				servicos.addItem(_servico.getNome());
-			
+
 			carregarGrid();
 			JOptionPane.showMessageDialog(null,
 					"Serviço cadastrado com sucesso");
@@ -224,6 +244,7 @@ public class EditFormServico extends JDialog implements ActionListener {
 
 		_servico.setNome(tfNome.getText());
 		_servico.setAtivo(chkAtivo.isSelected());
+		_servico.setDescricao(descricao.getText());
 		_servico.setValorServico(valor.getValor());
 		_servico.setTipoCobranca((TipoCobranca) tipocobranca.getSelectedItem());
 
@@ -246,8 +267,14 @@ public class EditFormServico extends JDialog implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Campo nome obrigatório.");
 				return;
 			}
-			if(tipocobranca.getSelectedItem()==TipoCobranca.SELECIONE){
-				JOptionPane.showMessageDialog(null, "Selecione um tipo de cobrança");
+			if (descricao.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null,
+						"Campo descrição é obrigatório.");
+				return;
+			}
+			if (tipocobranca.getSelectedItem() == TipoCobranca.SELECIONE) {
+				JOptionPane.showMessageDialog(null,
+						"Selecione um tipo de cobrança");
 				return;
 			}
 

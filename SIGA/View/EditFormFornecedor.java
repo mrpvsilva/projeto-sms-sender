@@ -390,7 +390,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 																	// CpfCnpj
 				JOptionPane.showMessageDialog(null, "Cpf/Cnpj inválido.",
 						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-			else if (JFFRg.getText().trim().isEmpty()) // Valida Rg
+			else if (JFFRg.getText().trim().isEmpty() && JCBCpfMask.isSelected()) // Valida Rg
 				JOptionPane.showMessageDialog(null, "Rg em branco.",
 						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 			else if (telmodel.getRowCount() < 1)
