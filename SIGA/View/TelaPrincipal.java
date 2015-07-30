@@ -8,8 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
-import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,8 +20,6 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import Control.LembretesControl;
-import Dominio.Lembrete;
 import Dominio.Permissao;
 import Extra.Extras;
 import Util.Modulos;
@@ -139,6 +135,25 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		JMenu JMForn = new JMenu("Fornecedores");
 		JMForn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMForn.setVisible(fornecedores.isVisualizar());
+		
+				// MENU CLIENTES
+				JMenu JMCli = new JMenu("Clientes");
+				JMCli.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+				JMCli.setVisible(clientes.isVisualizar());
+				menuBar.add(JMCli);
+				
+						JMICliCad = new JMenuItem("Novo");
+						JMICliCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+						JMICliCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
+						JMICliCad.addActionListener(this);
+						JMICliCad.setVisible(clientes.isCadastrar());
+						JMCli.add(JMICliCad);
+						
+								JMICliBuscar = new JMenuItem("Buscar");
+								JMICliBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+								JMICliBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0));
+								JMICliBuscar.addActionListener(this);
+								JMCli.add(JMICliBuscar);
 		menuBar.add(JMForn);
 
 		JMIFornCad = new JMenuItem("Novo");
@@ -154,42 +169,114 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		JMIFornBuscar.addActionListener(this);
 		JMForn.add(JMIFornBuscar);
 
-		// MENU TIPO SERVICOS
-		mnTipoServio_1 = new JMenu("Servi\u00E7os");
-		mnTipoServio_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		mnTipoServio_1.setVisible(tipoServicos.isVisualizar());
-		JMForn.add(mnTipoServio_1);
-
-		JMenuItem mntmCadastrar_1 = new JMenuItem("Novo");
-		mntmCadastrar_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		mntmCadastrar_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				EditFormServico tscad = new EditFormServico();
-				tscad.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-				tscad.setLocationRelativeTo(null);
-				tscad.setVisible(true);
-			}
-		});
-		mntmCadastrar_1.setVisible(tipoServicos.isCadastrar());
-		mnTipoServio_1.add(mntmCadastrar_1);
-
-		JMenuItem mntmBuscar_1 = new JMenuItem("Buscar");
-		mntmBuscar_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		mntmBuscar_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BuscarServicos tsb = new BuscarServicos();
-				tsb.setLocationRelativeTo(null);
-				tsb.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-				tsb.setVisible(true);
-			}
-		});
-		mnTipoServio_1.add(mntmBuscar_1);
-
 		// MENU ITENS
 		JMenu JMServ = new JMenu("Itens");
+		JMServ.setEnabled(false);
 		JMServ.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMServ.setVisible(itens.isVisualizar());
-		menuBar.add(JMServ);
+		
+				mnOramentos = new JMenu("Or\u00E7amentos");
+				mnOramentos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+				mnOramentos.setVisible(orcamento.isVisualizar());
+				menuBar.add(mnOramentos);
+				
+						mntmNovo = new JMenuItem("Novo");
+						mntmNovo.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent arg0) {
+
+								EditFormOrcamento ef = new EditFormOrcamento();
+								ef.setLocationRelativeTo(null);
+								ef.setVisible(true);
+
+							}
+						});
+						mntmNovo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+						mntmNovo.setVisible(orcamento.isCadastrar());
+						mnOramentos.add(mntmNovo);
+						
+								mntmBuscar_2 = new JMenuItem("Buscar");
+								mntmBuscar_2.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent arg0) {
+										BuscarOrcamentos bo = new BuscarOrcamentos();
+										bo.setVisible(true);
+									}
+								});
+								mntmBuscar_2.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+								mnOramentos.add(mntmBuscar_2);
+		
+				// MENU TIPO SERVICOS
+				mnTipoServio_1 = new JMenu("Servi\u00E7os");
+				menuBar.add(mnTipoServio_1);
+				mnTipoServio_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+				mnTipoServio_1.setVisible(tipoServicos.isVisualizar());
+				
+						JMenuItem mntmCadastrar_1 = new JMenuItem("Novo");
+						mntmCadastrar_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+						mntmCadastrar_1.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent arg0) {
+								EditFormServico tscad = new EditFormServico();
+								tscad.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+								tscad.setLocationRelativeTo(null);
+								tscad.setVisible(true);
+							}
+						});
+						mntmCadastrar_1.setVisible(tipoServicos.isCadastrar());
+						mnTipoServio_1.add(mntmCadastrar_1);
+						
+								JMenuItem mntmBuscar_1 = new JMenuItem("Buscar");
+								mntmBuscar_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+								mntmBuscar_1.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent e) {
+										BuscarServicos tsb = new BuscarServicos();
+										tsb.setLocationRelativeTo(null);
+										tsb.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+										tsb.setVisible(true);
+									}
+								});
+								mnTipoServio_1.add(mntmBuscar_1);
+		
+				// MENU LEMBRETES
+				JMenu JMLemb = new JMenu("Lembretes");
+				JMLemb.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+				// permissão de visualização dos lembretes
+				JMLemb.setVisible(lembretes.isVisualizar());
+				menuBar.add(JMLemb);
+				
+						JMILembCad = new JMenuItem("Novo");
+						JMILembCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+						JMILembCad.setAccelerator(KeyStroke
+								.getKeyStroke(KeyEvent.VK_PAGE_UP, 0));
+						JMILembCad.addActionListener(this);
+						// permissão de cadastrdo dos lembretes
+						JMILembCad.setVisible(lembretes.isCadastrar());
+						JMLemb.add(JMILembCad);
+						
+								JMILembBuscar = new JMenuItem("Buscar");
+								JMILembBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+								JMILembBuscar.setAccelerator(KeyStroke.getKeyStroke(
+										KeyEvent.VK_PAGE_DOWN, 0));
+								JMILembBuscar.addActionListener(this);
+								JMLemb.add(JMILembBuscar);
+		
+				// MENU EVENTOS
+				JMEventos = new JMenu("Eventos");
+				JMEventos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+				JMEventos.setEnabled(false);
+				JMEventos.setVisible(eventos.isVisualizar());
+				menuBar.add(JMEventos);
+				
+						mntmCadastrar = new JMenuItem("Novo");
+						mntmCadastrar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+						mntmCadastrar
+								.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0));
+						mntmCadastrar.setVisible(eventos.isCadastrar());
+						JMEventos.add(mntmCadastrar);
+						
+								mntmBuscar = new JMenuItem("Buscar");
+								mntmBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+								mntmBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
+								JMEventos.add(mntmBuscar);
+		//menuBar.add(JMServ);
 
 		JMIServCad = new JMenuItem("Novo");
 		JMIServCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
@@ -220,96 +307,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		JMITSBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		JMITSBuscar.addActionListener(this);
 		JMTipoServio.add(JMITSBuscar);
-
-		// MENU CLIENTES
-		JMenu JMCli = new JMenu("Clientes");
-		JMCli.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMCli.setVisible(clientes.isVisualizar());
-		menuBar.add(JMCli);
-
-		JMICliCad = new JMenuItem("Novo");
-		JMICliCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMICliCad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
-		JMICliCad.addActionListener(this);
-		JMICliCad.setVisible(clientes.isCadastrar());
-		JMCli.add(JMICliCad);
-
-		JMICliBuscar = new JMenuItem("Buscar");
-		JMICliBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMICliBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0));
-		JMICliBuscar.addActionListener(this);
-		JMCli.add(JMICliBuscar);
-
-		// MENU EVENTOS
-		JMEventos = new JMenu("Eventos");
-		JMEventos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMEventos.setEnabled(false);
-		JMEventos.setVisible(eventos.isVisualizar());
-
-		mnOramentos = new JMenu("Or\u00E7amentos");
-		mnOramentos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		mnOramentos.setVisible(orcamento.isVisualizar());
-		menuBar.add(mnOramentos);
-
-		mntmNovo = new JMenuItem("Novo");
-		mntmNovo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				EditFormOrcamento ef = new EditFormOrcamento();
-				ef.setLocationRelativeTo(null);
-				ef.setVisible(true);
-
-			}
-		});
-		mntmNovo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		mntmNovo.setVisible(orcamento.isCadastrar());
-		mnOramentos.add(mntmNovo);
-
-		mntmBuscar_2 = new JMenuItem("Buscar");
-		mntmBuscar_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				BuscarOrcamentos bo = new BuscarOrcamentos();
-				bo.setVisible(true);
-			}
-		});
-		mntmBuscar_2.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		mnOramentos.add(mntmBuscar_2);
-		menuBar.add(JMEventos);
-
-		mntmCadastrar = new JMenuItem("Novo");
-		mntmCadastrar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		mntmCadastrar
-				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0));
-		mntmCadastrar.setVisible(eventos.isCadastrar());
-		JMEventos.add(mntmCadastrar);
-
-		mntmBuscar = new JMenuItem("Buscar");
-		mntmBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		mntmBuscar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
-		JMEventos.add(mntmBuscar);
-
-		// MENU LEMBRETES
-		JMenu JMLemb = new JMenu("Lembretes");
-		JMLemb.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		// permissão de visualização dos lembretes
-		JMLemb.setVisible(lembretes.isVisualizar());
-		menuBar.add(JMLemb);
-
-		JMILembCad = new JMenuItem("Novo");
-		JMILembCad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMILembCad.setAccelerator(KeyStroke
-				.getKeyStroke(KeyEvent.VK_PAGE_UP, 0));
-		JMILembCad.addActionListener(this);
-		// permissão de cadastrdo dos lembretes
-		JMILembCad.setVisible(lembretes.isCadastrar());
-		JMLemb.add(JMILembCad);
-
-		JMILembBuscar = new JMenuItem("Buscar");
-		JMILembBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		JMILembBuscar.setAccelerator(KeyStroke.getKeyStroke(
-				KeyEvent.VK_PAGE_DOWN, 0));
-		JMILembBuscar.addActionListener(this);
-		JMLemb.add(JMILembBuscar);
 
 		// MENU FINANCEIRO
 		JMenu JMFin = new JMenu("Financeiro");

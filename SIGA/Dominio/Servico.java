@@ -31,6 +31,8 @@ public class Servico implements Serializable {
 	@Column
 	private String nome;
 	@Column
+	private String descricao;
+	@Column
 	private BigDecimal valorservico;	
 	@Column
 	@Enumerated(EnumType.STRING)
@@ -65,6 +67,14 @@ public class Servico implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public boolean isAtivo() {

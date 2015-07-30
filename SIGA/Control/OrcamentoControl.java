@@ -72,20 +72,19 @@ public class OrcamentoControl {
 		return _itemRepository.findByTipo(tipoItem);
 	}
 
-	public void buscarEventoItens(Evento evento) {
-		List<Item> itens = _itemRepository.findAll(true);	
-
-		for (Item item : itens) {			
-			evento.addItem(new EventoItem(evento, item));
-		}
-		
-	}
+//	public void buscarEventoItens(Evento evento) {
+//		List<Item> itens = _itemRepository.findAll(true);	
+//
+//		for (Item item : itens) {			
+//			evento.addItem(new EventoItem(evento, item));
+//		}
+//		
+//	}
 
 	public void buscarServicos(Evento evento) {
 		List<Servico> servicos = _servicoRepository.findAll(true);
 		
-		for (Servico servico : servicos) {
-			
+		for (Servico servico : servicos) {			
 			evento.addServico(new EventoServico(evento, servico));
 		}
 		
