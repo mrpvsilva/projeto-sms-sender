@@ -29,23 +29,14 @@ public class GerarRelatorio {
 		case ORCAMENTO_FORMATURA:
 			path = GerarRelatorio.class
 					.getResourceAsStream("/Relatorios/Orcamento_Formatura_.jasper");
-			//report =   JasperCompileManager.compileReport(path);
+			
 			report =(JasperReport) JRLoader.loadObject(path); 
 			print = JasperFillManager
 					.fillReport(report, parametros, connection);
 
 			break;
 
-		// case "Dia":
-		// path = GerarRelatorio.class
-		// .getResourceAsStream("/relatorios/vendasdia.jrxml");
-		// report = JasperCompileManager.compileReport(path);
-
-		// print = JasperFillManager
-		// .fillReport(report, null, new JRBeanCollectionDataSource(
-		// db.Vendas.buscarVendasDia()));
-
-		// break;
+		
 
 		}
 
