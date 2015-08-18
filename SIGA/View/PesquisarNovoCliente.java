@@ -19,12 +19,8 @@ import javax.swing.ImageIcon;
 
 import Control.OrcamentoControl;
 import Dominio.Cliente;
-import Dominio.ClienteEvento;
-import Dominio.Evento;
 import Extra.Extras;
 import Extra.Mascaras;
-import TableModels.DefaultTableModel;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;

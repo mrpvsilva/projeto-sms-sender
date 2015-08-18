@@ -81,7 +81,8 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		Clientes = PermissoesManager.buscarPermissao(Modulos.Clientes);
 		setResizable(false);
 		setModal(true);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(BuscarClientes.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				BuscarClientes.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		setTitle("SIGA - buscar clientes");
 		setBounds(100, 100, 797, 700);
 		getContentPane().setLayout(new BorderLayout());
@@ -177,11 +178,12 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		panel.add(btnPesquisar);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setToolTipText("Clique duas vezes para visualizar o cliente");
+		scrollPane
+				.setToolTipText("Clique duas vezes para visualizar o cliente");
 		scrollPane.setBounds(10, 129, 765, 483);
 		contentPanel.add(scrollPane);
 
-		table = new JTable(modelClientes);		
+		table = new JTable(modelClientes);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -287,16 +289,9 @@ public class BuscarClientes extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent acao) {
 
 		if (acao.getSource() == JBCadCli) {
-
-			try {
-				EditFormCliente cdtcc = new EditFormCliente();
-				cdtcc.setVisible(true);
-				cdtcc.setLocationRelativeTo(null);
-			} catch (ParseException e) {
-				JOptionPane.showMessageDialog(null,
-						"Erro ao carregar a tela de cadastro de cliente",
-						"Error", JOptionPane.ERROR_MESSAGE);
-			}// final do try e catch
+			PesquisarNovoCliente cdtcc = new PesquisarNovoCliente();
+			cdtcc.setLocationRelativeTo(null);
+			cdtcc.setVisible(true);
 
 		}// final do botão cadastrar cliente
 
