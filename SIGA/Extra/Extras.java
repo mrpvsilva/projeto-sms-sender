@@ -11,7 +11,8 @@ public class Extras {
 
 	private static Usuario _usuarioLogado;
 	private static final int[] pesoCPF = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-	private static final int[] pesoCNPJ = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3,2 };
+	private static final int[] pesoCNPJ = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3,
+			2 };
 
 	public static Usuario getUsuarioLogado() {
 		return _usuarioLogado;
@@ -103,7 +104,7 @@ public class Extras {
 		return fone.replace("(", "").replace(")", "").replace("-", "").trim();
 	}
 
-	public static String FormatDate(Date date,String format) {
+	public static String FormatDate(Date date, String format) {
 		return new SimpleDateFormat(format).format(date);
 	}
 
@@ -117,21 +118,31 @@ public class Extras {
 		return soma > 9 ? 0 : soma;
 	}
 
-	public static boolean isValidCPF(String cpf) {
-		cpf = cpf.replace(".", "").replace("/", "").replace("-", "");
-		if ((cpf == null) || (cpf.length() != 11))
+	public static boolean validarCPFCNPJ(String cpfCnpj) {
+
+		if ((cpfCnpj == null))
 			return false;
 
+		cpfCnpj = cpfCnpj.replace(".", "").replace("/", "").replace("-", "").replace(" ", "");
+
+		if (cpfCnpj.length() == 11)
+			return isValidCPF(cpfCnpj);
+
+		if (cpfCnpj.length() == 14)
+			return isValidCNPJ(cpfCnpj);
+
+		return false;
+
+	}
+
+	private static boolean isValidCPF(String cpf) {
 		Integer digito1 = calcularDigito(cpf.substring(0, 9), pesoCPF);
 		Integer digito2 = calcularDigito(cpf.substring(0, 9) + digito1, pesoCPF);
 		return cpf.equals(cpf.substring(0, 9) + digito1.toString()
 				+ digito2.toString());
 	}
 
-	public static boolean isValidCNPJ(String cnpj) {
-		cnpj = cnpj.replace(".", "").replace("/", "").replace("-", "");
-		if ((cnpj == null) || (cnpj.length() != 14))
-			return false;
+	private static boolean isValidCNPJ(String cnpj) {
 
 		Integer digito1 = calcularDigito(cnpj.substring(0, 12), pesoCNPJ);
 		Integer digito2 = calcularDigito(cnpj.substring(0, 12) + digito1,
@@ -141,7 +152,13 @@ public class Extras {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(Extras.FormatDDDBD("91981231126"));
-		System.out.println(Extras.FormatNumeroBD("91981231126"));
+		System.out.println("deve ser false: "+validarCPFCNPJ(null));
+		System.out.println("deve ser false: "+validarCPFCNPJ(""));
+		System.out.println("deve ser false: "+validarCPFCNPJ("123"));
+		System.out.println("deve ser false: "+validarCPFCNPJ("125369874444444444"));
+		System.out.println("deve ser false: "+validarCPFCNPJ("859.058.362-73"));
+		System.out.println("deve ser true: "+validarCPFCNPJ("859.058.362-72"));
+		System.out.println("deve ser false: "+validarCPFCNPJ("15.274.758/0001-93"));
+		//System.out.println(Extras.FormatNumeroBD("91981231126"));
 	}
 }

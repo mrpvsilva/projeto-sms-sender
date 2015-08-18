@@ -107,6 +107,29 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		start();
 	}
 
+	/** Contrutor usado pela tela de principal e de busca de clientes */
+	public EditFormCliente(String cpfcnpjcliente, boolean isCNPJ)
+			throws ParseException {
+		cliente = new Cliente();
+		start();
+
+		if (isCNPJ) {
+			try {
+				cpfcnpj.setFormatterFactory(new DefaultFormatterFactory(
+						new MaskFormatter(Mascaras.maskCnpj)));
+				cpfcnpj.setText(cpfcnpjcliente);
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} else {
+			cpfcnpj.setValue(cpfcnpjcliente);
+		}
+		cpfcnpj.setEnabled(false);
+		chckbxCnpj.setSelected(isCNPJ);
+		chckbxCnpj.setEnabled(false);
+	}
+
 	/** Contrutor usado pela tela de adicionar cliente ao evento */
 	public EditFormCliente(Evento evento,
 			DefaultTableModel<ClienteEvento> modelCliente)
@@ -491,8 +514,8 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		email.setText(cliente.getEmail());
 		datanascimento.setValue(new SimpleDateFormat("dd/MM/yyyy")
 				.format(cliente.getDatanascimento()));
-		
-		chckbxCnpj.setSelected(cliente.getCpfCnpj().length()==11);
+
+		chckbxCnpj.setSelected(cliente.getCpfCnpj().length() == 11);
 		Endereco e = cliente.getEndereco();
 		endereco.setText(e.getEndereco());
 		cep.setText(e.getCep() + "");
