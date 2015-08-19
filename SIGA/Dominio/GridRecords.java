@@ -29,6 +29,10 @@ public class GridRecords<E> {
 	}
 
 	public int getPageIndex() {
+
+		if (getPageSize() == 1)
+			return 1;
+
 		return pageIndex;
 	}
 
@@ -42,6 +46,10 @@ public class GridRecords<E> {
 
 	public void setRecordsCount(int recordsCount) {
 		this.recordsCount = recordsCount;
+	}
+
+	public boolean isEmptyRecords() {
+		return lista.size() == 0;
 	}
 
 }
