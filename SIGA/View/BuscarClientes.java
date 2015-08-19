@@ -39,6 +39,8 @@ import Util.PermissoesManager;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class BuscarClientes extends JDialog implements ActionListener {
 
@@ -228,6 +230,12 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		JButton btnIn = new JButton("");
 		btnIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+
+				int index = Integer.parseInt(pageIndex.getText());
+
+				if (index == 1)
+					return;
+
 				pageIndex.setText("1");
 				pesquisarClientes();
 			}
@@ -241,8 +249,13 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		JButton btnBackc = new JButton("");
 		btnBackc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int pi = Integer.parseInt(pageIndex.getText()) - 1;
-				pageIndex.setText(pi == 0 ? 1 + "" : pi + "");
+				int index = Integer.parseInt(pageIndex.getText());
+
+				if (index == 1)
+					return;
+				index--;
+				System.out.println(index);
+				pageIndex.setText(index < 1 ? "1" : index + "");
 				pesquisarClientes();
 
 			}
@@ -271,9 +284,15 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		JButton btnForward = new JButton("");
 		btnForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int pi = Integer.parseInt(pageIndex.getText()) + 1;
-				pageIndex.setText(pi > gridRecord.getPageSize() ? gridRecord
-						.getPageSize() + "" : pi + "");
+				int index = Integer.parseInt(pageIndex.getText());
+
+				if (index == gridRecord.getPageSize())
+					return;
+
+				index++;
+
+				pageIndex.setText(index > gridRecord.getPageSize() ? gridRecord
+						.getPageSize() + "" : index + "");
 				pesquisarClientes();
 			}
 		});
@@ -285,7 +304,13 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		JButton btnFim = new JButton("");
 		btnFim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int index = Integer.parseInt(pageIndex.getText());
+
+				if (index == gridRecord.getPageSize())
+					return;
+
 				pageIndex.setText(gridRecord.getPageSize() + "");
+				pesquisarClientes();
 			}
 		});
 		btnFim.setIcon(new ImageIcon(BuscarClientes.class
@@ -294,6 +319,11 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		pagination.add(btnFim);
 
 		recordCount = new JComboBox();
+		recordCount.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				pesquisarClientes();
+			}
+		});
 		recordCount.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		recordCount.setModel(new DefaultComboBoxModel(new String[] { "1", "10",
 				"20", "30", "50", "100" }));
@@ -366,12 +396,9 @@ public class BuscarClientes extends JDialog implements ActionListener {
 				.getSelectedItem().toString()));
 		controller._listarTodos(txt, campo, gridRecord);
 		modelClientes.setLinhas(gridRecord.getLista());
+		pageIndex.setText(gridRecord.getPageIndex() + "");
 		totalRecord.setText(gridRecord.getPageSize() + "");
-
-		if (modelClientes.getRowCount() == 0)
-			emptyList.setVisible(true);
-		else
-			emptyList.setVisible(false);
+		emptyList.setVisible(gridRecord.isEmptyRecords());
 
 	}
 
