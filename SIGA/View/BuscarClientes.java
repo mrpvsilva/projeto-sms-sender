@@ -30,11 +30,15 @@ import javax.swing.border.TitledBorder;
 
 import Control.ClientesControl;
 import Dominio.Cliente;
+import Dominio.GridRecords;
 import Dominio.Permissao;
 import TableModels.ClienteTableModel;
 import TableModels.DefaultTableModel;
 import Util.Modulos;
 import Util.PermissoesManager;
+
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class BuscarClientes extends JDialog implements ActionListener {
 
@@ -58,6 +62,10 @@ public class BuscarClientes extends JDialog implements ActionListener {
 	private JButton btnAlterar;
 	private JRadioButton radiocpf, radionome;
 	private JLabel emptyList;
+	private JTextField pageIndex;
+	private GridRecords<Cliente> gridRecord;
+	private JComboBox recordCount;
+	private JLabel totalRecord;
 
 	/**
 	 * Launch the application.
@@ -84,7 +92,7 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				BuscarClientes.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		setTitle("SIGA - buscar clientes");
-		setBounds(100, 100, 797, 700);
+		setBounds(100, 100, 797, 729);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -109,7 +117,7 @@ public class BuscarClientes extends JDialog implements ActionListener {
 			public void keyReleased(KeyEvent e) {
 
 				if (e.getKeyCode() == 10)
-					pesquisar();
+					pesquisarClientes();
 				else
 					modelClientes.clear();
 			}
@@ -163,12 +171,12 @@ public class BuscarClientes extends JDialog implements ActionListener {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == 10)
-					pesquisar();
+					pesquisarClientes();
 			}
 		});
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				pesquisar();
+				pesquisarClientes();
 			}
 		});
 		btnPesquisar.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -210,6 +218,50 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		emptyList.setFont(new Font("Tahoma", Font.BOLD, 13));
 		emptyList.setBounds(561, 615, 214, 15);
 		contentPanel.add(emptyList);
+
+		JPanel pagination = new JPanel();
+		pagination.setBounds(73, 615, 503, 40);
+		contentPanel.add(pagination);
+
+		JButton btnIn = new JButton("");
+		btnIn.setIcon(new ImageIcon(BuscarClientes.class
+				.getResource("/Img/back.png")));
+		btnIn.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		pagination.add(btnIn);
+
+		JButton btnBackc = new JButton("");
+		btnBackc.setIcon(new ImageIcon(BuscarClientes.class
+				.getResource("/Img/rewind.png")));
+		btnBackc.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		pagination.add(btnBackc);
+
+		pageIndex = new JTextField();
+		pageIndex.setText("1");
+		pageIndex.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		pagination.add(pageIndex);
+		pageIndex.setColumns(1);
+
+		totalRecord = new JLabel("de 2");
+		totalRecord.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		pagination.add(totalRecord);
+
+		JButton btnForward = new JButton("");
+		btnForward.setIcon(new ImageIcon(BuscarClientes.class
+				.getResource("/Img/forwind.png")));
+		btnForward.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		pagination.add(btnForward);
+
+		JButton btnFim = new JButton("");
+		btnFim.setIcon(new ImageIcon(BuscarClientes.class
+				.getResource("/Img/forward.png")));
+		btnFim.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		pagination.add(btnFim);
+
+		recordCount = new JComboBox();
+		recordCount.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		recordCount.setModel(new DefaultComboBoxModel(new String[] {"1", "10",
+				"15", "20", "25", "50" }));
+		pagination.add(recordCount);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -260,30 +312,54 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		btnAlterar.setVisible(Clientes.isAlterar());
 		JBSair.setMnemonic(KeyEvent.VK_Q);
 		buttonPane.add(JBSair);
+		pesquisarClientes();
 
 	}
 
-	private void pesquisar() {
+	private void pesquisarClientes() {
+		if (gridRecord == null)
+			gridRecord = new GridRecords<Cliente>();
 
 		String txt = pesquisa.getText();
 		String campo = radiocpf.isSelected() ? "cpfcnpj"
 				: radiorg.isSelected() ? "rg"
 						: radionome.isSelected() ? "nomecompleto" : "";
-		if (txt.length() > 0) {
-			modelClientes.setLinhas(controller.pesquisar(txt, campo));
-			System.out.println(modelClientes.getRowCount());
 
-			if (modelClientes.getRowCount() == 0)
-				emptyList.setVisible(true);
-			else
-				emptyList.setVisible(false);
+		gridRecord.setPageIndex(Integer.parseInt(pageIndex.getText()));
+		gridRecord.setRecordsCount(Integer.parseInt(recordCount
+				.getSelectedItem().toString()));
+		controller._listarTodos(txt, campo, gridRecord);
+		modelClientes.setLinhas(gridRecord.getLista());
+		totalRecord.setText(gridRecord.totalRecords() + "");
 
-		} else {
-			modelClientes.clear();
+		if (modelClientes.getRowCount() == 0)
+			emptyList.setVisible(true);
+		else
 			emptyList.setVisible(false);
-		}
 
 	}
+
+//	private void pesquisar() {
+//
+//		String txt = pesquisa.getText();
+//		String campo = radiocpf.isSelected() ? "cpfcnpj"
+//				: radiorg.isSelected() ? "rg"
+//						: radionome.isSelected() ? "nomecompleto" : "";
+//		if (txt.length() > 0) {
+//			modelClientes.setLinhas(controller.pesquisar(txt, campo));
+//			System.out.println(modelClientes.getRowCount());
+//
+//			if (modelClientes.getRowCount() == 0)
+//				emptyList.setVisible(true);
+//			else
+//				emptyList.setVisible(false);
+//
+//		} else {
+//			modelClientes.clear();
+//			emptyList.setVisible(false);
+//		}
+//
+//	}
 
 	@Override
 	public void actionPerformed(ActionEvent acao) {

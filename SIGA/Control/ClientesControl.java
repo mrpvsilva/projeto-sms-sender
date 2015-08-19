@@ -2,7 +2,9 @@ package Control;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import Dominio.Cliente;
+import Dominio.GridRecords;
 import Interfaces.IClienteRepository;
 import Model.ClientesModel;
 import Repositories.ClienteRepository;
@@ -21,6 +23,16 @@ public class ClientesControl {
 
 	public List<Cliente> listarTodos() {
 		return clientes.findAll();
+	}
+
+	public void _listarTodos(String valor, String campo,
+			GridRecords<Cliente> grid) {
+		grid.setLista(clientes.findAll(valor, campo, grid.getPageIndex(),
+				grid.getRecordsCount()));
+	}
+
+	public int countClientes() {
+		return clientes.countCliente();
 	}
 
 	public boolean cadastrar(Cliente cliente) {
