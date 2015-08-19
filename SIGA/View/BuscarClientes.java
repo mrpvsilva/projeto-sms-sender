@@ -66,6 +66,8 @@ public class BuscarClientes extends JDialog implements ActionListener {
 	private GridRecords<Cliente> gridRecord;
 	private JComboBox recordCount;
 	private JLabel totalRecord;
+	private JLabel lblPg;
+	private JLabel lblDe;
 
 	/**
 	 * Launch the application.
@@ -224,16 +226,34 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		contentPanel.add(pagination);
 
 		JButton btnIn = new JButton("");
+		btnIn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				pageIndex.setText("1");
+				pesquisarClientes();
+			}
+		});
 		btnIn.setIcon(new ImageIcon(BuscarClientes.class
 				.getResource("/Img/back.png")));
+		btnIn.setSize(10, 10);
 		btnIn.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		pagination.add(btnIn);
 
 		JButton btnBackc = new JButton("");
+		btnBackc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int pi = Integer.parseInt(pageIndex.getText()) - 1;
+				pageIndex.setText(pi == 0 ? 1 + "" : pi + "");
+				pesquisarClientes();
+
+			}
+		});
 		btnBackc.setIcon(new ImageIcon(BuscarClientes.class
 				.getResource("/Img/rewind.png")));
 		btnBackc.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		pagination.add(btnBackc);
+
+		lblPg = new JLabel("P\u00E1g.");
+		pagination.add(lblPg);
 
 		pageIndex = new JTextField();
 		pageIndex.setText("1");
@@ -241,17 +261,33 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		pagination.add(pageIndex);
 		pageIndex.setColumns(1);
 
+		lblDe = new JLabel("de");
+		pagination.add(lblDe);
+
 		totalRecord = new JLabel("de 2");
 		totalRecord.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		pagination.add(totalRecord);
 
 		JButton btnForward = new JButton("");
+		btnForward.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int pi = Integer.parseInt(pageIndex.getText()) + 1;
+				pageIndex.setText(pi > gridRecord.getPageSize() ? gridRecord
+						.getPageSize() + "" : pi + "");
+				pesquisarClientes();
+			}
+		});
 		btnForward.setIcon(new ImageIcon(BuscarClientes.class
 				.getResource("/Img/forwind.png")));
 		btnForward.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		pagination.add(btnForward);
 
 		JButton btnFim = new JButton("");
+		btnFim.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pageIndex.setText(gridRecord.getPageSize() + "");
+			}
+		});
 		btnFim.setIcon(new ImageIcon(BuscarClientes.class
 				.getResource("/Img/forward.png")));
 		btnFim.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -259,8 +295,8 @@ public class BuscarClientes extends JDialog implements ActionListener {
 
 		recordCount = new JComboBox();
 		recordCount.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		recordCount.setModel(new DefaultComboBoxModel(new String[] {"1", "10",
-				"15", "20", "25", "50" }));
+		recordCount.setModel(new DefaultComboBoxModel(new String[] { "1", "10",
+				"20", "30", "50", "100" }));
 		pagination.add(recordCount);
 
 		JPanel buttonPane = new JPanel();
@@ -330,7 +366,7 @@ public class BuscarClientes extends JDialog implements ActionListener {
 				.getSelectedItem().toString()));
 		controller._listarTodos(txt, campo, gridRecord);
 		modelClientes.setLinhas(gridRecord.getLista());
-		totalRecord.setText(gridRecord.totalRecords() + "");
+		totalRecord.setText(gridRecord.getPageSize() + "");
 
 		if (modelClientes.getRowCount() == 0)
 			emptyList.setVisible(true);
@@ -339,27 +375,27 @@ public class BuscarClientes extends JDialog implements ActionListener {
 
 	}
 
-//	private void pesquisar() {
-//
-//		String txt = pesquisa.getText();
-//		String campo = radiocpf.isSelected() ? "cpfcnpj"
-//				: radiorg.isSelected() ? "rg"
-//						: radionome.isSelected() ? "nomecompleto" : "";
-//		if (txt.length() > 0) {
-//			modelClientes.setLinhas(controller.pesquisar(txt, campo));
-//			System.out.println(modelClientes.getRowCount());
-//
-//			if (modelClientes.getRowCount() == 0)
-//				emptyList.setVisible(true);
-//			else
-//				emptyList.setVisible(false);
-//
-//		} else {
-//			modelClientes.clear();
-//			emptyList.setVisible(false);
-//		}
-//
-//	}
+	// private void pesquisar() {
+	//
+	// String txt = pesquisa.getText();
+	// String campo = radiocpf.isSelected() ? "cpfcnpj"
+	// : radiorg.isSelected() ? "rg"
+	// : radionome.isSelected() ? "nomecompleto" : "";
+	// if (txt.length() > 0) {
+	// modelClientes.setLinhas(controller.pesquisar(txt, campo));
+	// System.out.println(modelClientes.getRowCount());
+	//
+	// if (modelClientes.getRowCount() == 0)
+	// emptyList.setVisible(true);
+	// else
+	// emptyList.setVisible(false);
+	//
+	// } else {
+	// modelClientes.clear();
+	// emptyList.setVisible(false);
+	// }
+	//
+	// }
 
 	@Override
 	public void actionPerformed(ActionEvent acao) {

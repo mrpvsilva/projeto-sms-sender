@@ -12,7 +12,7 @@ public interface IClienteRepository extends IRepositoryBase<Cliente> {
 
 	public Cliente find(String cpfcnpj);
 	
-	public int countCliente();
+	public long countCliente(String valor, String campo);
 	
 	
 

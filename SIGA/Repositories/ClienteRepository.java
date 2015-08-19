@@ -64,12 +64,30 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 	}
 
 	@Override
-	public int countCliente() {
-
+	public long countCliente(String valor, String campo) {
 		try {
-			return entityManager.createQuery("select c from Cliente c")
-					.getResultList().size();
+			CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 
+			Root<Cliente> cliente = cq.from(Cliente.class);
+
+			cq.select(cb.count(cliente));
+
+			List<Predicate> condicoes = new ArrayList<Predicate>();
+
+			if (!valor.isEmpty()) {
+				Path<String> c = cliente.get(campo);
+				condicoes.add(cb.like(c, "%" + valor + "%"));
+			}
+			Predicate[] condicoesComoArray = condicoes
+					.toArray(new Predicate[condicoes.size()]);
+			Predicate todasCondicoes = cb.and(condicoesComoArray);
+			cq.where(todasCondicoes);
+
+			return entityManager.createQuery(cq).getSingleResult();
+
+		} catch (NoResultException ex) {
+			return 0;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return 0;
@@ -79,7 +97,6 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 	@Override
 	public List<Cliente> findAll(String valor, String campo, int page, int total) {
 		try {
-			
 
 			CriteriaBuilder criteriaBuilder = entityManager
 					.getCriteriaBuilder();
