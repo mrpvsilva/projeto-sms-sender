@@ -7,11 +7,7 @@ public class GridRecords<E> {
 	private List<E> lista;
 	private int pageIndex;
 	private int recordsCount;
-
-	public GridRecords() {
-		pageIndex = 1;
-		recordsCount = 10;
-	}
+	private long totalRecords;
 
 	public List<E> getLista() {
 		return lista;
@@ -21,14 +17,15 @@ public class GridRecords<E> {
 		this.lista = lista;
 	}
 
-	public int totalRecords() {
-		return lista.size();
-	}
-
 	public int getPageSize() {
 
-		// (int)Math.Ceiling((float)totalRecords / (float)request.RecordsCount)
-		return (int) Math.ceil((double) totalRecords() / (double) recordsCount);
+		int t = (int) Math.ceil((double) totalRecords / (double) recordsCount);
+
+		return t;
+	}
+
+	public void setTotalRecords(long totalRecords) {
+		this.totalRecords = totalRecords;
 	}
 
 	public int getPageIndex() {

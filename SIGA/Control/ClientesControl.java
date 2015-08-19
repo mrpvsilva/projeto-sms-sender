@@ -27,12 +27,10 @@ public class ClientesControl {
 
 	public void _listarTodos(String valor, String campo,
 			GridRecords<Cliente> grid) {
+
+		grid.setTotalRecords(clientes.countCliente(valor, campo));
 		grid.setLista(clientes.findAll(valor, campo, grid.getPageIndex(),
 				grid.getRecordsCount()));
-	}
-
-	public int countClientes() {
-		return clientes.countCliente();
 	}
 
 	public boolean cadastrar(Cliente cliente) {
