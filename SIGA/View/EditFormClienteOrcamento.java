@@ -98,7 +98,7 @@ public class EditFormClienteOrcamento extends JDialog implements ActionListener 
 	public EditFormClienteOrcamento(String cpfcnpjcliente, boolean isCNPJ)
 			throws ParseException {
 		cliente = new Cliente();
-		start();		
+		start();
 	}
 
 	/** Contrutor usado pela tela de adicionar cliente ao evento */
@@ -303,49 +303,32 @@ public class EditFormClienteOrcamento extends JDialog implements ActionListener 
 
 		if (acao.getSource() == salvar) {
 
-			if (nomeCompleto.getText().length() < 1) {
-				Validate.validarJTextField(nomeCompleto,
-						msg_erro_dado_pessoais,
-						"Campo nome completo é obrigatório.");
-				return;
-			} else if (modeltelefone.getLinhas().isEmpty()) {
-				tabbedPane.setSelectedIndex(1);
-				Validate.validarJTable(table, msg_erro_telefones,
-						"Telefone é obrigatório.");
-				return;
-			}
+			cliente.setNomeCompleto(nomeCompleto.getText());
+			cliente.setEmail(email.getText());
+			cliente.setTelefones(modeltelefone.getLinhas());
 
-			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
-					"Deseja salvar o cliente?")) {
+			boolean sucesso = false;
 
-				cliente.setNomeCompleto(nomeCompleto.getText());
-
-				cliente.setTelefones(modeltelefone.getLinhas());
-
-				boolean sucesso = false;
-
-				if (!editando) {
-					sucesso = controller.cadastrar(cliente);
-					if (_modelCliente != null) {
-						_modelCliente.add(cliente);
-					}
-					if (_evento != null) {
-						_modelClienteEvento.add(new ClienteEvento(_evento,
-								cliente));
-					}
-
-				} else {
-					sucesso = controller.atualizar(cliente);
+			if (!editando) {
+				sucesso = controller.cadastrar(cliente);
+				if (_modelCliente != null) {
+					_modelCliente.add(cliente);
+				}
+				if (_evento != null) {
+					_modelClienteEvento
+							.add(new ClienteEvento(_evento, cliente));
 				}
 
-				String txt = sucesso ? "Cliente salvo com sucesso"
-						: "Falha ao salvar o cliente";
+			} else {
+				sucesso = controller.atualizar(cliente);
+			}
 
-				JOptionPane.showMessageDialog(null, txt, "",
-						sucesso ? JOptionPane.INFORMATION_MESSAGE
-								: JOptionPane.WARNING_MESSAGE);
+			String txt = sucesso ? "Cliente salvo com sucesso"
+					: "Falha ao salvar o cliente";
 
-			}// final da confirmação
+			JOptionPane.showMessageDialog(null, txt, "",
+					sucesso ? JOptionPane.INFORMATION_MESSAGE
+							: JOptionPane.WARNING_MESSAGE);
 
 		}// final do botão cadastrar usuário
 

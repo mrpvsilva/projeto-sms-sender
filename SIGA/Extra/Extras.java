@@ -3,6 +3,8 @@ package Extra;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Dominio.Usuario;
 
@@ -123,7 +125,8 @@ public class Extras {
 		if ((cpfCnpj == null))
 			return false;
 
-		cpfCnpj = cpfCnpj.replace(".", "").replace("/", "").replace("-", "").replace(" ", "");
+		cpfCnpj = cpfCnpj.replace(".", "").replace("/", "").replace("-", "")
+				.replace(" ", "");
 
 		if (cpfCnpj.length() == 11)
 			return isValidCPF(cpfCnpj);
@@ -151,14 +154,40 @@ public class Extras {
 				+ digito2.toString());
 	}
 
+	public static boolean isValidEmail(String email) {
+
+		if (email==null || email.isEmpty())
+			return false;
+
+		return Pattern
+				.compile(
+						"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+								+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
+				.matcher(email).matches();
+
+	}
+
 	public static void main(String[] args) {
-		System.out.println("deve ser false: "+validarCPFCNPJ(null));
-		System.out.println("deve ser false: "+validarCPFCNPJ(""));
-		System.out.println("deve ser false: "+validarCPFCNPJ("123"));
-		System.out.println("deve ser false: "+validarCPFCNPJ("125369874444444444"));
-		System.out.println("deve ser false: "+validarCPFCNPJ("859.058.362-73"));
-		System.out.println("deve ser true: "+validarCPFCNPJ("859.058.362-72"));
-		System.out.println("deve ser false: "+validarCPFCNPJ("15.274.758/0001-93"));
-		//System.out.println(Extras.FormatNumeroBD("91981231126"));
+		// System.out.println("deve ser false: " + validarCPFCNPJ(null));
+		// System.out.println("deve ser false: " + validarCPFCNPJ(""));
+		// System.out.println("deve ser false: " + validarCPFCNPJ("123"));
+		// System.out.println("deve ser false: "
+		// + validarCPFCNPJ("125369874444444444"));
+		// System.out.println("deve ser false: "
+		// + validarCPFCNPJ("859.058.362-73"));
+		// System.out
+		// .println("deve ser true: " + validarCPFCNPJ("859.058.362-72"));
+		// System.out.println("deve ser false: "
+		// + validarCPFCNPJ("15.274.758/0001-93"));
+		System.out.println("deve ser false: " + Extras.isValidEmail(""));
+		System.out.println("deve ser false: " + Extras.isValidEmail(null));
+		System.out.println("deve ser false: " + Extras.isValidEmail("sfsfdsf"));
+		System.out.println("deve ser false: " + Extras.isValidEmail("@"));
+		System.out.println("deve ser false: " + Extras.isValidEmail("adddaa@"));
+		System.out.println("deve ser false: " + Extras.isValidEmail("adddaa@fdsfsfs"));
+		System.out.println("deve ser false: " + Extras.isValidEmail("adddaa@fdsfsfs."));
+		System.out.println("deve ser true: " + Extras.isValidEmail("adddaa@fdsfsfs.com"));
+		System.out.println("deve ser true: " + Extras.isValidEmail("mrpvsilva@gmail.com.br"));
+
 	}
 }
