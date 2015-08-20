@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import Util.Operadoras;
+
 @Table(name = "clienteOrcamento")
 public class ClienteOrcamento implements Serializable {
 
@@ -30,7 +32,7 @@ public class ClienteOrcamento implements Serializable {
 	private int telefone;
 	@Column
 	@Enumerated(EnumType.STRING)
-	private Operadora operadora;
+	private Operadoras operadora;
 	@Column
 	private String email;
 	@ManyToOne
@@ -69,11 +71,11 @@ public class ClienteOrcamento implements Serializable {
 		this.telefone = telefone;
 	}
 
-	public Operadora getOperadora() {
+	public Operadoras getOperadora() {
 		return operadora;
 	}
 
-	public void setOperadora(Operadora operadora) {
+	public void setOperadora(Operadoras operadora) {
 		this.operadora = operadora;
 	}
 
