@@ -20,9 +20,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import Extra.Extras;
+
 @Entity
 @Table(name = "clientes")
-public class Cliente implements Serializable {
+public class Cliente implements Serializable, Validate {
 
 	private static final long serialVersionUID = 1L;
 
@@ -53,17 +55,11 @@ public class Cliente implements Serializable {
 	@JoinTable(name = "enderecosclientes", joinColumns = { @JoinColumn(name = "idcliente", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idendereco", referencedColumnName = "id") })
 	private Endereco endereco;
 
-	@OneToMany(mappedBy = "cliente")	
+	@OneToMany(mappedBy = "cliente")
 	private List<ClienteEvento> eventos;
 
-	// @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch =
-	// FetchType.EAGER)
-	// private List<ClienteItemExtra> itensExtras;
-
 	public Cliente() {
-
 		setEndereco(new EnderecoCliente());
-
 	}
 
 	public Cliente(String nomeCompleto, String email, String rg,
@@ -77,7 +73,6 @@ public class Cliente implements Serializable {
 		setResponsavel(responsavel);
 		setEndereco(endereco);
 		setNomeGuerraMilitar(nomeGuerraMilitar);
-
 	}
 
 	public long getId() {
@@ -174,6 +169,25 @@ public class Cliente implements Serializable {
 
 	public void setEventos(List<ClienteEvento> eventos) {
 		this.eventos = eventos;
+	}
+
+	@Override
+	public ModelState modelState() {
+
+		if (nomecompleto.isEmpty())
+			return new ModelState("Nome completo é um campo obrigatorio");
+		if (cpfcnpj.isEmpty())
+			return new ModelState("CPF/CNPJ é um campo obrigatorio");
+		if (!Extras.validarCPFCNPJ(cpfcnpj))
+			return new ModelState("CPF/CNPJ é inválido");
+		if (rg.isEmpty())
+			return new ModelState("RG é um campo obrigatorio");
+		if (!email.isEmpty() && !Extras.isValidEmail(email))
+			return new ModelState("Email é inválido");
+		if (telefones.size() == 0)
+			return new ModelState("Cliente deve possuir ao menos um telefone");
+
+		return new ModelState();
 	}
 
 	// public void addEvento(Evento evento) {
