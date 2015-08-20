@@ -2,6 +2,6 @@ package Util;
 
 public enum Operadoras {
 	
-	SELECIONE,TODOS,CLARO,FIXO,OI,TIM,VIVO
+	SELECIONE,CLARO,FIXO,OI,TIM,VIVO
 
 }
