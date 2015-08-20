@@ -29,6 +29,7 @@
 		<class>Dominio.Item</class>
 		<class>Dominio.EventoServico</class>
 		<class>Dominio.ClienteEvento</class>
+		<class>Dominio.ClienteOrcamento</class>
 
 
 
