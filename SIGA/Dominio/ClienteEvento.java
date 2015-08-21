@@ -2,6 +2,7 @@ package Dominio;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class ClienteEvento implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "idevento", referencedColumnName = "id")
 	private Evento evento;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idcliente", referencedColumnName = "id")
 	private Cliente cliente;
 	@Column

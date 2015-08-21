@@ -8,15 +8,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,25 +21,17 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
 
-import Control.ClientesControl;
 import Dominio.Cliente;
 import Dominio.ClienteEvento;
-import Dominio.Endereco;
 import Dominio.Evento;
+import Dominio.ModelState;
 import Dominio.Telefone;
 import Dominio.TelefoneCliente;
-import Extra.Extras;
-import Extra.Mascaras;
-import Extra.Validacoes;
 import TableModels.DefaultTableModel;
 import TableModels.TelefoneTableModel;
-import Util.Validate;
 
 import javax.swing.JTabbedPane;
-import javax.swing.JCheckBox;
 
 public class EditFormClienteOrcamento extends JDialog implements ActionListener {
 
@@ -54,25 +40,27 @@ public class EditFormClienteOrcamento extends JDialog implements ActionListener 
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JButton salvar;
+	private JButton cadastrar;
 	private JTextField nomeCompleto;
 	private JButton sair;
 	private JPanel aba_telefones;
 	private JTable table;
 	private DefaultTableModel<Telefone> modeltelefone;
 	private JTextField email;
-	private Cliente cliente;
-	private ClientesControl controller;
-	private boolean editando;
+	private ClienteEvento cliente;
+	// private ClientesControl controller;
 	private JLabel msg_erro_dado_pessoais;
 	private JLabel msg_erro_telefones;
 	private JButton add_telefone;
 	private JTabbedPane tabbedPane;
 	private JButton remove_telefone;
 	private JButton edit_telefone;
-	private DefaultTableModel<Cliente> _modelCliente;
+	// private DefaultTableModel<Cliente> _modelCliente;
 	private DefaultTableModel<ClienteEvento> _modelClienteEvento;
-	private Evento _evento;
+	private int linha;
+	private JButton atualizar;
+
+	// private Evento _evento;
 
 	/**
 	 * Launch the application.
@@ -87,45 +75,46 @@ public class EditFormClienteOrcamento extends JDialog implements ActionListener 
 		}
 	}
 
-	/** Contrutor chamada para o cadastro do cliente */
-	public EditFormClienteOrcamento() throws ParseException {
-		cliente = new Cliente();
+	/** Contrutor chamada para teste do cadastro do cliente no orçamento */
+	public EditFormClienteOrcamento() {
+		cliente = new ClienteEvento(new Evento(), new Cliente());
 		modeltelefone = new TelefoneTableModel();
 		start();
+		atualizar.setVisible(false);
 	}
 
-	/** Contrutor usado pela tela de principal e de busca de clientes */
-	public EditFormClienteOrcamento(String cpfcnpjcliente, boolean isCNPJ)
-			throws ParseException {
-		cliente = new Cliente();
-		start();
-	}
+	// /** Contrutor usado pela tela de principal e de busca de clientes */
+	// public EditFormClienteOrcamento(String cpfcnpjcliente, boolean isCNPJ)
+	// throws ParseException {
+	// cliente = new Cliente();
+	// start();
+	// }
 
-	/** Contrutor usado pela tela de adicionar cliente ao evento */
+	/** Contrutor usado para cadastrar do cliente no orçamento */
 	public EditFormClienteOrcamento(Evento evento,
-			DefaultTableModel<ClienteEvento> modelCliente)
-			throws ParseException {
-		cliente = new Cliente();
+			DefaultTableModel<ClienteEvento> modelCliente) {
+		cliente = new ClienteEvento(evento, new Cliente());
 		_modelClienteEvento = modelCliente;
-		_evento = evento;
-		modeltelefone = new TelefoneTableModel();
 		start();
+		atualizar.setVisible(false);
 	}
 
-	/** Construtor chamado para edição e visualização do cliente */
-	public EditFormClienteOrcamento(boolean editando, Cliente cliente)
-			throws ParseException {
-		this.editando = editando;
+	/** Construtor chamado para edição do cliente do orçamento */
+	public EditFormClienteOrcamento(int linha,
+			DefaultTableModel<ClienteEvento> modelCliente, ClienteEvento cliente) {
+
 		this.cliente = cliente;
-		modeltelefone = new TelefoneTableModel(cliente.getTelefones());
+		this._modelClienteEvento = modelCliente;
+		this.linha = linha;
 		start();
+		cadastrar.setVisible(false);
 		carregarCampos();
-		if (!editando)
-			visualizando();
+
 	}
 
-	public void start() throws ParseException {
-		controller = new ClientesControl();
+	public void start() {
+
+		// controller = new ClientesControl();
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
@@ -188,7 +177,7 @@ public class EditFormClienteOrcamento extends JDialog implements ActionListener 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 25, 534, 122);
 		aba_telefones.add(scrollPane);
-
+		modeltelefone = new TelefoneTableModel();
 		table = new JTable(modeltelefone);
 		scrollPane.setViewportView(table);
 
@@ -219,6 +208,7 @@ public class EditFormClienteOrcamento extends JDialog implements ActionListener 
 					EditFormTelefone ef = new EditFormTelefone(linha, t,
 							modeltelefone);
 					ef.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+					ef.setLocationRelativeTo(null);
 					ef.setVisible(true);
 				} else {
 					JOptionPane
@@ -260,14 +250,20 @@ public class EditFormClienteOrcamento extends JDialog implements ActionListener 
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				salvar = new JButton("Salvar");
-				salvar.addActionListener(this);
-				salvar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				salvar.setIcon(new ImageIcon(EditFormClienteOrcamento.class
+				cadastrar = new JButton("Salvar");
+				cadastrar.addActionListener(this);
+
+				atualizar = new JButton("Salvar");
+				atualizar.setIcon(new ImageIcon(EditFormClienteOrcamento.class
 						.getResource("/Img/Confirmar.png")));
-				buttonPane.add(salvar);
-				salvar.setMnemonic(KeyEvent.VK_S);
-				getRootPane().setDefaultButton(salvar);
+				atualizar.addActionListener(this);
+				buttonPane.add(atualizar);
+				cadastrar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				cadastrar.setIcon(new ImageIcon(EditFormClienteOrcamento.class
+						.getResource("/Img/Confirmar.png")));
+				buttonPane.add(cadastrar);
+				cadastrar.setMnemonic(KeyEvent.VK_S);
+				getRootPane().setDefaultButton(cadastrar);
 			}
 
 			sair = new JButton("Sair");
@@ -278,59 +274,55 @@ public class EditFormClienteOrcamento extends JDialog implements ActionListener 
 			sair.setMnemonic(KeyEvent.VK_Q);
 			buttonPane.add(sair);
 		}
-	}
-
-	private void visualizando() {
-		boolean enabled = editando;
-		nomeCompleto.setEditable(enabled);
-		email.setEditable(enabled);
-		salvar.setVisible(enabled);
-		add_telefone.setVisible(enabled);
-		edit_telefone.setVisible(enabled);
-		remove_telefone.setVisible(enabled);
-
-		getRootPane().setDefaultButton(sair);
 
 	}
 
 	private void carregarCampos() {
-		nomeCompleto.setText(cliente.getNomeCompleto());
-		email.setText(cliente.getEmail());
+		nomeCompleto.setText(cliente.getCliente().getNomeCompleto());
+		email.setText(cliente.getCliente().getEmail());
+		modeltelefone.setLinhas(cliente.getCliente().getTelefones());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent acao) {
 
-		if (acao.getSource() == salvar) {
+		if (acao.getSource() == cadastrar) {
 
-			cliente.setNomeCompleto(nomeCompleto.getText());
-			cliente.setEmail(email.getText());
-			cliente.setTelefones(modeltelefone.getLinhas());
+			cliente.getCliente().setNomeCompleto(nomeCompleto.getText());
+			cliente.getCliente().setEmail(email.getText());
+			cliente.getCliente().setTelefones(modeltelefone.getLinhas());
+			cliente.getCliente().setCpfCnpjClienteOrcamento();
 
-			boolean sucesso = false;
+			ModelState state = cliente.getCliente().modelState();
 
-			if (!editando) {
-				sucesso = controller.cadastrar(cliente);
-				if (_modelCliente != null) {
-					_modelCliente.add(cliente);
-				}
-				if (_evento != null) {
-					_modelClienteEvento
-							.add(new ClienteEvento(_evento, cliente));
-				}
+			if (state.isValid()) {
+				_modelClienteEvento.add(cliente);
+				this.dispose();
 
 			} else {
-				sucesso = controller.atualizar(cliente);
+				JOptionPane.showMessageDialog(null, state.MensagemErro(),
+						"Atenção", JOptionPane.WARNING_MESSAGE);
 			}
 
-			String txt = sucesso ? "Cliente salvo com sucesso"
-					: "Falha ao salvar o cliente";
+		}
 
-			JOptionPane.showMessageDialog(null, txt, "",
-					sucesso ? JOptionPane.INFORMATION_MESSAGE
-							: JOptionPane.WARNING_MESSAGE);
+		if (acao.getSource() == atualizar) {
 
-		}// final do botão cadastrar usuário
+			cliente.getCliente().setNomeCompleto(nomeCompleto.getText());
+			cliente.getCliente().setEmail(email.getText());
+			cliente.getCliente().setTelefones(modeltelefone.getLinhas());
+
+			ModelState state = cliente.getCliente().modelState();
+
+			if (state.isValid()) {
+				_modelClienteEvento.update(linha, cliente);
+				this.dispose();
+			} else {
+				JOptionPane.showMessageDialog(null, state.MensagemErro(),
+						"Atenção", JOptionPane.WARNING_MESSAGE);
+			}
+
+		}
 
 		if (acao.getSource() == sair) {
 			this.dispose();
