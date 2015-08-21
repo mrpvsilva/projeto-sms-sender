@@ -67,7 +67,8 @@ public class AddClienteEvento extends JDialog {
 	public AddClienteEvento(Evento evento,
 			DefaultTableModel<ClienteEvento> modelCliente) {
 		setTitle("Busca de cliente");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(AddClienteEvento.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				AddClienteEvento.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		_evento = evento;
 		_modelCliente = modelCliente;
@@ -199,17 +200,13 @@ public class AddClienteEvento extends JDialog {
 				novo = new JButton("Novo");
 				novo.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						try {
-							AddClienteEvento.this.dispose();
-							EditFormCliente efc = new EditFormCliente(_evento,
-									_modelCliente);
-							efc.setLocationRelativeTo(null);
-							efc.setVisible(true);
 
-						} catch (ParseException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						AddClienteEvento.this.dispose();
+						EditFormClienteOrcamento efc = new EditFormClienteOrcamento(
+								_evento, _modelCliente);
+						efc.setLocationRelativeTo(null);
+						efc.setVisible(true);
+
 					}
 				});
 				novo.setVisible(false);

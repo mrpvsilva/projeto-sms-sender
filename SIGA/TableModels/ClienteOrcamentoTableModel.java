@@ -5,23 +5,23 @@ import java.util.List;
 import Dominio.ClienteEvento;
 import Dominio.Telefone;
 
-public class ClienteEventoTableModel extends DefaultTableModel<ClienteEvento> {
+public class ClienteOrcamentoTableModel extends DefaultTableModel<ClienteEvento> {
 
-	private final static String[] colunas = new String[] { "Nome", "CPF",
-			"Telefone", "Nº conv. extras" };
+	private final static String[] colunas = new String[] { "Nome", "Telefone",
+			"Email" };
 
-	public ClienteEventoTableModel() {
+	public ClienteOrcamentoTableModel() {
 		super(colunas);
 
 	}
 
-	public ClienteEventoTableModel(List<ClienteEvento> linhas) {
+	public ClienteOrcamentoTableModel(List<ClienteEvento> linhas) {
 		super(colunas, linhas);
 	}
 
 	@Override
 	public boolean isCellEditable(int row, int col) {
-		return (col == 3);
+		return false;
 	}
 
 	@Override
@@ -32,29 +32,15 @@ public class ClienteEventoTableModel extends DefaultTableModel<ClienteEvento> {
 		case 0:
 			return c.getCliente().getNomeCompleto();
 		case 1:
-			return c.getCliente().getCpfCnpj();
-		case 2:
 			Telefone t = c.getCliente().getTelefones().get(0);
 			return "(" + t.getDdd() + ")" + t.getNumero() + " "
 					+ t.getOperadora();
-		case 3:
-			return c.getConvidadosextras();
+		case 2:
+			return c.getCliente().getEmail();
 
 		default:
 			return null;
 		}
-
-	}
-
-	@Override
-	public void setValueAt(Object value, int row, int col) {
-
-		if (col == 3) {
-			int qtd = (int) value;
-			linhas.get(row).setConvidadosextras(qtd);
-		}
-
-		fireTableDataChanged();
 
 	}
 

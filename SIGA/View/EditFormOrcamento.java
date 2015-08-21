@@ -15,13 +15,11 @@ import javax.swing.event.TableModelListener;
 import Control.OrcamentoControl;
 import Dominio.ClienteEvento;
 import Dominio.Evento;
-import Dominio.EventoItem;
 import Dominio.EventoServico;
 import Dominio.StatusEvento;
 import Dominio.TiposEvento;
-import TableModels.ClienteEventoTableModel;
+import TableModels.ClienteOrcamentoTableModel;
 import TableModels.DefaultTableModel;
-import TableModels.EventoItemTableModel;
 import TableModels.EventoServicoTableModel;
 import Util.DateTimePicker;
 import Util.EditFormType;
@@ -70,11 +68,11 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	private JButton cancelar;
 
 	private JTable table_clientes;
-	//private JTable table_itens;
+	// private JTable table_itens;
 	private JTable table_servicos;
 
 	private DefaultTableModel<ClienteEvento> modelClientes;
-	//private DefaultTableModel<EventoItem> modelItens;
+	// private DefaultTableModel<EventoItem> modelItens;
 	private DefaultTableModel<EventoServico> modelServicos;
 	private JButton addCliente;
 	private JTextField totalEvento;
@@ -111,12 +109,13 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	 * Construtor para cadastro de orçamento apartir da tela principal
 	 */
 	public EditFormOrcamento() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(EditFormOrcamento.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				EditFormOrcamento.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		_evento = new Evento(StatusEvento.ORCAMENTO);
 
 		_orcamentoControl = new OrcamentoControl();
 		_orcamentoControl.buscarServicos(_evento);
-		//_orcamentoControl.buscarEventoItens(_evento);
+		// _orcamentoControl.buscarEventoItens(_evento);
 
 		_tipo = EditFormType.cadastrar;
 		start();
@@ -130,7 +129,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		_evento = new Evento(StatusEvento.ORCAMENTO);
 		_orcamentoControl = new OrcamentoControl();
 		_orcamentoControl.buscarServicos(_evento);
-		//_orcamentoControl.buscarEventoItens(_evento);
+		// _orcamentoControl.buscarEventoItens(_evento);
 
 		_tipo = EditFormType.cadastrar;
 		start();
@@ -230,7 +229,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 				public void keyReleased(KeyEvent k) {
 					if (!nConvidadosCliente.getText().isEmpty()) {
 						calcularConvidados();
-						//calcularSubTotalItens();
+						// calcularSubTotalItens();
 						calcularSubTotalServicos();
 						calcularTotalCliente();
 
@@ -271,7 +270,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			public void keyReleased(KeyEvent k) {
 				if (!nClientes.getText().isEmpty()) {
 					calcularConvidados();
-					//calcularSubTotalItens();
+					// calcularSubTotalItens();
 					calcularSubTotalServicos();
 					calcularTotalCliente();
 
@@ -360,7 +359,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			scrollPane.setBounds(10, 11, 826, 350);
 			tab_clientes.add(scrollPane);
 
-			modelClientes = new ClienteEventoTableModel();
+			modelClientes = new ClienteOrcamentoTableModel();
 
 			table_clientes = new JTable(modelClientes);
 			table_clientes.getModel().addTableModelListener(
@@ -379,29 +378,78 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 					});
 
 			table_clientes.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			table_clientes.getColumnModel().getColumn(3).setMinWidth(0);
-			table_clientes.getColumnModel().getColumn(3).setMaxWidth(0);
 
 			scrollPane.setViewportView(table_clientes);
 
+			erro_clientes = new JLabel("");
+			erro_clientes.setForeground(Color.RED);
+			erro_clientes.setFont(new Font("Tahoma", Font.BOLD, 13));
+			erro_clientes.setBounds(68, 430, 520, 23);
+			tab_clientes.add(erro_clientes);
+
+			JPanel panel_1 = new JPanel();
+			FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
+			flowLayout.setHgap(1);
+			flowLayout.setAlignment(FlowLayout.LEFT);
+			panel_1.setBounds(10, 364, 205, 34);
+			tab_clientes.add(panel_1);
+
+			JButton button_1 = new JButton("");
+			button_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					AddClienteEvento adc = new AddClienteEvento(_evento,
+							modelClientes);
+					adc.setLocationRelativeTo(null);
+					adc.setVisible(true);
+				}
+			});
+			button_1.setToolTipText("Pesquisar cliente");
+			button_1.setIcon(new ImageIcon(EditFormOrcamento.class
+					.getResource("/Img/Procurar.png")));
+			panel_1.add(button_1);
+
 			addCliente = new JButton("");
+			panel_1.add(addCliente);
 			addCliente.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
-					AddClienteEvento ace = new AddClienteEvento(_evento,
-							modelClientes);
-					ace.setLocationRelativeTo(null);
-					ace.setVisible(true);
+					EditFormClienteOrcamento efc = new EditFormClienteOrcamento(
+							_evento, modelClientes);
+					efc.setLocationRelativeTo(null);
+					efc.setVisible(true);
 
 				}
 			});
 			addCliente.setIcon(new ImageIcon(EditFormOrcamento.class
 					.getResource("/Img/plus.png")));
 			addCliente.setToolTipText("Adicionar cliente");
-			addCliente.setBounds(10, 372, 23, 23);
-			tab_clientes.add(addCliente);
+
+			JButton button = new JButton("");
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int linha = table_clientes.getSelectedRow();
+
+					if (linha > -1) {
+						ClienteEvento cliente = modelClientes.find(linha);
+						EditFormClienteOrcamento efc = new EditFormClienteOrcamento(
+								linha, modelClientes, cliente);
+						efc.setLocationRelativeTo(null);
+						efc.setVisible(true);
+
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Selecione um cliente para alterar", "Atenção",
+								JOptionPane.WARNING_MESSAGE);
+					}
+				}
+			});
+			button.setToolTipText("Alterar cliente");
+			panel_1.add(button);
+			button.setIcon(new ImageIcon(EditFormOrcamento.class
+					.getResource("/Img/edit.png")));
 
 			removeCliente = new JButton("");
+			panel_1.add(removeCliente);
 			removeCliente.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int linha = table_clientes.getSelectedRow();
@@ -416,27 +464,19 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 				}
 			});
 			removeCliente.setIcon(new ImageIcon(EditFormOrcamento.class
-					.getResource("/Img/close16.png")));
+					.getResource("/Img/trash.png")));
 			removeCliente.setToolTipText("Remover cliente");
-			removeCliente.setBounds(35, 372, 23, 23);
-			tab_clientes.add(removeCliente);
-
-			erro_clientes = new JLabel("");
-			erro_clientes.setForeground(Color.RED);
-			erro_clientes.setFont(new Font("Tahoma", Font.BOLD, 13));
-			erro_clientes.setBounds(68, 430, 520, 23);
-			tab_clientes.add(erro_clientes);
 		}
 
 		JPanel tab_itens = new JPanel();
-		//tabbedPane.addTab("Itens", null, tab_itens, null);
+		// tabbedPane.addTab("Itens", null, tab_itens, null);
 		tab_itens.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 826, 350);
 		tab_itens.add(scrollPane);
-		//modelItens = new EventoItemTableModel();
-		//table_itens = new JTable(modelItens);
+		// modelItens = new EventoItemTableModel();
+		// table_itens = new JTable(modelItens);
 		// table_itens.getColumnModel().getColumn(3).setMinWidth(0);
 		// table_itens.getColumnModel().getColumn(3).setMaxWidth(0);
 		// table_itens.getModel().addTableModelListener(new TableModelListener()
@@ -454,40 +494,40 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 		//
 		// scrollPane.setViewportView(table_itens);
 
-//		JButton addItem = new JButton("");
-//		addItem.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				AddItemEvento aie = new AddItemEvento(modelItens, _evento);
-//				aie.setLocationRelativeTo(null);
-//				aie.setVisible(true);
-//			}
-//		});
-//		addItem.setIcon(new ImageIcon(EditFormOrcamento.class
-//				.getResource("/Img/plus.png")));
-//		addItem.setToolTipText("Adicionar item");
-//		addItem.setBounds(10, 372, 23, 23);
-//		tab_itens.add(addItem);
+		// JButton addItem = new JButton("");
+		// addItem.addActionListener(new ActionListener() {
+		// public void actionPerformed(ActionEvent arg0) {
+		// AddItemEvento aie = new AddItemEvento(modelItens, _evento);
+		// aie.setLocationRelativeTo(null);
+		// aie.setVisible(true);
+		// }
+		// });
+		// addItem.setIcon(new ImageIcon(EditFormOrcamento.class
+		// .getResource("/Img/plus.png")));
+		// addItem.setToolTipText("Adicionar item");
+		// addItem.setBounds(10, 372, 23, 23);
+		// tab_itens.add(addItem);
 
-//		JButton removeItem = new JButton("");
-//		removeItem.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				int linha = table_itens.getSelectedRow();
-//
-//				if (linha > -1) {
-//					modelItens.remove(linha);
-//				} else {
-//					JOptionPane.showMessageDialog(null,
-//							"Selecione um item para remover", "Atenção",
-//							JOptionPane.WARNING_MESSAGE);
-//				}
-//
-//			}
-//		});
-//		removeItem.setIcon(new ImageIcon(EditFormOrcamento.class
-//				.getResource("/Img/close16.png")));
-//		removeItem.setToolTipText("Remover item");
-//		removeItem.setBounds(35, 372, 23, 23);
-//		tab_itens.add(removeItem);
+		// JButton removeItem = new JButton("");
+		// removeItem.addActionListener(new ActionListener() {
+		// public void actionPerformed(ActionEvent arg0) {
+		// int linha = table_itens.getSelectedRow();
+		//
+		// if (linha > -1) {
+		// modelItens.remove(linha);
+		// } else {
+		// JOptionPane.showMessageDialog(null,
+		// "Selecione um item para remover", "Atenção",
+		// JOptionPane.WARNING_MESSAGE);
+		// }
+		//
+		// }
+		// });
+		// removeItem.setIcon(new ImageIcon(EditFormOrcamento.class
+		// .getResource("/Img/close16.png")));
+		// removeItem.setToolTipText("Remover item");
+		// removeItem.setBounds(35, 372, 23, 23);
+		// tab_itens.add(removeItem);
 
 		// erro_itens = new JLabel("");
 		// erro_itens.setForeground(Color.RED);
@@ -595,11 +635,12 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			{
 				cancelar = new JButton("Cancelar");
 				cancelar.addActionListener(this);
-				
+
 				JButton btnGerarOramento = new JButton("Gerar or\u00E7amento");
 				btnGerarOramento.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						_orcamentoControl.gerarOrcamento(_evento.getId(), TiposEvento.FORMATURA);
+						_orcamentoControl.gerarOrcamento(_evento.getId(),
+								TiposEvento.FORMATURA);
 					}
 				});
 				buttonPane.add(btnGerarOramento);
@@ -637,7 +678,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 			_evento.setNumeroConvidadosCliente(Integer
 					.parseInt(nConvidadosCliente.getText()));
 			_evento.setClientes(modelClientes.getLinhas());
-			//_evento.setItens(modelItens.getLinhas());
+			// _evento.setItens(modelItens.getLinhas());
 			_evento.setServicos(modelServicos.getLinhas());
 
 			boolean success = false;
@@ -673,9 +714,9 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	private void calcularTotal() {
 		BigDecimal total = new BigDecimal(0);
 
-//		for (EventoItem ei : modelItens.getLinhas()) {
-//			total = total.add(ei.getSubtotal());
-//		}
+		// for (EventoItem ei : modelItens.getLinhas()) {
+		// total = total.add(ei.getSubtotal());
+		// }
 
 		for (EventoServico es : modelServicos.getLinhas()) {
 			total = total.add(es.getSubTotal());
@@ -733,24 +774,24 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 	 * Calcula o subtotal dos itens baseado no nmero de clientes e no total de
 	 * convidados.
 	 */
-//	private void calcularSubTotalItens() {
-//		String clientes = nClientes.getText();
-//		String convidadosDoCliente = nConvidadosCliente.getText();
-//
-//		if (!clientes.isEmpty() || !convidadosDoCliente.isEmpty()) {
-//
-//			int nclientes = Integer.parseInt(clientes);
-//			int nconvidados = Integer.parseInt(convidadosDoCliente);
-//
-//			for (EventoItem e : modelItens.getLinhas()) {
-//				e.atualizarSubTotal(nclientes, nconvidados);
-//			}
-//
-//			modelItens.AtualizarModel();
-//
-//		}
-//
-//	}
+	// private void calcularSubTotalItens() {
+	// String clientes = nClientes.getText();
+	// String convidadosDoCliente = nConvidadosCliente.getText();
+	//
+	// if (!clientes.isEmpty() || !convidadosDoCliente.isEmpty()) {
+	//
+	// int nclientes = Integer.parseInt(clientes);
+	// int nconvidados = Integer.parseInt(convidadosDoCliente);
+	//
+	// for (EventoItem e : modelItens.getLinhas()) {
+	// e.atualizarSubTotal(nclientes, nconvidados);
+	// }
+	//
+	// modelItens.AtualizarModel();
+	//
+	// }
+	//
+	// }
 
 	/**
 	 * Calcula o subtotal dos servicos baseado no número de clientes e no total
@@ -785,7 +826,7 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 
 		// totalconvidados.setText(_evento.getTotalConvidados() + "");
 		modelClientes.setLinhas(_evento.getClientes());
-		//modelItens.setLinhas(_evento.getItens());
+		// modelItens.setLinhas(_evento.getItens());
 		modelServicos.setLinhas(_evento.getServicos());
 
 		// } else {
@@ -842,11 +883,11 @@ public class EditFormOrcamento extends JDialog implements ActionListener {
 
 			return false;
 		}
-//		if (modelItens.getLinhas().size() == 0) {
-//			tabbedPane.setSelectedIndex(1);
-//			erro_itens.setText("Adicione ao menos um item");
-//			return false;
-//		}
+		// if (modelItens.getLinhas().size() == 0) {
+		// tabbedPane.setSelectedIndex(1);
+		// erro_itens.setText("Adicione ao menos um item");
+		// return false;
+		// }
 		if (modelServicos.getLinhas().size() == 0) {
 			tabbedPane.setSelectedIndex(2);
 			erro_servicos.setText("Adicione ao menos um serviço");

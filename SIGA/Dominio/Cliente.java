@@ -19,6 +19,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import java.util.UUID;
 
 import Extra.Extras;
 
@@ -58,8 +60,11 @@ public class Cliente implements Serializable, Validate {
 	@OneToMany(mappedBy = "cliente")
 	private List<ClienteEvento> eventos;
 
+	@Transient
+	private boolean orcamento;
+
 	public Cliente() {
-		setEndereco(new EnderecoCliente());
+		orcamento = false;
 	}
 
 	public Cliente(String nomeCompleto, String email, String rg,
@@ -73,6 +78,7 @@ public class Cliente implements Serializable, Validate {
 		setResponsavel(responsavel);
 		setEndereco(endereco);
 		setNomeGuerraMilitar(nomeGuerraMilitar);
+		orcamento = false;
 	}
 
 	public long getId() {
@@ -171,57 +177,34 @@ public class Cliente implements Serializable, Validate {
 		this.eventos = eventos;
 	}
 
+	public void setCpfCnpjClienteOrcamento() {
+
+		cpfcnpj = UUID.randomUUID().toString().replace("-", "").toUpperCase()
+				.substring(0, 14);
+		rg = cpfcnpj;
+		orcamento = true;
+
+	}
+
 	@Override
 	public ModelState modelState() {
 
 		if (nomecompleto.isEmpty())
 			return new ModelState("Nome completo é um campo obrigatorio");
-		if (cpfcnpj.isEmpty())
+		if (!orcamento && cpfcnpj.isEmpty())
 			return new ModelState("CPF/CNPJ é um campo obrigatorio");
-		if (!Extras.validarCPFCNPJ(cpfcnpj))
+		if (!orcamento && !Extras.validarCPFCNPJ(cpfcnpj))
 			return new ModelState("CPF/CNPJ é inválido");
-		if (rg.isEmpty())
+		if (!orcamento && rg.isEmpty())
 			return new ModelState("RG é um campo obrigatorio");
-		if (!email.isEmpty() && !Extras.isValidEmail(email))
+		if (email.isEmpty())
+			return new ModelState("Email é um campo obrigatorio ");
+		if (!Extras.isValidEmail(email))
 			return new ModelState("Email é inválido");
 		if (telefones.size() == 0)
 			return new ModelState("Cliente deve possuir ao menos um telefone");
 
 		return new ModelState();
 	}
-
-	// public void addEvento(Evento evento) {
-	// if (eventos == null) {
-	// eventos = new ArrayList<Evento>();
-	// }
-	//
-	// eventos.add(evento);
-	// }
-	//
-	// public List<Evento> getEventos() {
-	// return eventos;
-	// }
-	//
-	// public void setEventos(List<Evento> eventos) {
-	// this.eventos = eventos;
-	// }
-	//
-	// public void addItemExtra(Item ItemExtra, Evento evento, int quantidade) {
-	// if (itensExtras == null) {
-	// itensExtras = new ArrayList<ClienteItemExtra>();
-	// }
-	//
-	// ClienteItemExtra cie = new ClienteItemExtra(this, evento, ItemExtra,
-	// quantidade);
-	// itensExtras.add(cie);
-	// }
-
-	// public List<ClienteItemExtra> getItensExtras() {
-	// return itensExtras;
-	// }
-	//
-	// public void setItensExtras(List<ClienteItemExtra> itensExtras) {
-	// this.itensExtras = itensExtras;
-	// }
 
 }
