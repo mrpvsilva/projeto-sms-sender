@@ -540,12 +540,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		cliente.setEndereco(e);
 		cliente.setTelefones(modeltelefone.getLinhas());
 	}
-
-	private void limparTela() {
-		cliente = new Cliente();
-		carregarCampos();
-
-	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent acao) {
