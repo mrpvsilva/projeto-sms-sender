@@ -54,8 +54,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JButton salvar;
-	private JButton JBNovoCad;
+	private JButton salvarSair;
 	private JTextField nomeCompleto;
 	private JTextField nomeResponsavel;
 	private JTextField rg;
@@ -86,6 +85,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 	private DefaultTableModel<ClienteEvento> _modelClienteEvento;
 	private Evento _evento;
 	private JCheckBox chckbxCnpj;
+	private JButton salvar;
 
 	/**
 	 * Launch the application.
@@ -103,7 +103,6 @@ public class EditFormCliente extends JDialog implements ActionListener {
 	/** Contrutor chamada para o cadastro do cliente */
 	public EditFormCliente() throws ParseException {
 		cliente = new Cliente();
-		modeltelefone = new TelefoneTableModel();
 		start();
 	}
 
@@ -112,7 +111,6 @@ public class EditFormCliente extends JDialog implements ActionListener {
 			throws ParseException {
 		cliente = new Cliente();
 		start();
-
 		if (isCNPJ) {
 			try {
 				cpfcnpj.setFormatterFactory(new DefaultFormatterFactory(
@@ -137,7 +135,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		cliente = new Cliente();
 		_modelClienteEvento = modelCliente;
 		_evento = evento;
-		modeltelefone = new TelefoneTableModel();
+
 		start();
 	}
 
@@ -146,14 +144,16 @@ public class EditFormCliente extends JDialog implements ActionListener {
 			throws ParseException {
 		this.editando = editando;
 		this.cliente = cliente;
-		modeltelefone = new TelefoneTableModel(cliente.getTelefones());
+
 		start();
+		modeltelefone.setLinhas(cliente.getTelefones());
 		carregarCampos();
 		if (!editando)
 			visualizando();
 	}
 
 	public void start() throws ParseException {
+		modeltelefone = new TelefoneTableModel();
 		controller = new ClientesControl();
 		setResizable(false);
 		setModal(true);
@@ -450,29 +450,19 @@ public class EditFormCliente extends JDialog implements ActionListener {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
+				salvarSair = new JButton("Salvar e sair");
+				salvarSair.addActionListener(this);
 				salvar = new JButton("Salvar");
 				salvar.addActionListener(this);
-				salvar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				salvar.setIcon(new ImageIcon(EditFormCliente.class
-						.getResource("/Img/Confirmar.png")));
 				buttonPane.add(salvar);
-				salvar.setMnemonic(KeyEvent.VK_S);
-				getRootPane().setDefaultButton(salvar);
-			}
-			{
-				JBNovoCad = new JButton("Novo");
-				JBNovoCad.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBNovoCad.setIcon(new ImageIcon(EditFormCliente.class
-						.getResource("/Img/window_new16.png")));
-				JBNovoCad.setMnemonic(KeyEvent.VK_N);
-				JBNovoCad.addActionListener(this);
-				buttonPane.add(JBNovoCad);
+				salvarSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				buttonPane.add(salvarSair);
+				salvarSair.setMnemonic(KeyEvent.VK_S);
+				getRootPane().setDefaultButton(salvarSair);
 			}
 
 			sair = new JButton("Sair");
 			sair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			sair.setIcon(new ImageIcon(EditFormCliente.class
-					.getResource("/Img/exit16.png")));
 			sair.addActionListener(this);
 			sair.setMnemonic(KeyEvent.VK_Q);
 			buttonPane.add(sair);
@@ -480,6 +470,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 	}
 
 	private void visualizando() {
+
 		boolean enabled = editando;
 		nomeCompleto.setEditable(enabled);
 		nomeResponsavel.setEditable(enabled);
@@ -495,8 +486,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		cidade.setEditable(enabled);
 		complemento.setEditable(enabled);
 
-		salvar.setVisible(enabled);
-		JBNovoCad.setVisible(enabled);
+		salvarSair.setVisible(enabled);
 		add_telefone.setVisible(enabled);
 		edit_telefone.setVisible(enabled);
 		remove_telefone.setVisible(enabled);
@@ -525,117 +515,64 @@ public class EditFormCliente extends JDialog implements ActionListener {
 
 	}
 
+	private void getDados() {
+		cliente.setNomeCompleto(nomeCompleto.getText());
+		cliente.setResponsavel(nomeResponsavel.getText());
+		cliente.setRg(rg.getText());
+		cliente.setEmail(email.getText());
+		cliente.setCpfCnpj(Extras.FormatCnpjCpf(cpfcnpj.getValue().toString()));
+		cliente.setNomeGuerraMilitar(nomeguerra.getText());
+		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+		try {
+			Date date = formatter.parse(datanascimento.getText());
+			cliente.setDatanascimento(new Date(date.getTime()));
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+
+		Endereco e = cliente.getEndereco();
+		e.setEndereco(endereco.getText());
+		e.setCep(cep.getText());
+		e.setBairro(bairro.getText());
+		e.setCidade(cidade.getText());
+		e.setComplemento(complemento.getText());
+		cliente.setEndereco(e);
+		cliente.setTelefones(modeltelefone.getLinhas());
+	}
+
+	private void limparTela() {
+		cliente = new Cliente();
+		carregarCampos();
+
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent acao) {
 
-		if (acao.getSource() == salvar) {
+		if (acao.getSource() == salvarSair) {
+			getDados();
+			if (controller.cadastrar(cliente)) {
+				if (_modelCliente != null)
+					_modelCliente.add(cliente);
 
-			if (nomeCompleto.getText().length() < 1) {
-				Validate.validarJTextField(nomeCompleto,
-						msg_erro_dado_pessoais,
-						"Campo nome completo é obrigatório.");
-				return;
-			} else if (rg.getText().trim().length() < 1) {
-				Validate.validarJTextField(rg, msg_erro_dado_pessoais,
-						"Campo RG é obrigatório.");
-				return;
-			} else if (cpfcnpj.getValue() == null) {
-
-				Validate.validarJFormatTextField(cpfcnpj,
-						msg_erro_dado_pessoais, "Campo CPF é obrigatório.");
-				return;
-			} else if (!Validacoes.ValidaCpfCnpj(cpfcnpj.getValue().toString())) {
-
-				Validate.validarJFormatTextField(cpfcnpj,
-						msg_erro_dado_pessoais, "Campo CPF é inválido.");
-				return;
-			} else if (datanascimento.getValue() == null) {
-
-				Validate.validarJFormatTextField(datanascimento,
-						msg_erro_dado_pessoais,
-						"Campo Data de nascimento é obrigatório.");
-				return;
-			} else if (endereco.getText().length() < 1) {
-
-				Validate.validarJTextField(endereco, msg_erro_endereco,
-						"Campo Endereço é obrigatório.");
-				return;
-			} else if (cep.getText().length() < 1) {
-
-				Validate.validarJTextField(cep, msg_erro_endereco,
-						"Campo CEP é obrigatório.");
-				return;
-			} else if (bairro.getText().length() < 1) {
-
-				Validate.validarJTextField(bairro, msg_erro_endereco,
-						"Campo Bairro é obrigatório.");
-				return;
-			} else if (cidade.getText().length() < 1) {
-
-				Validate.validarJTextField(cidade, msg_erro_endereco,
-						"Campo Cidade é obrigatório.");
-				return;
-			} else if (modeltelefone.getLinhas().isEmpty()) {
-				tabbedPane.setSelectedIndex(1);
-				Validate.validarJTable(table, msg_erro_telefones,
-						"Telefone é obrigatório.");
-				return;
+				this.dispose();
 			}
 
-			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
-					"Deseja salvar o cliente?")) {
-
-				cliente.setNomeCompleto(nomeCompleto.getText());
-				cliente.setResponsavel(nomeResponsavel.getText());
-				cliente.setRg(rg.getText());
-				cliente.setEmail(email.getText());
-				cliente.setCpfCnpj(Extras.FormatCnpjCpf(cpfcnpj.getValue()
-						.toString()));
-				cliente.setNomeGuerraMilitar(nomeguerra.getText());
-				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
-				try {
-					Date date = formatter.parse(datanascimento.getText());
-					cliente.setDatanascimento(new Date(date.getTime()));
-				} catch (ParseException e1) {
-					e1.printStackTrace();
-				}
-
-				Endereco e = cliente.getEndereco();
-				e.setEndereco(endereco.getText());
-				e.setCep(Integer.parseInt(cep.getText()));
-				e.setBairro(bairro.getText());
-				e.setCidade(cidade.getText());
-				e.setComplemento(complemento.getText());
-				cliente.setEndereco(e);
-				cliente.setTelefones(modeltelefone.getLinhas());
-
-				boolean sucesso = false;
-
-				if (!editando) {
-					sucesso = controller.cadastrar(cliente);
-					if (_modelCliente != null) {
-						_modelCliente.add(cliente);
-					}
-					if (_evento != null) {
-						_modelClienteEvento.add(new ClienteEvento(_evento,
-								cliente));
-					}
-
-				} else {
-					sucesso = controller.atualizar(cliente);
-				}
-
-				String txt = sucesso ? "Cliente salvo com sucesso"
-						: "Falha ao salvar o cliente";
-
-				JOptionPane.showMessageDialog(null, txt, "",
-						sucesso ? JOptionPane.INFORMATION_MESSAGE
-								: JOptionPane.WARNING_MESSAGE);
-
-			}// final da confirmação
-
 		}// final do botão cadastrar usuário
+
+		if (acao.getSource() == salvar) {
+			getDados();
+			if (controller.cadastrar(cliente)) {
+				if (_modelCliente != null)
+					_modelCliente.add(cliente);
+
+				this.dispose();
+				PesquisarNovoCliente cdtcc = new PesquisarNovoCliente();
+				cdtcc.setLocationRelativeTo(null);
+				cdtcc.setVisible(true);
+			}
+		}
 
 		if (acao.getSource() == sair) {
 			this.dispose();

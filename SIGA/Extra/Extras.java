@@ -156,7 +156,7 @@ public class Extras {
 
 	public static boolean isValidEmail(String email) {
 
-		if (email==null || email.isEmpty())
+		if (email == null || email.isEmpty())
 			return false;
 
 		return Pattern
@@ -164,6 +164,16 @@ public class Extras {
 						"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 								+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
 				.matcher(email).matches();
+
+	}
+
+	public static boolean isValidaCep(String cep) {
+		if (cep.length() == 8) {
+
+			cep = cep.substring(0, 5) + "-" + cep.substring(5, 8);
+		}
+
+		return Pattern.compile("[0-9]{5}-[0-9]{3}").matcher(cep).matches();
 
 	}
 
@@ -184,10 +194,23 @@ public class Extras {
 		System.out.println("deve ser false: " + Extras.isValidEmail("sfsfdsf"));
 		System.out.println("deve ser false: " + Extras.isValidEmail("@"));
 		System.out.println("deve ser false: " + Extras.isValidEmail("adddaa@"));
-		System.out.println("deve ser false: " + Extras.isValidEmail("adddaa@fdsfsfs"));
-		System.out.println("deve ser false: " + Extras.isValidEmail("adddaa@fdsfsfs."));
-		System.out.println("deve ser true: " + Extras.isValidEmail("adddaa@fdsfsfs.com"));
-		System.out.println("deve ser true: " + Extras.isValidEmail("mrpvsilva@gmail.com.br"));
+		System.out.println("deve ser false: "
+				+ Extras.isValidEmail("adddaa@fdsfsfs"));
+		System.out.println("deve ser false: "
+				+ Extras.isValidEmail("adddaa@fdsfsfs."));
+		System.out.println("deve ser true: "
+				+ Extras.isValidEmail("adddaa@fdsfsfs.com"));
+		System.out.println("deve ser true: "
+				+ Extras.isValidEmail("mrpvsilva@gmail.com.br"));
+
+		System.out.println("deve ser false: "
+				+ Extras.isValidaCep("mrpvsilva@gmail.com.br"));
+
+		System.out.println("deve ser false: " + Extras.isValidaCep("35353"));
+
+		System.out
+				.println("deve ser false: " + Extras.isValidaCep("362632111"));
+		System.out.println("deve ser true: " + Extras.isValidaCep("67145280"));
 
 	}
 }

@@ -12,12 +12,14 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import Extra.Extras;
+
 @Entity(name = "Endereco_SINGLE_TABLE")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("ENDERECO")
 @Table(name = "enderecos")
-public abstract class Endereco {
+public abstract class Endereco implements Validate {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +29,7 @@ public abstract class Endereco {
 	@Column
 	private String bairro;
 	@Column
-	private int cep;
+	private String cep;
 	@Column
 	private String complemento;
 	@Column
@@ -57,11 +59,11 @@ public abstract class Endereco {
 		this.bairro = bairro;
 	}
 
-	public int getCep() {
+	public String getCep() {
 		return cep;
 	}
 
-	public void setCep(int cep) {
+	public void setCep(String cep) {
 		this.cep = cep;
 	}
 
@@ -79,6 +81,23 @@ public abstract class Endereco {
 
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
+	}
+
+	@Override
+	public ModelState modelState() {
+
+		if (endereco == null || endereco.isEmpty())
+			return new ModelState("O campo Endereço é obrigatório");
+		if (bairro == null || bairro.isEmpty())
+			return new ModelState("O campo Bairro é obrigatório");
+		if (cep == null || cep.isEmpty())
+			return new ModelState("O campo CEP é obrigatório");
+		if (!Extras.isValidaCep(cep))
+			return new ModelState("O campo CEP é inválido");
+		if (cidade == null || cidade.isEmpty())
+			return new ModelState("O campo Cidade é obrigatório");
+
+		return new ModelState();
 	}
 
 }
