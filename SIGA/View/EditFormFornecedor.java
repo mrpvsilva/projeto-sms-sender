@@ -36,7 +36,6 @@ import Dominio.Telefone;
 import Dominio.TelefoneFornecedor;
 import Extra.Extras;
 import Extra.Mascaras;
-import Extra.Validacoes;
 import TableModels.DefaultTableModel;
 import TableModels.TelefoneTableModel;
 import jmoneyfield.JMoneyField;
@@ -52,8 +51,8 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 	private JTextField JTFEmail;
 	private JTextField JTFEnd;
 	private JTextField JTFSite;
-	private JButton JBNovForn;
-	private JButton JBSalvForn;
+	private JButton salvarSair;
+	private JButton salvar;
 	private JTextField JFFRg;
 	private JFormattedTextField JFFCnpj;
 	private JComboBox JCBTpServ;
@@ -73,17 +72,19 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 	private JButton btnedittel;
 	private JButton btnremovetel;
 	private Fornecedor fornecedor;
-	private JButton JBSair;
+	private JButton sair;
 	private JLabel JLCnpj;
 	private JTextField cidade;
 	private JMoneyField valor;
+	private JButton atualizar;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			EditFormFornecedor dialog = new EditFormFornecedor(null, null);
+			EditFormFornecedor dialog = new EditFormFornecedor();
+			dialog.setLocationRelativeTo(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -92,20 +93,56 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 	}
 
 	/**
-	 * Create the dialog.
+	 * Construtor usado para teste da tela de cadastro/edição
 	 * 
-	 * @throws ParseException
+	 * */
+
+	public EditFormFornecedor() {
+		fornecedor = new Fornecedor();
+		start();
+		atualizar.setVisible(false);
+	}
+
+	/**
+	 * Construtor usado para cadastrar fornecedor pela tela de busca de
+	 * fornecedor
+	 * 
+	 * @param fornecedor
+	 * @param model
 	 */
+	public EditFormFornecedor(DefaultTableModel<Fornecedor> model) {
+		fornecedor = new Fornecedor();
+		forModel = model;
+		start();
+		atualizar.setVisible(false);
+	}
+
+	/**
+	 * Construtor usado para edição do fornecedor pela tela de busca do
+	 * fornecedor
+	 * 
+	 * @param fornecedor
+	 * @param model
+	 */
+
 	public EditFormFornecedor(Fornecedor fornecedor,
-			DefaultTableModel<Fornecedor> model) throws ParseException {
+			DefaultTableModel<Fornecedor> model) {
+		this.fornecedor = fornecedor;
+		forModel = model;
+		start();
+		salvar.setVisible(false);
+		salvarSair.setVisible(false);
+		preencherCampos();
+	}
+
+	private void start() {
 		setResizable(false);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(
 						EditFormFornecedor.class
 								.getResource("/Img/LOGO_LOGIN_GDA.png")));
-		this.forModel = model;
-		this.fornecedor = fornecedor;
+
 		_fornecedorControl = new FornecedoresControl();
 		setBounds(0, -20, 530, 421);
 		setTitle("SIGA  - Cadastrar fornecedor");
@@ -156,7 +193,12 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		contentPanel.add(JTFNome);
 		JTFNome.setColumns(10);
 
-		maskCnpj = new MaskFormatter(Mascaras.maskCnpj);
+		try {
+			maskCnpj = new MaskFormatter(Mascaras.maskCnpj);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		JFFCnpj = new JFormattedTextField(maskCnpj);
 		JFFCnpj.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JFFCnpj.setBounds(111, 36, 118, 20);
@@ -223,7 +265,12 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		lblCep.setBounds(321, 286, 46, 15);
 		contentPanel.add(lblCep);
 
-		maskCep = new MaskFormatter(Mascaras.maskCep);
+		try {
+			maskCep = new MaskFormatter(Mascaras.maskCep);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		JFFCep = new JFormattedTextField(maskCep);
 		JFFCep.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		JFFCep.setBounds(393, 283, 118, 20);
@@ -316,35 +363,32 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JBSalvForn = new JButton("Salvar");
-				JBSalvForn.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBSalvForn.setIcon(new ImageIcon(EditFormFornecedor.class
-						.getResource("/Img/Confirmar.png")));
-				JBSalvForn.addActionListener(this);
-				JBSalvForn.setMnemonic(KeyEvent.VK_S);
-				buttonPane.add(JBSalvForn);
-				getRootPane().setDefaultButton(JBSalvForn);
+				salvar = new JButton("Salvar");
+				salvar.setFont(new Font("Dialog", Font.BOLD, 13));
+				salvar.addActionListener(this);
+
+				atualizar = new JButton("Salvar");
+				atualizar.setFont(new Font("Dialog", Font.BOLD, 13));
+				buttonPane.add(atualizar);
+				salvar.setMnemonic(KeyEvent.VK_S);
+				buttonPane.add(salvar);
+				getRootPane().setDefaultButton(salvar);
 			}
 			{
-				JBNovForn = new JButton("Novo");
-				JBNovForn.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				JBNovForn.setIcon(new ImageIcon(EditFormFornecedor.class
-						.getResource("/Img/window_new16.png")));
-				JBNovForn.addActionListener(this);
-				JBNovForn.setMnemonic(KeyEvent.VK_N);
-				buttonPane.add(JBNovForn);
+				salvarSair = new JButton("Salvar e sair");
+				salvarSair.setFont(new Font("Dialog", Font.BOLD, 13));
+				salvarSair.addActionListener(this);
+				salvarSair.setMnemonic(KeyEvent.VK_N);
+				buttonPane.add(salvarSair);
 			}
 
-			JBSair = new JButton("Sair");
-			JBSair.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			JBSair.setIcon(new ImageIcon(EditFormFornecedor.class
-					.getResource("/Img/exit16.png")));
-			JBSair.addActionListener(this);
-			JBSair.setMnemonic(KeyEvent.VK_Q);
-			buttonPane.add(JBSair);
+			sair = new JButton("Sair");
+			sair.setFont(new Font("Dialog", Font.BOLD, 13));
+			sair.addActionListener(this);
+			sair.setMnemonic(KeyEvent.VK_Q);
+			buttonPane.add(sair);
 		}
 
-		preencherCampos();
 	}
 
 	@Override
@@ -382,83 +426,26 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 			}
 		}
 
-		if (acao.getSource() == JBSalvForn) {
-
-			if (JTFNome.getText().isEmpty()) // Valida Nome
-				JOptionPane.showMessageDialog(null, "Nome em branco.",
-						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-			else if (!Validacoes.ValidaCpfCnpj(JFFCnpj.getText())) // Valida
-																	// CpfCnpj
-				JOptionPane.showMessageDialog(null, "Cpf/Cnpj inválido.",
-						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-			else if (JFFRg.getText().trim().isEmpty()
-					&& JCBCpfMask.isSelected()) // Valida Rg
-				JOptionPane.showMessageDialog(null, "Rg em branco.",
-						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-			else if (telmodel.getRowCount() < 1)
-				JOptionPane.showMessageDialog(null,
-						"Adicione ao menos um telefone", "Erro ao cadastrar",
-						JOptionPane.ERROR_MESSAGE);
-			else if (JCBTpServ.getSelectedItem().toString().equals("SELECIONE"))
-				JOptionPane.showMessageDialog(null,
-						"Selecione um tipo de serviço.", "Erro ao cadastrar",
-						JOptionPane.ERROR_MESSAGE);
-			else if (JTFEmail.getText().trim().isEmpty()) // Valida Email
-				JOptionPane.showMessageDialog(null, "Email em branco.",
-						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-			else if (JTFEnd.getText().trim().isEmpty()) // Valida Endereço
-				JOptionPane.showMessageDialog(null, "Endereço em branco.",
-						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-			else if (cidade.getText().trim().isEmpty()) // Valida Endereço
-				JOptionPane.showMessageDialog(null, "Cidade em branco.",
-						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-			else if (JTFBairro.getText().trim().isEmpty()) // Valida Bairro
-				JOptionPane.showMessageDialog(null, "Bairro em branco.",
-						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-			else if (!Validacoes.ValidaCep(JFFCep.getText())) // Valida Cep
-				JOptionPane.showMessageDialog(null, "Cep inválido.",
-						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-			else if (JTFSite.getText().trim().isEmpty()) // Valida Site
-				JOptionPane.showMessageDialog(null, "Site em branco.",
-						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-			else {
-
-				if (fornecedor == null) {
-					cadastrar();
-				} else {
-					atualizar();
-				}
-
-				preencherCampos();
-
-			}
+		if (acao.getSource() == salvar) {
 
 		}
 
-		if (acao.getSource() == JBNovForn) {
-
-			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
-					"Deseja cadastrar um novo fornecedor?")) {
-
-				JTFNome.setText("");
-				JFFCnpj.setText("");
-				JFFRg.setText("");
-				JTFEmail.setText("");
-				JTFEnd.setText("");
-				JTFBairro.setText("");
-				JFFCep.setText("");
-				JTFSite.setText("");
-
-			}// Final da pergunta se deseja cadastrar um novo fornecedor
-
-		}// final do botão novo
+		if (acao.getSource() == salvarSair) {
+			cadastrar();
+			this.dispose();
+		}
 
 		if (acao.getSource() == JCBCpfMask) {
 			JFFCnpj.setValue(null);
 			formaterCPFCNPJ(JCBCpfMask.isSelected());
 		}
 
-		if (acao.getSource() == JBSair) {
+		if (acao.getSource() == atualizar) {
+			atualizar();
+			this.dispose();
+		}
+
+		if (acao.getSource() == sair) {
 			this.dispose();
 		}
 
@@ -506,7 +493,6 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 	}
 
 	private void cadastrar() {
-		fornecedor = new Fornecedor();
 
 		fornecedor.setNome(JTFNome.getText());
 		fornecedor.setCpfcnpj(Extras.FormatCnpjCpf(JFFCnpj.getText()));

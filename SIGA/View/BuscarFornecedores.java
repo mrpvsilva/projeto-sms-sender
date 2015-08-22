@@ -86,7 +86,10 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 		Fornecedores = PermissoesManager.buscarPermissao(Modulos.Fornecedores);
 		setResizable(false);
 		setModal(true);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(BuscarFornecedores.class.getResource("/Img/LOGO_LOGIN_GDA.png")));
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(
+						BuscarFornecedores.class
+								.getResource("/Img/LOGO_LOGIN_GDA.png")));
 		setTitle("SIGA - buscar fornecedores");
 		setBounds(100, 100, 750, 550);
 		getContentPane().setLayout(new BorderLayout());
@@ -210,33 +213,23 @@ public class BuscarFornecedores extends JDialog implements ActionListener {
 
 		if (acao.getSource() == JBCadForn) {
 
-			try {
-				EditFormFornecedor jdtcf = new EditFormFornecedor(null, model);
-				jdtcf.setVisible(true);
-				jdtcf.setLocationRelativeTo(null);
-			} catch (ParseException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage(), "Erro",
-						JOptionPane.ERROR_MESSAGE);
-			}// final do try e catch
+			EditFormFornecedor jdtcf = new EditFormFornecedor(model);
+			jdtcf.setLocationRelativeTo(null);
+			jdtcf.setVisible(true);
 
 		}// final do botão cadastrar fornecedores
 
 		if (acao.getSource() == JBEditForn) {
 
-			try {
-				int linha = tabela.getSelectedRow();
-				if (linha > -1) {
-					EditFormFornecedor jdtcf = new EditFormFornecedor(
-							model.find(linha), model);
-					jdtcf.setVisible(true);
-					jdtcf.setLocationRelativeTo(null);
-				} else {
-					JOptionPane.showMessageDialog(null, "Selecione uma linha");
-				}
-			} catch (ParseException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage(), "Erro",
-						JOptionPane.ERROR_MESSAGE);
-			}// final do try e catch
+			int linha = tabela.getSelectedRow();
+			if (linha > -1) {
+				EditFormFornecedor jdtcf = new EditFormFornecedor(
+						model.find(linha), model);
+				jdtcf.setVisible(true);
+				jdtcf.setLocationRelativeTo(null);
+			} else {
+				JOptionPane.showMessageDialog(null, "Selecione uma fornecedor");
+			}
 
 		}// final do botão atualizar fornecedores
 
