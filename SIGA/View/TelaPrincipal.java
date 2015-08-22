@@ -531,20 +531,10 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 
 		/* JMenu Fornecedores */
 		if (acao.getSource() == JMIFornCad) {
-			EditFormFornecedor jdtcf;
-
-			try {
-				jdtcf = new EditFormFornecedor(null, null);
-				jdtcf.setLocationRelativeTo(null);
-				jdtcf.setResizable(false);
-				jdtcf.setVisible(true);
-
-			} catch (ParseException e) {
-
-				JOptionPane.showMessageDialog(null, e.getMessage(),
-						"Erro ao carregar máscaras", JOptionPane.ERROR_MESSAGE);
-			}// necessário devido a máscara e não ter que repetir várias
-				// instruções try e Catch
+			EditFormFornecedor jdtcf = new EditFormFornecedor();
+			jdtcf.setLocationRelativeTo(null);
+			jdtcf.setResizable(false);
+			jdtcf.setVisible(true);
 
 		}// final do JMenuItemFornecedores Cadastro
 

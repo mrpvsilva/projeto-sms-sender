@@ -5,3 +5,5 @@
 	-cobrar rg do fornecedor apenas se for pessoa fisica - ok
 	-colocar no lugar de itens os serviços - ok
 	-ordem dos menus: clientes, Fornecedores, orçamentos, serviços, lembretes, eventos. - ok
+**22/08/2015
+	-Procurar saber se cpfcnpj de fornecedores deve ser obrigatório

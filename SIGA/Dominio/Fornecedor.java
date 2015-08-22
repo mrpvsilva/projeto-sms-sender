@@ -19,9 +19,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import Extra.Extras;
+
 @Entity
 @Table(name = "fornecedores")
-public class Fornecedor implements Serializable {
+public class Fornecedor implements Serializable, Validate {
 
 	private static final long serialVersionUID = 1L;
 
@@ -156,6 +158,27 @@ public class Fornecedor implements Serializable {
 		}
 
 		this.telefones.add(telefone);
+	}
+
+	@Override
+	public ModelState modelState() {
+
+		if (nome == null || nome.isEmpty())
+			return new ModelState("O campo Nome é obrigatório");
+		if (cpfcnpj != null && !cpfcnpj.isEmpty()
+				&& Extras.validarCPFCNPJ(cpfcnpj))
+			return new ModelState("O campo CPF/CNPJ é inválido");
+		if (servico == null)
+			return new ModelState("O campo Serviço é obrigatório");
+		if (valorservico == null || valorservico.equals(0))
+			return new ModelState("O campo Valor do serviço é obrigatório");
+		if (!endereco.modelState().isValid())
+			return endereco.modelState();
+		if (telefones.size() == 0)
+			return new ModelState(
+					"Fornecedor deve possuir ao menos um telefone");
+
+		return new ModelState();
 	}
 
 }

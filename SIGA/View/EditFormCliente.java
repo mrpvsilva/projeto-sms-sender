@@ -32,18 +32,13 @@ import javax.swing.text.MaskFormatter;
 
 import Control.ClientesControl;
 import Dominio.Cliente;
-import Dominio.ClienteEvento;
 import Dominio.Endereco;
-import Dominio.Evento;
 import Dominio.Telefone;
 import Dominio.TelefoneCliente;
 import Extra.Extras;
 import Extra.Mascaras;
-import Extra.Validacoes;
 import TableModels.DefaultTableModel;
 import TableModels.TelefoneTableModel;
-import Util.Validate;
-
 import javax.swing.JTabbedPane;
 import javax.swing.JCheckBox;
 
@@ -518,13 +513,15 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		cliente.setEmail(email.getText());
 		cliente.setCpfCnpj(Extras.FormatCnpjCpf(cpfcnpj.getValue().toString()));
 		cliente.setNomeGuerraMilitar(nomeguerra.getText());
-		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-		try {
-			Date date = formatter.parse(datanascimento.getText());
-			cliente.setDatanascimento(new Date(date.getTime()));
-		} catch (ParseException e1) {
-			e1.printStackTrace();
+		if (datanascimento.getValue() != null) {
+			try {
+				Date date = new SimpleDateFormat("dd/MM/yyyy")
+						.parse(datanascimento.getText());
+				cliente.setDatanascimento(new Date(date.getTime()));
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
 		}
 
 		Endereco e = cliente.getEndereco();
