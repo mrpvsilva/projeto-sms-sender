@@ -33,18 +33,18 @@ public class Cliente implements Serializable, Validate {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column
-	private String nomecompleto;
+	private String nomeCompleto;
 	@Column
 	private String email;
 	@Column
 	private String rg;
 	@Column
-	private String cpfcnpj;
+	private String cpfCnpj;
 	@Column
-	private String nomeresponsavel;
+	private String nomeResponsavel;
 	@Column
 	@Temporal(TemporalType.DATE)
-	private Date datanascimento;
+	private Date dataNascimento;
 	@Column
 	private String nomeGuerraMilitar;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Telefone.class)
@@ -85,11 +85,11 @@ public class Cliente implements Serializable, Validate {
 	}
 
 	public String getNomeCompleto() {
-		return nomecompleto;
+		return nomeCompleto;
 	}
 
 	public void setNomeCompleto(String nomeCompleto) {
-		this.nomecompleto = nomeCompleto;
+		this.nomeCompleto = nomeCompleto;
 	}
 
 	public String getEmail() {
@@ -109,22 +109,24 @@ public class Cliente implements Serializable, Validate {
 	}
 
 	public String getCpfCnpj() {
-		return cpfcnpj;
+		return cpfCnpj;
 	}
 
 	public void setCpfCnpj(String cpfCnpj) {
-		this.cpfcnpj = cpfCnpj;
+		this.cpfCnpj = cpfCnpj;
 	}
 
 	public String getResponsavel() {
-		return nomeresponsavel;
+		return nomeResponsavel;
 	}
 
 	public void setResponsavel(String responsavel) {
-		this.nomeresponsavel = responsavel;
+		this.nomeResponsavel = responsavel;
 	}
 
 	public Endereco getEndereco() {
+		if (endereco == null)
+			endereco = new EnderecoCliente();
 		return endereco;
 	}
 
@@ -157,11 +159,11 @@ public class Cliente implements Serializable, Validate {
 	}
 
 	public Date getDatanascimento() {
-		return datanascimento;
+		return dataNascimento;
 	}
 
 	public void setDatanascimento(Date datanascimento) {
-		this.datanascimento = datanascimento;
+		this.dataNascimento = datanascimento;
 	}
 
 	public List<ClienteEvento> getEventos() {
@@ -174,20 +176,20 @@ public class Cliente implements Serializable, Validate {
 
 	public void setCpfCnpjClienteOrcamento() {
 
-		cpfcnpj = UUID.randomUUID().toString().replace("-", "").toUpperCase()
+		cpfCnpj = UUID.randomUUID().toString().replace("-", "").toUpperCase()
 				.substring(0, 14);
-		rg = cpfcnpj;
+		rg = cpfCnpj;
 		orcamento = true;
 	}
 
 	@Override
 	public ModelState modelState() {
 
-		if (nomecompleto.isEmpty())
+		if (nomeCompleto.isEmpty())
 			return new ModelState("Nome completo é um campo obrigatorio");
-		if (!orcamento && cpfcnpj.isEmpty())
+		if (!orcamento && cpfCnpj.isEmpty())
 			return new ModelState("CPF/CNPJ é um campo obrigatorio");
-		if (!orcamento && !Extras.validarCPFCNPJ(cpfcnpj))
+		if (!orcamento && !Extras.validarCPFCNPJ(cpfCnpj))
 			return new ModelState("CPF/CNPJ é inválido");
 		if (!orcamento && rg.isEmpty())
 			return new ModelState("RG é um campo obrigatorio");
@@ -195,6 +197,8 @@ public class Cliente implements Serializable, Validate {
 			return new ModelState("Email é um campo obrigatorio ");
 		if (!Extras.isValidEmail(email))
 			return new ModelState("Email é inválido");
+		if (!orcamento && !endereco.modelState().isValid())
+			return endereco.modelState();
 		if (telefones.size() == 0)
 			return new ModelState("Cliente deve possuir ao menos um telefone");
 

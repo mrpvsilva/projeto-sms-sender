@@ -400,29 +400,7 @@ public class BuscarClientes extends JDialog implements ActionListener {
 		totalRecord.setText(gridRecord.getPageSize() + "");
 		emptyList.setVisible(gridRecord.isEmptyRecords());
 
-	}
-
-	// private void pesquisar() {
-	//
-	// String txt = pesquisa.getText();
-	// String campo = radiocpf.isSelected() ? "cpfcnpj"
-	// : radiorg.isSelected() ? "rg"
-	// : radionome.isSelected() ? "nomecompleto" : "";
-	// if (txt.length() > 0) {
-	// modelClientes.setLinhas(controller.pesquisar(txt, campo));
-	// System.out.println(modelClientes.getRowCount());
-	//
-	// if (modelClientes.getRowCount() == 0)
-	// emptyList.setVisible(true);
-	// else
-	// emptyList.setVisible(false);
-	//
-	// } else {
-	// modelClientes.clear();
-	// emptyList.setVisible(false);
-	// }
-	//
-	// }
+	}	
 
 	@Override
 	public void actionPerformed(ActionEvent acao) {

@@ -21,7 +21,7 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 	public List<Cliente> findAll() {
 
 		try {
-			String q = "select c from Cliente c WHERE c.orcamento = false order by c.nomecompleto";
+			String q = "select c from Cliente c WHERE c.orcamento = false order by c.nomeCompleto";
 			@SuppressWarnings("unchecked")
 			List<Cliente> l = entityManager.createQuery(q).getResultList();
 			return l;
@@ -37,7 +37,7 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 		try {
 
 			String q = "select c from Cliente c where c." + campo + " like '%"
-					+ valor + "%' and c.orcamento = false order by c.nomecompleto";
+					+ valor + "%' and c.orcamento = false order by c.nomeCompleto";
 			return entityManager.createQuery(q, Cliente.class).getResultList();
 
 		} catch (NoResultException ex) {
@@ -51,7 +51,7 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 	@Override
 	public Cliente find(String cpfcnpj) {
 		try {
-			String q = "select c from Cliente c where c.cpfcnpj= :cpfcnpj";
+			String q = "select c from Cliente c where c.cpfCnpj= :cpfcnpj";
 			Query query = entityManager.createQuery(q);
 			query.setParameter("cpfcnpj", cpfcnpj);
 			return (Cliente) query.getSingleResult();
@@ -107,7 +107,6 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 			CriteriaQuery<Cliente> criteriaQuery = criteriaBuilder
 					.createQuery(Cliente.class);
 			Root<Cliente> cliente = criteriaQuery.from(Cliente.class);
-
 			List<Predicate> condicoes = new ArrayList<Predicate>();
 
 			if (!valor.isEmpty()) {
@@ -122,7 +121,7 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 			Predicate todasCondicoes = criteriaBuilder.and(condicoesComoArray);
 			criteriaQuery.where(todasCondicoes);
 			criteriaQuery.orderBy(criteriaBuilder.asc(cliente
-					.get("nomecompleto")));
+					.get("nomeCompleto")));
 
 			return entityManager.createQuery(criteriaQuery)
 					.setFirstResult((page - 1) * total).setMaxResults(total)

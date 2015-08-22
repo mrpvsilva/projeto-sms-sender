@@ -296,16 +296,17 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		lblValorDoServio.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblValorDoServio.setBounds(2, 98, 105, 14);
 		contentPanel.add(lblValorDoServio);
-		
+
 		JButton button = new JButton("");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				EditFormServico efs = new EditFormServico(JCBTpServ); 
+				EditFormServico efs = new EditFormServico(JCBTpServ);
 				efs.setLocationRelativeTo(null);
 				efs.setVisible(true);
 			}
 		});
-		button.setIcon(new ImageIcon(EditFormFornecedor.class.getResource("/Img/plus.png")));
+		button.setIcon(new ImageIcon(EditFormFornecedor.class
+				.getResource("/Img/plus.png")));
 		button.setToolTipText("Adicionar servi\u00E7o");
 		button.setBounds(488, 61, 23, 23);
 		contentPanel.add(button);
@@ -390,7 +391,8 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 																	// CpfCnpj
 				JOptionPane.showMessageDialog(null, "Cpf/Cnpj inválido.",
 						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
-			else if (JFFRg.getText().trim().isEmpty() && JCBCpfMask.isSelected()) // Valida Rg
+			else if (JFFRg.getText().trim().isEmpty()
+					&& JCBCpfMask.isSelected()) // Valida Rg
 				JOptionPane.showMessageDialog(null, "Rg em branco.",
 						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
 			else if (telmodel.getRowCount() < 1)
@@ -400,7 +402,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 			else if (JCBTpServ.getSelectedItem().toString().equals("SELECIONE"))
 				JOptionPane.showMessageDialog(null,
 						"Selecione um tipo de serviço.", "Erro ao cadastrar",
-						JOptionPane.ERROR_MESSAGE);			
+						JOptionPane.ERROR_MESSAGE);
 			else if (JTFEmail.getText().trim().isEmpty()) // Valida Email
 				JOptionPane.showMessageDialog(null, "Email em branco.",
 						"Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
@@ -427,10 +429,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 					atualizar();
 				}
 
-				
 				preencherCampos();
-
-				
 
 			}
 
@@ -480,7 +479,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		endereco.setEndereco(JTFEnd.getText());
 		endereco.setCidade(cidade.getText());
 		endereco.setBairro(JTFBairro.getText());
-		endereco.setCep((Integer.parseInt(Extras.FormatCep(JFFCep.getText()))));
+		endereco.setCep(Extras.FormatCep(JFFCep.getText()));
 
 		try {
 			fornecedor.setValorServico(valor.getValor());
@@ -522,7 +521,7 @@ public class EditFormFornecedor extends JDialog implements ActionListener {
 		endereco.setEndereco(JTFEnd.getText());
 		endereco.setBairro(JTFBairro.getText());
 		endereco.setCidade(cidade.getText());
-		endereco.setCep((Integer.parseInt(Extras.FormatCep(JFFCep.getText()))));
+		endereco.setCep(Extras.FormatCep(JFFCep.getText()));
 
 		try {
 			fornecedor.setValorServico(valor.getValor());

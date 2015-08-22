@@ -3,8 +3,11 @@ package Control;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import Dominio.Cliente;
 import Dominio.GridRecords;
+import Dominio.ModelState;
 import Interfaces.IClienteRepository;
 import Model.ClientesModel;
 import Repositories.ClienteRepository;
@@ -21,9 +24,9 @@ public class ClientesControl {
 		return clientes.findAll(valor, campo);
 	}
 
-	public List<Cliente> listarTodos() {
-		return clientes.findAll();
-	}
+	// public List<Cliente> listarTodos() {
+	// return clientes.findAll();
+	// }
 
 	public void _listarTodos(String valor, String campo,
 			GridRecords<Cliente> grid) {
@@ -35,9 +38,23 @@ public class ClientesControl {
 
 	public boolean cadastrar(Cliente cliente) {
 
+		ModelState state = cliente.modelState();
+
+		if (!state.isValid()) {
+			JOptionPane.showMessageDialog(null, state.MensagemErro(),
+					"Atenção", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
 		try {
-			return clientes.add(cliente);
+			clientes.add(cliente);
+			JOptionPane.showMessageDialog(null,
+					"Cliente cadastrado com sucesso", "Sucesso",
+					JOptionPane.INFORMATION_MESSAGE);
+			return true;
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Falha ao cadastar o cliente\n"
+					+ e.getMessage(), "Atenção", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 
