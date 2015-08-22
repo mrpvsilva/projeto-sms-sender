@@ -21,7 +21,7 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 	public List<Cliente> findAll() {
 
 		try {
-			String q = "select c from Cliente c order by c.nomecompleto";
+			String q = "select c from Cliente c WHERE c.orcamento = false order by c.nomecompleto";
 			@SuppressWarnings("unchecked")
 			List<Cliente> l = entityManager.createQuery(q).getResultList();
 			return l;
@@ -37,7 +37,7 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 		try {
 
 			String q = "select c from Cliente c where c." + campo + " like '%"
-					+ valor + "%' order by c.nomecompleto";
+					+ valor + "%' and c.orcamento = false order by c.nomecompleto";
 			return entityManager.createQuery(q, Cliente.class).getResultList();
 
 		} catch (NoResultException ex) {
@@ -79,6 +79,10 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 				Path<String> c = cliente.get(campo);
 				condicoes.add(cb.like(c, "%" + valor + "%"));
 			}
+
+			Path<Boolean> c = cliente.get("orcamento");
+			condicoes.add(cb.equal(c, false));
+
 			Predicate[] condicoesComoArray = condicoes
 					.toArray(new Predicate[condicoes.size()]);
 			Predicate todasCondicoes = cb.and(condicoesComoArray);
@@ -110,6 +114,9 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 				Path<String> c = cliente.get(campo);
 				condicoes.add(criteriaBuilder.like(c, "%" + valor + "%"));
 			}
+			Path<Boolean> c = cliente.get("orcamento");
+			condicoes.add(criteriaBuilder.equal(c, false));
+
 			Predicate[] condicoesComoArray = condicoes
 					.toArray(new Predicate[condicoes.size()]);
 			Predicate todasCondicoes = criteriaBuilder.and(condicoesComoArray);
