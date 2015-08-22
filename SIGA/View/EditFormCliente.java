@@ -82,8 +82,6 @@ public class EditFormCliente extends JDialog implements ActionListener {
 	private JButton remove_telefone;
 	private JButton edit_telefone;
 	private DefaultTableModel<Cliente> _modelCliente;
-	private DefaultTableModel<ClienteEvento> _modelClienteEvento;
-	private Evento _evento;
 	private JCheckBox chckbxCnpj;
 	private JButton salvar;
 
@@ -100,7 +98,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		}
 	}
 
-	/** Contrutor chamada para o cadastro do cliente */
+	/** Contrutor chamada para teste do cadastro do cliente */
 	public EditFormCliente() throws ParseException {
 		cliente = new Cliente();
 		start();
@@ -128,16 +126,13 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		chckbxCnpj.setEnabled(false);
 	}
 
-	/** Contrutor usado pela tela de adicionar cliente ao evento */
-	public EditFormCliente(Evento evento,
-			DefaultTableModel<ClienteEvento> modelCliente)
-			throws ParseException {
-		cliente = new Cliente();
-		_modelClienteEvento = modelCliente;
-		_evento = evento;
-
-		start();
-	}
+	// /** Contrutor usado pela tela de adicionar cliente ao evento */
+	// public EditFormCliente(Evento evento,
+	// DefaultTableModel<ClienteEvento> modelCliente)
+	// throws ParseException {
+	// cliente = new Cliente();
+	// start();
+	// }
 
 	/** Construtor chamado para edição e visualização do cliente */
 	public EditFormCliente(boolean editando, Cliente cliente)
@@ -487,6 +482,7 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		complemento.setEditable(enabled);
 
 		salvarSair.setVisible(enabled);
+		salvar.setVisible(enabled);
 		add_telefone.setVisible(enabled);
 		edit_telefone.setVisible(enabled);
 		remove_telefone.setVisible(enabled);
@@ -540,7 +536,6 @@ public class EditFormCliente extends JDialog implements ActionListener {
 		cliente.setEndereco(e);
 		cliente.setTelefones(modeltelefone.getLinhas());
 	}
-	
 
 	@Override
 	public void actionPerformed(ActionEvent acao) {
