@@ -19,7 +19,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import java.util.UUID;
 
 import Extra.Extras;
@@ -46,21 +45,17 @@ public class Cliente implements Serializable, Validate {
 	@Column
 	@Temporal(TemporalType.DATE)
 	private Date datanascimento;
-
 	@Column
 	private String nomeGuerraMilitar;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Telefone.class)
 	@JoinTable(name = "telefonesclientes", joinColumns = { @JoinColumn(name = "idcliente", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idtelefone", referencedColumnName = "id") })
 	private List<Telefone> telefones;
-
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "enderecosclientes", joinColumns = { @JoinColumn(name = "idcliente", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "idendereco", referencedColumnName = "id") })
 	private Endereco endereco;
-
 	@OneToMany(mappedBy = "cliente")
 	private List<ClienteEvento> eventos;
-
-	@Transient
+	@Column
 	private boolean orcamento;
 
 	public Cliente() {
@@ -183,7 +178,6 @@ public class Cliente implements Serializable, Validate {
 				.substring(0, 14);
 		rg = cpfcnpj;
 		orcamento = true;
-
 	}
 
 	@Override
