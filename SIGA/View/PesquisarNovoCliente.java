@@ -103,6 +103,8 @@ public class PesquisarNovoCliente extends JDialog {
 								|| (chckbxCnpj.isSelected() && c.length() == 14)) {
 							if (Extras.validarCPFCNPJ(c)) {
 								buscarcliente.setEnabled(true);
+								buscarcliente.requestFocus();
+								getRootPane().setDefaultButton(buscarcliente);
 							} else {
 								cliente.setText("CPF ou CNPJ é inválido");
 							}
@@ -198,7 +200,8 @@ public class PesquisarNovoCliente extends JDialog {
 						try {
 							PesquisarNovoCliente.this.dispose();
 							EditFormCliente efc = new EditFormCliente(cpfcnpj
-									.getValue().toString(),chckbxCnpj.isSelected());
+									.getValue().toString(), chckbxCnpj
+									.isSelected());
 							efc.setLocationRelativeTo(null);
 							efc.setVisible(true);
 
@@ -212,7 +215,6 @@ public class PesquisarNovoCliente extends JDialog {
 				novo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				novo.setActionCommand("OK");
 				buttonPane.add(novo);
-				getRootPane().setDefaultButton(novo);
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
@@ -222,7 +224,6 @@ public class PesquisarNovoCliente extends JDialog {
 			}
 		}
 		limparBusca();
-		getRootPane().setDefaultButton(buscarcliente);
 	}
 
 	private void limparBusca() {
