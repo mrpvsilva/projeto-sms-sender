@@ -387,9 +387,9 @@ public class BuscarClientes extends JDialog implements ActionListener {
 			gridRecord = new GridRecords<Cliente>();
 
 		String txt = pesquisa.getText();
-		String campo = radiocpf.isSelected() ? "cpfcnpj"
+		String campo = radiocpf.isSelected() ? "cpfCnpj"
 				: radiorg.isSelected() ? "rg"
-						: radionome.isSelected() ? "nomecompleto" : "";
+						: radionome.isSelected() ? "nomeCompleto" : "";
 
 		gridRecord.setPageIndex(Integer.parseInt(pageIndex.getText()));
 		gridRecord.setRecordsCount(Integer.parseInt(recordCount

@@ -104,8 +104,9 @@ public class ClienteRepository extends RepositoryBase<Cliente> implements
 
 			CriteriaBuilder criteriaBuilder = entityManager
 					.getCriteriaBuilder();
-			CriteriaQuery<Cliente> criteriaQuery = criteriaBuilder
-					.createQuery(Cliente.class);
+			
+			CriteriaQuery<Cliente> criteriaQuery = criteriaBuilder.createQuery(Cliente.class);
+			
 			Root<Cliente> cliente = criteriaQuery.from(Cliente.class);
 			List<Predicate> condicoes = new ArrayList<Predicate>();
 
